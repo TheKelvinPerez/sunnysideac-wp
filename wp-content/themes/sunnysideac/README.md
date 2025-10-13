@@ -1,18 +1,59 @@
-# SunnySide AC WordPress Theme
+# WordPress Vite Starter
 
-A modern WordPress theme built with Vite and Tailwind CSS v4.
+A modern WordPress starter theme built with Vite and Tailwind CSS v4. Features Hot Module Replacement (HMR), ES modules, and smart asset detection for seamless development and production workflows.
+
+![WordPress](https://img.shields.io/badge/WordPress-6.0+-blue.svg)
+![Vite](https://img.shields.io/badge/Vite-6.3-purple.svg)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-v4-38bdf8.svg)
+![License](https://img.shields.io/badge/License-GPL%20v2-green.svg)
+
+## ✨ Features
+
+- ⚡ **Vite Development** - Lightning-fast Hot Module Replacement (HMR) for instant feedback
+- 🎨 **Tailwind CSS v4** - Modern utility-first CSS framework with CSS-native configuration
+- 🔄 **Smart Detection** - Automatically switches between dev server and production builds
+- 📦 **ES Modules** - Modern JavaScript with native module support
+- 🚀 **Optimized Production** - Minified assets with content-based hashing for cache busting
+- 🛠️ **Zero Config** - Works out of the box with sensible defaults
+- 🔧 **Customizable** - Easy configuration via `.env` file or WordPress filters
 
 ## Development Setup
 
 ### Prerequisites
-- Node.js (v18 or higher)
-- npm
+- WordPress 6.0 or higher
+- PHP 7.4 or higher
+- Node.js 18 or higher
+- npm or yarn
 
-### Installation
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/yourusername/wordpress-vite-starter.git
+cd wordpress-vite-starter
+```
+
+### 2. Install Dependencies
 
 ```bash
 npm install
 ```
+
+### 3. Start Development Server
+
+```bash
+npm run dev
+```
+
+The Vite dev server will start at `http://localhost:3000`.
+
+### 4. Activate Theme
+
+1. Copy the theme folder to your WordPress `wp-content/themes/` directory
+2. Go to WordPress Admin → Appearance → Themes
+3. Activate the "WordPress Vite Starter" theme
+4. Open your WordPress site in a browser
+
+You should see instant updates as you edit your files!
 
 ### Development
 
@@ -78,15 +119,15 @@ You can also use WordPress filters to override these settings programmatically:
 
 ```php
 // In your functions.php or plugin
-add_filter('sunnysideac_vite_protocol', function($protocol) {
+add_filter('vite_protocol', function($protocol) {
     return 'https';
 });
 
-add_filter('sunnysideac_vite_host', function($host) {
+add_filter('vite_host', function($host) {
     return '192.168.1.100';
 });
 
-add_filter('sunnysideac_vite_port', function($port) {
+add_filter('vite_port', function($port) {
     return '5173';
 });
 ```
@@ -289,3 +330,96 @@ import './css/main.css';
 import './css/custom.css';
 import './css/components/header.css';
 ```
+
+## 🔥 Hot Module Replacement (HMR)
+
+HMR allows you to see changes instantly without refreshing the page:
+
+1. Start the dev server: `npm run dev`
+2. Open your WordPress site
+3. Edit CSS or JS files
+4. See instant updates in the browser!
+
+**How it works:**
+- Vite watches your files for changes
+- When you save, Vite reprocesses only the changed file
+- Updates are pushed to the browser via WebSocket
+- Page updates without a full reload
+
+## 📚 Documentation
+
+For a detailed explanation of the architecture, see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+Topics covered:
+- How Vite works in WordPress
+- Tailwind CSS v4 configuration
+- ES modules and WordPress integration
+- Hot Module Replacement explained
+- Complete request flow
+- Troubleshooting guide
+
+## 🛠️ Available Commands
+
+```bash
+# Start Vite dev server with HMR
+npm run dev
+
+# Build optimized assets for production
+npm run build
+
+# Preview production build locally
+npm run preview
+```
+
+## 🐛 Troubleshooting
+
+### Styles not loading in development
+
+**Check:**
+1. Is `npm run dev` running?
+2. Can you access `http://localhost:3000`?
+3. Check browser console for errors
+
+### Styles not loading in production
+
+**Solution:**
+1. Run `npm run build` before deploying
+2. Verify `dist/` folder exists
+3. Check `dist/.vite/manifest.json` exists
+
+### "Cannot use import statement outside a module"
+
+**Check:**
+- Scripts should have `type="module"` in page source
+- The `script_loader_tag` filter is working correctly
+
+### HMR not working
+
+**Check:**
+1. Vite dev server is running
+2. WebSocket connection not blocked by firewall
+3. Browser console shows no WebSocket errors
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+This project is licensed under the GNU General Public License v2 or later.
+
+## 🙏 Credits
+
+Built with:
+- [Vite](https://vitejs.dev/) - Next Generation Frontend Tooling
+- [Tailwind CSS v4](https://tailwindcss.com/) - Utility-first CSS Framework
+- [WordPress](https://wordpress.org/) - Content Management System
+
+## 📞 Support
+
+- **Documentation**: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
+- **Issues**: [GitHub Issues](https://github.com/yourusername/wordpress-vite-starter/issues)
+
+---
+
+**Made with ❤️ for the WordPress community**

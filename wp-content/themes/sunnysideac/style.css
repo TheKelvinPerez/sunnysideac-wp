@@ -1,15 +1,15 @@
 /*
-Theme Name: SunnySide AC
-Theme URI: https://sunnyside247ac.com
-Author: Kelvin Perez 
-Author URI: https://kelvinperez.com
-Description: Custom Theme for SunnySide AC
-Requires at least: 6.7
-Tested up to: 6.8
-Requires PHP: 7.2
-Version: 1.3
+Theme Name: WordPress Vite Starter
+Theme URI: https://github.com/yourusername/wordpress-vite-starter
+Author: Your Name
+Author URI: https://yourwebsite.com
+Description: A modern WordPress starter theme built with Vite and Tailwind CSS v4. Features Hot Module Replacement (HMR), ES modules, and smart asset detection for seamless development and production workflows.
+Requires at least: 6.0
+Tested up to: 6.7
+Requires PHP: 7.4
+Version: 1.0.0
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: sunnysideac
-Tags: one-column, custom-colors, custom-menu, custom-logo, editor-style, featured-images, full-site-editing, block-patterns, rtl-language-support, sticky-post, threaded-comments, translation-ready, wide-blocks, block-styles, style-variations, accessibility-ready, blog, portfolio, news
+Text Domain: wp-vite-starter
+Tags: vite, tailwind, modern, starter-theme, hmr, custom-colors, custom-menu, custom-logo, featured-images, threaded-comments, translation-ready, block-styles, accessibility-ready, blog, portfolio
 */

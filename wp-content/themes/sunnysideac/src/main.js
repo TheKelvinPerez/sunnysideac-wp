@@ -2,4 +2,4 @@
 import './css/main.css';
 
 // Add your custom JavaScript here
-console.log('SunnySide AC theme loaded with Vite');
+console.log('WordPress Vite Starter theme loaded with Vite');
