@@ -8,7 +8,7 @@
                 <p class="text-gray-400">
                     <?php
                     $description = get_bloginfo('description');
-                    echo $description ? esc_html($description) : 'Modern WordPress theme built with Vite and Tailwind CSS v4.';
+                    echo $description ? esc_html($description) : 'Your trusted HVAC service provider. Professional, reliable, and always here when you need us.';
                     ?>
                 </p>
             </div>
@@ -24,8 +24,8 @@
                     'fallback_cb' => function() {
                         echo '<ul class="space-y-2">';
                         echo '<li><a href="' . esc_url(home_url('/')) . '" class="text-gray-400 hover:text-white transition-colors">Home</a></li>';
-                        echo '<li><a href="' . esc_url(home_url('/blog')) . '" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>';
-                        echo '<li><a href="' . esc_url(home_url('/about')) . '" class="text-gray-400 hover:text-white transition-colors">About</a></li>';
+                        echo '<li><a href="' . esc_url(home_url('/services')) . '" class="text-gray-400 hover:text-white transition-colors">Services</a></li>';
+                        echo '<li><a href="' . esc_url(home_url('/about')) . '" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>';
                         echo '<li><a href="' . esc_url(home_url('/contact')) . '" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>';
                         echo '</ul>';
                     }
@@ -35,10 +35,11 @@
 
             <!-- Contact Info -->
             <div>
-                <h3 class="text-xl font-bold mb-4">Contact</h3>
+                <h3 class="text-xl font-bold mb-4">Contact Us</h3>
                 <div class="space-y-2 text-gray-400">
-                    <p>Email: info@example.com</p>
+                    <p>Email: info@sunnyside247ac.com</p>
                     <p>Phone: (555) 123-4567</p>
+                    <p class="text-yellow-400 font-semibold">24/7 Emergency Service</p>
                 </div>
             </div>
         </div>

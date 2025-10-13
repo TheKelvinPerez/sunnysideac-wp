@@ -6,68 +6,69 @@
         <div class="container mx-auto px-4">
             <div class="max-w-3xl">
                 <h1 class="text-5xl font-bold mb-6">
-                    Welcome to <?php bloginfo('name'); ?>
+                    Stay Cool with <?php bloginfo('name'); ?>
                 </h1>
                 <p class="text-xl text-blue-100 mb-8">
-                    A modern WordPress starter theme built with Vite and Tailwind CSS v4. Fast development with Hot Module Replacement.
+                    Professional HVAC services available 24/7. Expert installation, maintenance, and emergency repairs for residential and commercial properties.
                 </p>
                 <div class="flex flex-wrap gap-4">
-                    <a href="#features" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-all transform hover:scale-105">
-                        View Features
+                    <a href="#services" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-all transform hover:scale-105">
+                        Our Services
                     </a>
-                    <a href="#documentation" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-all">
-                        Documentation
+                    <a href="#contact" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-all">
+                        Get a Free Quote
                     </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="py-16">
+    <!-- Services Section -->
+    <section id="services" class="py-16">
         <div class="container mx-auto px-4">
             <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Features</h2>
-                <p class="text-xl text-gray-600">Everything you need to build modern WordPress themes</p>
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Our Services</h2>
+                <p class="text-xl text-gray-600">Professional HVAC solutions for every need</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Feature 1: Vite -->
+                <!-- Service 1: Installation -->
                 <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
                     <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                         <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Vite Development</h3>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">AC Installation</h3>
                     <p class="text-gray-600">
-                        Lightning-fast Hot Module Replacement (HMR) for instant feedback during development.
+                        Expert installation of residential and commercial air conditioning systems with quality equipment and professional service.
                     </p>
                 </div>
 
-                <!-- Feature 2: Tailwind -->
+                <!-- Service 2: Maintenance -->
                 <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
                     <div class="w-16 h-16 bg-green-100 rounded-lg flex items-center justify-center mb-4">
                         <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Tailwind CSS v4</h3>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Maintenance Plans</h3>
                     <p class="text-gray-600">
-                        Modern utility-first CSS framework with CSS-native configuration and automatic tree-shaking.
+                        Regular maintenance to keep your system running efficiently and extend its lifespan. Prevent costly repairs.
                     </p>
                 </div>
 
-                <!-- Feature 3: Smart Detection -->
+                <!-- Service 3: Emergency Repairs -->
                 <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-                    <div class="w-16 h-16 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                    <div class="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Smart Detection</h3>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">24/7 Emergency Repairs</h3>
                     <p class="text-gray-600">
-                        Automatically switches between dev server and production builds. No configuration needed.
+                        Fast response emergency repair service available around the clock. We're here when you need us most.
                     </p>
                 </div>
             </div>
@@ -79,8 +80,8 @@
     <section class="py-16 bg-white">
         <div class="container mx-auto px-4">
             <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Latest Posts</h2>
-                <p class="text-xl text-gray-600">Your blog posts will appear here</p>
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Latest News & Tips</h2>
+                <p class="text-xl text-gray-600">Stay informed about HVAC maintenance, energy savings, and more</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -143,14 +144,14 @@
     <?php endif; ?>
 
     <!-- CTA Section -->
-    <section id="documentation" class="py-20 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
+    <section id="contact" class="py-20 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="text-4xl font-bold mb-6">Ready to Get Started?</h2>
+            <h2 class="text-4xl font-bold mb-6">Need AC Service Today?</h2>
             <p class="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-                Clone this starter theme and start building your next WordPress project with modern tools.
+                Call us now for fast, reliable HVAC service. Emergency repairs available 24/7.
             </p>
-            <a href="https://github.com/yourusername/wordpress-vite-starter" class="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-50 transition-all transform hover:scale-105 inline-block">
-                View on GitHub
+            <a href="tel:+15551234567" class="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-50 transition-all transform hover:scale-105 inline-block">
+                Call (555) 123-4567
             </a>
         </div>
     </section>
@@ -174,7 +175,7 @@
                 </div>
 
                 <div class="bg-green-50 border border-green-200 rounded-lg p-4 text-green-900">
-                    <strong>Console Check:</strong> Open your browser console - you should see "WordPress Vite Starter theme loaded with Vite"
+                    <strong>Console Check:</strong> Open your browser console - you should see "SunnySide AC theme loaded with Vite"
                 </div>
             </div>
         </div>

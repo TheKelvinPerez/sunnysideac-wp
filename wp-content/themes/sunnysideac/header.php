@@ -6,7 +6,7 @@
 
     <?php
     // Inline critical CSS to prevent FOUC in development
-    $is_dev = function_exists('vite_is_dev_server_running') && vite_is_dev_server_running();
+    $is_dev = function_exists('sunnysideac_is_vite_dev_server_running') && sunnysideac_is_vite_dev_server_running();
     if ($is_dev) : ?>
     <style>
         /* Prevent flash of unstyled content while Vite injects CSS */

@@ -3,7 +3,7 @@
 /**
  * Get Vite dev server URL from environment or use defaults
  */
-function vite_get_dev_server_url() {
+function sunnysideac_get_vite_dev_server_url() {
     // Try to load .env file if it exists
     $env_file = get_template_directory() . '/.env';
     $protocol = 'http';
@@ -20,9 +20,9 @@ function vite_get_dev_server_url() {
     }
 
     // Allow filtering via WordPress hooks for more flexibility
-    $protocol = apply_filters('vite_protocol', $protocol);
-    $host = apply_filters('vite_host', $host);
-    $port = apply_filters('vite_port', $port);
+    $protocol = apply_filters('sunnysideac_vite_protocol', $protocol);
+    $host = apply_filters('sunnysideac_vite_host', $host);
+    $port = apply_filters('sunnysideac_vite_port', $port);
 
     return "{$protocol}://{$host}:{$port}";
 }
@@ -30,8 +30,8 @@ function vite_get_dev_server_url() {
 /**
  * Check if Vite dev server is running
  */
-function vite_is_dev_server_running() {
-    $vite_dev_server = vite_get_dev_server_url();
+function sunnysideac_is_vite_dev_server_running() {
+    $vite_dev_server = sunnysideac_get_vite_dev_server_url();
 
     // Use file_get_contents with stream context for better compatibility
     $context = stream_context_create([
@@ -50,29 +50,29 @@ function vite_is_dev_server_running() {
 /**
  * Enqueue Vite assets
  */
-function theme_enqueue_assets() {
-    $is_dev = vite_is_dev_server_running();
-    $vite_server_url = vite_get_dev_server_url();
+function sunnysideac_enqueue_assets() {
+    $is_dev = sunnysideac_is_vite_dev_server_running();
+    $vite_server_url = sunnysideac_get_vite_dev_server_url();
 
     if ($is_dev) {
         // Development mode: Load from Vite dev server
         wp_enqueue_script(
-            'theme-vite-client',
+            'sunnysideac-vite-client',
             $vite_server_url . '/@vite/client',
             array(),
             null,
             false
         );
-        wp_script_add_data('theme-vite-client', 'type', 'module');
+        wp_script_add_data('sunnysideac-vite-client', 'type', 'module');
 
         wp_enqueue_script(
-            'theme-main',
+            'sunnysideac-main',
             $vite_server_url . '/src/main.js',
-            array('theme-vite-client'),
+            array('sunnysideac-vite-client'),
             null,
             false
         );
-        wp_script_add_data('theme-main', 'type', 'module');
+        wp_script_add_data('sunnysideac-main', 'type', 'module');
     } else {
         // Production mode: Load built assets
         $manifest_path = get_template_directory() . '/dist/.vite/manifest.json';
@@ -87,7 +87,7 @@ function theme_enqueue_assets() {
                 if (isset($main['css'])) {
                     foreach ($main['css'] as $css_file) {
                         wp_enqueue_style(
-                            'theme-main',
+                            'sunnysideac-main',
                             get_template_directory_uri() . '/dist/' . $css_file,
                             array(),
                             null
@@ -97,23 +97,23 @@ function theme_enqueue_assets() {
 
                 // Enqueue JS
                 wp_enqueue_script(
-                    'theme-main',
+                    'sunnysideac-main',
                     get_template_directory_uri() . '/dist/' . $main['file'],
                     array(),
                     null,
                     true
                 );
-                wp_script_add_data('theme-main', 'type', 'module');
+                wp_script_add_data('sunnysideac-main', 'type', 'module');
             }
         }
     }
 }
-add_action('wp_enqueue_scripts', 'theme_enqueue_assets');
+add_action('wp_enqueue_scripts', 'sunnysideac_enqueue_assets');
 
 /**
  * Theme setup
  */
-function theme_setup() {
+function sunnysideac_setup() {
     // Add theme support
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
@@ -128,21 +128,21 @@ function theme_setup() {
 
     // Register navigation menus
     register_nav_menus(array(
-        'primary' => __('Primary Menu', 'theme'),
-        'footer' => __('Footer Menu', 'theme'),
+        'primary' => __('Primary Menu', 'sunnysideac'),
+        'footer' => __('Footer Menu', 'sunnysideac'),
     ));
 }
-add_action('after_setup_theme', 'theme_setup');
+add_action('after_setup_theme', 'sunnysideac_setup');
 
 /**
  * Add type="module" to Vite scripts
  */
-function theme_add_type_attribute($tag, $handle, $src) {
-    if ('theme-vite-client' === $handle || 'theme-main' === $handle) {
+function sunnysideac_add_type_attribute($tag, $handle, $src) {
+    if ('sunnysideac-vite-client' === $handle || 'sunnysideac-main' === $handle) {
         // Remove the type="text/javascript" attribute and replace with type="module"
         $tag = str_replace("type='text/javascript'", "type='module'", $tag);
         $tag = str_replace('type="text/javascript"', 'type="module"', $tag);
     }
     return $tag;
 }
-add_filter('script_loader_tag', 'theme_add_type_attribute', 10, 3);
+add_filter('script_loader_tag', 'sunnysideac_add_type_attribute', 10, 3);
