@@ -1,0 +1,54 @@
+# Ignore everything by default
+/*
+
+# But track these directories
+!wp-content/
+
+# Within wp-content, ignore everything
+wp-content/*
+
+# Except themes and plugins directories
+!wp-content/themes/
+!wp-content/plugins/
+
+# Within themes, ignore default themes
+wp-content/themes/twenty*/
+
+# Only track YOUR custom theme
+!wp-content/themes/sunnysideac/
+
+# Track custom plugins (add your custom plugins here)
+# Example: !wp-content/plugins/your-custom-plugin/
+
+# Always ignore these
+wp-content/uploads/
+wp-content/cache/
+wp-content/backup*/
+wp-content/upgrade/
+wp-content/ai1wm-backups/
+
+# Ignore config and environment files
+wp-config.php
+.htaccess
+*.log
+error_log
+debug.log
+
+# Ignore OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Ignore editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Track .gitignore itself
+!.gitignore
