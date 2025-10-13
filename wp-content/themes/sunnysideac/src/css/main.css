@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+/*
+ * Tailwind CSS v4 Configuration
+ * Configure your theme using CSS variables and the @theme directive
+ */
+
+@theme {
+  /* Example: Add custom colors */
+  /* --color-primary: #0070f3; */
+  /* --color-secondary: #7928ca; */
+
+  /* Example: Add custom fonts */
+  /* --font-display: 'Your Font', serif; */
+
+  /* Example: Add custom spacing */
+  /* --spacing-huge: 5rem; */
+}
+
+/*
+ * Custom Component Styles
+ * Use @layer components for reusable component classes
+ */
+@layer components {
+  /* Example component */
+  /* .btn-primary {
+    @apply bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors;
+  } */
+}
+
+/*
+ * Custom Utility Styles
+ * Use @layer utilities for custom utility classes
+ */
+@layer utilities {
+  /* Example utility */
+  /* .text-balance {
+    text-wrap: balance;
+  } */
+}
+
+/*
+ * Regular Custom CSS
+ * Add your custom styles below (outside of @layer)
+ */
