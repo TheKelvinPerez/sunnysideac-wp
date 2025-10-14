@@ -1,12 +1,15 @@
 <?php get_header(); ?>
 
 <main class="min-h-screen bg-gray-50">
-    <!-- Hero Section -->
-    <?php get_template_part('template-parts/hero-section'); ?>
+    <!-- Mobile constraint wrapper - applies 20px padding on mobile only -->
+    <div class="px-5 lg:px-0 max-w-7xl mx-auto">
+        <section class="flex gap-10 flex-col">
+            <!-- Hero Section -->
+            <?php get_template_part('template-parts/hero-section'); ?>
 
-    <!-- Services Section -->
-    <section id="services" class="py-16">
-        <div class="container mx-auto px-4">
+            <!-- Services Section -->
+            <section id="services" class="py-16">
+                <div class="container mx-auto px-4">
             <div class="text-center mb-12">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Our Services</h2>
                 <p class="text-xl text-gray-600">Professional HVAC solutions for every need</p>
@@ -124,6 +127,9 @@
     </section>
     <?php endif; ?>
 
+        </section>
+    </div>
+
     <!-- CTA Section -->
     <section id="contact" class="py-20 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
         <div class="container mx-auto px-4 text-center">
@@ -137,30 +143,6 @@
         </div>
     </section>
 
-    <!-- Tailwind Test Section -->
-    <section class="py-16 bg-gray-100">
-        <div class="container mx-auto px-4">
-            <div class="bg-white rounded-lg shadow-lg p-8">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">🎨 Tailwind CSS + Vite Test</h2>
-                <p class="text-gray-600 mb-6">This section confirms that Tailwind CSS and Vite are working correctly.</p>
-
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                    <div class="bg-blue-500 text-white p-4 rounded-lg text-center font-semibold">Blue</div>
-                    <div class="bg-green-500 text-white p-4 rounded-lg text-center font-semibold">Green</div>
-                    <div class="bg-red-500 text-white p-4 rounded-lg text-center font-semibold">Red</div>
-                    <div class="bg-purple-500 text-white p-4 rounded-lg text-center font-semibold">Purple</div>
-                </div>
-
-                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 text-blue-900 mb-4">
-                    <strong>✓ Assets Loaded:</strong> If you see colors and styling, everything is working!
-                </div>
-
-                <div class="bg-green-50 border border-green-200 rounded-lg p-4 text-green-900">
-                    <strong>Console Check:</strong> Open your browser console - you should see "SunnySide AC theme loaded with Vite"
-                </div>
-            </div>
-        </div>
-    </section>
 </main>
 
 <?php get_footer(); ?>

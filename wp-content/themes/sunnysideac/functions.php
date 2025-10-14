@@ -21,6 +21,11 @@ if (!function_exists('dd')) {
 }
 
 /**
+ * Include global constants
+ */
+require_once get_template_directory() . '/inc/constants.php';
+
+/**
  * Include hero configuration
  */
 require_once get_template_directory() . '/inc/hero-config.php';
@@ -158,6 +163,85 @@ function sunnysideac_setup() {
     ));
 }
 add_action('after_setup_theme', 'sunnysideac_setup');
+
+/**
+ * Add SEO meta box to pages and posts
+ */
+function sunnysideac_add_seo_meta_box() {
+    add_meta_box(
+        'sunnysideac_seo_meta',
+        'SEO Settings',
+        'sunnysideac_seo_meta_box_callback',
+        array('page', 'post'),
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'sunnysideac_add_seo_meta_box');
+
+/**
+ * SEO meta box callback
+ */
+function sunnysideac_seo_meta_box_callback($post) {
+    wp_nonce_field('sunnysideac_save_seo_meta', 'sunnysideac_seo_nonce');
+
+    $description = get_post_meta($post->ID, '_seo_description', true);
+    $keywords = get_post_meta($post->ID, '_seo_keywords', true);
+    $canonical = get_post_meta($post->ID, '_seo_canonical', true);
+    ?>
+    <div style="margin: 10px 0;">
+        <label for="seo_description" style="display: block; margin-bottom: 5px; font-weight: bold;">Meta Description</label>
+        <textarea id="seo_description" name="seo_description" rows="3" style="width: 100%;"><?php echo esc_textarea($description); ?></textarea>
+        <p class="description">Recommended length: 150-160 characters</p>
+    </div>
+
+    <div style="margin: 10px 0;">
+        <label for="seo_keywords" style="display: block; margin-bottom: 5px; font-weight: bold;">Meta Keywords</label>
+        <input type="text" id="seo_keywords" name="seo_keywords" value="<?php echo esc_attr($keywords); ?>" style="width: 100%;">
+        <p class="description">Comma-separated keywords (e.g., hvac, air conditioning, repair)</p>
+    </div>
+
+    <div style="margin: 10px 0;">
+        <label for="seo_canonical" style="display: block; margin-bottom: 5px; font-weight: bold;">Canonical URL</label>
+        <input type="url" id="seo_canonical" name="seo_canonical" value="<?php echo esc_url($canonical); ?>" style="width: 100%;">
+        <p class="description">Leave blank to use the default permalink</p>
+    </div>
+    <?php
+}
+
+/**
+ * Save SEO meta box data
+ */
+function sunnysideac_save_seo_meta($post_id) {
+    // Check nonce
+    if (!isset($_POST['sunnysideac_seo_nonce']) || !wp_verify_nonce($_POST['sunnysideac_seo_nonce'], 'sunnysideac_save_seo_meta')) {
+        return;
+    }
+
+    // Check autosave
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+
+    // Check permissions
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    // Save meta fields
+    if (isset($_POST['seo_description'])) {
+        update_post_meta($post_id, '_seo_description', sanitize_textarea_field($_POST['seo_description']));
+    }
+
+    if (isset($_POST['seo_keywords'])) {
+        update_post_meta($post_id, '_seo_keywords', sanitize_text_field($_POST['seo_keywords']));
+    }
+
+    if (isset($_POST['seo_canonical'])) {
+        update_post_meta($post_id, '_seo_canonical', esc_url_raw($_POST['seo_canonical']));
+    }
+}
+add_action('save_post', 'sunnysideac_save_seo_meta');
 
 /**
  * Add type="module" to Vite scripts

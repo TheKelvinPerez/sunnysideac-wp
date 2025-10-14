@@ -3,11 +3,34 @@
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="WordPress <?php echo get_bloginfo('version'); ?>">
 
     <!-- Favicons -->
     <link rel="icon" type="image/svg+xml" href="<?php echo get_template_directory_uri(); ?>/assets/icons/favicon.svg">
     <link rel="icon" type="image/png" sizes="96x96" href="<?php echo get_template_directory_uri(); ?>/assets/icons/favicon-96x96.png">
     <link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/assets/icons/favicon.ico">
+
+    <?php
+    // SEO Meta Tags
+    $page_description = get_post_meta(get_the_ID(), '_seo_description', true);
+    $page_keywords = get_post_meta(get_the_ID(), '_seo_keywords', true);
+    $canonical_url = get_post_meta(get_the_ID(), '_seo_canonical', true);
+
+    // Use Yoast/RankMath if available, otherwise use custom fields
+    if (!defined('WPSEO_VERSION') && !defined('RANK_MATH_VERSION')) {
+        if ($page_description) {
+            echo '<meta name="description" content="' . esc_attr($page_description) . '">' . "\n";
+        }
+        if ($page_keywords) {
+            echo '<meta name="keywords" content="' . esc_attr($page_keywords) . '">' . "\n";
+        }
+        if ($canonical_url) {
+            echo '<link rel="canonical" href="' . esc_url($canonical_url) . '">' . "\n";
+        } elseif (is_singular()) {
+            echo '<link rel="canonical" href="' . esc_url(get_permalink()) . '">' . "\n";
+        }
+    }
+    ?>
 
     <?php
     // Inline critical CSS to prevent FOUC in development

@@ -9,8 +9,6 @@ $icons = sunnysideac_get_hero_icons();
 $images = sunnysideac_get_hero_images();
 $statistics = sunnysideac_get_hero_statistics();
 ?>
-
-  <?php dd($icons['best_refreshed']); ?>
 <section class="relative mx-auto w-full max-w-7xl overflow-hidden rounded-[20px] bg-white lg:bg-transparent">
   <!-- Mobile Background Image - Hidden on Desktop -->
   <div
