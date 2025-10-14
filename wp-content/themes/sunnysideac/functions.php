@@ -1,22 +1,186 @@
 <?php
 
 /**
- * Debug helper function - Dump and Die (with pretty output)
- *
- * @param mixed $var Variable to dump
+ * Load Composer autoloader
  */
-if (!function_exists('dd')) {
-    function dd($var) {
-        echo '<pre>';
+require_once get_template_directory() . '/vendor/autoload.php';
 
-        if (is_array($var) || is_object($var)) {
-            echo json_encode($var, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-        } else {
-            var_dump($var);
+/**
+ * Load environment variables
+ */
+$dotenv = Dotenv\Dotenv::createImmutable(get_template_directory());
+$dotenv->load();
+
+
+/**
+ * Initialize Whoops error handler for development
+ */
+if ($_ENV['APP_ENV'] === 'development') {
+    $whoops = new \Whoops\Run;
+    $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+    $whoops->register();
+}
+
+/**
+ * Helper function to format array/object data hierarchically
+ */
+if (!function_exists('dd_format_value')) {
+    function dd_format_value($value, $depth = 0, $maxDepth = 10) {
+        if ($depth > $maxDepth) {
+            return '... (max depth reached)';
         }
 
-        echo '</pre>';
-        // exit;
+        $indent = str_repeat('    ', $depth); // 4 spaces per level
+        $output = '';
+
+        if (is_array($value)) {
+            $count = count($value);
+            $output .= "Array ({$count})\n";
+            foreach ($value as $key => $val) {
+                $output .= $indent . "    [{$key}] => ";
+                if (is_array($val) || is_object($val)) {
+                    $output .= dd_format_value($val, $depth + 1, $maxDepth);
+                } else {
+                    $output .= dd_format_scalar($val) . "\n";
+                }
+            }
+        } elseif (is_object($value)) {
+            $className = get_class($value);
+            $output .= "Object ({$className})\n";
+            $properties = (array) $value;
+            foreach ($properties as $key => $val) {
+                $output .= $indent . "    {$key} => ";
+                if (is_array($val) || is_object($val)) {
+                    $output .= dd_format_value($val, $depth + 1, $maxDepth);
+                } else {
+                    $output .= dd_format_scalar($val) . "\n";
+                }
+            }
+        } else {
+            $output .= dd_format_scalar($value);
+        }
+
+        return $output;
+    }
+}
+
+/**
+ * Helper function to format scalar values
+ */
+if (!function_exists('dd_format_scalar')) {
+    function dd_format_scalar($value) {
+        if (is_null($value)) {
+            return 'NULL';
+        } elseif (is_bool($value)) {
+            return $value ? 'true' : 'false';
+        } elseif (is_string($value)) {
+            return '"' . $value . '"';
+        } else {
+            return (string) $value;
+        }
+    }
+}
+
+/**
+ * Debug helper function - Dump and Die (with pretty hierarchical output)
+ *
+ * @param mixed ...$vars Variables to dump
+ * @param bool $explode Whether to explode array items into separate tables (default: true)
+ */
+if (!function_exists('dd')) {
+    function dd(...$vars) {
+        // Check if last parameter is a boolean to control explode behavior
+        $explode = true;
+        if (count($vars) > 0 && is_bool(end($vars))) {
+            $explode = array_pop($vars);
+        }
+
+        // Use Whoops for beautiful output if in development
+        if ($_ENV['APP_ENV'] === 'development') {
+            $whoops = new \Whoops\Run;
+            $handler = new \Whoops\Handler\PrettyPageHandler;
+
+            // Add the variables to inspect with hierarchical formatting
+            foreach ($vars as $varIndex => $var) {
+                $varType = gettype($var);
+
+                // If it's an array and explode is true, add each item as a separate table
+                if ($explode && is_array($var) && !empty($var)) {
+                    // Check if this is a numeric array (list) vs associative array
+                    $isNumericArray = array_keys($var) === range(0, count($var) - 1);
+
+                    if ($isNumericArray) {
+                        // Explode numeric arrays into separate tables
+                        foreach ($var as $itemIndex => $item) {
+                            $itemType = gettype($item);
+
+                            if (is_array($item) || is_object($item)) {
+                                $displayValue = '<pre style="white-space: pre-wrap; font-family: monospace; line-height: 1.5;">' .
+                                               dd_format_value($item, 0, 5) .
+                                               '</pre>';
+                            } else {
+                                $displayValue = dd_format_scalar($item);
+                            }
+
+                            $handler->addDataTable("Variable #" . ($varIndex + 1) . " - Item [{$itemIndex}] ({$itemType})", [
+                                'Value' => $displayValue
+                            ]);
+                        }
+                    } else {
+                        // For associative arrays, show each key as a separate row
+                        $tableData = [];
+                        foreach ($var as $key => $value) {
+                            if (is_array($value) || is_object($value)) {
+                                $tableData[$key] = '<pre style="white-space: pre-wrap; font-family: monospace; line-height: 1.5;">' .
+                                                  dd_format_value($value, 0, 5) .
+                                                  '</pre>';
+                            } else {
+                                $tableData[$key] = dd_format_scalar($value);
+                            }
+                        }
+                        $handler->addDataTable("Variable #" . ($varIndex + 1) . " ({$varType}) - " . count($var) . " items", $tableData);
+                    }
+                } else {
+                    // Normal single-value display
+                    if (is_array($var) || is_object($var)) {
+                        $displayValue = '<pre style="white-space: pre-wrap; font-family: monospace; line-height: 1.5;">' .
+                                       dd_format_value($var, 0, 5) .
+                                       '</pre>';
+                    } else {
+                        $displayValue = dd_format_scalar($var);
+                    }
+
+                    $handler->addDataTable("Variable #" . ($varIndex + 1) . " ({$varType})", [
+                        'Value' => $displayValue
+                    ]);
+                }
+            }
+
+            $whoops->pushHandler($handler);
+            $whoops->handleException(
+                new \Exception('Debug Dump (dd) called - Inspect the variables in the data tables above')
+            );
+        } else {
+            // Fallback for production (though dd shouldn't be used in production)
+            echo '<pre style="background: #f5f5f5; padding: 15px; border: 1px solid #ddd; border-radius: 4px; font-family: monospace; line-height: 1.5;">';
+            echo '<strong>Debug Dump:</strong>' . PHP_EOL . PHP_EOL;
+
+            foreach ($vars as $index => $var) {
+                $varType = gettype($var);
+                echo "Variable #" . ($index + 1) . " ({$varType}):" . PHP_EOL;
+
+                if (is_array($var) || is_object($var)) {
+                    echo dd_format_value($var);
+                } else {
+                    echo dd_format_scalar($var);
+                }
+                echo PHP_EOL . PHP_EOL;
+            }
+
+            echo '</pre>';
+        }
+
+        exit(1);
     }
 }
 
@@ -34,20 +198,10 @@ require_once get_template_directory() . '/inc/hero-config.php';
  * Get Vite dev server URL from environment or use defaults
  */
 function sunnysideac_get_vite_dev_server_url() {
-    // Try to load .env file if it exists
-    $env_file = get_template_directory() . '/.env';
-    $protocol = 'http';
-    $host = 'localhost';
-    $port = '3000';
-
-    if (file_exists($env_file)) {
-        $env_vars = parse_ini_file($env_file);
-        if ($env_vars) {
-            $protocol = $env_vars['VITE_DEV_SERVER_PROTOCOL'] ?? $protocol;
-            $host = $env_vars['VITE_DEV_SERVER_HOST'] ?? $host;
-            $port = $env_vars['VITE_DEV_SERVER_PORT'] ?? $port;
-        }
-    }
+    // Get values from environment variables loaded by phpdotenv
+    $protocol = $_ENV['VITE_DEV_SERVER_PROTOCOL'] ?? 'http';
+    $host = $_ENV['VITE_DEV_SERVER_HOST'] ?? 'localhost';
+    $port = $_ENV['VITE_DEV_SERVER_PORT'] ?? '3000';
 
     // Allow filtering via WordPress hooks for more flexibility
     $protocol = apply_filters('sunnysideac_vite_protocol', $protocol);
@@ -165,85 +319,6 @@ function sunnysideac_setup() {
 add_action('after_setup_theme', 'sunnysideac_setup');
 
 /**
- * Add SEO meta box to pages and posts
- */
-function sunnysideac_add_seo_meta_box() {
-    add_meta_box(
-        'sunnysideac_seo_meta',
-        'SEO Settings',
-        'sunnysideac_seo_meta_box_callback',
-        array('page', 'post'),
-        'normal',
-        'high'
-    );
-}
-add_action('add_meta_boxes', 'sunnysideac_add_seo_meta_box');
-
-/**
- * SEO meta box callback
- */
-function sunnysideac_seo_meta_box_callback($post) {
-    wp_nonce_field('sunnysideac_save_seo_meta', 'sunnysideac_seo_nonce');
-
-    $description = get_post_meta($post->ID, '_seo_description', true);
-    $keywords = get_post_meta($post->ID, '_seo_keywords', true);
-    $canonical = get_post_meta($post->ID, '_seo_canonical', true);
-    ?>
-    <div style="margin: 10px 0;">
-        <label for="seo_description" style="display: block; margin-bottom: 5px; font-weight: bold;">Meta Description</label>
-        <textarea id="seo_description" name="seo_description" rows="3" style="width: 100%;"><?php echo esc_textarea($description); ?></textarea>
-        <p class="description">Recommended length: 150-160 characters</p>
-    </div>
-
-    <div style="margin: 10px 0;">
-        <label for="seo_keywords" style="display: block; margin-bottom: 5px; font-weight: bold;">Meta Keywords</label>
-        <input type="text" id="seo_keywords" name="seo_keywords" value="<?php echo esc_attr($keywords); ?>" style="width: 100%;">
-        <p class="description">Comma-separated keywords (e.g., hvac, air conditioning, repair)</p>
-    </div>
-
-    <div style="margin: 10px 0;">
-        <label for="seo_canonical" style="display: block; margin-bottom: 5px; font-weight: bold;">Canonical URL</label>
-        <input type="url" id="seo_canonical" name="seo_canonical" value="<?php echo esc_url($canonical); ?>" style="width: 100%;">
-        <p class="description">Leave blank to use the default permalink</p>
-    </div>
-    <?php
-}
-
-/**
- * Save SEO meta box data
- */
-function sunnysideac_save_seo_meta($post_id) {
-    // Check nonce
-    if (!isset($_POST['sunnysideac_seo_nonce']) || !wp_verify_nonce($_POST['sunnysideac_seo_nonce'], 'sunnysideac_save_seo_meta')) {
-        return;
-    }
-
-    // Check autosave
-    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-        return;
-    }
-
-    // Check permissions
-    if (!current_user_can('edit_post', $post_id)) {
-        return;
-    }
-
-    // Save meta fields
-    if (isset($_POST['seo_description'])) {
-        update_post_meta($post_id, '_seo_description', sanitize_textarea_field($_POST['seo_description']));
-    }
-
-    if (isset($_POST['seo_keywords'])) {
-        update_post_meta($post_id, '_seo_keywords', sanitize_text_field($_POST['seo_keywords']));
-    }
-
-    if (isset($_POST['seo_canonical'])) {
-        update_post_meta($post_id, '_seo_canonical', esc_url_raw($_POST['seo_canonical']));
-    }
-}
-add_action('save_post', 'sunnysideac_save_seo_meta');
-
-/**
  * Add type="module" to Vite scripts
  */
 function sunnysideac_add_type_attribute($tag, $handle) {
@@ -255,3 +330,4 @@ function sunnysideac_add_type_attribute($tag, $handle) {
     return $tag;
 }
 add_filter('script_loader_tag', 'sunnysideac_add_type_attribute', 10, 3);
+

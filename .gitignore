@@ -52,3 +52,4 @@ Thumbs.db
 
 # Track .gitignore itself
 !.gitignore
+wp-content/plugins

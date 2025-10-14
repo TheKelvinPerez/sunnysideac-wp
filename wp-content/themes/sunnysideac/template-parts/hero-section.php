@@ -9,6 +9,15 @@ $icons = sunnysideac_get_hero_icons();
 $images = sunnysideac_get_hero_images();
 $statistics = sunnysideac_get_hero_statistics();
 ?>
+
+<?php
+// Get ACF review images from homepage
+$home_page_id = get_option('page_on_front');
+$review_images = get_field('review_images', $home_page_id);
+dd($_SERVER, false);
+?>
+
+
 <section class="relative mx-auto w-full max-w-7xl overflow-hidden rounded-[20px] bg-white lg:bg-transparent">
   <!-- Mobile Background Image - Hidden on Desktop -->
   <div
@@ -122,15 +131,22 @@ $statistics = sunnysideac_get_hero_statistics();
           <div class="flex items-center justify-between gap-2 sm:gap-4 lg:gap-6">
             <!-- Review Photos -->
             <div class="flex w-[15vw] items-center gap-2">
-              <?php foreach ($images['review_photos'] as $index => $photo_url): ?>
-                <img
-                  src="<?php echo esc_url($photo_url); ?>"
-                  alt="Customer review photo <?php echo ($index + 1); ?>"
-                  class="<?php echo $index === 0 ? 'h-10 w-10' : '-ml-8 h-10 w-10'; ?> rounded-full object-cover sm:h-12 sm:w-12"
-                  loading="lazy"
-                  decoding="async"
-                />
-              <?php endforeach; ?>
+              <?php if ($review_images && is_array($review_images)) : ?>
+                <?php foreach ($review_images as $index => $row) : ?>
+                  <?php
+                    $image = $row['review_picture'];
+                    if ($image) :
+                  ?>
+                    <img
+                      src="<?php echo esc_url($image['url']); ?>"
+                      alt="<?php echo esc_attr($image['alt'] ?: 'Customer review photo ' . ($index + 1)); ?>"
+                      class="<?php echo $index === 0 ? 'h-10 w-10' : '-ml-8 h-10 w-10'; ?> rounded-full object-cover sm:h-12 sm:w-12"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  <?php endif; ?>
+                <?php endforeach; ?>
+              <?php endif; ?>
             </div>
 
             <!-- Google Rating Section -->
@@ -294,15 +310,22 @@ $statistics = sunnysideac_get_hero_statistics();
           <div class="flex items-center justify-between gap-2 sm:gap-4">
             <!-- Review Photos -->
             <div class="flex w-[40vw] items-center justify-center gap-2">
-              <?php foreach ($images['review_photos'] as $index => $photo_url): ?>
-                <img
-                  src="<?php echo esc_url($photo_url); ?>"
-                  alt="Customer review photo <?php echo ($index + 1); ?>"
-                  class="-ml-8 h-10 w-10 rounded-full object-cover sm:h-12 sm:w-12 <?php echo $index === 0 ? 'ml-0' : ''; ?>"
-                  loading="lazy"
-                  decoding="async"
-                />
-              <?php endforeach; ?>
+              <?php if ($review_images && is_array($review_images)) : ?>
+                <?php foreach ($review_images as $index => $row) : ?>
+                  <?php
+                    $image = $row['review_picture'];
+                    if ($image) :
+                  ?>
+                    <img
+                      src="<?php echo esc_url($image['url']); ?>"
+                      alt="<?php echo esc_attr($image['alt'] ?: 'Customer review photo ' . ($index + 1)); ?>"
+                      class="-ml-8 h-10 w-10 rounded-full object-cover sm:h-12 sm:w-12 <?php echo $index === 0 ? 'ml-0' : ''; ?>"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  <?php endif; ?>
+                <?php endforeach; ?>
+              <?php endif; ?>
             </div>
 
             <!-- Google Rating Section -->
