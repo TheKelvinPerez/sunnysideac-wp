@@ -2,26 +2,7 @@
 
 <main class="min-h-screen bg-gray-50">
     <!-- Hero Section -->
-    <section class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
-        <div class="container mx-auto px-4">
-            <div class="max-w-3xl">
-                <h1 class="text-5xl font-bold mb-6">
-                    Stay Cool with <?php bloginfo('name'); ?>
-                </h1>
-                <p class="text-xl text-blue-100 mb-8">
-                    Professional HVAC services available 24/7. Expert installation, maintenance, and emergency repairs for residential and commercial properties.
-                </p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="#services" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-all transform hover:scale-105">
-                        Our Services
-                    </a>
-                    <a href="#contact" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-all">
-                        Get a Free Quote
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
+    <?php get_template_part('template-parts/hero-section'); ?>
 
     <!-- Services Section -->
     <section id="services" class="py-16">

@@ -1,6 +1,31 @@
 <?php
 
 /**
+ * Debug helper function - Dump and Die (with pretty output)
+ *
+ * @param mixed $var Variable to dump
+ */
+if (!function_exists('dd')) {
+    function dd($var) {
+        echo '<pre>';
+
+        if (is_array($var) || is_object($var)) {
+            echo json_encode($var, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        } else {
+            var_dump($var);
+        }
+
+        echo '</pre>';
+        // exit;
+    }
+}
+
+/**
+ * Include hero configuration
+ */
+require_once get_template_directory() . '/inc/hero-config.php';
+
+/**
  * Get Vite dev server URL from environment or use defaults
  */
 function sunnysideac_get_vite_dev_server_url() {
@@ -137,7 +162,7 @@ add_action('after_setup_theme', 'sunnysideac_setup');
 /**
  * Add type="module" to Vite scripts
  */
-function sunnysideac_add_type_attribute($tag, $handle, $src) {
+function sunnysideac_add_type_attribute($tag, $handle) {
     if ('sunnysideac-vite-client' === $handle || 'sunnysideac-main' === $handle) {
         // Remove the type="text/javascript" attribute and replace with type="module"
         $tag = str_replace("type='text/javascript'", "type='module'", $tag);
