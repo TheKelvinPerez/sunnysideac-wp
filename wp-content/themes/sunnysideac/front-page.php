@@ -13,6 +13,9 @@ get_header(); ?>
 			<!-- Hero Section -->
 			<?php get_template_part( 'template-parts/hero-section' ); ?>
 
+			<!-- Logo Marquee Section -->
+			<?php get_template_part( 'template-parts/logo-marquee' ); ?>
+
 			<!-- Services Section -->
 			<section id="services" class="py-16">
 				<div class="container mx-auto px-4">
