@@ -10,7 +10,7 @@ $features = [
         'id' => 1,
         'title' => 'Customer Centric Approach',
         'description' => 'We put you first, tailoring every solution to your needs and budget — because your comfort is our priority.',
-        'icon' => sunnysideac_asset_url('assets/images/why-choose-us-heart.svg'),
+        'icon' => sunnysideac_asset_url('assets/images/home-page/why-choose-us-heart.svg'),
         'icon_alt' => 'Customer centric approach with heart icon',
         'bg_color' => 'bg-white',
     ],
@@ -18,7 +18,7 @@ $features = [
         'id' => 2,
         'title' => '24/7 Emergency Service',
         'description' => 'No matter the time, our team is ready to restore your comfort when you need it most.',
-        'icon' => sunnysideac_asset_url('assets/images/why-choose-us-emergency.svg'),
+        'icon' => sunnysideac_asset_url('assets/images/home-page/why-choose-us-emergency.svg'),
         'icon_alt' => '24/7 emergency service with clock icon',
         'bg_color' => 'bg-amber-50',
     ],
@@ -26,7 +26,7 @@ $features = [
         'id' => 3,
         'title' => 'Expert Technicians',
         'description' => 'Our certified HVAC professionals bring skill, precision, and care to every job — big or small.',
-        'icon' => sunnysideac_asset_url('assets/images/why-choose-us-wrench.svg'),
+        'icon' => sunnysideac_asset_url('assets/images/home-page/why-choose-us-wrench.svg'),
         'icon_alt' => 'Expert technicians with wrench icon',
         'bg_color' => 'bg-white',
     ],
@@ -34,8 +34,8 @@ $features = [
 
 // Images data
 $images = [
-    'main' => sunnysideac_asset_url('assets/images/why-choose-us-main-image.png'),
-    'icon' => sunnysideac_asset_url('assets/images/why-choose-us-icon.png'),
+    'main' => sunnysideac_asset_url('assets/images/home-page/why-choose-us-main-image.png'),
+    'icon' => sunnysideac_asset_url('assets/images/home-page/why-choose-us-icon.png'),
 ];
 ?>
 
