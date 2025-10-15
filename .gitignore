@@ -53,3 +53,4 @@ Thumbs.db
 # Track .gitignore itself
 !.gitignore
 wp-content/plugins
+wp-content/themes/sunnysideac/docs

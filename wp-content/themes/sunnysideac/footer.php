@@ -1,4 +1,3 @@
-
 <footer class="bg-gray-900 text-white mt-16">
 	<div class="container mx-auto px-4 py-12">
 		<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
