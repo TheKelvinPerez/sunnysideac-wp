@@ -14,7 +14,7 @@ $tel_href      = SUNNYSIDE_TEL_HREF;
 $phone_display = SUNNYSIDE_PHONE_DISPLAY;
 ?>
 
-<section class="relative mx-auto w-full max-w-7xl overflow-hidden rounded-[20px] bg-white lg:bg-transparent">
+<section class="relative w-full overflow-hidden rounded-[20px] bg-white lg:bg-transparent">
 	<!-- Mobile Background Image - Hidden on Desktop -->
 	<div class="absolute inset-0 rounded-[20px] bg-cover bg-center bg-no-repeat lg:hidden"
 	style="background-image: url('<?php echo esc_url( $images['mobile_hero'] ); ?>');">

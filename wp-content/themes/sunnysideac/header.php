@@ -70,65 +70,447 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
-<header class="bg-white shadow-lg">
-	<div class="container mx-auto px-4 py-6">
-		<div class="flex items-center justify-between">
-			<div class="flex items-center gap-4">
-				<?php if ( has_custom_logo() ) : ?>
-					<?php the_custom_logo(); ?>
-				<?php else : ?>
-					<h1 class="text-2xl font-bold text-blue-600">
-						<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="hover:text-blue-700 transition-colors">
-							<?php bloginfo( 'name' ); ?>
-						</a>
-					</h1>
-				<?php endif; ?>
+<!-- Global content wrapper with max-width -->
+<div class="mx-auto w-full max-w-7xl px-4">
+
+<?php
+// Navigation configuration
+$navigation_items = [
+	['name' => 'Home', 'hasDropdown' => false, 'href' => home_url('/')],
+	['name' => 'About', 'hasDropdown' => false, 'href' => home_url('/about')],
+	['name' => 'Services', 'hasDropdown' => true, 'href' => home_url('/services')],
+	['name' => 'Projects', 'hasDropdown' => false, 'href' => home_url('/projects')],
+	['name' => 'Blog', 'hasDropdown' => false, 'href' => home_url('/blog')],
+	['name' => 'Contact Us', 'hasDropdown' => false, 'href' => home_url('/contact')],
+];
+
+$service_items = [
+	[
+		'name' => 'Air Conditioning Installation',
+		'href' => home_url('/services/air-conditioning-installation'),
+		'iconPath' => 'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z',
+	],
+	[
+		'name' => 'Indoor Air Quality Solutions',
+		'href' => home_url('/services/indoor-air-quality'),
+		'iconPath' => 'M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z',
+	],
+	[
+		'name' => 'HVAC Maintenance Plans',
+		'href' => home_url('/services/hvac-maintenance'),
+		'iconPath' => 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z',
+	],
+	[
+		'name' => 'Emergency HVAC Services',
+		'href' => home_url('/services/emergency-hvac'),
+		'iconPath' => 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z',
+	],
+	[
+		'name' => 'Commercial HVAC Services',
+		'href' => home_url('/services/commercial-hvac'),
+		'iconPath' => 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4',
+	],
+];
+
+// Asset paths
+$logo_path = get_template_directory_uri() . '/assets/images/images/logos/sunny-side-logo.png';
+$chevron_down_icon = get_template_directory_uri() . '/assets/images/images/logos/navigation-chevron-down.svg';
+$call_us_icon = get_template_directory_uri() . '/assets/images/images/logos/navigation-call-us-now-icon.svg';
+$mail_icon = get_template_directory_uri() . '/assets/images/images/logos/navigation-mail-icon.svg';
+$phone_icon = get_template_directory_uri() . '/assets/images/images/logos/navigation-phone-icon.png';
+?>
+
+<div class="my-6 flex w-full justify-center lg:mt-8" id="main-navigation" data-tel-href="<?php echo esc_attr(SUNNYSIDE_TEL_HREF); ?>">
+	<header class="w-full overflow-visible rounded-[20px] bg-[#ffead5]" role="banner">
+
+		<!-- Desktop Top contact bar - hidden on mobile -->
+		<div class="hidden w-full rounded-t-[20px] border-b-2 border-white bg-[#ffead5] py-2 lg:block">
+			<div class="flex items-center justify-between px-4">
+				<!-- Contact info -->
+				<div class="flex items-center gap-6 text-sm">
+					<a
+						href="<?php echo esc_attr(SUNNYSIDE_MAILTO_HREF); ?>"
+						class="flex items-center gap-2 text-gray-700 transition-colors duration-200 hover:text-[#fb9939]"
+						aria-label="Email us for support at <?php echo esc_attr(SUNNYSIDE_EMAIL_ADDRESS); ?>"
+					>
+						<img src="<?php echo esc_url($mail_icon); ?>" alt="" class="h-4 w-4" loading="lazy" decoding="async" />
+						<span><?php echo esc_html(SUNNYSIDE_EMAIL_ADDRESS); ?></span>
+					</a>
+					<a
+						href="<?php echo esc_attr(SUNNYSIDE_TEL_HREF); ?>"
+						class="flex items-center gap-2 text-gray-700 transition-colors duration-200 hover:text-[#fb9939]"
+						aria-label="Call <?php echo esc_attr(SUNNYSIDE_PHONE_DISPLAY); ?> for AC services"
+					>
+						<img src="<?php echo esc_url($phone_icon); ?>" alt="" class="h-4 w-4" loading="lazy" decoding="async" />
+						<span><?php echo esc_html(SUNNYSIDE_PHONE_DISPLAY); ?></span>
+					</a>
+				</div>
+
+				<!-- Social icons -->
+				<?php get_template_part('template-parts/social-icons', null, ['size' => 'md']); ?>
+			</div>
+		</div>
+
+		<!-- Main navigation -->
+		<nav class="w-full overflow-visible rounded-[20px] bg-[#ffead5] py-4" role="navigation" aria-label="Main navigation">
+
+			<!-- Mobile Layout -->
+			<div class="flex items-center justify-between px-4 lg:hidden">
+				<!-- Hamburger Menu -->
+				<button
+					id="mobile-menu-toggle"
+					class="flex flex-col gap-2 p-2 transition-opacity hover:opacity-80"
+					aria-label="Toggle mobile menu"
+					aria-expanded="false"
+				>
+					<div class="h-1 w-10 rounded-full bg-gradient-to-r from-[#fb9939] to-[#e5462f]"></div>
+					<div class="h-1 w-10 rounded-full bg-gradient-to-r from-[#fb9939] to-[#e5462f]"></div>
+					<div class="h-1 w-10 rounded-full bg-gradient-to-r from-[#fb9939] to-[#e5462f]"></div>
+				</button>
+
+				<!-- Centered Logo -->
+				<a
+					href="<?php echo esc_url(home_url('/')); ?>"
+					class="flex items-center gap-2 transition-opacity hover:opacity-80"
+					aria-label="SunnySide 24/7 AC - Go to homepage"
+				>
+					<img
+						class="h-12 w-20 object-contain"
+						alt="SunnySide 24/7 AC company logo"
+						src="<?php echo esc_url($logo_path); ?>"
+						loading="lazy"
+						decoding="async"
+					/>
+					<div class="flex flex-col text-center">
+						<div class="bg-[linear-gradient(90deg,rgba(255,193,59,1)_0%,rgba(229,70,47,1)_100%)] bg-clip-text [font-family:'Inter-Bold',Helvetica] text-lg leading-tight font-bold [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [text-fill-color:transparent]">
+							SunnySide
+						</div>
+						<div class="bg-[linear-gradient(90deg,rgba(229,70,47,1)_0%,rgba(255,193,59,1)_100%)] bg-clip-text [font-family:'Inter-Bold',Helvetica] text-xl leading-tight font-bold [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [text-fill-color:transparent]">
+							24/7 AC
+						</div>
+					</div>
+				</a>
+
+				<!-- Phone CTA -->
+				<button
+					id="mobile-call-btn"
+					class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-r from-[#fb9939] to-[#e5462f] shadow-md transition-transform hover:scale-105"
+					aria-label="Call us now"
+				>
+					<img src="<?php echo esc_url($call_us_icon); ?>" alt="" class="h-6 w-6" loading="lazy" decoding="async" />
+				</button>
 			</div>
 
-			<nav class="hidden md:flex items-center gap-6">
-				<?php
-				wp_nav_menu(
-					array(
-						'theme_location' => 'primary',
-						'container'      => false,
-						'menu_class'     => 'flex gap-6',
-						'fallback_cb'    => function () {
-							echo '<div class="flex gap-6">';
-							echo '<a href="' . esc_url( home_url( '/' ) ) . '" class="text-gray-700 hover:text-blue-600 transition-colors">Home</a>';
-							echo '<a href="' . esc_url( home_url( '/about' ) ) . '" class="text-gray-700 hover:text-blue-600 transition-colors">About</a>';
-							echo '<a href="' . esc_url( home_url( '/contact' ) ) . '" class="text-gray-700 hover:text-blue-600 transition-colors">Contact</a>';
-							echo '</div>';
-						},
-					)
-				);
-				?>
-			</nav>
+			<!-- Desktop Layout -->
+			<div class="hidden items-center justify-between px-4 lg:flex">
+				<!-- Logo section -->
+				<a
+					href="<?php echo esc_url(home_url('/')); ?>"
+					class="flex items-center gap-3 transition-opacity hover:opacity-80"
+					aria-label="SunnySide 24/7 AC - Go to homepage"
+				>
+					<img
+						class="h-auto w-full"
+						alt="SunnySide 24/7 AC company logo"
+						src="<?php echo esc_url($logo_path); ?>"
+						loading="lazy"
+						decoding="async"
+					/>
+					<div class="flex flex-col">
+						<div class="bg-[linear-gradient(90deg,rgba(255,193,59,1)_0%,rgba(229,70,47,1)_100%)] bg-clip-text [font-family:'Inter-Bold',Helvetica] text-2xl leading-tight font-bold [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [text-fill-color:transparent]">
+							SunnySide
+						</div>
+						<div class="bg-[linear-gradient(90deg,rgba(229,70,47,1)_0%,rgba(255,193,59,1)_100%)] bg-clip-text [font-family:'Inter-Bold',Helvetica] text-3xl leading-tight font-bold [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [text-fill-color:transparent]">
+							24/7 AC
+						</div>
+					</div>
+				</a>
 
-			<button class="md:hidden text-gray-700 hover:text-blue-600" id="mobile-menu-button">
-				<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-				</svg>
-			</button>
-		</div>
+				<!-- Navigation menu -->
+				<ul class="flex items-center gap-2 overflow-visible" role="menubar">
+					<?php foreach ($navigation_items as $item) : ?>
+						<li role="none">
+							<?php if ($item['name'] === 'Services') : ?>
+								<div class="relative" id="services-dropdown-container">
+									<div
+										class="inline-flex cursor-pointer items-center gap-1 rounded-full px-6 py-3 transition-colors duration-200 hover:bg-[#ffc549] focus:ring-2 focus:ring-[#ffc549] focus:ring-offset-2 focus:outline-none bg-[#fde0a0] nav-item"
+										data-item="<?php echo esc_attr($item['name']); ?>"
+										role="menuitem"
+										aria-haspopup="true"
+										aria-expanded="false"
+										aria-label="Services menu"
+									>
+										<a
+											href="<?php echo esc_url($item['href']); ?>"
+											class="[font-family:'Inter-Medium',Helvetica] text-lg font-medium whitespace-nowrap text-black hover:text-black focus:text-black"
+										>
+											<?php echo esc_html($item['name']); ?>
+										</a>
+										<button
+											class="ml-1 border-none bg-transparent p-0 focus:outline-none services-dropdown-btn"
+											aria-label="Toggle services dropdown"
+										>
+											<img
+												src="<?php echo esc_url($chevron_down_icon); ?>"
+												alt=""
+												class="h-4 w-4 text-current transition-transform duration-200 chevron-icon"
+												role="presentation"
+												loading="lazy"
+												decoding="async"
+											/>
+										</button>
+									</div>
 
-		<!-- Mobile Menu -->
-		<div id="mobile-menu" class="hidden md:hidden mt-4 pb-4 border-t border-gray-200 pt-4">
-			<?php
-			wp_nav_menu(
-				array(
-					'theme_location' => 'primary',
-					'container'      => false,
-					'menu_class'     => 'flex flex-col gap-3',
-					'fallback_cb'    => function () {
-						echo '<div class="flex flex-col gap-3">';
-						echo '<a href="' . esc_url( home_url( '/' ) ) . '" class="text-gray-700 hover:text-blue-600 transition-colors">Home</a>';
-						echo '<a href="' . esc_url( home_url( '/about' ) ) . '" class="text-gray-700 hover:text-blue-600 transition-colors">About</a>';
-						echo '<a href="' . esc_url( home_url( '/contact' ) ) . '" class="text-gray-700 hover:text-blue-600 transition-colors">Contact</a>';
-						echo '</div>';
-					},
-				)
-			);
-			?>
-		</div>
-	</div>
-</header>
+									<!-- Dropdown Menu -->
+									<div class="absolute top-full left-0 z-[9999] mt-[10px] w-[320px] rounded-[20px] border-2 border-[#e6d4b8] bg-white shadow-[0_8px_25px_rgba(0,0,0,0.15)] hidden services-dropdown">
+										<div class="py-4">
+											<?php foreach ($service_items as $service_index => $service) : ?>
+												<div>
+													<a
+														href="<?php echo esc_url($service['href']); ?>"
+														class="mx-2 flex cursor-pointer items-center gap-3 rounded-[20px] px-6 py-3 transition-colors duration-200 hover:bg-[#ffc549] focus:bg-[#ffc549] focus:outline-none"
+														aria-label="Navigate to <?php echo esc_attr($service['name']); ?>"
+													>
+														<div class="h-5 w-5 flex-shrink-0">
+															<svg class="h-5 w-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+																<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="<?php echo esc_attr($service['iconPath']); ?>" />
+															</svg>
+														</div>
+														<span class="[font-family:'Inter-Medium',Helvetica] text-base font-medium text-black">
+															<?php echo esc_html($service['name']); ?>
+														</span>
+													</a>
+													<?php if ($service_index < count($service_items) - 1) : ?>
+														<div class="mx-6 my-2 border-b border-[#d4af7a]"></div>
+													<?php endif; ?>
+												</div>
+											<?php endforeach; ?>
+										</div>
+									</div>
+								</div>
+							<?php else : ?>
+								<button
+									class="cursor-pointer rounded-full px-6 py-3 transition-colors duration-200 hover:bg-[#ffc549] focus:ring-2 focus:ring-[#ffc549] focus:ring-offset-2 focus:outline-none bg-[#fde0a0] nav-item"
+									data-item="<?php echo esc_attr($item['name']); ?>"
+									data-href="<?php echo esc_url($item['href']); ?>"
+									role="menuitem"
+									aria-label="Navigate to <?php echo esc_attr($item['name']); ?>"
+								>
+									<span class="[font-family:'Inter-Medium',Helvetica] text-lg font-medium whitespace-nowrap text-black">
+										<?php echo esc_html($item['name']); ?>
+									</span>
+								</button>
+							<?php endif; ?>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+
+				<!-- Call us button -->
+				<button
+					id="desktop-call-btn"
+					class="inline-flex cursor-pointer items-center gap-2 rounded-full bg-[linear-gradient(90deg,rgba(251,176,57,1)_0%,rgba(229,70,47,1)_100%)] px-6 py-3 transition-transform duration-200 hover:scale-105 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:outline-none"
+					aria-label="Call us now for AC services"
+				>
+					<img
+						src="<?php echo esc_url($call_us_icon); ?>"
+						alt=""
+						class="h-5 w-5"
+						role="presentation"
+						loading="lazy"
+						decoding="async"
+					/>
+					<span class="[font-family:'Inter-Medium',Helvetica] text-lg font-medium whitespace-nowrap text-white">
+						Call Us Now
+					</span>
+				</button>
+			</div>
+
+			<!-- Mobile Menu Dropdown -->
+			<div id="mobile-menu" class="fixed inset-0 z-[9999] bg-gradient-to-b from-[#fb9939]/40 to-black/80 backdrop-blur-md lg:hidden hidden">
+				<div class="absolute inset-x-0 top-0 h-[100dvh] w-full p-5">
+					<div class="mx-auto h-full w-full max-w-sm overflow-hidden overscroll-contain rounded-[20px] bg-white shadow-xl" id="mobile-menu-content">
+						<div class="flex h-full flex-col">
+							<!-- Header with close button -->
+							<div class="flex items-center justify-between p-4">
+								<button
+									id="mobile-menu-close"
+									class="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-gray-300 hover:bg-gray-100"
+									aria-label="Close mobile menu"
+								>
+									✕
+								</button>
+								<a
+									href="<?php echo esc_url(home_url('/')); ?>"
+									class="flex items-center gap-2 transition-opacity hover:opacity-80"
+									aria-label="SunnySide 24/7 AC - Go to homepage"
+								>
+									<img
+										class="h-11 object-contain"
+										alt="SunnySide 24/7 AC company logo"
+										src="<?php echo esc_url($logo_path); ?>"
+										loading="lazy"
+										decoding="async"
+									/>
+									<div class="flex flex-col">
+										<div class="bg-[linear-gradient(90deg,rgba(255,193,59,1)_0%,rgba(229,70,47,1)_100%)] bg-clip-text [font-family:'Inter-Bold',Helvetica] text-sm leading-tight font-bold [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [text-fill-color:transparent]">
+											SunnySide
+										</div>
+										<div class="bg-[linear-gradient(90deg,rgba(229,70,47,1)_0%,rgba(255,193,59,1)_100%)] bg-clip-text [font-family:'Inter-Bold',Helvetica] text-sm leading-tight font-bold [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [text-fill-color:transparent]">
+											24/7 AC
+										</div>
+									</div>
+								</a>
+								<button
+									id="mobile-call-btn-header"
+									class="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-r from-[#fb9939] to-[#e5462f] transition-transform duration-200 hover:scale-105"
+									aria-label="Call us now"
+								>
+									<img src="<?php echo esc_url($call_us_icon); ?>" alt="" class="h-4 w-4" loading="lazy" decoding="async" />
+								</button>
+							</div>
+
+							<!-- Content -->
+							<div class="flex-1 overflow-y-auto overscroll-contain px-4 pt-5 pb-4">
+								<div class="mb-4 text-center text-sm text-gray-600">
+									The <span class="font-bold text-[#fb9939]">Best</span> At Keeping You <span class="font-bold text-[#e5462f]">Refreshed!</span>
+								</div>
+
+								<!-- Action Buttons -->
+								<div class="mb-6 space-y-3">
+									<div class="relative">
+										<button
+											id="location-select-btn"
+											class="flex w-full items-center justify-between rounded-lg bg-gradient-to-r from-[#fb9939] to-[#e5462f] px-4 py-3 text-white"
+											aria-label="Select a location"
+										>
+											<div class="flex items-center gap-2">
+												<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+												</svg>
+												<span class="font-medium" id="selected-location-text">SELECT A LOCATION</span>
+											</div>
+											<svg class="h-4 w-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+											</svg>
+										</button>
+										<select
+											id="location-select"
+											class="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+											aria-hidden="true"
+											tabindex="-1"
+										>
+											<option value="">SELECT A LOCATION</option>
+											<?php foreach (SUNNYSIDE_SERVICE_AREAS as $area) : ?>
+												<option value="<?php echo esc_attr($area); ?>"><?php echo esc_html($area); ?></option>
+											<?php endforeach; ?>
+										</select>
+									</div>
+
+									<a
+										href="<?php echo esc_attr(SUNNYSIDE_TEL_HREF); ?>"
+										class="flex w-full items-center justify-between rounded-lg bg-gradient-to-r from-[#e5462f] to-[#fb9939] px-4 py-3 text-white"
+										aria-label="Call to schedule service - <?php echo esc_attr(SUNNYSIDE_PHONE_DISPLAY); ?>"
+									>
+										<div class="flex items-center gap-2">
+											<span class="text-sm">
+												SunnySide 24/7 AC Is Open And Available Schedule A Service Now
+											</span>
+										</div>
+										<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+										</svg>
+									</a>
+								</div>
+
+								<!-- Services Section -->
+								<div class="mb-6">
+									<h3 class="mb-3 border-b border-gray-200 pb-2 text-lg font-medium text-gray-800">
+										Services
+									</h3>
+									<div class="space-y-1">
+										<?php foreach ($service_items as $service) : ?>
+											<a
+												href="<?php echo esc_url($service['href']); ?>"
+												class="block w-full py-2 text-left text-gray-700 transition-colors duration-200 hover:text-[#fb9939] mobile-service-link"
+											>
+												<?php echo esc_html($service['name']); ?>
+											</a>
+										<?php endforeach; ?>
+									</div>
+								</div>
+
+								<!-- Navigation Links -->
+								<div class="mb-6 space-y-1">
+									<?php foreach ($navigation_items as $item) : ?>
+										<?php if ($item['name'] !== 'Home' && $item['name'] !== 'Services') : ?>
+											<button
+												class="w-full border-b border-gray-200 py-2 text-left text-gray-700 hover:text-[#fb9939] mobile-nav-link"
+												data-href="<?php echo esc_url($item['href']); ?>"
+											>
+												<?php echo esc_html($item['name']); ?>
+											</button>
+										<?php endif; ?>
+									<?php endforeach; ?>
+								</div>
+
+								<!-- Contact Info -->
+								<div class="space-y-4">
+									<div class="flex items-start gap-3">
+										<div class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#ffc549]">
+											<img src="<?php echo esc_url($mail_icon); ?>" alt="" class="h-4 w-4" loading="lazy" decoding="async" />
+										</div>
+										<div>
+											<div class="text-sm font-medium text-gray-800">Email</div>
+											<a
+												href="<?php echo esc_attr(SUNNYSIDE_MAILTO_HREF); ?>"
+												class="text-sm text-gray-600 transition-colors duration-200 hover:text-[#fb9939]"
+												aria-label="Email us at <?php echo esc_attr(SUNNYSIDE_EMAIL_ADDRESS); ?>"
+											>
+												<?php echo esc_html(SUNNYSIDE_EMAIL_ADDRESS); ?>
+											</a>
+										</div>
+									</div>
+
+									<div class="flex items-start gap-3">
+										<div class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#ffc549]">
+											<svg class="h-4 w-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+											</svg>
+										</div>
+										<div>
+											<div class="text-sm font-medium text-gray-800">Locations</div>
+											<div class="text-sm text-gray-600"><?php echo esc_html(SUNNYSIDE_ADDRESS_STREET); ?></div>
+											<div class="text-sm text-gray-600">
+												<?php echo esc_html(SUNNYSIDE_ADDRESS_CITY); ?>, <?php echo esc_html(SUNNYSIDE_ADDRESS_STATE); ?> <?php echo esc_html(SUNNYSIDE_ADDRESS_ZIP); ?>
+											</div>
+										</div>
+									</div>
+
+									<div class="flex items-start gap-3">
+										<div class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#ffc549]">
+											<img src="<?php echo esc_url($phone_icon); ?>" alt="" class="h-4 w-4" loading="lazy" decoding="async" />
+										</div>
+										<div>
+											<div class="text-sm font-medium text-gray-800">Phone</div>
+											<div class="text-sm text-gray-600"><?php echo esc_html(SUNNYSIDE_PHONE_DISPLAY); ?></div>
+										</div>
+									</div>
+								</div>
+
+								<!-- Follow Us -->
+								<div class="mt-6 text-center">
+									<div class="mb-3 text-sm font-medium text-gray-800">Follow Us:</div>
+									<div class="flex justify-center">
+										<?php get_template_part('template-parts/social-icons', null, ['size' => 'sm']); ?>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</nav>
+	</header>
+</div>
