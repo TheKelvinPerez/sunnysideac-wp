@@ -11,6 +11,17 @@ require_once get_template_directory() . '/vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(get_template_directory());
 $dotenv->load();
 
+/**
+ * Initialize Timber
+ */
+Timber\Timber::init();
+
+/**
+ * Configure Timber settings
+ */
+Timber\Timber::$dirname = array('views', 'templates');
+Timber\Timber::$autoescape = false;
+
 
 /**
  * Initialize Whoops error handler for development
@@ -317,6 +328,15 @@ function sunnysideac_setup() {
     ));
 }
 add_action('after_setup_theme', 'sunnysideac_setup');
+
+/**
+ * Add custom data to Timber context
+ */
+add_filter('timber/context', function($context) {
+    $context['site'] = Timber\Timber::get_context()['site'];
+    $context['menu'] = Timber\Timber::get_menu('primary');
+    return $context;
+});
 
 /**
  * Add type="module" to Vite scripts
