@@ -32,158 +32,111 @@ if ($_ENV['APP_ENV'] === 'development') {
 }
 
 /**
- * Helper function to format array/object data hierarchically
+ * Helper function to flatten nested arrays for Whoops display
+ * Converts nested arrays into dot notation strings
  */
-if (!function_exists('dd_format_value')) {
-    function dd_format_value($value, $depth = 0, $maxDepth = 10) {
-        if ($depth > $maxDepth) {
-            return '... (max depth reached)';
-        }
+if (!function_exists('dd_flatten_array')) {
+    function dd_flatten_array($array, $prefix = '') {
+        $result = [];
+        foreach ($array as $key => $value) {
+            $newKey = $prefix === '' ? $key : $prefix . '.' . $key;
 
-        $indent = str_repeat('    ', $depth); // 4 spaces per level
-        $output = '';
-
-        if (is_array($value)) {
-            $count = count($value);
-            $output .= "Array ({$count})\n";
-            foreach ($value as $key => $val) {
-                $output .= $indent . "    [{$key}] => ";
-                if (is_array($val) || is_object($val)) {
-                    $output .= dd_format_value($val, $depth + 1, $maxDepth);
+            if (is_array($value) && !empty($value)) {
+                // Recursively flatten nested arrays
+                $result = array_merge($result, dd_flatten_array($value, $newKey));
+            } else {
+                // Convert value to string for display
+                if (is_bool($value)) {
+                    $result[$newKey] = $value ? 'true' : 'false';
+                } elseif (is_null($value)) {
+                    $result[$newKey] = 'null';
+                } elseif (is_string($value) && $value === '') {
+                    $result[$newKey] = '(empty string)';
                 } else {
-                    $output .= dd_format_scalar($val) . "\n";
+                    $result[$newKey] = $value;
                 }
             }
-        } elseif (is_object($value)) {
-            $className = get_class($value);
-            $output .= "Object ({$className})\n";
-            $properties = (array) $value;
-            foreach ($properties as $key => $val) {
-                $output .= $indent . "    {$key} => ";
-                if (is_array($val) || is_object($val)) {
-                    $output .= dd_format_value($val, $depth + 1, $maxDepth);
-                } else {
-                    $output .= dd_format_scalar($val) . "\n";
-                }
-            }
-        } else {
-            $output .= dd_format_scalar($value);
         }
-
-        return $output;
+        return $result;
     }
 }
 
 /**
- * Helper function to format scalar values
- */
-if (!function_exists('dd_format_scalar')) {
-    function dd_format_scalar($value) {
-        if (is_null($value)) {
-            return 'NULL';
-        } elseif (is_bool($value)) {
-            return $value ? 'true' : 'false';
-        } elseif (is_string($value)) {
-            return '"' . $value . '"';
-        } else {
-            return (string) $value;
-        }
-    }
-}
-
-/**
- * Debug helper function - Dump and Die (with pretty hierarchical output)
+ * Debug helper function - Dump and Die
+ * Outputs clean, formatted data to Whoops error handler
  *
  * @param mixed ...$vars Variables to dump
- * @param bool $explode Whether to explode array items into separate tables (default: true)
  */
 if (!function_exists('dd')) {
     function dd(...$vars) {
-        // Check if last parameter is a boolean to control explode behavior
-        $explode = true;
-        if (count($vars) > 0 && is_bool(end($vars))) {
-            $explode = array_pop($vars);
-        }
-
         // Use Whoops for beautiful output if in development
         if ($_ENV['APP_ENV'] === 'development') {
             $whoops = new \Whoops\Run;
             $handler = new \Whoops\Handler\PrettyPageHandler;
 
-            // Add the variables to inspect with hierarchical formatting
+            // Add each variable as a data table
             foreach ($vars as $varIndex => $var) {
                 $varType = gettype($var);
+                $varLabel = "Variable #" . ($varIndex + 1) . " ({$varType})";
 
-                // If it's an array and explode is true, add each item as a separate table
-                if ($explode && is_array($var) && !empty($var)) {
-                    // Check if this is a numeric array (list) vs associative array
+                // Handle different data types appropriately
+                if (is_scalar($var) || is_null($var)) {
+                    // For scalar values (string, int, bool, etc.), show as simple key-value
+                    $displayValue = $var;
+                    if (is_bool($var)) {
+                        $displayValue = $var ? 'true' : 'false';
+                    } elseif (is_null($var)) {
+                        $displayValue = 'null';
+                    }
+                    $handler->addDataTable($varLabel, ['Value' => $displayValue]);
+                } elseif (is_array($var) && !empty($var)) {
+                    // Check if it's a numeric array with complex items (arrays/objects)
                     $isNumericArray = array_keys($var) === range(0, count($var) - 1);
+                    $hasComplexItems = false;
 
                     if ($isNumericArray) {
-                        // Explode numeric arrays into separate tables
-                        foreach ($var as $itemIndex => $item) {
-                            $itemType = gettype($item);
-
+                        foreach ($var as $item) {
                             if (is_array($item) || is_object($item)) {
-                                $displayValue = '<pre style="white-space: pre-wrap; font-family: monospace; line-height: 1.5;">' .
-                                               dd_format_value($item, 0, 5) .
-                                               '</pre>';
-                            } else {
-                                $displayValue = dd_format_scalar($item);
+                                $hasComplexItems = true;
+                                break;
                             }
+                        }
+                    }
 
-                            $handler->addDataTable("Variable #" . ($varIndex + 1) . " - Item [{$itemIndex}] ({$itemType})", [
-                                'Value' => $displayValue
-                            ]);
+                    // Split into separate tables only for numeric arrays with complex items
+                    if ($isNumericArray && $hasComplexItems) {
+                        foreach ($var as $itemIndex => $item) {
+                            $itemLabel = $varLabel . " - Item #" . $itemIndex;
+                            $flattened = dd_flatten_array((array) $item);
+                            $handler->addDataTable($itemLabel, $flattened);
                         }
                     } else {
-                        // For associative arrays, show each key as a separate row
-                        $tableData = [];
-                        foreach ($var as $key => $value) {
-                            if (is_array($value) || is_object($value)) {
-                                $tableData[$key] = '<pre style="white-space: pre-wrap; font-family: monospace; line-height: 1.5;">' .
-                                                  dd_format_value($value, 0, 5) .
-                                                  '</pre>';
-                            } else {
-                                $tableData[$key] = dd_format_scalar($value);
-                            }
-                        }
-                        $handler->addDataTable("Variable #" . ($varIndex + 1) . " ({$varType}) - " . count($var) . " items", $tableData);
+                        // For simple arrays or associative arrays, flatten and show in one table
+                        $flattened = dd_flatten_array($var);
+                        $handler->addDataTable($varLabel, $flattened);
                     }
+                } elseif (is_object($var)) {
+                    // For objects, flatten and show properties
+                    $flattened = dd_flatten_array((array) $var);
+                    $handler->addDataTable($varLabel, $flattened);
                 } else {
-                    // Normal single-value display
-                    if (is_array($var) || is_object($var)) {
-                        $displayValue = '<pre style="white-space: pre-wrap; font-family: monospace; line-height: 1.5;">' .
-                                       dd_format_value($var, 0, 5) .
-                                       '</pre>';
-                    } else {
-                        $displayValue = dd_format_scalar($var);
-                    }
-
-                    $handler->addDataTable("Variable #" . ($varIndex + 1) . " ({$varType})", [
-                        'Value' => $displayValue
-                    ]);
+                    // Fallback for any other type
+                    $handler->addDataTable($varLabel, ['Value' => print_r($var, true)]);
                 }
             }
 
             $whoops->pushHandler($handler);
             $whoops->handleException(
-                new \Exception('Debug Dump (dd) called - Inspect the variables in the data tables above')
+                new \Exception('Debug Dump (dd)')
             );
         } else {
-            // Fallback for production (though dd shouldn't be used in production)
-            echo '<pre style="background: #f5f5f5; padding: 15px; border: 1px solid #ddd; border-radius: 4px; font-family: monospace; line-height: 1.5;">';
-            echo '<strong>Debug Dump:</strong>' . PHP_EOL . PHP_EOL;
+            // Fallback for production
+            echo '<pre style="background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; font-family: monospace; line-height: 1.5; overflow: auto;">';
+            echo '<strong style="color: #4ec9b0;">Debug Dump:</strong>' . PHP_EOL . PHP_EOL;
 
             foreach ($vars as $index => $var) {
-                $varType = gettype($var);
-                echo "Variable #" . ($index + 1) . " ({$varType}):" . PHP_EOL;
-
-                if (is_array($var) || is_object($var)) {
-                    echo dd_format_value($var);
-                } else {
-                    echo dd_format_scalar($var);
-                }
+                echo '<strong style="color: #569cd6;">Variable #' . ($index + 1) . ':</strong>' . PHP_EOL;
+                echo json_encode($var, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
                 echo PHP_EOL . PHP_EOL;
             }
 
@@ -334,6 +287,18 @@ add_action('after_setup_theme', 'sunnysideac_setup');
 add_filter('timber/context', function($context) {
     $context['menu'] = Timber\Timber::get_menu('primary');
     return $context;
+});
+
+/**
+ * Add custom Twig functions
+ */
+add_filter('timber/twig', function($twig) {
+    // Add dd() function to Twig
+    $twig->addFunction(new \Twig\TwigFunction('dd', function(...$vars) {
+        dd(...$vars);
+    }));
+
+    return $twig;
 });
 
 /**
