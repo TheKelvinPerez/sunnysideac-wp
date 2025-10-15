@@ -58,4 +58,5 @@ define('SUNNYSIDE_SERVICE_AREAS', [
 define('SUNNYSIDE_FACEBOOK_URL', 'https://facebook.com/sunnyside247ac');
 define('SUNNYSIDE_INSTAGRAM_URL', 'https://instagram.com/sunnyside247ac');
 define('SUNNYSIDE_TWITTER_URL', 'https://twitter.com/sunnyside247ac');
+define('SUNNYSIDE_YOUTUBE_URL', 'https://youtube.com/@sunnyside247ac');
 define('SUNNYSIDE_LINKEDIN_URL', 'https://linkedin.com/company/sunnyside247ac');
