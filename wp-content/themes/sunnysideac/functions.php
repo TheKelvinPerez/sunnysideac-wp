@@ -142,11 +142,6 @@ if ( ! function_exists( 'dd' ) ) {
 require_once get_template_directory() . '/inc/constants.php';
 
 /**
- * Include hero configuration
- */
-require_once get_template_directory() . '/inc/hero-config.php';
-
-/**
  * Get Vite dev server URL from environment or use defaults
  */
 function sunnysideac_get_vite_dev_server_url() {

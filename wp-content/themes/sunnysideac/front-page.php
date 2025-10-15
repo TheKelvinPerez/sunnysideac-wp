@@ -19,6 +19,9 @@ get_header(); ?>
 			<!-- Work Process Section -->
 			<?php get_template_part( 'template-parts/work-process' ); ?>
 
+			<!-- Why Choose Us Section -->
+			<?php get_template_part( 'template-parts/why-choose-us' ); ?>
+
 		</section>
 	</div>
 

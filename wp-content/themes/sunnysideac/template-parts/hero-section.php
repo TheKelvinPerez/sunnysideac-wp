@@ -4,14 +4,63 @@
  * Vanilla PHP/WordPress template
  */
 
-// Get data for hero section
-$icons         = sunnysideac_get_hero_icons();
-$images        = sunnysideac_get_hero_images();
-$statistics    = sunnysideac_get_hero_statistics();
+// Icons data
+$icons = [
+    'best_refreshed' => sunnysideac_asset_url('assets/icons/best-at-keeping-refreshed-icon.svg'),
+    'mobile_best_refreshed' => sunnysideac_asset_url('assets/icons/mobile-best-refreshed-icon.svg'),
+    'schedule_service' => sunnysideac_asset_url('assets/icons/schedule-service-now-icon.svg'),
+    'call_us_now' => sunnysideac_asset_url('assets/icons/call-us-now-icon.svg'),
+    'google' => sunnysideac_asset_url('assets/icons/google-icon.svg'),
+    'star' => sunnysideac_asset_url('assets/icons/star-icon.svg'),
+    'hero_line_break' => sunnysideac_asset_url('assets/icons/hero-line-break.svg')
+];
+
+// Images data
+$images = [
+    'hero_right' => sunnysideac_asset_url('assets/images/images/hero/hero-right-image.png'),
+    'mobile_hero' => sunnysideac_asset_url('assets/images/images/hero/mobile-hero-image.png'),
+    'review_photos' => [
+        sunnysideac_asset_url('assets/images/images/hero/review_photo_1.png'),
+        sunnysideac_asset_url('assets/images/images/hero/review_photo_2.png'),
+        sunnysideac_asset_url('assets/images/images/hero/review_photo_3.png'),
+        sunnysideac_asset_url('assets/images/images/hero/review_photo_4.png')
+    ]
+];
+
+// Statistics data
+$statistics = [
+    [
+        'number' => '1.5K+',
+        'description' => "Project Completed\nWith Excellence"
+    ],
+    [
+        'number' => '2014',
+        'description' => "Family-Owned\n& Operated Since"
+    ],
+    [
+        'number' => '2.5K+',
+        'description' => "Happy Customers\nServed"
+    ]
+];
+
+// Get WordPress data
 $home_page_id  = get_option( 'page_on_front' );
 $review_images = get_field( 'review_images', $home_page_id );
 $tel_href      = SUNNYSIDE_TEL_HREF;
 $phone_display = SUNNYSIDE_PHONE_DISPLAY;
+
+/**
+ * Render star rating
+ *
+ * @param int $count Number of stars
+ * @param string $star_icon_url URL to the star icon
+ * @param string $class Additional CSS classes
+ */
+function sunnysideac_render_stars($count = 5, $star_icon_url = '', $class = 'h-3 w-3 sm:h-4 sm:w-4 lg:h-5 lg:w-5') {
+    for ($i = 0; $i < $count; $i++) {
+        echo '<img src="' . esc_url($star_icon_url) . '" alt="Star" class="' . esc_attr($class) . '" loading="lazy" decoding="async" />';
+    }
+}
 ?>
 
 <section class="relative w-full overflow-hidden rounded-[20px] bg-white lg:bg-transparent">
@@ -125,7 +174,7 @@ $phone_display = SUNNYSIDE_PHONE_DISPLAY;
 				decoding="async" />
 				<div class="flex flex-col items-start">
 				<div class="flex items-center gap-0.5">
-					<?php sunnysideac_render_stars( 5, 'h-3 w-3 sm:h-4 sm:w-4 lg:h-5 lg:w-5' ); ?>
+					<?php sunnysideac_render_stars( 5, $icons['star'], 'h-3 w-3 sm:h-4 sm:w-4 lg:h-5 lg:w-5' ); ?>
 				</div>
 				<div class="mt-0.5 text-[10px] font-medium text-black sm:text-xs lg:text-sm">
 					5.0 Rating
@@ -264,7 +313,7 @@ $phone_display = SUNNYSIDE_PHONE_DISPLAY;
 				decoding="async" />
 				<div class="flex flex-col items-start">
 				<div class="flex items-center gap-0.5">
-					<?php sunnysideac_render_stars( 5, 'h-3 w-3 sm:h-4 sm:w-4' ); ?>
+					<?php sunnysideac_render_stars( 5, $icons['star'], 'h-3 w-3 sm:h-4 sm:w-4' ); ?>
 				</div>
 				<div class="mt-0.5 text-[10px] font-medium text-white sm:text-xs">
 					5.0 Rating
