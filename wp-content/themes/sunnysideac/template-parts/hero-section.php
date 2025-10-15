@@ -8,15 +8,9 @@
 $icons = sunnysideac_get_hero_icons();
 $images = sunnysideac_get_hero_images();
 $statistics = sunnysideac_get_hero_statistics();
-?>
-
-<?php
-// Get ACF review images from homepage
 $home_page_id = get_option('page_on_front');
 $review_images = get_field('review_images', $home_page_id);
-dd($_SERVER, false);
 ?>
-
 
 <section class="relative mx-auto w-full max-w-7xl overflow-hidden rounded-[20px] bg-white lg:bg-transparent">
   <!-- Mobile Background Image - Hidden on Desktop -->
