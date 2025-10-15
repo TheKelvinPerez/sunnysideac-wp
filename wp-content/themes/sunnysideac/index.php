@@ -2,7 +2,7 @@
 
 <main class="min-h-screen bg-gray-50">
 	<!-- Mobile constraint wrapper - applies 20px padding on mobile only -->
-	<div class="lg:px-0 max-w-7xl mx-auto">
+	<div class="px-5 lg:px-0 max-w-7xl mx-auto">
 		<section class="flex gap-10 flex-col">
 			<!-- Hero Section -->
 			<?php get_template_part( 'template-parts/hero-section' ); ?>
