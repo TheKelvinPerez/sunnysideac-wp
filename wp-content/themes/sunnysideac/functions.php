@@ -20,7 +20,6 @@ Timber\Timber::init();
  * Configure Timber settings
  */
 Timber\Timber::$dirname = array('views', 'templates');
-Timber\Timber::$autoescape = false;
 
 
 /**
@@ -333,7 +332,6 @@ add_action('after_setup_theme', 'sunnysideac_setup');
  * Add custom data to Timber context
  */
 add_filter('timber/context', function($context) {
-    $context['site'] = Timber\Timber::get_context()['site'];
     $context['menu'] = Timber\Timber::get_menu('primary');
     return $context;
 });
