@@ -26,7 +26,7 @@ if ( $_ENV['APP_ENV'] === 'development' ) {
  */
 if ( ! function_exists( 'dd_flatten_array' ) ) {
 	function dd_flatten_array( $array, $prefix = '' ) {
-		$result = array();
+		$result = [];
 		foreach ( $array as $key => $value ) {
 			$newKey = $prefix === '' ? $key : $prefix . '.' . $key;
 
@@ -77,7 +77,7 @@ if ( ! function_exists( 'dd' ) ) {
 					} elseif ( is_null( $var ) ) {
 						$displayValue = 'null';
 					}
-					$handler->addDataTable( $varLabel, array( 'Value' => $displayValue ) );
+					$handler->addDataTable( $varLabel, [ 'Value' => $displayValue ] );
 				} elseif ( is_array( $var ) && ! empty( $var ) ) {
 					// Check if it's a numeric array with complex items (arrays/objects)
 					$isNumericArray  = array_keys( $var ) === range( 0, count( $var ) - 1 );
@@ -110,7 +110,7 @@ if ( ! function_exists( 'dd' ) ) {
 					$handler->addDataTable( $varLabel, $flattened );
 				} else {
 					// Fallback for any other type
-					$handler->addDataTable( $varLabel, array( 'Value' => print_r( $var, true ) ) );
+					$handler->addDataTable( $varLabel, [ 'Value' => print_r( $var, true ) ] );
 				}
 			}
 
@@ -171,12 +171,12 @@ function sunnysideac_is_vite_dev_server_running() {
 
 	// Use file_get_contents with stream context for better compatibility
 	$context = stream_context_create(
-		array(
-			'http' => array(
+		[
+			'http' => [
 				'timeout'       => 1,
 				'ignore_errors' => true,
-			),
-		)
+			],
+		]
 	);
 
 	$result = @file_get_contents( $vite_dev_server, false, $context );
@@ -197,7 +197,7 @@ function sunnysideac_enqueue_assets() {
 		wp_enqueue_script(
 			'sunnysideac-vite-client',
 			$vite_server_url . '/@vite/client',
-			array(),
+			[],
 			null,
 			false
 		);
@@ -206,7 +206,7 @@ function sunnysideac_enqueue_assets() {
 		wp_enqueue_script(
 			'sunnysideac-main',
 			$vite_server_url . '/src/main.js',
-			array( 'sunnysideac-vite-client' ),
+			[ 'sunnysideac-vite-client' ],
 			null,
 			false
 		);
@@ -227,7 +227,7 @@ function sunnysideac_enqueue_assets() {
 						wp_enqueue_style(
 							'sunnysideac-main',
 							get_template_directory_uri() . '/dist/' . $css_file,
-							array(),
+							[],
 							null
 						);
 					}
@@ -237,7 +237,7 @@ function sunnysideac_enqueue_assets() {
 				wp_enqueue_script(
 					'sunnysideac-main',
 					get_template_directory_uri() . '/dist/' . $main['file'],
-					array(),
+					[],
 					null,
 					true
 				);
@@ -258,21 +258,21 @@ function sunnysideac_setup() {
 	add_theme_support( 'custom-logo' );
 	add_theme_support(
 		'html5',
-		array(
+		[
 			'search-form',
 			'comment-form',
 			'comment-list',
 			'gallery',
 			'caption',
-		)
+		]
 	);
 
 	// Register navigation menus
 	register_nav_menus(
-		array(
+		[
 			'primary' => __( 'Primary Menu', 'sunnysideac' ),
 			'footer'  => __( 'Footer Menu', 'sunnysideac' ),
-		)
+		]
 	);
 }
 add_action( 'after_setup_theme', 'sunnysideac_setup' );

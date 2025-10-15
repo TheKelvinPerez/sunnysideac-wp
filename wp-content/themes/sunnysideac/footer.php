@@ -20,7 +20,7 @@
 				<h3 class="text-xl font-bold mb-4">Quick Links</h3>
 				<?php
 				wp_nav_menu(
-					array(
+					[
 						'theme_location' => 'footer',
 						'container'      => false,
 						'menu_class'     => 'space-y-2',
@@ -32,7 +32,7 @@
 							echo '<li><a href="' . esc_url( home_url( '/contact' ) ) . '" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>';
 							echo '</ul>';
 						},
-					)
+					]
 				);
 				?>
 			</div>

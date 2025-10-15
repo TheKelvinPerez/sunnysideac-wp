@@ -5,57 +5,57 @@
  */
 
 // Define company logos
-$company_logos = array(
-	array(
+$company_logos = [
+	[
 		'id'      => 1,
 		'name'    => 'Bryant',
 		'src'     => get_template_directory_uri() . '/assets/images/company-logos/Bryant-Logo.png',
 		'alt'     => 'Bryant HVAC logo',
 		'website' => 'https://www.bryant.com',
-	),
-	array(
+	],
+	[
 		'id'      => 2,
 		'name'    => 'Carrier',
 		'src'     => get_template_directory_uri() . '/assets/images/company-logos/Carrier-Logo.png',
 		'alt'     => 'Carrier air conditioning logo',
 		'website' => 'https://www.carrier.com',
-	),
-	array(
+	],
+	[
 		'id'      => 3,
 		'name'    => 'Goodman',
 		'src'     => get_template_directory_uri() . '/assets/images/company-logos/Goodman-Logo.png',
 		'alt'     => 'Goodman HVAC logo',
 		'website' => 'https://www.goodmanmfg.com',
-	),
-	array(
+	],
+	[
 		'id'      => 4,
 		'name'    => 'Lennox',
 		'src'     => get_template_directory_uri() . '/assets/images/company-logos/Lennox-Logo.png',
 		'alt'     => 'Lennox HVAC logo',
 		'website' => 'https://www.lennox.com',
-	),
-	array(
+	],
+	[
 		'id'      => 5,
 		'name'    => 'Rheem',
 		'src'     => get_template_directory_uri() . '/assets/images/company-logos/Rheem-Logo.png',
 		'alt'     => 'Rheem HVAC logo',
 		'website' => 'https://www.rheem.com',
-	),
-	array(
+	],
+	[
 		'id'      => 6,
 		'name'    => 'Trane',
 		'src'     => get_template_directory_uri() . '/assets/images/company-logos/Trane-Logo.png',
 		'alt'     => 'Trane air conditioning logo',
 		'website' => 'https://www.trane.com',
-	),
-	array(
+	],
+	[
 		'id'      => 7,
 		'name'    => 'Daikin',
 		'src'     => get_template_directory_uri() . '/assets/images/company-logos/daikin-logo.png',
 		'alt'     => 'Daikin HVAC logo',
 		'website' => 'https://www.daikin.com',
-	),
-);
+	],
+];
 
 $icon_url = get_template_directory_uri() . '/assets/images/home-page/trusted-brands-section-icon.svg';
 ?>
@@ -70,11 +70,11 @@ $icon_url = get_template_directory_uri() . '/assets/images/home-page/trusted-bra
 			get_template_part(
 				'template-parts/title',
 				null,
-				array(
+				[
 					'icon'  => $icon_url,
 					'title' => 'Brands We Service',
 					'id'    => 'trusted-brands-heading',
-				)
+				]
 			);
 			?>
 		</header>

@@ -10,20 +10,20 @@
  * @return array Array of statistic data
  */
 function sunnysideac_get_hero_statistics() {
-    return array(
-        array(
+    return [
+        [
             'number' => '1.5K+',
             'description' => "Project Completed\nWith Excellence"
-        ),
-        array(
+        ],
+        [
             'number' => '2014',
             'description' => "Family-Owned\n& Operated Since"
-        ),
-        array(
+        ],
+        [
             'number' => '2.5K+',
             'description' => "Happy Customers\nServed"
-        )
-    );
+        ]
+    ];
 }
 
 /**
@@ -43,7 +43,7 @@ function sunnysideac_asset_url($path) {
  */
 function sunnysideac_get_hero_icons() {
     $base_path = 'assets/icons/';
-    return array(
+    return [
         'best_refreshed' => sunnysideac_asset_url($base_path . 'best-at-keeping-refreshed-icon.svg'),
         'mobile_best_refreshed' => sunnysideac_asset_url($base_path . 'mobile-best-refreshed-icon.svg'),
         'schedule_service' => sunnysideac_asset_url($base_path . 'schedule-service-now-icon.svg'),
@@ -51,7 +51,7 @@ function sunnysideac_get_hero_icons() {
         'google' => sunnysideac_asset_url($base_path . 'google-icon.svg'),
         'star' => sunnysideac_asset_url($base_path . 'star-icon.svg'),
         'hero_line_break' => sunnysideac_asset_url($base_path . 'hero-line-break.svg')
-    );
+    ];
 }
 
 /**
@@ -62,16 +62,16 @@ function sunnysideac_get_hero_icons() {
 function sunnysideac_get_hero_images() {
     $base_path = 'assets/images/images/hero/';
 
-    return array(
+    return [
         'hero_right' => sunnysideac_asset_url($base_path . 'hero-right-image.png'),
         'mobile_hero' => sunnysideac_asset_url($base_path . 'mobile-hero-image.png'),
-        'review_photos' => array(
+        'review_photos' => [
             sunnysideac_asset_url($base_path . 'review_photo_1.png'),
             sunnysideac_asset_url($base_path . 'review_photo_2.png'),
             sunnysideac_asset_url($base_path . 'review_photo_3.png'),
             sunnysideac_asset_url($base_path . 'review_photo_4.png')
-        )
-    );
+        ]
+    ];
 }
 
 /**
