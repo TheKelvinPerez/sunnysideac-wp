@@ -3,5 +3,6 @@ package-lock.json
 dist/
 .DS_Store
 .env
+docs
 vendor/
 composer.lock
