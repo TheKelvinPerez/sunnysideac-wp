@@ -57,6 +57,7 @@ $our_process_icon_url = get_template_directory_uri() . '/assets/images/home-page
 				null,
 				[
 					'text' => 'Your Comfort, Our Process',
+					'class' => 'text-gray-600 md:text-4xl md:leading-tight',
 				]
 			);
 			?>

@@ -22,6 +22,8 @@ get_header(); ?>
 			<!-- Why Choose Us Section -->
 			<?php get_template_part( 'template-parts/why-choose-us' ); ?>
 
+			<!-- Family Owned Section -->
+		<?php get_template_part( 'template-parts/family-owned-section' ); ?>
 		</section>
 	</div>
 

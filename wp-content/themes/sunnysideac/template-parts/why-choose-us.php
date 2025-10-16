@@ -48,25 +48,27 @@ $images = [
         <div class="rounded-[20px] bg-white p-6 md:p-8 lg:p-10">
             <!-- Header Section -->
             <header class="mb-6 text-center md:mb-8">
-                <div class="flex items-center justify-center gap-3 mb-4">
-                    <?php if (isset($images['icon'])) : ?>
-                        <img
-                            class="h-12 w-12 md:h-14 md:w-14"
-                            alt="Why choose us icon"
-                            src="<?php echo esc_url($images['icon']); ?>"
-                        >
-                    <?php endif; ?>
-                    <h2
-                        id="why-choose-us-heading"
-                        class="text-2xl font-bold text-gray-900 md:text-3xl lg:text-4xl"
-                    >
-                        Why Choose Us
-                    </h2>
-                </div>
-
-                <p class="mx-auto max-w-4xl text-base font-light text-gray-600 md:text-lg lg:text-xl">
-                    Service You Can Trust, Comfort You Deserve
-                </p>
+                <?php
+                get_template_part(
+                    'template-parts/title',
+                    null,
+                    [
+                        'icon'  => $images['icon'] ?? '',
+                        'title' => 'Why Choose Us',
+                        'id'    => 'why-choose-us-heading',
+                    ]
+                );
+                ?>
+                <?php
+                get_template_part(
+                    'template-parts/subheading',
+                    null,
+                    [
+                        'text' => 'Service You Can Trust, Comfort You Deserve',
+                        'class' => 'mx-auto max-w-4xl text-gray-600 md:text-4xl md:leading-tight',
+                    ]
+                );
+                ?>
             </header>
 
             <!-- Mobile Image - Shows under title on mobile only -->
