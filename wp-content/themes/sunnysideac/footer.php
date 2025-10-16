@@ -33,10 +33,10 @@ $services = [
 		<div class="px-4 sm:px-6 lg:px-8">
 			<!-- Main footer content -->
 			<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-						<?php get_template_part( 'template-parts/footer-company-info' ); ?>
-				<?php get_template_part( 'template-parts/footer-quick-links', null, array( 'links' => $quick_links ) ); ?>
-				<?php get_template_part( 'template-parts/footer-services-subsection', null, array( 'services' => $services ) ); ?>
-				<?php get_template_part( 'template-parts/footer-contact-subsection' ); ?>
+						<?php get_template_part('template-parts/footer-company-info'); ?>
+				<?php get_template_part('template-parts/footer-quick-links', null, ['links' => $quick_links]); ?>
+				<?php get_template_part('template-parts/footer-services-subsection', null, ['services' => $services]); ?>
+				<?php get_template_part('template-parts/footer-contact-subsection'); ?>
 			</div>
 
 			<!-- Divider line -->
