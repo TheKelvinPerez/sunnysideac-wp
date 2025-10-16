@@ -142,6 +142,11 @@ if ( ! function_exists( 'dd' ) ) {
 require_once get_template_directory() . '/inc/constants.php';
 
 /**
+ * Include helper functions
+ */
+require_once get_template_directory() . '/inc/helpers.php';
+
+/**
  * Get Vite dev server URL from environment or use defaults
  */
 function sunnysideac_get_vite_dev_server_url() {

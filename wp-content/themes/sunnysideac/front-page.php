@@ -28,11 +28,20 @@ get_header(); ?>
 			<!-- Customer Reviews Section -->
 		<?php get_template_part( 'template-parts/customer-reviews' ); ?>
 
+			<!-- Areas We Serve Section -->
+			<?php get_template_part( 'template-parts/areas-we-serve' ); ?>
+
+			<!-- Blog Section -->
+			<?php get_template_part( 'template-parts/blog-section' ); ?>
+
 			<!-- Our Projects Section -->
 			<?php get_template_part( 'template-parts/our-projects' ); ?>
 
 			<!-- FAQ Section -->
 			<?php get_template_part( 'template-parts/faq-section' ); ?>
+
+			<!-- Contact Us Section -->
+			<?php get_template_part( 'template-parts/contact-us' ); ?>
 		</section>
 	</div>
 

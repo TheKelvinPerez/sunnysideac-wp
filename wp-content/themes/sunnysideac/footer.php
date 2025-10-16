@@ -1,75 +1,82 @@
+<?php
+/**
+ * Footer Template
+ * Main footer component with all subsections
+ */
 
-</div><!-- Close global content wrapper -->
+// Component data (like props in React)
+$quick_links = [
+	['text' => 'Home Page', 'href' => '/'],
+	['text' => 'About Us', 'href' => '/about'],
+	['text' => 'Our Services', 'href' => '/services'],
+	['text' => 'Our Blog', 'href' => '/blog'],
+	['text' => 'Contact Us', 'href' => '/contact'],
+	['text' => 'Get a Free Quote', 'href' => '/quote'],
+];
 
-<footer class="bg-gray-900 text-white mt-16">
-	<div class="container mx-auto px-4 py-12">
-		<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-			<!-- About Section -->
-			<div>
-				<h3 class="text-xl font-bold mb-4"><?php bloginfo( 'name' ); ?></h3>
-				<p class="text-gray-400">
-					<?php
-					$description = get_bloginfo( 'description' );
-					echo $description ? esc_html( $description ) : 'Your trusted HVAC service provider. Professional, reliable, and always here when you need us.';
-					?>
+$services = [
+	['text' => 'Air Conditioning Installation', 'href' => '/services/air-conditioning-installation'],
+	['text' => 'Indoor Air Quality Solutions', 'href' => '/services/indoor-air-quality'],
+	['text' => 'HVAC Maintenance Plans', 'href' => '/services/hvac-maintenance'],
+	['text' => 'Emergency HVAC Services', 'href' => '/services/emergency-hvac'],
+	['text' => 'Commercial HVAC Services', 'href' => '/services/commercial-hvac'],
+];
+?>
+
+
+<footer
+	class="mt-10 mb-10 bg-white rounded-2xl"
+	role="contentinfo"
+	aria-label="Site footer"
+>
+	<div class="mx-auto px-5 py-8 lg:px-0 lg:py-12">
+		<div class="px-4 sm:px-6 lg:px-8">
+			<!-- Main footer content -->
+			<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+						<?php get_template_part( 'template-parts/footer-company-info' ); ?>
+				<?php get_template_part( 'template-parts/footer-quick-links', null, array( 'links' => $quick_links ) ); ?>
+				<?php get_template_part( 'template-parts/footer-services-subsection', null, array( 'services' => $services ) ); ?>
+				<?php get_template_part( 'template-parts/footer-contact-subsection' ); ?>
+			</div>
+
+			<!-- Divider line -->
+			<div class="my-8 border-t border-gray-200"></div>
+
+			<!-- Bottom section with copyright and legal links -->
+			<div class="flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
+				<p class="text-center font-light text-gray-600 sm:text-left">
+					2025 Sunny Side Air Conditioning. All Rights Reserved.
 				</p>
-			</div>
 
-			<!-- Quick Links -->
-			<div>
-				<h3 class="text-xl font-bold mb-4">Quick Links</h3>
-				<?php
-				wp_nav_menu(
-					array(
-						'theme_location' => 'footer',
-						'container'      => false,
-						'menu_class'     => 'space-y-2',
-						'fallback_cb'    => function () {
-							echo '<ul class="space-y-2">';
-							echo '<li><a href="' . esc_url( home_url( '/' ) ) . '" class="text-gray-400 hover:text-white transition-colors">Home</a></li>';
-							echo '<li><a href="' . esc_url( home_url( '/services' ) ) . '" class="text-gray-400 hover:text-white transition-colors">Services</a></li>';
-							echo '<li><a href="' . esc_url( home_url( '/about' ) ) . '" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>';
-							echo '<li><a href="' . esc_url( home_url( '/contact' ) ) . '" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>';
-							echo '</ul>';
-						},
-					)
-				);
-				?>
-			</div>
+				<nav
+					class="flex items-center space-x-6"
+					aria-label="Footer legal links"
+				>
+					<a
+						href="/privacy-policy"
+						class="font-light text-gray-600 hover:text-gray-900 hover:underline focus:outline-2 focus:outline-blue-500"
+						aria-label="Privacy Policy"
+					>
+						Privacy Policy
+					</a>
 
-			<!-- Contact Info -->
-			<div>
-				<h3 class="text-xl font-bold mb-4">Contact Us</h3>
-				<div class="space-y-2 text-gray-400">
-			<p>Email: <?php echo SUNNYSIDE_EMAIL_ADDRESS; ?></p>
-			<p>Phone: <?php echo SUNNYSIDE_PHONE_DISPLAY; ?></p>
-					<p class="text-yellow-400 font-semibold">24/7 Emergency Service</p>
-				</div>
-			</div>
-		</div>
+					<span class="text-gray-300">|</span>
 
-		<div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-			<p>&copy; <?php echo date( 'Y' ); ?> <?php bloginfo( 'name' ); ?>. All rights reserved.</p>
-			<p class="mt-2 text-sm">Built with ❤️ by SunnySide Tech</p>
+					<a
+						href="/terms-conditions"
+						class="font-light text-gray-600 hover:text-gray-900 hover:underline focus:outline-2 focus:outline-blue-500"
+						aria-label="Terms and Conditions"
+					>
+						Terms &amp; Conditions
+					</a>
+				</nav>
+			</div>
 		</div>
 	</div>
 </footer>
 
+</div><!-- Close global content wrapper from header -->
 <?php wp_footer(); ?>
-
-<script>
-// Mobile menu toggle
-document.addEventListener('DOMContentLoaded', function() {
-	const menuButton = document.getElementById('mobile-menu-button');
-	const mobileMenu = document.getElementById('mobile-menu');
-
-	if (menuButton && mobileMenu) {
-		menuButton.addEventListener('click', function() {
-			mobileMenu.classList.toggle('hidden');
-		});
-	}
-});
-</script>
 
 </body>
 </html>

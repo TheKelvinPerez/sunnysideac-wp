@@ -61,12 +61,3 @@ define('SUNNYSIDE_TWITTER_URL', 'https://twitter.com/sunnyside247ac');
 define('SUNNYSIDE_YOUTUBE_URL', 'https://youtube.com/@sunnyside247ac');
 define('SUNNYSIDE_LINKEDIN_URL', 'https://linkedin.com/company/sunnyside247ac');
 
-/**
- * Get asset URL helper function
- *
- * @param string $path Path relative to theme directory
- * @return string Full URL to asset
- */
-function sunnysideac_asset_url($path) {
-    return get_template_directory_uri() . '/' . ltrim($path, '/');
-}
