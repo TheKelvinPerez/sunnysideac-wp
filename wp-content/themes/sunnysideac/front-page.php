@@ -24,6 +24,9 @@ get_header(); ?>
 
 			<!-- Family Owned Section -->
 		<?php get_template_part( 'template-parts/family-owned-section' ); ?>
+
+			<!-- Customer Reviews Section -->
+		<?php get_template_part( 'template-parts/customer-reviews' ); ?>
 		</section>
 	</div>
 
