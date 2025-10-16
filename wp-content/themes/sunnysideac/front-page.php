@@ -27,6 +27,12 @@ get_header(); ?>
 
 			<!-- Customer Reviews Section -->
 		<?php get_template_part( 'template-parts/customer-reviews' ); ?>
+
+			<!-- Our Projects Section -->
+			<?php get_template_part( 'template-parts/our-projects' ); ?>
+
+			<!-- FAQ Section -->
+			<?php get_template_part( 'template-parts/faq-section' ); ?>
 		</section>
 	</div>
 
