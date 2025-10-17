@@ -5,24 +5,24 @@
  */
 
 // Define process steps - optimized data structure
-$process_steps = [
-	[
+$process_steps = array(
+	array(
 		'title'    => 'CONSULTATION',
 		'subtitle' => 'Free',
-	],
-	[
+	),
+	array(
 		'title'    => 'INSPECTION',
 		'subtitle' => 'Assessment',
-	],
-	[
+	),
+	array(
 		'title'    => 'REPAIR',
 		'subtitle' => 'Installation',
-	],
-	[
+	),
+	array(
 		'title'    => 'MAINTENANCE',
 		'subtitle' => 'Support',
-	],
-];
+	),
+);
 
 // Common styles (extracted from redundant data)
 $common_bg_color = 'bg-gray-50';
@@ -33,7 +33,7 @@ $our_process_icon_url = get_template_directory_uri() . '/assets/images/home-page
 ?>
 
 <section
-	class="w-full py-16"
+	class="w-full"
 	role="main"
 	aria-labelledby="work-process-heading"
 >
@@ -44,21 +44,21 @@ $our_process_icon_url = get_template_directory_uri() . '/assets/images/home-page
 			get_template_part(
 				'template-parts/title',
 				null,
-				[
+				array(
 					'icon'  => $our_process_icon_url,
 					'title' => 'Work Process',
 					'id'    => 'work-process-heading',
-				]
+				)
 			);
 			?>
 			<?php
 			get_template_part(
 				'template-parts/subheading',
 				null,
-				[
-					'text' => 'Your Comfort, Our Process',
+				array(
+					'text'  => 'Your Comfort, Our Process',
 					'class' => 'text-gray-600 md:text-4xl md:leading-tight',
-				]
+				)
 			);
 			?>
 		</header>
