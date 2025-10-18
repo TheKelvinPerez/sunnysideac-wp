@@ -3,59 +3,7 @@
  * Footer Template
  * Main footer component with all subsections
  */
-
-// Component data (like props in React)
-$quick_links = [
-	[
-		'text' => 'Home Page',
-		'href' => '/',
-	],
-	[
-		'text' => 'About Us',
-		'href' => '/about',
-	],
-	[
-		'text' => 'Our Services',
-		'href' => '/services',
-	],
-	[
-		'text' => 'Our Blog',
-		'href' => '/blog',
-	],
-	[
-		'text' => 'Contact Us',
-		'href' => '/contact',
-	],
-	[
-		'text' => 'Get a Free Quote',
-		'href' => '/quote',
-	],
-];
-
-$services = [
-	[
-		'text' => 'Air Conditioning Installation',
-		'href' => '/services/air-conditioning-installation',
-	],
-	[
-		'text' => 'Indoor Air Quality Solutions',
-		'href' => '/services/indoor-air-quality',
-	],
-	[
-		'text' => 'HVAC Maintenance Plans',
-		'href' => '/services/hvac-maintenance',
-	],
-	[
-		'text' => 'Emergency HVAC Services',
-		'href' => '/services/emergency-hvac',
-	],
-	[
-		'text' => 'Commercial HVAC Services',
-		'href' => '/services/commercial-hvac',
-	],
-];
 ?>
-
 
 <footer
 	class="mt-10 mb-10 bg-white rounded-2xl"
@@ -64,11 +12,15 @@ $services = [
 >
 	<div class="mx-auto px-5 py-8 lg:px-0 lg:py-12">
 		<div class="px-4 sm:px-6 lg:px-8">
-			<!-- Main footer content -->
+			<!-- Main footer content - 4 columns on desktop -->
 			<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-						<?php get_template_part( 'template-parts/footer-company-info' ); ?>
-				<?php get_template_part( 'template-parts/footer-quick-links', null, array( 'links' => $quick_links ) ); ?>
-				<?php get_template_part( 'template-parts/footer-services-subsection', null, array( 'services' => $services ) ); ?>
+				<!-- Column 1: Company Info with Logo -->
+				<?php get_template_part( 'template-parts/footer-company-info' ); ?>
+
+				<!-- Columns 2 & 3: Footer Navigation (4 sections displayed as 2 columns) -->
+				<?php get_template_part( 'template-parts/footer-navigation' ); ?>
+
+				<!-- Column 4: Contact Us -->
 				<?php get_template_part( 'template-parts/footer-contact-subsection' ); ?>
 			</div>
 

@@ -54,6 +54,42 @@ define('SUNNYSIDE_SERVICE_AREAS', [
 	'Palm Beach',
 ]);
 
+// Service categorization for menu organization
+define('SUNNYSIDE_SERVICES_BY_CATEGORY', [
+	'cooling' => [
+		'AC Repair',
+		'AC Installation',
+		'AC Maintenance',
+		'AC Replacement'
+	],
+	'heating' => [
+		'Heating Repair',
+		'Heating Installation',
+		'Heat Pumps'
+	],
+	'air_quality' => [
+		'Ductless / Mini Split',
+		'Indoor Air Quality',
+		'Water Heaters'
+	]
+]);
+
+// Priority cities for dropdown (top 8)
+define('SUNNYSIDE_PRIORITY_CITIES', [
+	'Pembroke Pines',
+	'Miramar',
+	'Weston',
+	'Hollywood',
+	'Fort Lauderdale',
+	'Miami',
+	'Boca Raton',
+	'West Palm Beach'
+]);
+
+// Service URL patterns
+define('SUNNYSIDE_SERVICE_URL_PATTERN', '/service/%s');
+define('SUNNYSIDE_CITY_URL_PATTERN', '/areas/%s');
+
 // Social media links
 define('SUNNYSIDE_FACEBOOK_URL', 'https://facebook.com/sunnyside247ac');
 define('SUNNYSIDE_INSTAGRAM_URL', 'https://instagram.com/sunnyside247ac');

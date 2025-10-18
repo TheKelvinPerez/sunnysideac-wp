@@ -449,6 +449,224 @@ if ( function_exists( 'acf_add_local_field_group' ) ) {
 			'description'           => '',
 		]
 	);
+
+	/**
+	 * City CPT - Local SEO Content Fields
+	 */
+	acf_add_local_field_group(
+		[
+			'key'      => 'group_city_seo_content',
+			'title'    => 'Local SEO Content',
+			'fields'   => [
+				[
+					'key'          => 'field_city_neighborhoods',
+					'label'        => 'Neighborhoods & Areas Served',
+					'name'         => 'neighborhoods',
+					'type'         => 'textarea',
+					'instructions' => 'List specific neighborhoods, zip codes, or areas. This makes content unique per city.',
+					'placeholder'  => 'Example: Downtown Miami, Brickell, Coral Way, Little Havana, Coconut Grove',
+				],
+				[
+					'key'          => 'field_city_climate_note',
+					'label'        => 'Climate/Weather Note',
+					'name'         => 'climate_note',
+					'type'         => 'textarea',
+					'instructions' => 'Local climate considerations for HVAC services.',
+					'placeholder'  => 'Example: Miami\'s humid subtropical climate means AC systems work harder year-round...',
+				],
+				[
+					'key'          => 'field_city_service_area_note',
+					'label'        => 'Service Area Details',
+					'name'         => 'service_area_note',
+					'type'         => 'wysiwyg',
+					'instructions' => 'Additional details about serving this city (response time, local permits, etc.)',
+					'toolbar'      => 'basic',
+					'media_upload' => 0,
+				],
+				[
+					'key'          => 'field_city_video_url',
+					'label'        => 'City Video URL',
+					'name'         => 'city_video_url',
+					'type'         => 'url',
+					'instructions' => 'YouTube or Vimeo URL for city-specific video (e.g., "HVAC Services in Miami"). HIGHLY recommended for local SEO!',
+					'placeholder'  => 'https://www.youtube.com/watch?v=...',
+				],
+				[
+					'key'          => 'field_city_video_title',
+					'label'        => 'Video Title',
+					'name'         => 'city_video_title',
+					'type'         => 'text',
+					'instructions' => 'Title of the video (for schema markup). Example: "HVAC Services in Miami, Florida"',
+					'placeholder'  => 'HVAC Services in Miami, Florida',
+					'conditional_logic' => [
+						[
+							[
+								'field'    => 'field_city_video_url',
+								'operator' => '!=empty',
+							],
+						],
+					],
+				],
+				[
+					'key'          => 'field_city_video_description',
+					'label'        => 'Video Description',
+					'name'         => 'city_video_description',
+					'type'         => 'textarea',
+					'instructions' => 'Brief description of the video content (for schema markup)',
+					'placeholder'  => 'Watch our HVAC technicians servicing homes and businesses throughout Miami...',
+					'rows'         => 3,
+					'conditional_logic' => [
+						[
+							[
+								'field'    => 'field_city_video_url',
+								'operator' => '!=empty',
+							],
+						],
+					],
+				],
+				[
+					'key'          => 'field_city_video_thumbnail',
+					'label'        => 'Video Thumbnail (Optional)',
+					'name'         => 'city_video_thumbnail',
+					'type'         => 'image',
+					'instructions' => 'Custom thumbnail image (1280x720). If empty, will use video platform\'s default thumbnail.',
+					'return_format' => 'url',
+					'preview_size' => 'medium',
+					'library'      => 'all',
+					'conditional_logic' => [
+						[
+							[
+								'field'    => 'field_city_video_url',
+								'operator' => '!=empty',
+							],
+						],
+					],
+				],
+				[
+					'key'          => 'field_city_video_duration',
+					'label'        => 'Video Duration',
+					'name'         => 'city_video_duration',
+					'type'         => 'text',
+					'instructions' => 'Duration in ISO 8601 format (e.g., PT2M30S for 2 minutes 30 seconds). Used for schema markup.',
+					'placeholder'  => 'PT2M30S',
+					'conditional_logic' => [
+						[
+							[
+								'field'    => 'field_city_video_url',
+								'operator' => '!=empty',
+							],
+						],
+					],
+				],
+			],
+			'location' => [
+				[
+					[
+						'param'    => 'post_type',
+						'operator' => '==',
+						'value'    => 'city',
+					],
+				],
+			],
+			'position' => 'normal',
+		]
+	);
+
+	/**
+	 * Service CPT - SEO Content Blocks
+	 */
+	acf_add_local_field_group(
+		[
+			'key'      => 'group_service_seo_content',
+			'title'    => 'Service Content Blocks',
+			'fields'   => [
+				[
+					'key'          => 'field_service_description',
+					'label'        => 'Service Description',
+					'name'         => 'service_description',
+					'type'         => 'wysiwyg',
+					'instructions' => 'Main service description (applies to all cities)',
+					'toolbar'      => 'full',
+					'media_upload' => 1,
+				],
+				[
+					'key'          => 'field_service_benefits',
+					'label'        => 'Key Benefits',
+					'name'         => 'service_benefits',
+					'type'         => 'repeater',
+					'instructions' => 'List of benefits for this service',
+					'layout'       => 'table',
+					'button_label' => 'Add Benefit',
+					'sub_fields'   => [
+						[
+							'key'   => 'field_benefit_text',
+							'label' => 'Benefit',
+							'name'  => 'benefit',
+							'type'  => 'text',
+						],
+					],
+				],
+				[
+					'key'          => 'field_service_process',
+					'label'        => 'Service Process/Steps',
+					'name'         => 'service_process',
+					'type'         => 'repeater',
+					'instructions' => 'Step-by-step process',
+					'layout'       => 'row',
+					'button_label' => 'Add Step',
+					'sub_fields'   => [
+						[
+							'key'   => 'field_process_step_title',
+							'label' => 'Step Title',
+							'name'  => 'title',
+							'type'  => 'text',
+						],
+						[
+							'key'   => 'field_process_step_description',
+							'label' => 'Description',
+							'name'  => 'description',
+							'type'  => 'textarea',
+							'rows'  => 3,
+						],
+					],
+				],
+				[
+					'key'          => 'field_service_faqs',
+					'label'        => 'FAQs',
+					'name'         => 'service_faqs',
+					'type'         => 'repeater',
+					'instructions' => 'Frequently asked questions about this service',
+					'layout'       => 'row',
+					'button_label' => 'Add FAQ',
+					'sub_fields'   => [
+						[
+							'key'   => 'field_faq_question',
+							'label' => 'Question',
+							'name'  => 'question',
+							'type'  => 'text',
+						],
+						[
+							'key'   => 'field_faq_answer',
+							'label' => 'Answer',
+							'name'  => 'answer',
+							'type'  => 'textarea',
+							'rows'  => 4,
+						],
+					],
+				],
+			],
+			'location' => [
+				[
+					[
+						'param'    => 'post_type',
+						'operator' => '==',
+						'value'    => 'service',
+					],
+				],
+			],
+			'position' => 'normal',
+		]
+	);
 }
 
 /**
@@ -473,7 +691,20 @@ function sunnysideac_add_city_service_root_rewrite() {
 add_action( 'init', 'sunnysideac_add_city_service_root_rewrite', 15 );
 
 /**
- * Validate the route at template_redirect (prevents hijacking)
+ * Add rewrite for /areas/{city}/ → city page
+ */
+function sunnysideac_add_areas_city_rewrite() {
+	add_rewrite_rule(
+		'^areas/([^/]+)/?$',
+		'index.php?post_type=city&name=$matches[1]',
+		'top'
+	);
+}
+add_action( 'init', 'sunnysideac_add_areas_city_rewrite', 16 );
+
+/**
+ * Validate the route at template_redirect
+ * Since all services are available in all cities, we just verify both posts exist
  */
 function sunnysideac_validate_city_service_route() {
 	// Only on frontend single service requests that have our city_slug filled
@@ -481,9 +712,8 @@ function sunnysideac_validate_city_service_route() {
 		return;
 	}
 
-	// WP will set is_singular('service') only after main query; we can check city_slug param too
 	$city_slug    = get_query_var( 'city_slug' );
-	$service_slug = get_query_var( 'name' ); // service slug
+	$service_slug = get_query_var( 'name' );
 
 	if ( empty( $city_slug ) || empty( $service_slug ) ) {
 		return;
@@ -495,20 +725,8 @@ function sunnysideac_validate_city_service_route() {
 	// Resolve service post by path/slug
 	$service_post = get_page_by_path( $service_slug, OBJECT, 'service' );
 
-	$valid = false;
-	if ( $city_post && $service_post ) {
-		$assigned_city_ids = get_post_meta( $service_post->ID, '_service_city_id', true );
-
-		// Handle both single ID (old data) and array of IDs (new multi-select)
-		if ( ! is_array( $assigned_city_ids ) ) {
-			$assigned_city_ids = [ $assigned_city_ids ];
-		}
-
-		// Check if the requested city is in the service's assigned cities
-		if ( in_array( intval( $city_post->ID ), array_map( 'intval', $assigned_city_ids ) ) ) {
-			$valid = true;
-		}
-	}
+	// Valid if both posts exist and are published
+	$valid = ( $city_post && $service_post && $city_post->post_status === 'publish' && $service_post->post_status === 'publish' );
 
 	if ( ! $valid ) {
 		global $wp_query;

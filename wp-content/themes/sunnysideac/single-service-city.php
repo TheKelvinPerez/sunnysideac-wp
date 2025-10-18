@@ -3,9 +3,9 @@
  * Template: single-service-city.php
  * Displays a service in the context of a specific city
  * URL structure: /{city-slug}/{service-slug}/
+ *
+ * SEO Optimized: JSON-LD Schema, Meta Tags, Semantic HTML, Internal Linking
  */
-
-get_header();
 
 // Service post is the main loop
 if ( have_posts() ) :
@@ -14,60 +14,556 @@ if ( have_posts() ) :
 	$service_id = get_the_ID();
 	$city_slug  = get_query_var( 'city_slug' );
 	$city_post  = $city_slug ? get_page_by_path( $city_slug, OBJECT, 'city' ) : null;
+
+	// Get ACF fields
+	$service_description = get_field( 'service_description', $service_id );
+	$service_benefits    = get_field( 'service_benefits', $service_id );
+	$service_process     = get_field( 'service_process', $service_id );
+	$service_faqs        = get_field( 'service_faqs', $service_id );
+
+	if ( $city_post ) {
+		$city_neighborhoods     = get_field( 'neighborhoods', $city_post->ID );
+		$city_climate_note      = get_field( 'climate_note', $city_post->ID );
+		$city_service_area_note = get_field( 'service_area_note', $city_post->ID );
+		$city_video_url         = get_field( 'city_video_url', $city_post->ID );
+		$city_video_title       = get_field( 'city_video_title', $city_post->ID );
+		$city_video_description = get_field( 'city_video_description', $city_post->ID );
+		$city_video_thumbnail   = get_field( 'city_video_thumbnail', $city_post->ID );
+		$city_video_duration    = get_field( 'city_video_duration', $city_post->ID );
+	}
+
+	// SEO Variables
+	$service_title = get_the_title();
+	$city_name     = $city_post ? get_the_title( $city_post ) : '';
+	$page_title    = $city_post ? $service_title . ' in ' . $city_name . ', FL - Sunnyside AC' : $service_title;
+	$meta_desc     = $city_post
+		? 'Expert ' . strtolower( $service_title ) . ' services in ' . $city_name . ', Florida. Licensed technicians, same-day service, 24/7 emergency repairs. Call ' . SUNNYSIDE_PHONE_DISPLAY . ' for fast service.'
+		: wp_trim_words( get_the_excerpt(), 20 );
+
+	$canonical_url = home_url( '/' . ( $city_post ? $city_slug . '/' : '' ) . get_post_field( 'post_name', $service_id ) . '/' );
+	$og_image      = has_post_thumbnail() ? get_the_post_thumbnail_url( $service_id, 'large' ) : get_template_directory_uri() . '/assets/images/default-og.jpg';
+
 	?>
+<!DOCTYPE html>
+<html <?php language_attributes(); ?>>
+<head>
+	<meta charset="<?php bloginfo( 'charset' ); ?>">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<main class="service-city-content">
-		<?php if ( $city_post ) : ?>
-			<nav class="breadcrumbs container mx-auto px-4 py-4">
-				<a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a>
-				<span class="separator"> / </span>
-				<a href="<?php echo esc_url( get_permalink( $city_post->ID ) ); ?>">
-					<?php echo esc_html( get_the_title( $city_post ) ); ?>
-				</a>
-				<span class="separator"> / </span>
-				<span class="current"><?php the_title(); ?></span>
-			</nav>
-		<?php endif; ?>
+	<!-- SEO Meta Tags -->
+	<title><?php echo esc_html( $page_title ); ?></title>
+	<meta name="description" content="<?php echo esc_attr( $meta_desc ); ?>">
+	<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+	<link rel="canonical" href="<?php echo esc_url( $canonical_url ); ?>">
 
-		<article id="post-<?php echo esc_attr( $service_id ); ?>" <?php post_class( 'container mx-auto px-4 py-8' ); ?>>
-			<header class="entry-header mb-8">
-				<h1 class="text-4xl font-bold mb-4"><?php the_title(); ?></h1>
+	<!-- Open Graph Meta Tags -->
+	<meta property="og:locale" content="en_US">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="<?php echo esc_attr( $page_title ); ?>">
+	<meta property="og:description" content="<?php echo esc_attr( $meta_desc ); ?>">
+	<meta property="og:url" content="<?php echo esc_url( $canonical_url ); ?>">
+	<meta property="og:site_name" content="Sunnyside AC">
+	<meta property="og:image" content="<?php echo esc_url( $og_image ); ?>">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="630">
 
-				<?php if ( $city_post ) : ?>
-					<p class="service-city text-xl text-gray-600">
-						Serving: <strong><?php echo esc_html( get_the_title( $city_post ) ); ?></strong>
-					</p>
+	<!-- Twitter Card Meta Tags -->
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="<?php echo esc_attr( $page_title ); ?>">
+	<meta name="twitter:description" content="<?php echo esc_attr( $meta_desc ); ?>">
+	<meta name="twitter:image" content="<?php echo esc_url( $og_image ); ?>">
+
+	<!-- Local Business Meta -->
+	<?php if ( $city_post ) : ?>
+	<meta name="geo.region" content="US-FL">
+	<meta name="geo.placename" content="<?php echo esc_attr( $city_name ); ?>">
+	<?php endif; ?>
+
+	<?php wp_head(); ?>
+
+	<!-- JSON-LD Structured Data -->
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@graph": [
+			{
+				"@type": "BreadcrumbList",
+				"itemListElement": [
+					{
+						"@type": "ListItem",
+						"position": 1,
+						"name": "Home",
+						"item": "<?php echo esc_url( home_url( '/' ) ); ?>"
+					}
+					<?php
+					if ( $city_post ) :
+						?>
+						,
+					{
+						"@type": "ListItem",
+						"position": 2,
+						"name": "<?php echo esc_js( $city_name ); ?>",
+						"item": "<?php echo esc_url( home_url( '/' . $city_slug . '/' ) ); ?>"
+					}
+					<?php endif; ?>,
+					{
+						"@type": "ListItem",
+						"position": <?php echo $city_post ? '3' : '2'; ?>,
+						"name": "<?php echo esc_js( $service_title ); ?>",
+						"item": "<?php echo esc_url( $canonical_url ); ?>"
+					}
+				]
+			},
+			{
+				"@type": "LocalBusiness",
+				"name": "Sunnyside AC",
+				"telephone": "<?php echo esc_js( SUNNYSIDE_PHONE_DISPLAY ); ?>",
+				"address": {
+					"@type": "PostalAddress",
+					"streetAddress": "6609 Emerald Lake Dr",
+					"addressLocality": "Miramar",
+					"addressRegion": "FL",
+					"postalCode": "33023",
+					"addressCountry": "US"
+				},
+				"url": "<?php echo esc_url( home_url( '/' ) ); ?>",
+				"priceRange": "$$",
+				"openingHours": "Mo-Su 00:00-23:59",
+				"areaServed": "Florida"
+			},
+			{
+				"@type": "Service",
+				"serviceType": "<?php echo esc_js( $service_title ); ?>",
+				"provider": {
+					"@type": "LocalBusiness",
+					"name": "Sunnyside AC"
+				}
+				<?php
+				if ( $city_post ) :
+					?>
+					,
+				"areaServed": {
+					"@type": "City",
+					"name": "<?php echo esc_js( $city_name ); ?>"
+				}
 				<?php endif; ?>
-
-				<?php if ( has_post_thumbnail() ) : ?>
-					<div class="featured-image my-6">
-						<?php the_post_thumbnail( 'large', [ 'class' => 'w-full h-auto rounded-lg' ] ); ?>
-					</div>
-				<?php endif; ?>
-			</header>
-
-			<div class="entry-content prose max-w-none">
-				<?php the_content(); ?>
-			</div>
-
-			<?php if ( $city_post ) : ?>
-				<aside class="city-info mt-12 p-6 bg-gray-100 rounded-lg">
-					<h2 class="text-2xl font-semibold mb-4">
-						About <?php echo esc_html( get_the_title( $city_post ) ); ?>
-					</h2>
-					<div class="city-description">
-						<?php echo wpautop( get_the_content( null, false, $city_post ) ); ?>
-					</div>
-					<a href="<?php echo esc_url( get_permalink( $city_post->ID ) ); ?>"
-					   class="inline-block mt-4 text-blue-600 hover:text-blue-800">
-						View all services in <?php echo esc_html( get_the_title( $city_post ) ); ?> &rarr;
-					</a>
-				</aside>
+			}
+			<?php
+			if ( $service_faqs ) :
+				?>
+				,
+			{
+				"@type": "FAQPage",
+				"mainEntity": [
+					<?php foreach ( $service_faqs as $index => $faq ) : ?>
+					{
+						"@type": "Question",
+						"name": "<?php echo esc_js( $faq['question'] ); ?>",
+						"acceptedAnswer": {
+							"@type": "Answer",
+							"text": "<?php echo esc_js( wp_strip_all_tags( $faq['answer'] ) ); ?>"
+						}
+					}<?php echo $index < count( $service_faqs ) - 1 ? ',' : ''; ?>
+					<?php endforeach; ?>
+				]
+			}
 			<?php endif; ?>
-		</article>
-	</main>
+			<?php
+			if ( $service_process ) :
+				?>
+				,
+			{
+				"@type": "HowTo",
+				"name": "Our <?php echo esc_js( $service_title ); ?> Process",
+				"step": [
+					<?php foreach ( $service_process as $index => $step ) : ?>
+					{
+						"@type": "HowToStep",
+						"position": <?php echo $index + 1; ?>,
+						"name": "<?php echo esc_js( $step['title'] ); ?>",
+						"text": "<?php echo esc_js( $step['description'] ); ?>"
+					}<?php echo $index < count( $service_process ) - 1 ? ',' : ''; ?>
+					<?php endforeach; ?>
+				]
+			}
+			<?php endif; ?>
+			<?php if ( ! empty( $city_video_url ) ) : ?>
+				<?php
+				$video_data = sunnysideac_parse_video_url( $city_video_url );
+				if ( $video_data ) :
+					?>
+			,{
+				"@type": "VideoObject",
+				"name": "<?php echo ! empty( $city_video_title ) ? esc_js( $city_video_title ) : esc_js( $service_title . ' in ' . $city_name . ', Florida' ); ?>",
+				"description": "<?php echo ! empty( $city_video_description ) ? esc_js( $city_video_description ) : esc_js( 'Video about ' . $service_title . ' services in ' . $city_name ); ?>",
+				"thumbnailUrl": "<?php echo ! empty( $city_video_thumbnail ) ? esc_url( $city_video_thumbnail ) : esc_url( $video_data['thumbnail_url'] ); ?>",
+				"uploadDate": "<?php echo esc_attr( get_the_date( 'c', $city_post ) ); ?>",
+				"contentUrl": "<?php echo esc_url( $video_data['watch_url'] ); ?>",
+				"embedUrl": "<?php echo esc_url( $video_data['embed_url'] ); ?>"
+					<?php if ( ! empty( $city_video_duration ) ) : ?>
+				,"duration": "<?php echo esc_js( $city_video_duration ); ?>"
+				<?php endif; ?>
+			}
+				<?php endif; ?>
+			<?php endif; ?>
+		]
+	}
+	</script>
+</head>
 
-	<?php
-endif;
+<body <?php body_class(); ?>>
 
-get_footer();
+	<?php get_header(); ?>
+
+<main class="min-h-screen bg-gray-50" role="main" itemscope itemtype="https://schema.org/Service">
+
+	<!-- Container matching front-page style -->
+	<div class="lg:px-0 max-w-7xl mx-auto">
+		<section class="flex gap-10 flex-col">
+
+			<!-- Hero Section with Service Title & CTA -->
+			<article id="post-<?php the_ID(); ?>" <?php post_class( 'service-city-page' ); ?>>
+
+				<!-- Page Header - Breadcrumbs & Title -->
+				<header class="entry-header bg-white rounded-[20px] p-6 md:p-10 mb-6">
+					<!-- Breadcrumbs -->
+					<nav aria-label="Breadcrumb" class="mb-6 flex justify-center" itemscope itemtype="https://schema.org/BreadcrumbList">
+						<ol class="flex flex-wrap items-center gap-2 text-sm text-gray-600">
+							<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+								<a itemprop="item" href="<?php echo esc_url( home_url( '/' ) ); ?>" class="hover:text-orange-500">
+									<span itemprop="name">Home</span>
+								</a>
+								<meta itemprop="position" content="1">
+							</li>
+							<?php if ( $city_post ) : ?>
+								<li class="text-gray-400">/</li>
+								<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+									<a itemprop="item" href="<?php echo esc_url( home_url( '/' . $city_slug . '/' ) ); ?>" class="hover:text-orange-500">
+										<span itemprop="name"><?php echo esc_html( $city_name ); ?></span>
+									</a>
+									<meta itemprop="position" content="2">
+								</li>
+							<?php endif; ?>
+							<li class="text-gray-400">/</li>
+							<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+								<span itemprop="name" class="font-semibold text-orange-500"><?php echo esc_html( $service_title ); ?></span>
+								<meta itemprop="position" content="<?php echo $city_post ? '3' : '2'; ?>">
+							</li>
+						</ol>
+					</nav>
+
+					<!-- Main Title with Gradient -->
+					<div class="text-center mb-8">
+						<h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4" itemprop="name">
+							<span class="bg-gradient-to-r from-[#fb9939] to-[#e5462f] bg-clip-text text-transparent">
+								<?php echo esc_html( $service_title ); ?>
+							</span>
+							<?php if ( $city_post ) : ?>
+								<span class="block text-gray-800 mt-2">
+									in <?php echo esc_html( $city_name ); ?>, Florida
+								</span>
+							<?php endif; ?>
+						</h1>
+
+						<?php if ( $city_post && $city_climate_note ) : ?>
+							<p class="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed italic">
+								<?php echo esc_html( $city_climate_note ); ?>
+							</p>
+						<?php endif; ?>
+					</div>
+
+					<!-- CTA Buttons - matching front page style -->
+					<div class="flex flex-col sm:flex-row justify-center gap-4 mt-8">
+						<a href="tel:<?php echo esc_attr( SUNNYSIDE_TEL_HREF ); ?>"
+							class="inline-flex items-center justify-center gap-2 rounded-[35px] bg-gradient-to-r from-[#fb9939] to-[#e5462f] px-6 py-4 transition-opacity hover:opacity-90 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:outline-none"
+							aria-label="Call to schedule service - <?php echo esc_attr( SUNNYSIDE_PHONE_DISPLAY ); ?>">
+							<span class="text-base lg:text-lg font-medium text-white whitespace-nowrap">
+								Schedule Service Now
+							</span>
+						</a>
+
+						<a href="tel:<?php echo esc_attr( SUNNYSIDE_TEL_HREF ); ?>"
+							class="inline-flex items-center justify-center gap-2 rounded-[35px] bg-gradient-to-r from-[#7fcbf2] to-[#594bf7] px-6 py-4 transition-opacity hover:opacity-90 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
+							aria-label="Call us now - <?php echo esc_attr( SUNNYSIDE_PHONE_DISPLAY ); ?>">
+							<span class="text-base lg:text-lg font-medium text-white whitespace-nowrap">
+								Call <?php echo esc_html( SUNNYSIDE_PHONE_DISPLAY ); ?>
+							</span>
+						</a>
+					</div>
+
+					<!-- Featured Image (if exists) -->
+					<?php if ( has_post_thumbnail() ) : ?>
+						<figure class="mt-8" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+							<?php
+							the_post_thumbnail(
+								'large',
+								[
+									'class'    => 'w-full h-auto rounded-2xl shadow-lg',
+									'itemprop' => 'url',
+									'alt'      => esc_attr( $service_title . ' services in ' . $city_name . ', Florida' ),
+								]
+							);
+							?>
+							<meta itemprop="width" content="1200">
+							<meta itemprop="height" content="630">
+						</figure>
+					<?php endif; ?>
+				</header>
+
+				<!-- City Video Section (High Local SEO Value) -->
+				<?php
+				if ( $city_post && ! empty( $city_video_url ) ) :
+					// Set template part variables for video component
+					set_query_var( 'video_url', $city_video_url );
+					set_query_var( 'video_title', $city_video_title );
+					set_query_var( 'video_description', $city_video_description );
+					set_query_var( 'video_thumbnail', $city_video_thumbnail );
+					set_query_var( 'video_duration', $city_video_duration );
+					set_query_var( 'service_title', $service_title );
+					set_query_var( 'city_name', $city_name );
+					set_query_var( 'city_post', $city_post );
+
+					// Include responsive video component
+					get_template_part( 'template-parts/video-embed' );
+				endif;
+				?>
+
+				<!-- Main Service Description - Redesigned -->
+				<?php if ( $service_description ) : ?>
+					<div class="service-description bg-white rounded-[20px] p-6 md:p-10 mb-6" itemprop="description">
+						<div class="prose prose-lg max-w-none">
+							<?php echo wp_kses_post( $service_description ); ?>
+						</div>
+					</div>
+				<?php endif; ?>
+
+				<!-- Service Benefits - Redesigned as Cards -->
+				<?php if ( $service_benefits ) : ?>
+					<section class="service-benefits bg-white rounded-[20px] p-6 md:p-10 mb-6" aria-labelledby="benefits-heading">
+						<header class="text-center mb-8">
+							<h2 id="benefits-heading" class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+								Why Choose Our <?php echo esc_html( $service_title ); ?> Services
+								<?php echo $city_post ? 'in ' . esc_html( $city_name ) : ''; ?>?
+							</h2>
+							<p class="text-lg text-gray-600">
+								Service You Can Trust, Comfort You Deserve
+							</p>
+						</header>
+
+						<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+							<?php foreach ( $service_benefits as $index => $benefit ) : ?>
+								<article class="group bg-gray-50 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:bg-orange-50 hover:shadow-lg">
+									<!-- Number Badge -->
+									<div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-orange-200 to-orange-300 mb-4">
+										<span class="text-xl font-bold text-orange-500">
+											<?php echo $index + 1; ?>
+										</span>
+									</div>
+
+									<!-- Benefit Text -->
+									<h3 class="text-lg font-semibold text-gray-900 mb-2">
+										<?php echo esc_html( $benefit['benefit'] ); ?>
+									</h3>
+								</article>
+							<?php endforeach; ?>
+						</div>
+					</section>
+				<?php endif; ?>
+
+				<!-- Service Process - Matching work-process.php style -->
+				<?php if ( $service_process ) : ?>
+					<section class="service-process bg-white rounded-[20px] p-6 md:p-10 mb-6" aria-labelledby="process-heading" itemscope itemtype="https://schema.org/HowTo">
+						<header class="text-center mb-12">
+							<h2 id="process-heading" class="text-3xl md:text-4xl font-bold text-gray-900 mb-4" itemprop="name">
+								Our <?php echo esc_html( $service_title ); ?> Process
+							</h2>
+							<p class="text-lg text-gray-600">
+								Your Comfort, Our Process
+							</p>
+						</header>
+
+						<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-<?php echo min( count( $service_process ), 4 ); ?> gap-6">
+							<?php foreach ( $service_process as $index => $step ) : ?>
+								<article class="group" itemprop="step" itemscope itemtype="https://schema.org/HowToStep">
+									<meta itemprop="position" content="<?php echo $index + 1; ?>">
+
+									<div class="bg-gray-50 rounded-2xl p-8 text-center transition-all duration-300 hover:scale-105 hover:bg-orange-50 hover:shadow-lg h-full flex flex-col items-center">
+										<!-- Step Number in Circle -->
+										<div class="mb-6">
+											<div class="relative inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-orange-200 to-orange-300">
+												<span class="text-3xl font-bold text-orange-500">
+													<?php echo $index + 1; ?>
+												</span>
+											</div>
+										</div>
+
+										<!-- Step Content -->
+										<h3 class="text-xl font-bold text-gray-900 mb-3" itemprop="name">
+											<?php echo esc_html( $step['title'] ); ?>
+										</h3>
+
+										<p class="text-base text-gray-600 leading-relaxed" itemprop="text">
+											<?php echo esc_html( $step['description'] ); ?>
+										</p>
+									</div>
+								</article>
+							<?php endforeach; ?>
+						</div>
+					</section>
+				<?php endif; ?>
+
+				<!-- Service Area Information (City-Specific) -->
+				<?php if ( $city_post && $city_service_area_note ) : ?>
+					<section class="service-area-info bg-white rounded-[20px] p-6 md:p-10 mb-6" aria-labelledby="service-area-heading">
+						<header class="mb-6">
+							<h2 id="service-area-heading" class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+								Serving <?php echo esc_html( $city_name ); ?>
+							</h2>
+						</header>
+
+						<div class="prose prose-lg max-w-none">
+							<?php echo wp_kses_post( $city_service_area_note ); ?>
+						</div>
+
+						<!-- Neighborhoods Grid -->
+						<?php if ( $city_neighborhoods ) : ?>
+							<?php
+							$neighborhoods_array = array_filter( array_map( 'trim', explode( "\n", $city_neighborhoods ) ) );
+							if ( ! empty( $neighborhoods_array ) ) :
+								?>
+								<div class="mt-8">
+									<h3 class="text-xl font-semibold text-gray-900 mb-4">
+										Areas We Serve in <?php echo esc_html( $city_name ); ?>:
+									</h3>
+									<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+										<?php foreach ( $neighborhoods_array as $neighborhood ) : ?>
+											<div class="bg-gray-50 rounded-lg px-4 py-2 text-center text-sm text-gray-700 hover:bg-orange-50 transition-colors">
+												<?php echo esc_html( $neighborhood ); ?>
+											</div>
+										<?php endforeach; ?>
+									</div>
+								</div>
+							<?php endif; ?>
+						<?php endif; ?>
+					</section>
+				<?php endif; ?>
+
+				<!-- FAQs - Redesigned with Accordion Style -->
+				<?php if ( $service_faqs ) : ?>
+					<section class="service-faqs bg-white rounded-[20px] p-6 md:p-10 mb-6" aria-labelledby="faq-heading">
+						<header class="text-center mb-8">
+							<h2 id="faq-heading" class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+								Frequently Asked Questions
+							</h2>
+							<p class="text-lg text-gray-600">
+								Got questions? We've got answers.
+							</p>
+						</header>
+
+						<div class="faq-list space-y-4 max-w-4xl mx-auto">
+							<?php foreach ( $service_faqs as $faq ) : ?>
+								<details class="faq-item bg-gray-50 rounded-2xl p-6 transition-all duration-300 hover:bg-orange-50 group" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+									<summary class="font-semibold text-lg cursor-pointer hover:text-orange-500 flex justify-between items-center" itemprop="name">
+										<span><?php echo esc_html( $faq['question'] ); ?></span>
+										<svg class="w-6 h-6 transform transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+										</svg>
+									</summary>
+									<div class="faq-answer mt-4 text-gray-600 leading-relaxed border-t border-gray-200 pt-4" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+										<div itemprop="text">
+											<?php echo wp_kses_post( wpautop( $faq['answer'] ) ); ?>
+										</div>
+									</div>
+								</details>
+							<?php endforeach; ?>
+						</div>
+					</section>
+				<?php endif; ?>
+
+				<!-- Internal Links Section - Redesigned as Grid Cards -->
+				<?php
+				// Get related services for internal linking
+				$all_services = get_posts(
+					[
+						'post_type'      => 'service',
+						'posts_per_page' => 6,
+						'post__not_in'   => [ $service_id ],
+						'orderby'        => 'rand',
+					]
+				);
+
+				if ( $all_services && $city_post ) :
+					?>
+					<section class="related-services bg-white rounded-[20px] p-6 md:p-10 mb-6" aria-labelledby="related-services-heading">
+						<header class="text-center mb-8">
+							<h2 id="related-services-heading" class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+								Other HVAC Services in <?php echo esc_html( $city_name ); ?>
+							</h2>
+							<p class="text-lg text-gray-600">
+								Comprehensive HVAC solutions for your home or business
+							</p>
+						</header>
+
+						<nav aria-label="Related services">
+							<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+								<?php foreach ( array_slice( $all_services, 0, 6 ) as $related_service ) : ?>
+									<a href="<?php echo esc_url( home_url( '/' . $city_slug . '/' . $related_service->post_name . '/' ) ); ?>"
+										class="group block bg-gray-50 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-orange-50 hover:to-orange-100 hover:shadow-lg">
+										<h3 class="font-bold text-lg text-gray-900 mb-2 group-hover:text-orange-500">
+											<?php echo esc_html( get_the_title( $related_service ) ); ?>
+										</h3>
+										<p class="text-gray-600 text-sm">
+											Professional service in <?php echo esc_html( $city_name ); ?>
+										</p>
+										<span class="inline-flex items-center mt-3 text-orange-500 font-medium text-sm">
+											Learn More
+											<svg class="w-4 h-4 ml-1 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+											</svg>
+										</span>
+									</a>
+								<?php endforeach; ?>
+							</div>
+						</nav>
+					</section>
+				<?php endif; ?>
+
+				<!-- Call to Action - Matching hero gradient style -->
+				<section class="cta-section bg-gradient-to-r from-[#fb9939] to-[#e5462f] rounded-[20px] p-8 md:p-12 mb-6 text-center" aria-labelledby="cta-heading">
+					<h2 id="cta-heading" class="text-3xl md:text-4xl font-bold text-white mb-4">
+						Ready to Get Started?
+					</h2>
+					<p class="text-xl text-white mb-8 max-w-2xl mx-auto">
+						Contact us today for expert <?php echo strtolower( $service_title ); ?>
+						<?php echo $city_post ? 'in ' . esc_html( $city_name ) : ''; ?>
+					</p>
+
+					<div class="flex flex-col sm:flex-row justify-center gap-4">
+						<a href="tel:<?php echo esc_attr( SUNNYSIDE_TEL_HREF ); ?>"
+							class="inline-flex items-center justify-center gap-2 rounded-[35px] bg-white px-8 py-4 transition-all hover:scale-105 hover:shadow-xl focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-orange-500 focus:outline-none">
+							<span class="text-lg font-bold text-orange-500">
+								Call <?php echo esc_html( SUNNYSIDE_PHONE_DISPLAY ); ?>
+							</span>
+						</a>
+
+						<a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"
+							class="inline-flex items-center justify-center gap-2 rounded-[35px] bg-gradient-to-r from-[#7fcbf2] to-[#594bf7] px-8 py-4 transition-all hover:scale-105 hover:shadow-xl focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 focus:ring-offset-orange-500 focus:outline-none">
+							<span class="text-lg font-bold text-white">
+								Request a Quote
+							</span>
+						</a>
+					</div>
+				</section>
+
+			</article>
+
+		</section>
+	</div>
+
+</main>
+
+	<?php get_footer(); ?>
+
+</body>
+</html>
+<?php endif; ?>

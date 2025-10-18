@@ -74,43 +74,56 @@
 <div class="mx-auto w-full max-w-7xl px-4">
 
 <?php
-// Navigation configuration
+// Updated navigation configuration
 $navigation_items = [
 	['name' => 'Home', 'hasDropdown' => false, 'href' => home_url('/')],
-	['name' => 'About', 'hasDropdown' => false, 'href' => home_url('/about')],
 	['name' => 'Services', 'hasDropdown' => true, 'href' => home_url('/services')],
 	['name' => 'Projects', 'hasDropdown' => false, 'href' => home_url('/projects')],
 	['name' => 'Blog', 'hasDropdown' => false, 'href' => home_url('/blog')],
+	['name' => 'Areas', 'hasDropdown' => true, 'href' => home_url('/areas')],
 	['name' => 'Contact Us', 'hasDropdown' => false, 'href' => home_url('/contact')],
 ];
 
-$service_items = [
-	[
-		'name' => 'Air Conditioning Installation',
-		'href' => home_url('/services/air-conditioning-installation'),
-		'iconPath' => 'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z',
-	],
-	[
-		'name' => 'Indoor Air Quality Solutions',
-		'href' => home_url('/services/indoor-air-quality'),
-		'iconPath' => 'M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z',
-	],
-	[
-		'name' => 'HVAC Maintenance Plans',
-		'href' => home_url('/services/hvac-maintenance'),
-		'iconPath' => 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z',
-	],
-	[
-		'name' => 'Emergency HVAC Services',
-		'href' => home_url('/services/emergency-hvac'),
-		'iconPath' => 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z',
-	],
-	[
-		'name' => 'Commercial HVAC Services',
-		'href' => home_url('/services/commercial-hvac'),
-		'iconPath' => 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4',
-	],
-];
+// Categorized service items
+$service_categories = SUNNYSIDE_SERVICES_BY_CATEGORY;
+$service_items = [];
+
+foreach ($service_categories as $category_key => $services) {
+	$category_label = ucwords(str_replace('_', ' ', $category_key));
+
+	// Add category header
+	$service_items[] = [
+		'type' => 'category_header',
+		'name' => $category_label,
+		'is_header' => true
+	];
+
+	// Add services in this category
+	foreach ($services as $service_name) {
+		$service_items[] = [
+			'name' => $service_name,
+			'href' => home_url(sprintf(SUNNYSIDE_SERVICE_URL_PATTERN, sanitize_title($service_name))),
+			'iconPath' => sunnysideac_get_service_icon($service_name),
+			'category' => $category_key
+		];
+	}
+
+	// Add separator (except after last category)
+	if ($category_key !== array_key_last($service_categories)) {
+		$service_items[] = ['type' => 'separator'];
+	}
+}
+
+// Service areas dropdown data
+$priority_cities = SUNNYSIDE_PRIORITY_CITIES;
+$city_items = [];
+foreach ($priority_cities as $city) {
+	$city_items[] = [
+		'name' => $city,
+		'href' => home_url(sprintf(SUNNYSIDE_CITY_URL_PATTERN, sanitize_title($city))),
+		'iconPath' => 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z'
+	];
+}
 
 // Asset paths
 $logo_path = get_template_directory_uri() . '/assets/images/images/logos/sunny-side-logo.png';
@@ -261,11 +274,22 @@ $phone_icon = get_template_directory_uri() . '/assets/images/images/logos/naviga
 										</button>
 									</div>
 
-									<!-- Dropdown Menu -->
-									<div class="absolute top-full left-0 z-[9999] mt-[10px] w-[320px] rounded-[20px] border-2 border-[#e6d4b8] bg-white shadow-[0_8px_25px_rgba(0,0,0,0.15)] hidden services-dropdown">
+									<!-- Enhanced Services Dropdown -->
+									<div class="absolute top-full left-0 z-[9999] mt-[10px] w-[400px] rounded-[20px] border-2 border-[#e6d4b8] bg-white shadow-[0_8px_25px_rgba(0,0,0,0.15)] hidden services-dropdown">
 										<div class="py-4">
 											<?php foreach ($service_items as $service_index => $service) : ?>
-												<div>
+												<?php if (isset($service['type']) && $service['type'] === 'category_header') : ?>
+													<!-- Category Header -->
+													<div class="px-6 py-2">
+														<div class="text-sm font-bold text-[#fb9939] uppercase tracking-wide">
+															<?php echo esc_html($service['name']); ?>
+														</div>
+													</div>
+												<?php elseif (isset($service['type']) && $service['type'] === 'separator') : ?>
+													<!-- Separator -->
+													<div class="mx-6 my-2 border-b border-[#d4af7a]"></div>
+												<?php else : ?>
+													<!-- Service Item -->
 													<a
 														href="<?php echo esc_url($service['href']); ?>"
 														class="mx-2 flex cursor-pointer items-center gap-3 rounded-[20px] px-6 py-3 transition-colors duration-200 hover:bg-[#ffc549] focus:bg-[#ffc549] focus:outline-none"
@@ -280,11 +304,87 @@ $phone_icon = get_template_directory_uri() . '/assets/images/images/logos/naviga
 															<?php echo esc_html($service['name']); ?>
 														</span>
 													</a>
-													<?php if ($service_index < count($service_items) - 1) : ?>
-														<div class="mx-6 my-2 border-b border-[#d4af7a]"></div>
-													<?php endif; ?>
-												</div>
+												<?php endif; ?>
 											<?php endforeach; ?>
+
+											<!-- All Services Link -->
+											<div class="mx-6 mt-3 pt-3 border-t border-[#d4af7a]">
+												<a
+													href="<?php echo esc_url(home_url('/services')); ?>"
+													class="flex items-center justify-center gap-2 rounded-[20px] bg-[#ffc549] px-4 py-2 text-center font-medium text-[#e5462f] transition-colors duration-200 hover:bg-[#fb9939] focus:bg-[#fb9939] focus:outline-none"
+												>
+													All HVAC Services
+													<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+														<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+													</svg>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							<?php elseif ($item['name'] === 'Areas') : ?>
+								<div class="relative" id="service-areas-dropdown-container">
+									<div
+										class="inline-flex cursor-pointer items-center gap-1 rounded-full px-6 py-3 transition-colors duration-200 hover:bg-[#ffc549] focus:ring-2 focus:ring-[#ffc549] focus:ring-offset-2 focus:outline-none bg-[#fde0a0] nav-item"
+										data-item="<?php echo esc_attr($item['name']); ?>"
+										role="menuitem"
+										aria-haspopup="true"
+										aria-expanded="false"
+										aria-label="Areas menu"
+									>
+										<a
+											href="<?php echo esc_url($item['href']); ?>"
+											class="[font-family:'Inter-Medium',Helvetica] text-lg font-medium whitespace-nowrap text-black hover:text-black focus:text-black"
+										>
+											<?php echo esc_html($item['name']); ?>
+										</a>
+										<button
+											class="ml-1 border-none bg-transparent p-0 focus:outline-none service-areas-dropdown-btn"
+											aria-label="Toggle areas dropdown"
+										>
+											<img
+												src="<?php echo esc_url($chevron_down_icon); ?>"
+												alt=""
+												class="h-4 w-4 text-current transition-transform duration-200 chevron-icon"
+												role="presentation"
+												loading="lazy"
+												decoding="async"
+											/>
+										</button>
+									</div>
+
+									<!-- Areas Dropdown -->
+									<div class="absolute top-full left-0 z-[9999] mt-[10px] w-[280px] rounded-[20px] border-2 border-[#e6d4b8] bg-white shadow-[0_8px_25px_rgba(0,0,0,0.15)] hidden service-areas-dropdown">
+										<div class="py-4">
+											<?php foreach ($city_items as $city_index => $city) : ?>
+												<a
+													href="<?php echo esc_url($city['href']); ?>"
+													class="mx-2 flex cursor-pointer items-center gap-3 rounded-[20px] px-6 py-3 transition-colors duration-200 hover:bg-[#ffc549] focus:bg-[#ffc549] focus:outline-none"
+													aria-label="Navigate to <?php echo esc_attr($city['name']); ?> service area"
+												>
+													<div class="h-5 w-5 flex-shrink-0">
+														<svg class="h-5 w-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+															<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="<?php echo esc_attr($city['iconPath']); ?>" />
+														</svg>
+													</div>
+													<span class="[font-family:'Inter-Medium',Helvetica] text-base font-medium text-black">
+														<?php echo esc_html($city['name']); ?>
+													</span>
+												</a>
+											<?php endforeach; ?>
+
+											<!-- All Areas Link -->
+											<div class="mx-6 mt-3 pt-3 border-t border-[#d4af7a]">
+												<a
+													href="<?php echo esc_url(home_url('/service-areas')); ?>"
+													class="flex items-center justify-center gap-2 rounded-[20px] bg-[#ffc549] px-4 py-2 text-center font-medium text-[#e5462f] transition-colors duration-200 hover:bg-[#fb9939] focus:bg-[#fb9939] focus:outline-none"
+												>
+													All Service Areas
+													<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+														<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+													</svg>
+												</a>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -430,20 +530,45 @@ $phone_icon = get_template_directory_uri() . '/assets/images/images/logos/naviga
 									</h3>
 									<div class="space-y-1">
 										<?php foreach ($service_items as $service) : ?>
+											<?php if (!isset($service['type']) || $service['type'] !== 'category_header' && $service['type'] !== 'separator') : ?>
+												<a
+													href="<?php echo esc_url($service['href']); ?>"
+													class="block w-full py-2 text-left text-gray-700 transition-colors duration-200 hover:text-[#fb9939] mobile-service-link"
+												>
+													<?php echo esc_html($service['name']); ?>
+												</a>
+											<?php endif; ?>
+										<?php endforeach; ?>
+									</div>
+								</div>
+
+								<!-- Areas Section -->
+								<div class="mb-6">
+									<h3 class="mb-3 border-b border-gray-200 pb-2 text-lg font-medium text-gray-800">
+										Areas
+									</h3>
+									<div class="space-y-1">
+										<?php foreach ($priority_cities as $city) : ?>
 											<a
-												href="<?php echo esc_url($service['href']); ?>"
-												class="block w-full py-2 text-left text-gray-700 transition-colors duration-200 hover:text-[#fb9939] mobile-service-link"
+												href="<?php echo esc_url(home_url(sprintf(SUNNYSIDE_CITY_URL_PATTERN, sanitize_title($city)))); ?>"
+												class="block w-full py-2 text-left text-gray-700 transition-colors duration-200 hover:text-[#fb9939] mobile-area-link"
 											>
-												<?php echo esc_html($service['name']); ?>
+												<?php echo esc_html($city); ?>
 											</a>
 										<?php endforeach; ?>
+										<a
+											href="<?php echo esc_url(home_url('/areas')); ?>"
+											class="block w-full py-2 text-left font-medium text-[#fb9939] transition-colors duration-200 hover:text-[#e5462f]"
+										>
+											→ View All Areas
+										</a>
 									</div>
 								</div>
 
 								<!-- Navigation Links -->
 								<div class="mb-6 space-y-1">
 									<?php foreach ($navigation_items as $item) : ?>
-										<?php if ($item['name'] !== 'Home' && $item['name'] !== 'Services') : ?>
+										<?php if ($item['name'] !== 'Home' && $item['name'] !== 'Services' && $item['name'] !== 'Areas') : ?>
 											<button
 												class="w-full border-b border-gray-200 py-2 text-left text-gray-700 hover:text-[#fb9939] mobile-nav-link"
 												data-href="<?php echo esc_url($item['href']); ?>"
@@ -527,6 +652,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	// State variables
 	let activeMenuItem = 'Home';
 	let isServicesDropdownOpen = false;
+let isServiceAreasDropdownOpen = false;
 	let isMobileMenuOpen = false;
 	let selectedLocation = '';
 	let hoverTimeout = null;
@@ -543,6 +669,11 @@ document.addEventListener('DOMContentLoaded', function() {
 	const locationSelect = document.getElementById('location-select');
 	const locationSelectBtn = document.getElementById('location-select-btn');
 	const selectedLocationText = document.getElementById('selected-location-text');
+
+	// Service Areas dropdown elements
+	const serviceAreasDropdownContainer = document.getElementById('service-areas-dropdown-container');
+	const serviceAreasDropdown = document.querySelector('.service-areas-dropdown');
+	const serviceAreasDropdownBtn = document.querySelector('.service-areas-dropdown-btn');
 
 	// Utility functions
 	function updateActiveMenuItem(itemName) {
@@ -568,8 +699,12 @@ document.addEventListener('DOMContentLoaded', function() {
 		if (itemName === 'Services') {
 			// Toggle dropdown
 			toggleServicesDropdown();
+		} else if (itemName === 'Areas') {
+			// Toggle dropdown
+			toggleServiceAreasDropdown();
 		} else {
 			closeServicesDropdown();
+			closeServiceAreasDropdown();
 			// Navigate to the page
 			if (href && href !== '#') {
 				window.location.href = href;
@@ -619,6 +754,47 @@ document.addEventListener('DOMContentLoaded', function() {
 				}
 				if (servicesDropdownContainer) {
 					servicesDropdownContainer.setAttribute('aria-expanded', 'false');
+				}
+			}
+		}
+	}
+
+	function toggleServiceAreasDropdown() {
+		isServiceAreasDropdownOpen = !isServiceAreasDropdownOpen;
+		updateServiceAreasDropdown();
+	}
+
+	function openServiceAreasDropdown() {
+		if (hoverTimeout) {
+			clearTimeout(hoverTimeout);
+			hoverTimeout = null;
+		}
+		isServiceAreasDropdownOpen = true;
+		updateServiceAreasDropdown();
+	}
+
+	function closeServiceAreasDropdown() {
+		isServiceAreasDropdownOpen = false;
+		updateServiceAreasDropdown();
+	}
+
+	function delayedCloseServiceAreasDropdown() {
+		hoverTimeout = setTimeout(() => {
+			closeServiceAreasDropdown();
+		}, 150);
+	}
+
+	function updateServiceAreasDropdown() {
+		if (serviceAreasDropdown) {
+			if (isServiceAreasDropdownOpen) {
+				serviceAreasDropdown.classList.remove('hidden');
+				if (serviceAreasDropdownContainer) {
+					serviceAreasDropdownContainer.setAttribute('aria-expanded', 'true');
+				}
+			} else {
+				serviceAreasDropdown.classList.add('hidden');
+				if (serviceAreasDropdownContainer) {
+					serviceAreasDropdownContainer.setAttribute('aria-expanded', 'false');
 				}
 			}
 		}
@@ -685,6 +861,31 @@ document.addEventListener('DOMContentLoaded', function() {
 				});
 				servicesDropdown.addEventListener('mouseleave', delayedCloseServicesDropdown);
 			}
+		} else if (itemName === 'Areas') {
+			// Areas dropdown toggle
+			if (serviceAreasDropdownBtn) {
+				serviceAreasDropdownBtn.addEventListener('click', (e) => {
+					e.preventDefault();
+					e.stopPropagation();
+					handleMenuItemClick(itemName, href);
+				});
+			}
+
+			// Hover events for areas dropdown
+			if (serviceAreasDropdownContainer) {
+				serviceAreasDropdownContainer.addEventListener('mouseenter', openServiceAreasDropdown);
+				serviceAreasDropdownContainer.addEventListener('mouseleave', delayedCloseServiceAreasDropdown);
+			}
+
+			if (serviceAreasDropdown) {
+				serviceAreasDropdown.addEventListener('mouseenter', () => {
+					if (hoverTimeout) {
+						clearTimeout(hoverTimeout);
+						hoverTimeout = null;
+					}
+				});
+				serviceAreasDropdown.addEventListener('mouseleave', delayedCloseServiceAreasDropdown);
+			}
 		} else {
 			// Regular navigation items
 			item.addEventListener('click', () => {
@@ -740,6 +941,11 @@ document.addEventListener('DOMContentLoaded', function() {
 		link.addEventListener('click', closeMobileMenu);
 	});
 
+	// Mobile service areas links
+	document.querySelectorAll('.mobile-area-link').forEach(link => {
+		link.addEventListener('click', closeMobileMenu);
+	});
+
 	// Location select
 	if (locationSelectBtn && locationSelect) {
 		locationSelectBtn.addEventListener('click', () => {
@@ -757,6 +963,9 @@ document.addEventListener('DOMContentLoaded', function() {
 		if (servicesDropdownContainer && !servicesDropdownContainer.contains(event.target)) {
 			closeServicesDropdown();
 		}
+		if (serviceAreasDropdownContainer && !serviceAreasDropdownContainer.contains(event.target)) {
+			closeServiceAreasDropdown();
+		}
 	});
 
 	// Handle escape key
@@ -767,6 +976,9 @@ document.addEventListener('DOMContentLoaded', function() {
 			}
 			if (isServicesDropdownOpen) {
 				closeServicesDropdown();
+			}
+			if (isServiceAreasDropdownOpen) {
+				closeServiceAreasDropdown();
 			}
 		}
 	});
