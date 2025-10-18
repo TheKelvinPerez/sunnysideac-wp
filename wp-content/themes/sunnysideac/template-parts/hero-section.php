@@ -6,41 +6,41 @@
 
 // Icons data
 $icons = [
-    'best_refreshed' => sunnysideac_asset_url('assets/icons/best-at-keeping-refreshed-icon.svg'),
-    'mobile_best_refreshed' => sunnysideac_asset_url('assets/icons/mobile-best-refreshed-icon.svg'),
-    'schedule_service' => sunnysideac_asset_url('assets/icons/schedule-service-now-icon.svg'),
-    'call_us_now' => sunnysideac_asset_url('assets/icons/call-us-now-icon.svg'),
-    'google' => sunnysideac_asset_url('assets/icons/google-icon.svg'),
-    'star' => sunnysideac_asset_url('assets/icons/star-icon.svg'),
-    'hero_line_break' => sunnysideac_asset_url('assets/icons/hero-line-break.svg')
+	'best_refreshed'        => sunnysideac_asset_url( 'assets/icons/best-at-keeping-refreshed-icon.svg' ),
+	'mobile_best_refreshed' => sunnysideac_asset_url( 'assets/icons/mobile-best-refreshed-icon.svg' ),
+	'schedule_service'      => sunnysideac_asset_url( 'assets/icons/schedule-service-now-icon.svg' ),
+	'call_us_now'           => sunnysideac_asset_url( 'assets/icons/call-us-now-icon.svg' ),
+	'google'                => sunnysideac_asset_url( 'assets/icons/google-icon.svg' ),
+	'star'                  => sunnysideac_asset_url( 'assets/icons/star-icon.svg' ),
+	'hero_line_break'       => sunnysideac_asset_url( 'assets/icons/hero-line-break.svg' ),
 ];
 
 // Images data
 $images = [
-    'hero_right' => sunnysideac_asset_url('assets/images/images/hero/hero-right-image.png'),
-    'mobile_hero' => sunnysideac_asset_url('assets/images/images/hero/mobile-hero-image.png'),
-    'review_photos' => [
-        sunnysideac_asset_url('assets/images/images/hero/review_photo_1.png'),
-        sunnysideac_asset_url('assets/images/images/hero/review_photo_2.png'),
-        sunnysideac_asset_url('assets/images/images/hero/review_photo_3.png'),
-        sunnysideac_asset_url('assets/images/images/hero/review_photo_4.png')
-    ]
+	'hero_right'    => sunnysideac_asset_url( 'assets/images/images/hero/hero-right-image.png' ),
+	'mobile_hero'   => sunnysideac_asset_url( 'assets/images/images/hero/mobile-hero-image.png' ),
+	'review_photos' => [
+		sunnysideac_asset_url( 'assets/images/images/hero/review_photo_1.png' ),
+		sunnysideac_asset_url( 'assets/images/images/hero/review_photo_2.png' ),
+		sunnysideac_asset_url( 'assets/images/images/hero/review_photo_3.png' ),
+		sunnysideac_asset_url( 'assets/images/images/hero/review_photo_4.png' ),
+	],
 ];
 
 // Statistics data
 $statistics = [
-    [
-        'number' => '1.5K+',
-        'description' => "Project Completed\nWith Excellence"
-    ],
-    [
-        'number' => '2014',
-        'description' => "Family-Owned\n& Operated Since"
-    ],
-    [
-        'number' => '2.5K+',
-        'description' => "Happy Customers\nServed"
-    ]
+	[
+		'number'      => '1.5K+',
+		'description' => "Project Completed\nWith Excellence",
+	],
+	[
+		'number'      => '2014',
+		'description' => "Family-Owned\n& Operated Since",
+	],
+	[
+		'number'      => '2.5K+',
+		'description' => "Happy Customers\nServed",
+	],
 ];
 
 // Get WordPress data
@@ -52,14 +52,14 @@ $phone_display = SUNNYSIDE_PHONE_DISPLAY;
 /**
  * Render star rating
  *
- * @param int $count Number of stars
+ * @param int    $count Number of stars
  * @param string $star_icon_url URL to the star icon
  * @param string $class Additional CSS classes
  */
-function sunnysideac_render_stars($count = 5, $star_icon_url = '', $class = 'h-3 w-3 sm:h-4 sm:w-4 lg:h-5 lg:w-5') {
-    for ($i = 0; $i < $count; $i++) {
-        echo '<img src="' . esc_url($star_icon_url) . '" alt="Star" class="' . esc_attr($class) . '" loading="lazy" decoding="async" />';
-    }
+function sunnysideac_render_stars( $count = 5, $star_icon_url = '', $class = 'h-3 w-3 sm:h-4 sm:w-4 lg:h-5 lg:w-5' ) {
+	for ( $i = 0; $i < $count; $i++ ) {
+		echo '<img src="' . esc_url( $star_icon_url ) . '" alt="Star" class="' . esc_attr( $class ) . '" loading="lazy" decoding="async" />';
+	}
 }
 ?>
 
@@ -97,7 +97,7 @@ function sunnysideac_render_stars($count = 5, $star_icon_url = '', $class = 'h-3
 		<div class="flex flex-1 flex-col justify-center">
 		<!-- Main Headline -->
 		<h1
-			class="text-center text-xl leading-tight font-semibold text-black sm:text-2xl md:text-3xl lg:text-left lg:text-4xl">
+			class="text-center text-xl border-red-500 leading-tight font-semibold text-black sm:text-2xl md:text-3xl lg:text-left lg:text-4xl">
 			AC Trouble? We Turn 'Hot & Miserable' Into 'Cool & Comfortable' —
 			Fast."
 		</h1>

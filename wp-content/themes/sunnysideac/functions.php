@@ -150,10 +150,11 @@ require_once get_template_directory() . '/inc/helpers.php';
  * Get Vite dev server URL from environment or use defaults
  */
 function sunnysideac_get_vite_dev_server_url() {
-	// Get values from environment variables loaded by phpdotenv
-	$protocol = $_ENV['VITE_DEV_SERVER_PROTOCOL'] ?? 'http';
-	$host     = $_ENV['VITE_DEV_SERVER_HOST'] ?? 'localhost';
-	$port     = $_ENV['VITE_DEV_SERVER_PORT'] ?? '3000';
+	// For DDEV, use HMR host/port which is the browser-accessible URL
+	// For non-DDEV, fall back to dev server host/port
+	$protocol = $_ENV['VITE_HMR_PROTOCOL'] ?? $_ENV['VITE_DEV_SERVER_PROTOCOL'] ?? 'http';
+	$host     = $_ENV['VITE_HMR_HOST'] ?? $_ENV['VITE_DEV_SERVER_HOST'] ?? 'localhost';
+	$port     = $_ENV['VITE_HMR_PORT'] ?? $_ENV['VITE_DEV_SERVER_PORT'] ?? '3000';
 
 	// Allow filtering via WordPress hooks for more flexibility
 	$protocol = apply_filters( 'sunnysideac_vite_protocol', $protocol );

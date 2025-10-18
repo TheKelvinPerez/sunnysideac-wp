@@ -71,7 +71,7 @@
 <?php wp_body_open(); ?>
 
 <!-- Global content wrapper with max-width -->
-<div class="mx-auto w-full max-w-7xl px-4">
+<div class="mx-auto w-full max-w-7xl px-4 overflow-visible">
 
 <?php
 // Updated navigation configuration
@@ -274,47 +274,78 @@ $phone_icon = get_template_directory_uri() . '/assets/images/images/logos/naviga
 										</button>
 									</div>
 
-									<!-- Enhanced Services Dropdown -->
-									<div class="absolute top-full left-0 z-[9999] mt-[10px] w-[400px] rounded-[20px] border-2 border-[#e6d4b8] bg-white shadow-[0_8px_25px_rgba(0,0,0,0.15)] hidden services-dropdown">
-										<div class="py-4">
-											<?php foreach ($service_items as $service_index => $service) : ?>
-												<?php if (isset($service['type']) && $service['type'] === 'category_header') : ?>
-													<!-- Category Header -->
-													<div class="px-6 py-2">
-														<div class="text-sm font-bold text-[#fb9939] uppercase tracking-wide">
-															<?php echo esc_html($service['name']); ?>
-														</div>
-													</div>
-												<?php elseif (isset($service['type']) && $service['type'] === 'separator') : ?>
-													<!-- Separator -->
-													<div class="mx-6 my-2 border-b border-[#d4af7a]"></div>
-												<?php else : ?>
-													<!-- Service Item -->
-													<a
-														href="<?php echo esc_url($service['href']); ?>"
-														class="mx-2 flex cursor-pointer items-center gap-3 rounded-[20px] px-6 py-3 transition-colors duration-200 hover:bg-[#ffc549] focus:bg-[#ffc549] focus:outline-none"
-														aria-label="Navigate to <?php echo esc_attr($service['name']); ?>"
-													>
-														<div class="h-5 w-5 flex-shrink-0">
-															<svg class="h-5 w-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-																<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="<?php echo esc_attr($service['iconPath']); ?>" />
-															</svg>
-														</div>
-														<span class="[font-family:'Inter-Medium',Helvetica] text-base font-medium text-black">
-															<?php echo esc_html($service['name']); ?>
-														</span>
-													</a>
-												<?php endif; ?>
-											<?php endforeach; ?>
+									<!-- Enhanced Services Mega Menu -->
+									<div class="fixed top-[210px] left-1/2 -translate-x-1/2 z-[9999] w-[1200px] max-w-[95vw] rounded-[20px] border-2 border-[#e6d4b8] bg-white shadow-[0_8px_25px_rgba(0,0,0,0.15)] overflow-hidden hidden services-dropdown">
+										<!-- Gradient Header -->
+										<div class="bg-gradient-to-r from-[#fb9939] to-[#e5462f] px-8 py-6">
+											<h3 class="text-3xl font-bold text-white [font-family:'Inter-Bold',Helvetica]">Our Services</h3>
+											<p class="text-base text-white/90 mt-1 font-normal [font-family:'Inter',Helvetica]">Professional HVAC Solutions for Your Comfort</p>
+										</div>
 
-											<!-- All Services Link -->
-											<div class="mx-6 mt-3 pt-3 border-t border-[#d4af7a]">
+										<div class="p-8">
+											<!-- 4-Column Grid Layout for wider display -->
+											<div class="grid grid-cols-4 gap-8 mb-8">
+												<?php
+												$current_category = '';
+												$category_items = [];
+
+												// Group services by category
+												foreach ($service_items as $service) {
+													if (isset($service['type']) && $service['type'] === 'category_header') {
+														// Render previous category if exists
+														if (!empty($category_items)) {
+															echo '<div class="space-y-3">';
+															echo '<h4 class="text-sm font-bold uppercase tracking-wide bg-gradient-to-r from-[#fb9939] to-[#e5462f] bg-clip-text [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [text-fill-color:transparent] mb-3">' . esc_html($current_category) . '</h4>';
+															foreach ($category_items as $item) {
+																echo $item;
+															}
+															echo '</div>';
+															$category_items = [];
+														}
+														$current_category = $service['name'];
+													} elseif (!isset($service['type']) || $service['type'] !== 'separator') {
+														// Add service item to current category
+														ob_start();
+														?>
+														<a
+															href="<?php echo esc_url($service['href']); ?>"
+															class="flex items-start gap-3 p-3 rounded-[20px] transition-all duration-200 hover:bg-[#ffc549] hover:scale-105 hover:shadow-md focus:bg-[#ffc549] focus:outline-none group"
+															aria-label="Navigate to <?php echo esc_attr($service['name']); ?>"
+														>
+															<div class="h-5 w-5 flex-shrink-0 mt-0.5">
+																<svg class="h-5 w-5 text-gray-600 group-hover:text-[#e5462f] transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+																	<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="<?php echo esc_attr($service['iconPath']); ?>" />
+																</svg>
+															</div>
+															<span class="[font-family:'Inter-Medium',Helvetica] text-sm font-medium text-black group-hover:text-[#e5462f] transition-colors duration-200">
+																<?php echo esc_html($service['name']); ?>
+															</span>
+														</a>
+														<?php
+														$category_items[] = ob_get_clean();
+													}
+												}
+
+												// Render last category
+												if (!empty($category_items)) {
+													echo '<div class="space-y-3">';
+													echo '<h4 class="text-sm font-bold uppercase tracking-wide bg-gradient-to-r from-[#fb9939] to-[#e5462f] bg-clip-text [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [text-fill-color:transparent] mb-3">' . esc_html($current_category) . '</h4>';
+													foreach ($category_items as $item) {
+														echo $item;
+													}
+													echo '</div>';
+												}
+												?>
+											</div>
+
+											<!-- All Services CTA -->
+											<div class="pt-6 border-t-2 border-[#e6d4b8]">
 												<a
 													href="<?php echo esc_url(home_url('/services')); ?>"
-													class="flex items-center justify-center gap-2 rounded-[20px] bg-[#ffc549] px-4 py-2 text-center font-medium text-[#e5462f] transition-colors duration-200 hover:bg-[#fb9939] focus:bg-[#fb9939] focus:outline-none"
+													class="flex items-center justify-center gap-2 rounded-[20px] bg-gradient-to-r from-[#fb9939] to-[#e5462f] px-6 py-4 text-center font-bold text-white text-lg transition-all duration-200 hover:scale-105 hover:shadow-lg focus:scale-105 focus:outline-none [font-family:'Inter-Bold',Helvetica]"
 												>
-													All HVAC Services
-													<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+													View All HVAC Services
+													<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 														<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
 													</svg>
 												</a>
@@ -353,34 +384,53 @@ $phone_icon = get_template_directory_uri() . '/assets/images/images/logos/naviga
 										</button>
 									</div>
 
-									<!-- Areas Dropdown -->
-									<div class="absolute top-full left-0 z-[9999] mt-[10px] w-[280px] rounded-[20px] border-2 border-[#e6d4b8] bg-white shadow-[0_8px_25px_rgba(0,0,0,0.15)] hidden service-areas-dropdown">
-										<div class="py-4">
-											<?php foreach ($city_items as $city_index => $city) : ?>
-												<a
-													href="<?php echo esc_url($city['href']); ?>"
-													class="mx-2 flex cursor-pointer items-center gap-3 rounded-[20px] px-6 py-3 transition-colors duration-200 hover:bg-[#ffc549] focus:bg-[#ffc549] focus:outline-none"
-													aria-label="Navigate to <?php echo esc_attr($city['name']); ?> service area"
-												>
-													<div class="h-5 w-5 flex-shrink-0">
-														<svg class="h-5 w-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-															<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="<?php echo esc_attr($city['iconPath']); ?>" />
-														</svg>
-													</div>
-													<span class="[font-family:'Inter-Medium',Helvetica] text-base font-medium text-black">
-														<?php echo esc_html($city['name']); ?>
-													</span>
-												</a>
-											<?php endforeach; ?>
+									<!-- Service Areas Mega Menu -->
+									<div class="fixed top-[210px] left-1/2 -translate-x-1/2 z-[9999] w-[900px] max-w-[95vw] rounded-[20px] border-2 border-[#e6d4b8] bg-white shadow-[0_8px_25px_rgba(0,0,0,0.15)] overflow-hidden hidden service-areas-dropdown">
+										<!-- Gradient Header -->
+										<div class="bg-gradient-to-r from-[#fb9939] to-[#e5462f] px-8 py-6">
+											<div class="flex items-center justify-between">
+												<div>
+													<h3 class="text-3xl font-bold text-white [font-family:'Inter-Bold',Helvetica]">Service Areas</h3>
+													<p class="text-base text-white/90 mt-1 font-normal [font-family:'Inter',Helvetica]">Proudly Serving South Florida</p>
+												</div>
+												<div class="text-white/80">
+													<!-- Florida Icon -->
+													<svg class="h-12 w-12" fill="currentColor" viewBox="0 0 24 24">
+														<path d="M19 12h-2V9h-2V6h-2V4h-2V2h-2v2H7v2H5v2H3v2H1v2h2v2h2v2h2v2h2v2h2v2h2v-2h2v-2h2v-2h2v-2h2v-2h2V12zm-4 4h-2v2h-2v-2h-2v-2H7v-2h2v-2h2V8h2v2h2v2h2v2h2v2z"/>
+													</svg>
+												</div>
+											</div>
+										</div>
 
-											<!-- All Areas Link -->
-											<div class="mx-6 mt-3 pt-3 border-t border-[#d4af7a]">
+										<div class="p-8">
+											<!-- 4-Column Grid Layout for Cities -->
+											<div class="grid grid-cols-4 gap-8 mb-8">
+												<?php foreach ($city_items as $city_index => $city) : ?>
+													<a
+														href="<?php echo esc_url($city['href']); ?>"
+														class="flex items-center gap-3 p-3 rounded-[20px] transition-all duration-200 hover:bg-[#ffc549] hover:scale-105 hover:shadow-md focus:bg-[#ffc549] focus:outline-none group"
+														aria-label="Navigate to <?php echo esc_attr($city['name']); ?> service area"
+													>
+														<div class="h-5 w-5 flex-shrink-0">
+															<svg class="h-5 w-5 text-gray-600 group-hover:text-[#e5462f] transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+																<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="<?php echo esc_attr($city['iconPath']); ?>" />
+															</svg>
+														</div>
+														<span class="[font-family:'Inter-Medium',Helvetica] text-sm font-medium text-black group-hover:text-[#e5462f] transition-colors duration-200">
+															<?php echo esc_html($city['name']); ?>
+														</span>
+													</a>
+												<?php endforeach; ?>
+											</div>
+
+											<!-- All Service Areas CTA -->
+											<div class="pt-6 border-t-2 border-[#e6d4b8]">
 												<a
 													href="<?php echo esc_url(home_url('/service-areas')); ?>"
-													class="flex items-center justify-center gap-2 rounded-[20px] bg-[#ffc549] px-4 py-2 text-center font-medium text-[#e5462f] transition-colors duration-200 hover:bg-[#fb9939] focus:bg-[#fb9939] focus:outline-none"
+													class="flex items-center justify-center gap-2 rounded-[20px] bg-gradient-to-r from-[#fb9939] to-[#e5462f] px-6 py-4 text-center font-bold text-white text-lg transition-all duration-200 hover:scale-105 hover:shadow-lg focus:scale-105 focus:outline-none [font-family:'Inter-Bold',Helvetica]"
 												>
-													All Service Areas
-													<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+													View All Service Areas
+													<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 														<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
 													</svg>
 												</a>
@@ -656,6 +706,7 @@ let isServiceAreasDropdownOpen = false;
 	let isMobileMenuOpen = false;
 	let selectedLocation = '';
 	let hoverTimeout = null;
+	let debugMode = false; // When true, disables hover/mouse events for manual control
 
 	// DOM elements
 	const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
@@ -718,20 +769,33 @@ let isServiceAreasDropdownOpen = false;
 	}
 
 	function openServicesDropdown() {
+		// In debug mode, ignore hover events
+		if (debugMode) return;
+
 		if (hoverTimeout) {
 			clearTimeout(hoverTimeout);
 			hoverTimeout = null;
 		}
+		// Close Service Areas dropdown when opening Services
+		isServiceAreasDropdownOpen = false;
+		updateServiceAreasDropdown();
+
 		isServicesDropdownOpen = true;
 		updateServicesDropdown();
 	}
 
 	function closeServicesDropdown() {
+		// In debug mode, ignore hover events
+		if (debugMode) return;
+
 		isServicesDropdownOpen = false;
 		updateServicesDropdown();
 	}
 
 	function delayedCloseServicesDropdown() {
+		// In debug mode, ignore hover events
+		if (debugMode) return;
+
 		hoverTimeout = setTimeout(() => {
 			closeServicesDropdown();
 		}, 150);
@@ -765,20 +829,33 @@ let isServiceAreasDropdownOpen = false;
 	}
 
 	function openServiceAreasDropdown() {
+		// In debug mode, ignore hover events
+		if (debugMode) return;
+
 		if (hoverTimeout) {
 			clearTimeout(hoverTimeout);
 			hoverTimeout = null;
 		}
+		// Close Services dropdown when opening Service Areas
+		isServicesDropdownOpen = false;
+		updateServicesDropdown();
+
 		isServiceAreasDropdownOpen = true;
 		updateServiceAreasDropdown();
 	}
 
 	function closeServiceAreasDropdown() {
+		// In debug mode, ignore hover events
+		if (debugMode) return;
+
 		isServiceAreasDropdownOpen = false;
 		updateServiceAreasDropdown();
 	}
 
 	function delayedCloseServiceAreasDropdown() {
+		// In debug mode, ignore hover events
+		if (debugMode) return;
+
 		hoverTimeout = setTimeout(() => {
 			closeServiceAreasDropdown();
 		}, 150);
@@ -982,6 +1059,171 @@ let isServiceAreasDropdownOpen = false;
 			}
 		}
 	});
+
+	// ===== DEBUGGING UTILITIES =====
+	// Expose navigation state control to window object for debugging
+	window.navDebug = {
+		// State getters
+		getState: () => ({
+			servicesDropdownOpen: isServicesDropdownOpen,
+			serviceAreasDropdownOpen: isServiceAreasDropdownOpen,
+			mobileMenuOpen: isMobileMenuOpen,
+			selectedLocation: selectedLocation,
+			debugMode: debugMode
+		}),
+
+		// Debug mode control
+		enableDebugMode: () => {
+			debugMode = true;
+			console.log('🔴 DEBUG MODE ENABLED - Hover events are now DISABLED');
+			console.log('   Only manual commands will open/close dropdowns');
+			console.log('   Use navDebug.disableDebugMode() to restore normal behavior');
+		},
+		disableDebugMode: () => {
+			debugMode = false;
+			console.log('🟢 DEBUG MODE DISABLED - Hover events restored to normal');
+		},
+
+		// Manual state control for Services dropdown (bypasses debug mode check)
+		openServices: () => {
+			console.log('🔵 Debug: Opening Services dropdown (manual control)');
+			debugMode = true; // Enable debug mode automatically
+			isServiceAreasDropdownOpen = false; // Close other dropdown
+			updateServiceAreasDropdown();
+			isServicesDropdownOpen = true;
+			updateServicesDropdown();
+		},
+		closeServices: () => {
+			console.log('🔵 Debug: Closing Services dropdown (manual control)');
+			const wasDebugMode = debugMode;
+			debugMode = false; // Temporarily disable to allow close
+			isServicesDropdownOpen = false;
+			updateServicesDropdown();
+			debugMode = wasDebugMode; // Restore debug mode state
+		},
+		toggleServices: () => {
+			console.log('🔵 Debug: Toggling Services dropdown (manual control)');
+			debugMode = true; // Enable debug mode automatically
+			if (!isServicesDropdownOpen) {
+				isServiceAreasDropdownOpen = false; // Close other dropdown
+				updateServiceAreasDropdown();
+			}
+			isServicesDropdownOpen = !isServicesDropdownOpen;
+			updateServicesDropdown();
+		},
+
+		// Manual state control for Service Areas dropdown (bypasses debug mode check)
+		openServiceAreas: () => {
+			console.log('🟢 Debug: Opening Service Areas dropdown (manual control)');
+			debugMode = true; // Enable debug mode automatically
+			isServicesDropdownOpen = false; // Close other dropdown
+			updateServicesDropdown();
+			isServiceAreasDropdownOpen = true;
+			updateServiceAreasDropdown();
+		},
+		closeServiceAreas: () => {
+			console.log('🟢 Debug: Closing Service Areas dropdown (manual control)');
+			const wasDebugMode = debugMode;
+			debugMode = false; // Temporarily disable to allow close
+			isServiceAreasDropdownOpen = false;
+			updateServiceAreasDropdown();
+			debugMode = wasDebugMode; // Restore debug mode state
+		},
+		toggleServiceAreas: () => {
+			console.log('🟢 Debug: Toggling Service Areas dropdown (manual control)');
+			debugMode = true; // Enable debug mode automatically
+			if (!isServiceAreasDropdownOpen) {
+				isServicesDropdownOpen = false; // Close other dropdown
+				updateServicesDropdown();
+			}
+			isServiceAreasDropdownOpen = !isServiceAreasDropdownOpen;
+			updateServiceAreasDropdown();
+		},
+
+		// Force both open (bypassing mutual exclusivity for debugging)
+		forceOpenBoth: () => {
+			console.log('🔴 Debug: FORCING both dropdowns open (bypassing mutual exclusivity)');
+			debugMode = true; // Enable debug mode automatically
+			isServicesDropdownOpen = true;
+			isServiceAreasDropdownOpen = true;
+			updateServicesDropdown();
+			updateServiceAreasDropdown();
+		},
+
+		// Close all
+		closeAll: () => {
+			console.log('⭕ Debug: Closing all dropdowns');
+			const wasDebugMode = debugMode;
+			debugMode = false; // Temporarily disable to allow close
+			isServicesDropdownOpen = false;
+			isServiceAreasDropdownOpen = false;
+			isMobileMenuOpen = false;
+			updateServicesDropdown();
+			updateServiceAreasDropdown();
+			updateMobileMenu();
+			debugMode = wasDebugMode; // Restore debug mode state
+		},
+
+		// Get DOM elements for inspection
+		getElements: () => ({
+			servicesDropdown,
+			serviceAreasDropdown,
+			servicesDropdownContainer,
+			serviceAreasDropdownContainer,
+			mobileMenu
+		}),
+
+		// Log current state
+		logState: () => {
+			const state = window.navDebug.getState();
+			console.log('📊 Navigation State:', state);
+			return state;
+		},
+
+		// Help message
+		help: () => {
+			console.log(`
+🛠️  Navigation Debug Utilities Available:
+
+📊 State Inspection:
+  navDebug.getState()            - Get current state object
+  navDebug.logState()            - Log current state to console
+  navDebug.getElements()         - Get DOM element references
+
+🔴 Debug Mode Control:
+  navDebug.enableDebugMode()     - Disable hover events (manual control only)
+  navDebug.disableDebugMode()    - Re-enable hover events (normal behavior)
+
+🔵 Services Dropdown:
+  navDebug.openServices()        - Open Services dropdown (auto-enables debug mode)
+  navDebug.closeServices()       - Close Services dropdown
+  navDebug.toggleServices()      - Toggle Services dropdown (auto-enables debug mode)
+
+🟢 Service Areas Dropdown:
+  navDebug.openServiceAreas()    - Open Service Areas dropdown (auto-enables debug mode)
+  navDebug.closeServiceAreas()   - Close Service Areas dropdown
+  navDebug.toggleServiceAreas()  - Toggle Service Areas dropdown (auto-enables debug mode)
+
+🔴 Advanced:
+  navDebug.forceOpenBoth()       - Force both dropdowns open (auto-enables debug mode)
+  navDebug.closeAll()            - Close all dropdowns
+  navDebug.help()                - Show this help message
+
+Example usage for CSS debugging:
+  navDebug.openServices()        // Opens Services & enables debug mode (stays open)
+  // Now hover won't close it - only navDebug commands work
+  navDebug.logState()            // Check current state
+  navDebug.closeAll()            // Close everything
+  navDebug.disableDebugMode()    // Restore normal hover behavior
+
+Note: Opening any dropdown automatically enables debug mode to keep it open.
+Use navDebug.disableDebugMode() when done debugging to restore normal behavior.
+			`);
+		}
+	};
+
+	// Log availability on page load
+	console.log('🛠️  Navigation debug utilities loaded. Type navDebug.help() for available commands.');
 
 	// Cleanup on page unload
 	window.addEventListener('beforeunload', () => {
