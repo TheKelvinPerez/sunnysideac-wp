@@ -602,12 +602,19 @@ $phone_icon        = get_template_directory_uri() . '/assets/images/images/logos
 									<h3 class="mb-3 border-b border-gray-200 pb-2 text-lg font-medium text-gray-800">
 										Services
 									</h3>
-									<div class="space-y-1">
+									<div class="space-y-3">
 										<?php foreach ( $service_items as $service ) : ?>
-											<?php if ( ! isset( $service['type'] ) || $service['type'] !== 'category_header' && $service['type'] !== 'separator' ) : ?>
+											<?php if ( isset( $service['type'] ) && $service['type'] === 'category_header' ) : ?>
+								<!-- Category Header -->
+								<div class="mt-4 first:mt-0">
+									<h4 class="mb-2 text-sm font-bold uppercase tracking-wide text-[#fb9939]">
+										<?php echo esc_html( $service['name'] ); ?>
+									</h4>
+								</div>
+							<?php elseif ( ! isset( $service['type'] ) || $service['type'] !== 'separator' ) : ?>
 												<a
 													href="<?php echo esc_url( $service['href'] ); ?>"
-													class="block w-full py-2 text-left text-gray-700 transition-colors duration-200 hover:text-[#fb9939] mobile-service-link"
+													class="block w-full py-2 pl-3 text-left text-gray-700 transition-colors duration-200 hover:text-[#fb9939] mobile-service-link"
 												>
 													<?php echo esc_html( $service['name'] ); ?>
 												</a>
@@ -929,6 +936,12 @@ let isServiceAreasDropdownOpen = false;
 		selectedLocation = value;
 		if (selectedLocationText) {
 			selectedLocationText.textContent = value || 'SELECT A LOCATION';
+		}
+		// Navigate to city page if a location was selected
+		if (value) {
+			const citySlug = value.toLowerCase().replace(/\s+/g, '-');
+			const cityUrl = '<?php echo home_url( '/areas/' ); ?>' + citySlug;
+			window.location.href = cityUrl;
 		}
 	}
 

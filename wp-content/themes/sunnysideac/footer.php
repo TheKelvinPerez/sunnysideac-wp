@@ -31,7 +31,7 @@
 			<div class="flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
 				<div class="text-center sm:text-left">
 					<p class="font-light text-gray-600">
-						2025 Sunny Side Air Conditioning Corp AllRights Reserved.
+						2025 Sunny Side Air Conditioning Corp All Rights Reserved.
 					</p>
 					<p class="font-light text-gray-500 text-sm mt-1">
 						Made with ❤️ by <a href="https://kelvinperez.com" target="_blank" rel="noopener noreferrer" class="hover:text-gray-700 hover:underline focus:outline-2 focus:outline-blue-500">Kelvin Perez</a>
