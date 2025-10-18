@@ -289,3 +289,253 @@ function sunnysideac_add_type_attribute( $tag, $handle ) {
 	return $tag;
 }
 add_filter( 'script_loader_tag', 'sunnysideac_add_type_attribute', 10, 3 );
+
+// Register "City" caption
+function register_city_cpt() {
+	register_post_type(
+		'city',
+		[
+			'labels'       => [
+				'name'          => 'Cities',
+				'singular_name' => 'City',
+				'add_new_item'  => 'Add New City',
+				'edit_item'     => 'Edit City',
+			],
+			'public'       => true,
+			'has_archive'  => true,
+			'rewrite'      => [
+				'slug'       => 'city',
+				'with_front' => false,
+			],
+			'supports'     => [ 'title', 'editor', 'thumbnail' ],
+			'menu_icon'    => 'dashicons-location-alt',
+			'show_in_rest' => true,
+		]
+	);
+}
+
+add_action( 'init', 'register_city_cpt' );
+
+
+function register_service_cpt() {
+	register_post_type(
+		'service',
+		[
+			'labels'       => [
+				'name'          => 'Services',
+				'singular_name' => 'Service',
+				'add_new_item'  => 'Add New Service',
+				'edit_item'     => 'Edit Service',
+			],
+			'public'       => true,
+			'has_archive'  => true,
+			'rewrite'      => [
+				'slug'       => 'service',
+				'with_front' => false,
+			],
+			'supports'     => [ 'title', 'editor', 'thumbnail' ],
+			'menu_icon'    => 'dashicons-hammer',
+			'show_in_rest' => true,
+		]
+	);
+}
+
+add_action( 'init', 'register_service_cpt' );
+
+
+function register_brand_cpt() {
+	register_post_type(
+		'brand',
+		[
+			'labels'       => [
+				'name'          => 'Brands',
+				'singular_name' => 'Brand',
+				'add_new_item'  => 'Add New Brand',
+				'edit_item'     => 'Edit Brand',
+			],
+			'public'       => true,
+			'has_archive'  => true,
+			'rewrite'      => [ 'slug' => 'brands' ],
+			'supports'     => [ 'title', 'editor', 'thumbnail' ],
+			'menu_icon'    => 'dashicons-awards',
+			'show_in_rest' => true,
+		]
+	);
+}
+
+add_action( 'init', 'register_brand_cpt' );
+
+function register_service_category_taxonomy() {
+	register_taxonomy(
+		'service_category',
+		[ 'service' ],
+		[
+			'labels'            => [
+				'name'          => 'Service Categories',
+				'singular_name' => 'Service Category',
+				'search_items'  => 'Search Service Categoreis',
+				'all_items'     => 'All Service Categories',
+				'parent_item'   => 'Parent Service Category:',
+				'edit_item'     => 'Edit Service Category',
+				'update_item'   => 'Update Service Category',
+				'add_new_item'  => 'Add New Service Category',
+				'new_item_name' => 'New Service Category Name',
+				'menu_name'     => 'Categories',
+			],
+			'hierarchical'      => true,
+			'show_ui'           => true,
+			'show_admin_column' => true,
+			'query_var'         => true,
+			'rewrite'           => [
+				'slug'       => 'service-category',
+				'with_front' => false,
+			],
+			'show_in_rest'      => true,
+		]
+	);
+}
+
+add_action( 'init', 'register_service_category_taxonomy' );
+
+/**
+ * =========================================================================
+ * CITY ↔ SERVICE CPT RELATIONSHIP (Meta-based, no taxonomy)
+ * Using ACF Pro for field management
+ * =========================================================================
+ */
+
+/**
+ * Register ACF Field Group for Service → City relationship
+ */
+if ( function_exists( 'acf_add_local_field_group' ) ) {
+	acf_add_local_field_group(
+		[
+			'key'                   => 'group_service_city_relationship',
+			'title'                 => 'City Assignment',
+			'fields'                => [
+				[
+					'key'           => 'field_service_city_id',
+					'label'         => 'Cities',
+					'name'          => '_service_city_id',
+					'type'          => 'post_object',
+					'instructions'  => 'Select the cities where this service is offered.',
+					'required'      => 0,
+					'post_type'     => [
+						0 => 'city',
+					],
+					'taxonomy'      => '',
+					'allow_null'    => 1,
+					'multiple'      => 1,
+					'return_format' => 'id',
+					'ui'            => 1,
+				],
+			],
+			'location'              => [
+				[
+					[
+						'param'    => 'post_type',
+						'operator' => '==',
+						'value'    => 'service',
+					],
+				],
+			],
+			'menu_order'            => 0,
+			'position'              => 'normal',
+			'style'                 => 'default',
+			'label_placement'       => 'top',
+			'instruction_placement' => 'label',
+			'hide_on_screen'        => '',
+			'active'                => true,
+			'description'           => '',
+		]
+	);
+}
+
+/**
+ * Register city_slug query var
+ */
+function sunnysideac_add_city_slug_query_var( $vars ) {
+	$vars[] = 'city_slug';
+	return $vars;
+}
+add_filter( 'query_vars', 'sunnysideac_add_city_slug_query_var' );
+
+/**
+ * Add root-level rewrite for /{city}/{service}/ → single service
+ */
+function sunnysideac_add_city_service_root_rewrite() {
+	add_rewrite_rule(
+		'^([^/]+)/([^/]+)/?$',
+		'index.php?post_type=service&name=$matches[2]&city_slug=$matches[1]',
+		'top'
+	);
+}
+add_action( 'init', 'sunnysideac_add_city_service_root_rewrite', 15 );
+
+/**
+ * Validate the route at template_redirect (prevents hijacking)
+ */
+function sunnysideac_validate_city_service_route() {
+	// Only on frontend single service requests that have our city_slug filled
+	if ( is_admin() ) {
+		return;
+	}
+
+	// WP will set is_singular('service') only after main query; we can check city_slug param too
+	$city_slug    = get_query_var( 'city_slug' );
+	$service_slug = get_query_var( 'name' ); // service slug
+
+	if ( empty( $city_slug ) || empty( $service_slug ) ) {
+		return;
+	}
+
+	// Resolve city post by path/slug
+	$city_post = get_page_by_path( $city_slug, OBJECT, 'city' );
+
+	// Resolve service post by path/slug
+	$service_post = get_page_by_path( $service_slug, OBJECT, 'service' );
+
+	$valid = false;
+	if ( $city_post && $service_post ) {
+		$assigned_city_ids = get_post_meta( $service_post->ID, '_service_city_id', true );
+
+		// Handle both single ID (old data) and array of IDs (new multi-select)
+		if ( ! is_array( $assigned_city_ids ) ) {
+			$assigned_city_ids = [ $assigned_city_ids ];
+		}
+
+		// Check if the requested city is in the service's assigned cities
+		if ( in_array( intval( $city_post->ID ), array_map( 'intval', $assigned_city_ids ) ) ) {
+			$valid = true;
+		}
+	}
+
+	if ( ! $valid ) {
+		global $wp_query;
+		$wp_query->set_404();
+		status_header( 404 );
+		// Load 404 template and halt
+		$notfound = get_404_template();
+		if ( $notfound ) {
+			include $notfound;
+		}
+		exit;
+	}
+}
+add_action( 'template_redirect', 'sunnysideac_validate_city_service_route', 1 );
+
+/**
+ * Use single-service-city.php template when city_slug is present
+ */
+add_filter(
+	'template_include',
+	function ( $template ) {
+		if ( is_singular( 'service' ) && get_query_var( 'city_slug' ) ) {
+			$new_template = locate_template( [ 'single-service-city.php' ] );
+			if ( $new_template ) {
+				return $new_template;
+			}
+		}
+		return $template;
+	}
+);
