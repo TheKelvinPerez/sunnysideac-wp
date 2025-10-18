@@ -74,7 +74,7 @@ define('SUNNYSIDE_SERVICES_BY_CATEGORY', [
 	]
 ]);
 
-// Priority cities for dropdown (top 8)
+// Priority cities for dropdown (top 16)
 define('SUNNYSIDE_PRIORITY_CITIES', [
 	'Pembroke Pines',
 	'Miramar',
@@ -83,7 +83,15 @@ define('SUNNYSIDE_PRIORITY_CITIES', [
 	'Fort Lauderdale',
 	'Miami',
 	'Boca Raton',
-	'West Palm Beach'
+	'West Palm Beach',
+	'Coral Springs',
+	'Plantation',
+	'Davie',
+	'Sunrise',
+	'Pompano Beach',
+	'Hialeah Lakes',
+	'Coral Gables',
+	'Deerfield Beach'
 ]);
 
 // Service URL patterns
