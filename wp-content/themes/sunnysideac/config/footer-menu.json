@@ -49,10 +49,6 @@
       "support": {
         "title": "Support",
         "links": [
-          {"name": "FAQs", "href": "/faq"},
-          {"name": "Reviews", "href": "/reviews"},
-          {"name": "Brands", "href": "/brands"},
-          {"name": "Privacy Policy", "href": "/privacy-policy"},
           {"name": "Maintenance Plans", "href": "/maintenance-plan"},
           {"name": "Warranty Information", "href": "/warranty"},
           {"name": "Customer Portal", "href": "/customer-portal"}
