@@ -1,0 +1,56 @@
+{
+  "desktop_nav": [
+    {
+      "title": "Home",
+      "href": "/",
+      "type": "link"
+    },
+    {
+      "title": "Services",
+      "href": "/services",
+      "type": "mega_menu",
+      "mega_menu_type": "services"
+    },
+    {
+      "title": "Areas",
+      "href": "/areas",
+      "type": "mega_menu",
+      "mega_menu_type": "service_areas"
+    },
+    {
+      "title": "Projects",
+      "href": "/projects",
+      "type": "link"
+    },
+    {
+      "title": "Blog",
+      "href": "/blog",
+      "type": "link"
+    },
+    {
+      "title": "Contact Us",
+      "href": "/contact",
+      "type": "link"
+    }
+  ],
+  "mobile_nav": {
+    "main_links": [
+      {
+        "title": "Projects",
+        "href": "/projects"
+      },
+      {
+        "title": "Blog",
+        "href": "/blog"
+      },
+      {
+        "title": "About",
+        "href": "/about"
+      },
+      {
+        "title": "Contact Us",
+        "href": "/contact"
+      }
+    ]
+  }
+}

@@ -150,6 +150,7 @@ require_once get_template_directory() . '/inc/helpers.php';
  * Include navigation functions and walker
  */
 require_once get_template_directory() . '/inc/navigation.php';
+require_once get_template_directory() . '/inc/main-navigation-helper.php';
 require_once get_template_directory() . '/inc/footer-menu-helper.php';
 
 /**
@@ -275,10 +276,11 @@ function sunnysideac_setup() {
 	);
 
 	// Register navigation menus
+	// Note: 'primary' menu removed - main navigation now uses JSON config (config/main-navigation.json)
+	// Note: 'footer' menu kept for backwards compatibility, but footer also uses JSON config (config/footer-menu.json)
 	register_nav_menus(
 		[
-			'primary' => __( 'Primary Menu', 'sunnysideac' ),
-			'footer'  => __( 'Footer Menu', 'sunnysideac' ),
+			'footer'  => __( 'Footer Menu (Legacy - uses JSON config)', 'sunnysideac' ),
 		]
 	);
 }

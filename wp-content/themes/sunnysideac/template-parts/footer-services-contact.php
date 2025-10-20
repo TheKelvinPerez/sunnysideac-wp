@@ -1,7 +1,7 @@
 <?php
 /**
- * Footer Services + Contact Component
- * Column 4: Services on top, Contact Us on bottom
+ * Footer Support + Contact Component
+ * Column 4: Support on top, Contact Us on bottom
  * Renders from footer-menu.json config
  */
 

@@ -235,17 +235,15 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 
 /**
  * Output desktop navigation menu
+ * Now uses JSON config instead of WordPress menus
  */
 function sunnysideac_desktop_nav_menu() {
-	wp_nav_menu( [
-		'theme_location'  => 'primary',
-		'container'       => false,
-		'menu_class'      => 'flex items-center gap-2 overflow-visible',
-		'items_wrap'      => '<ul role="menubar" class="%2$s">%3$s</ul>',
-		'walker'          => new Sunnyside_Nav_Walker(),
-		'fallback_cb'     => 'sunnysideac_fallback_menu',
-		'depth'           => 2,
-	] );
+	// Try JSON config first, then fallback
+	if (function_exists('sunnysideac_render_desktop_nav_from_config')) {
+		sunnysideac_render_desktop_nav_from_config();
+	} else {
+		sunnysideac_fallback_menu();
+	}
 }
 
 /**
@@ -261,57 +259,15 @@ function sunnysideac_fallback_menu() {
 
 /**
  * Output mobile navigation menu
+ * Now uses JSON config instead of hardcoded values
  */
 function sunnysideac_mobile_nav_menu() {
-	// Services Section
-	echo '<div class="mb-6">';
-	echo '<h3 class="mb-3 border-b border-gray-200 pb-2 text-lg font-medium text-gray-800">Services</h3>';
-	echo '<div class="space-y-3">';
-
-	// Get services from constants
-	$service_categories = SUNNYSIDE_SERVICES_BY_CATEGORY;
-	foreach ( $service_categories as $category_key => $services ) {
-		$category_label = ucwords( str_replace( '_', ' ', $category_key ) );
-		echo '<div class="mt-4 first:mt-0">';
-		echo '<h4 class="mb-2 text-sm font-bold uppercase tracking-wide text-[#fb9939]">' . esc_html( $category_label ) . '</h4>';
-		echo '</div>';
-
-		foreach ( $services as $service_name ) {
-			$service_url = home_url( sprintf( SUNNYSIDE_SERVICE_URL_PATTERN, sanitize_title( $service_name ) ) );
-			echo '<a href="' . esc_url( $service_url ) . '" class="block w-full py-2 pl-3 text-left text-gray-700 transition-colors duration-200 hover:text-[#fb9939] mobile-service-link">' . esc_html( $service_name ) . '</a>';
-		}
+	// Try JSON config first, then fallback
+	if (function_exists('sunnysideac_render_mobile_nav_from_config')) {
+		sunnysideac_render_mobile_nav_from_config();
+	} else {
+		sunnysideac_mobile_nav_menu_fallback();
 	}
-
-	echo '</div></div>';
-
-	// Areas Section
-	echo '<div class="mb-6">';
-	echo '<h3 class="mb-3 border-b border-gray-200 pb-2 text-lg font-medium text-gray-800">Areas</h3>';
-	echo '<div class="space-y-1">';
-
-	foreach ( SUNNYSIDE_PRIORITY_CITIES as $city ) {
-		$city_url = home_url( sprintf( SUNNYSIDE_CITY_URL_PATTERN, sanitize_title( $city ) ) );
-		echo '<a href="' . esc_url( $city_url ) . '" class="block w-full py-2 text-left text-gray-700 transition-colors duration-200 hover:text-[#fb9939] mobile-area-link">' . esc_html( $city ) . '</a>';
-	}
-
-	echo '<a href="' . esc_url( home_url( '/areas' ) ) . '" class="block w-full py-2 text-left font-medium text-[#fb9939] transition-colors duration-200 hover:text-[#e5462f]">→ View All Areas</a>';
-	echo '</div></div>';
-
-	// Other Navigation Links
-	echo '<div class="mb-6 space-y-1">';
-
-	$nav_items = [
-		'Projects'   => '/projects',
-		'Blog'       => '/blog',
-		'About'      => '/about',
-		'Contact Us' => '/contact',
-	];
-
-	foreach ( $nav_items as $title => $url ) {
-		echo '<button class="w-full border-b border-gray-200 py-2 text-left text-gray-700 hover:text-[#fb9939] mobile-nav-link" data-href="' . esc_url( home_url( $url ) ) . '">' . esc_html( $title ) . '</button>';
-	}
-
-	echo '</div>';
 }
 
 /**

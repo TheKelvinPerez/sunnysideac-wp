@@ -96,7 +96,7 @@ function sunnysideac_render_footer_menu_from_config() {
 
 /**
  * Render footer column 4 from configuration
- * Services on top, Contact Us on bottom
+ * Support on top, Contact Us on bottom
  */
 function sunnysideac_render_footer_column_4() {
     $config = sunnysideac_get_footer_menu_config();
@@ -107,12 +107,12 @@ function sunnysideac_render_footer_column_4() {
 
     echo '<div class="space-y-8">';
 
-    // Services Quick Links section
-    if (isset($config['footer_sections']['column_4']['services_quick'])) {
-        $services_quick = $config['footer_sections']['column_4']['services_quick'];
+    // Support section
+    if (isset($config['footer_sections']['column_4']['support'])) {
+        $support = $config['footer_sections']['column_4']['support'];
         get_template_part('template-parts/footer-menu-section', null, [
-            'title' => $services_quick['title'],
-            'links' => sunnysideac_process_menu_links($services_quick['links'])
+            'title' => $support['title'],
+            'links' => sunnysideac_process_menu_links($support['links'])
         ]);
     }
 
