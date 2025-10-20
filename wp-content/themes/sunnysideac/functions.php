@@ -150,6 +150,7 @@ require_once get_template_directory() . '/inc/helpers.php';
  * Include navigation functions and walker
  */
 require_once get_template_directory() . '/inc/navigation.php';
+require_once get_template_directory() . '/inc/footer-menu-helper.php';
 
 /**
  * Get Vite dev server URL from environment or use defaults

@@ -1,10 +1,10 @@
 <?php
 /**
  * Footer Navigation Component
- * Uses WordPress menu system with custom walker for consistent styling
- * Falls back to hardcoded menu if no menu is assigned
+ * Uses JSON configuration with component-based template parts
+ * Falls back to WordPress menu, then hardcoded menu as backup
  */
 
-// Output footer navigation using WordPress menu
-sunnysideac_footer_nav_menu();
+// Use the new elegant approach - JSON config + components
+sunnysideac_footer_nav_menu_v2();
 ?>

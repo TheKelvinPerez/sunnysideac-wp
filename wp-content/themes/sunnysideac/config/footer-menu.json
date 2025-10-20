@@ -1,0 +1,65 @@
+{
+  "footer_sections": {
+    "column_2": {
+      "services": {
+        "title": "Services",
+        "links": [
+          {"name": "AC Repair", "href": "/service/ac-repair"},
+          {"name": "AC Installation", "href": "/service/ac-installation"},
+          {"name": "AC Maintenance", "href": "/service/ac-maintenance"},
+          {"name": "Heating Services", "href": "/service/heating-repair"},
+          {"name": "All HVAC Services", "href": "/services"}
+        ]
+      },
+      "company": {
+        "title": "Company",
+        "links": [
+          {"name": "About Us", "href": "/about"},
+          {"name": "Financing", "href": "/financing"},
+          {"name": "Maintenance Plan", "href": "/maintenance-plan"},
+          {"name": "Careers", "href": "/careers"}
+        ]
+      }
+    },
+    "column_3": {
+      "service_areas": {
+        "title": "Service Areas",
+        "links": [
+          {"name": "Pembroke Pines", "href": "/service-areas/pembroke-pines"},
+          {"name": "Miramar", "href": "/service-areas/miramar"},
+          {"name": "Weston", "href": "/service-areas/weston"},
+          {"name": "Hollywood", "href": "/service-areas/hollywood"},
+          {"name": "Fort Lauderdale", "href": "/service-areas/fort-lauderdale"},
+          {"name": "All Service Areas", "href": "/service-areas"}
+        ]
+      },
+      "brands": {
+        "title": "Brands",
+        "links": [
+          {"name": "Daikin", "href": "/brands/daikin"},
+          {"name": "Goodman", "href": "/brands/goodman"},
+          {"name": "Rheem", "href": "/brands/rheem"},
+          {"name": "Trane", "href": "/brands/trane"},
+          {"name": "Carrier", "href": "/brands/carrier"},
+          {"name": "All Brands", "href": "/brands"}
+        ]
+      }
+    },
+    "column_4": {
+      "services_quick": {
+        "title": "Services",
+        "links": [
+          {"name": "Air Conditioning", "href": "/services/air-conditioning"},
+          {"name": "Heating", "href": "/services/heating"},
+          {"name": "Maintenance", "href": "/services/maintenance"},
+          {"name": "Installation", "href": "/services/installation"},
+          {"name": "Repair", "href": "/services/repair"}
+        ]
+      },
+      "contact": {
+        "title": "Contact Us",
+        "type": "contact_info"
+      }
+    }
+  }
+}

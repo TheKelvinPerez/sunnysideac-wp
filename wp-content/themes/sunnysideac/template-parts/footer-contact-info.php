@@ -1,10 +1,19 @@
 <?php
 /**
- * Footer Contact Subsection Component
- * Contact information with icons and links
+ * Footer Contact Info Component
+ * Reusable footer contact info section - works like a React component
+ *
+ * @param array $props Component properties
+ *   - 'title' (string) Section title
+ *   - 'class' (string) Additional CSS classes
  */
 
-// Component data (like props in React)
+$props = wp_parse_args($args, [
+    'title' => 'Contact Us',
+    'class' => ''
+]);
+
+// Contact info data
 $contact_info = [
 	[
 		'id'      => 'phone',
@@ -37,12 +46,12 @@ $contact_info = [
 ];
 ?>
 
-<section class="space-y-4" aria-labelledby="contact-heading">
+<section class="footer-contact-info <?php echo esc_attr($props['class']); ?>" aria-labelledby="contact-heading">
 	<h3
 		id="contact-heading"
-		class="text-xl font-semibold text-gray-900 sm:text-2xl"
+		class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl"
 	>
-		Contact Us
+		<?php echo esc_html($props['title']); ?>
 	</h3>
 
 	<div class="space-y-4">
@@ -76,50 +85,5 @@ $contact_info = [
 				</div>
 			</div>
 		<?php endforeach; ?>
-	</div>
-
-	<!-- Support Section -->
-	<div class="mt-8 pt-6 border-t border-gray-200">
-		<h3
-			id="support-heading"
-			class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl"
-		>
-			Support
-		</h3>
-
-		<ul class="space-y-2">
-			<li>
-				<a
-					href="<?php echo esc_url(home_url('/faq')); ?>"
-					class="font-light text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500"
-				>
-					FAQs
-				</a>
-			</li>
-			<li>
-				<a
-					href="<?php echo esc_url(home_url('/reviews')); ?>"
-					class="font-light text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500"
-				>
-					Reviews
-				</a>
-			</li>
-			<li>
-				<a
-					href="<?php echo esc_url(home_url('/brands')); ?>"
-					class="font-light text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500"
-				>
-					Brands
-				</a>
-			</li>
-			<li>
-				<a
-					href="<?php echo esc_url(home_url('/privacy-policy')); ?>"
-					class="font-light text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500"
-				>
-					Privacy Policy
-				</a>
-			</li>
-		</ul>
 	</div>
 </section>

@@ -17,11 +17,11 @@
 				<!-- Column 1: Company Info with Logo -->
 				<?php get_template_part( 'template-parts/footer-company-info' ); ?>
 
-				<!-- Columns 2 & 3: Footer Navigation (4 sections displayed as 2 columns) -->
+				<!-- Columns 2 & 3: Footer Navigation (using JSON config) -->
 				<?php get_template_part( 'template-parts/footer-navigation' ); ?>
 
-				<!-- Column 4: Contact Us -->
-				<?php get_template_part( 'template-parts/footer-contact-subsection' ); ?>
+				<!-- Column 4: Services and Contact Us -->
+				<?php get_template_part( 'template-parts/footer-services-contact' ); ?>
 			</div>
 
 			<!-- Divider line -->
