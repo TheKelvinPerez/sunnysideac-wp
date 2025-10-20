@@ -398,7 +398,6 @@ let isServiceAreasDropdownOpen = false;
 	const servicesDropdownContainer = document.getElementById('services-dropdown-container');
 	const servicesDropdown = document.querySelector('.services-dropdown');
 	const servicesDropdownBtn = document.querySelector('.services-dropdown-btn');
-	const chevronIcon = document.querySelector('.chevron-icon');
 	const locationSelect = document.getElementById('location-select');
 	const locationSelectBtn = document.getElementById('location-select-btn');
 	const selectedLocationText = document.getElementById('selected-location-text');
@@ -407,6 +406,10 @@ let isServiceAreasDropdownOpen = false;
 	const serviceAreasDropdownContainer = document.getElementById('service-areas-dropdown-container');
 	const serviceAreasDropdown = document.querySelector('.service-areas-dropdown');
 	const serviceAreasDropdownBtn = document.querySelector('.service-areas-dropdown-btn');
+
+	// Chevron icons - get them from within their containers
+	const servicesChevronIcon = servicesDropdownContainer?.querySelector('.chevron-icon');
+	const serviceAreasChevronIcon = serviceAreasDropdownContainer?.querySelector('.chevron-icon');
 
 	// Utility functions
 	function updateActiveMenuItem(itemName) {
@@ -487,16 +490,16 @@ let isServiceAreasDropdownOpen = false;
 		if (servicesDropdown) {
 			if (isServicesDropdownOpen) {
 				servicesDropdown.classList.remove('hidden');
-				if (chevronIcon) {
-					chevronIcon.style.transform = 'rotate(180deg)';
+				if (servicesChevronIcon) {
+					servicesChevronIcon.style.transform = 'rotate(180deg)';
 				}
 				if (servicesDropdownContainer) {
 					servicesDropdownContainer.setAttribute('aria-expanded', 'true');
 				}
 			} else {
 				servicesDropdown.classList.add('hidden');
-				if (chevronIcon) {
-					chevronIcon.style.transform = 'rotate(0deg)';
+				if (servicesChevronIcon) {
+					servicesChevronIcon.style.transform = 'rotate(0deg)';
 				}
 				if (servicesDropdownContainer) {
 					servicesDropdownContainer.setAttribute('aria-expanded', 'false');
@@ -547,11 +550,17 @@ let isServiceAreasDropdownOpen = false;
 		if (serviceAreasDropdown) {
 			if (isServiceAreasDropdownOpen) {
 				serviceAreasDropdown.classList.remove('hidden');
+				if (serviceAreasChevronIcon) {
+					serviceAreasChevronIcon.style.transform = 'rotate(180deg)';
+				}
 				if (serviceAreasDropdownContainer) {
 					serviceAreasDropdownContainer.setAttribute('aria-expanded', 'true');
 				}
 			} else {
 				serviceAreasDropdown.classList.add('hidden');
+				if (serviceAreasChevronIcon) {
+					serviceAreasChevronIcon.style.transform = 'rotate(0deg)';
+				}
 				if (serviceAreasDropdownContainer) {
 					serviceAreasDropdownContainer.setAttribute('aria-expanded', 'false');
 				}
