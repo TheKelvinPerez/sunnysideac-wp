@@ -77,4 +77,49 @@ $contact_info = [
 			</div>
 		<?php endforeach; ?>
 	</div>
+
+	<!-- Support Section -->
+	<div class="mt-8 pt-6 border-t border-gray-200">
+		<h3
+			id="support-heading"
+			class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl"
+		>
+			Support
+		</h3>
+
+		<ul class="space-y-2">
+			<li>
+				<a
+					href="<?php echo esc_url(home_url('/faq')); ?>"
+					class="font-light text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500"
+				>
+					FAQs
+				</a>
+			</li>
+			<li>
+				<a
+					href="<?php echo esc_url(home_url('/reviews')); ?>"
+					class="font-light text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500"
+				>
+					Reviews
+				</a>
+			</li>
+			<li>
+				<a
+					href="<?php echo esc_url(home_url('/brands')); ?>"
+					class="font-light text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500"
+				>
+					Brands
+				</a>
+			</li>
+			<li>
+				<a
+					href="<?php echo esc_url(home_url('/privacy-policy')); ?>"
+					class="font-light text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500"
+				>
+					Privacy Policy
+				</a>
+			</li>
+		</ul>
+	</div>
 </section>

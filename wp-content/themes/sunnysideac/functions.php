@@ -147,6 +147,11 @@ require_once get_template_directory() . '/inc/constants.php';
 require_once get_template_directory() . '/inc/helpers.php';
 
 /**
+ * Include navigation functions and walker
+ */
+require_once get_template_directory() . '/inc/navigation.php';
+
+/**
  * Get Vite dev server URL from environment or use defaults
  */
 function sunnysideac_get_vite_dev_server_url() {
