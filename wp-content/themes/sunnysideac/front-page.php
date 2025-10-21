@@ -9,6 +9,7 @@ get_header(); ?>
 <main class="min-h-screen bg-gray-50">
 	<!-- Mobile constraint wrapper - applies 20px padding on mobile only -->
 	<div class="lg:px-0 max-w-7xl mx-auto">
+	<h1>Deployment pipeline is working</h1>
 		<section class="flex gap-10 flex-col">
 			<!-- Hero Section -->
 			<?php get_template_part( 'template-parts/hero-section' ); ?>
