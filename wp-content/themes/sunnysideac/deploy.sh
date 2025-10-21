@@ -15,7 +15,7 @@ git push prod main || {
 }
 
 # 3. Sync uploads
-rsync -avz --delete ../wp-content/uploads/ deploy@5.161.93.195:/var/www/staging-sunnysideac/wp-content/uploads/
+rsync -avz --delete /Users/0xaquawolf/Local Sites/sunnyside-ac/app/public/wp-content/uploads deploy@5.161.93.195:/var/www/staging-sunnysideac/wp-content/uploads/
 
 # 4. Import DB if provided
 if [ ! -z "$2" ]; then
