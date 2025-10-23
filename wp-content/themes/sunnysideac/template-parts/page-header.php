@@ -38,7 +38,7 @@ $description_color = $bg_color === 'gradient' ? 'text-white/90' : 'text-gray-600
 ?>
 
 <!-- Page Header - Breadcrumbs & Title -->
-<header class="entry-header <?php echo esc_attr($bg_class); ?> rounded-[20px] p-6 md:p-10">
+<header class="entry-header <?php echo esc_attr($bg_class); ?> rounded-[20px] p-6 md:p-10 mb-6">
 	<?php if (!empty($breadcrumbs)) : ?>
 		<!-- Breadcrumbs -->
 		<nav aria-label="Breadcrumb" class="mb-6 flex justify-center" itemscope itemtype="https://schema.org/BreadcrumbList">

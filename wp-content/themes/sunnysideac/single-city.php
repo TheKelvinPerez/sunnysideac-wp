@@ -33,7 +33,7 @@ if ( have_posts() ) :
 				<article id="post-<?php the_ID(); ?>" <?php post_class( 'city-page' ); ?>>
 
 					<?php
-					// Page Header with Breadcrumbs (white background like you preferred)
+					// Page Header with Breadcrumbs (using template part)
 					get_template_part('template-parts/page-header', null, [
 						'breadcrumbs' => [
 							['name' => 'Home', 'url' => home_url('/')],
