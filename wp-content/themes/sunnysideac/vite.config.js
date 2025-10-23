@@ -41,6 +41,10 @@ export default defineConfig(({ mode }) => {
       watch: {
         usePolling: true, // Required for file watching to work in Docker
         interval: 1000,
+        // Watch PHP files for Tailwind CSS class scanning
+        included: ['**/*.php', '**/*.js', '**/*.css', '**/*.html'],
+        // Exclude certain directories
+        excluded: ['**/node_modules/**', '**/dist/**'],
       },
     },
   };

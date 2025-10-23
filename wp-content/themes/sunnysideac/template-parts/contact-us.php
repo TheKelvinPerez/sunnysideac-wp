@@ -5,7 +5,7 @@
  */
 
 // Component data (like props in React)
-$company_email = 'kelvin@sunnyside247ac.com';
+$company_email = 'support@sunnyside247ac.com';
 
 $service_types = [
 	'Air Conditioning Repair',
@@ -23,11 +23,11 @@ $select_options = [
 ];
 
 $images = [
-	'contact_us_icon' => sunnysideac_asset_url('assets/images/home-page/contact-us/contact-us-icon.svg'),
-	'email_icon'      => sunnysideac_asset_url('assets/images/home-page/contact-us/email-contact-icon.svg'),
-	'phone_icon'      => sunnysideac_asset_url('assets/images/home-page/contact-us/phone-contact-icon.svg'),
-	'location_icon'   => sunnysideac_asset_url('assets/images/home-page/contact-us/location-contact-icon.svg'),
-	'chevron_down'    => sunnysideac_asset_url('assets/images/home-page/contact-us/chevron-down-contact-form.svg'),
+	'contact_us_icon' => sunnysideac_asset_url( 'assets/images/home-page/contact-us/contact-us-icon.svg' ),
+	'email_icon'      => sunnysideac_asset_url( 'assets/images/home-page/contact-us/email-contact-icon.svg' ),
+	'phone_icon'      => sunnysideac_asset_url( 'assets/images/home-page/contact-us/phone-contact-icon.svg' ),
+	'location_icon'   => sunnysideac_asset_url( 'assets/images/home-page/contact-us/location-contact-icon.svg' ),
+	'chevron_down'    => sunnysideac_asset_url( 'assets/images/home-page/contact-us/chevron-down-contact-form.svg' ),
 ];
 ?>
 
@@ -38,16 +38,24 @@ $images = [
 	<!-- Header Section -->
 	<header class="mb-8 text-center">
 		<?php
-		get_template_part('template-parts/title', null, [
-			'icon'  => $images['contact_us_icon'],
-			'title' => 'Contact Us'
-		]);
+		get_template_part(
+			'template-parts/title',
+			null,
+			[
+				'icon'  => $images['contact_us_icon'],
+				'title' => 'Contact Us',
+			]
+		);
 		?>
 		<?php
-		get_template_part('template-parts/subheading', null, [
-			'text' => 'Fast, Friendly HVAC Support — 24/7',
-			'class' => 'mt-4 text-center'
-		]);
+		get_template_part(
+			'template-parts/subheading',
+			null,
+			[
+				'text'  => 'Fast, Friendly HVAC Support — 24/7',
+				'class' => 'mt-4 text-center',
+			]
+		);
 		?>
 	</header>
 
@@ -69,7 +77,7 @@ $images = [
 				method="POST"
 			>
 				<!-- Web3Forms Required Fields -->
-				<input type="hidden" name="access_key" value="<?php echo esc_attr($_ENV['WEB3_FORM_ACCESS_KEY'] ?? ''); ?>" />
+				<input type="hidden" name="access_key" value="<?php echo esc_attr( $_ENV['WEB3_FORM_ACCESS_KEY'] ?? '' ); ?>" />
 				<input type="hidden" name="subject" value="SSAC - New Website Contact Form Submission" />
 				<input type="checkbox" name="botcheck" style="display: none;" />
 
@@ -150,9 +158,9 @@ $images = [
 							<option value="" disabled selected class="text-gray-400">
 								Service Type*
 							</option>
-							<?php foreach ($service_types as $service): ?>
-								<option value="<?php echo esc_attr($service); ?>">
-									<?php echo esc_html($service); ?>
+							<?php foreach ( $service_types as $service ) : ?>
+								<option value="<?php echo esc_attr( $service ); ?>">
+									<?php echo esc_html( $service ); ?>
 								</option>
 							<?php endforeach; ?>
 						</select>
@@ -163,7 +171,7 @@ $images = [
 							<img
 								class="h-3 w-3"
 								alt="Dropdown Arrow"
-								src="<?php echo esc_url($images['chevron_down']); ?>"
+								src="<?php echo esc_url( $images['chevron_down'] ); ?>"
 							/>
 						</div>
 					</div>
@@ -185,9 +193,9 @@ $images = [
 						<option value="" disabled selected class="text-gray-400">
 							Select Category*
 						</option>
-						<?php foreach ($select_options as $option): ?>
-							<option value="<?php echo esc_attr($option); ?>">
-								<?php echo esc_html($option); ?>
+						<?php foreach ( $select_options as $option ) : ?>
+							<option value="<?php echo esc_attr( $option ); ?>">
+								<?php echo esc_html( $option ); ?>
 							</option>
 						<?php endforeach; ?>
 					</select>
@@ -198,7 +206,7 @@ $images = [
 						<img
 							class="h-3 w-3"
 							alt="Dropdown Arrow"
-							src="<?php echo esc_url($images['chevron_down']); ?>"
+							src="<?php echo esc_url( $images['chevron_down'] ); ?>"
 						/>
 					</div>
 				</fieldset>
@@ -266,18 +274,18 @@ $images = [
 						<img
 							class="h-16 w-16"
 							alt="Email contact icon"
-							src="<?php echo esc_url($images['email_icon']); ?>"
+							src="<?php echo esc_url( $images['email_icon'] ); ?>"
 						/>
 					</div>
 					<div>
 						<h3 class="font-semibold text-black md:text-lg">Email</h3>
 						<a
-							href="<?php echo esc_attr('mailto:' . $company_email); ?>"
+							href="<?php echo esc_attr( 'mailto:' . $company_email ); ?>"
 							class="font-light break-all text-black hover:underline focus:underline focus:outline-none md:text-lg"
-							aria-label="<?php echo esc_attr('Email us at ' . $company_email); ?>"
+							aria-label="<?php echo esc_attr( 'Email us at ' . $company_email ); ?>"
 							itemprop="email"
 						>
-							<?php echo esc_html($company_email); ?>
+							<?php echo esc_html( $company_email ); ?>
 						</a>
 					</div>
 				</div>
@@ -288,7 +296,7 @@ $images = [
 						<img
 							class="h-16 w-16"
 							alt="Location contact icon"
-							src="<?php echo esc_url($images['location_icon']); ?>"
+							src="<?php echo esc_url( $images['location_icon'] ); ?>"
 						/>
 					</div>
 					<div>
@@ -301,11 +309,11 @@ $images = [
 							itemscope
 							itemtype="https://schema.org/PostalAddress"
 						>
-							<span itemprop="streetAddress"><?php echo esc_html(SUNNYSIDE_ADDRESS_STREET); ?></span>
+							<span itemprop="streetAddress"><?php echo esc_html( SUNNYSIDE_ADDRESS_STREET ); ?></span>
 							<br />
-							<span itemprop="addressLocality"><?php echo esc_html(SUNNYSIDE_ADDRESS_CITY); ?></span>,
-							<span itemprop="addressRegion"><?php echo esc_html(SUNNYSIDE_ADDRESS_STATE); ?></span>
-							<span itemprop="postalCode"><?php echo esc_html(SUNNYSIDE_ADDRESS_ZIP); ?></span>
+							<span itemprop="addressLocality"><?php echo esc_html( SUNNYSIDE_ADDRESS_CITY ); ?></span>,
+							<span itemprop="addressRegion"><?php echo esc_html( SUNNYSIDE_ADDRESS_STATE ); ?></span>
+							<span itemprop="postalCode"><?php echo esc_html( SUNNYSIDE_ADDRESS_ZIP ); ?></span>
 						</div>
 					</div>
 				</div>
@@ -316,18 +324,18 @@ $images = [
 						<img
 							class="h-16 w-16"
 							alt="Phone contact icon"
-							src="<?php echo esc_url($images['phone_icon']); ?>"
+							src="<?php echo esc_url( $images['phone_icon'] ); ?>"
 						/>
 					</div>
 					<div>
 						<h3 class="font-semibold text-black md:text-lg">Phone</h3>
 						<a
-							href="<?php echo esc_attr(SUNNYSIDE_TEL_HREF); ?>"
+							href="<?php echo esc_attr( SUNNYSIDE_TEL_HREF ); ?>"
 							class="font-light text-black hover:underline focus:underline focus:outline-none md:text-lg"
-							aria-label="<?php echo esc_attr('Call us at ' . SUNNYSIDE_PHONE_DISPLAY); ?>"
+							aria-label="<?php echo esc_attr( 'Call us at ' . SUNNYSIDE_PHONE_DISPLAY ); ?>"
 							itemprop="telephone"
 						>
-							<?php echo esc_html(SUNNYSIDE_PHONE_DISPLAY); ?>
+							<?php echo esc_html( SUNNYSIDE_PHONE_DISPLAY ); ?>
 						</a>
 					</div>
 				</div>
@@ -339,7 +347,7 @@ $images = [
 					Follow Us:
 				</h3>
 				<div class="flex justify-center">
-					<?php get_template_part('template-parts/social-icons', null, ['size' => 'md']); ?>
+					<?php get_template_part( 'template-parts/social-icons', null, [ 'size' => 'md' ] ); ?>
 				</div>
 			</nav>
 		</aside>

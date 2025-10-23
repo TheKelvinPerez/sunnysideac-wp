@@ -95,7 +95,7 @@ define('SUNNYSIDE_PRIORITY_CITIES', [
 ]);
 
 // Service URL patterns
-define('SUNNYSIDE_SERVICE_URL_PATTERN', '/service/%s');
+define('SUNNYSIDE_SERVICE_URL_PATTERN', '/services/%s');
 define('SUNNYSIDE_CITY_URL_PATTERN', '/areas/%s');
 
 // Social media links

@@ -313,7 +313,7 @@ function register_city_cpt() {
 			'public'       => true,
 			'has_archive'  => true,
 			'rewrite'      => [
-				'slug'       => 'city',
+				'slug'       => 'areas',
 				'with_front' => false,
 			],
 			'supports'     => [ 'title', 'editor', 'thumbnail' ],
@@ -339,7 +339,7 @@ function register_service_cpt() {
 			'public'       => true,
 			'has_archive'  => true,
 			'rewrite'      => [
-				'slug'       => 'service',
+				'slug'       => 'services',
 				'with_front' => false,
 			],
 			'supports'     => [ 'title', 'editor', 'thumbnail' ],
@@ -689,10 +689,11 @@ add_filter( 'query_vars', 'sunnysideac_add_city_slug_query_var' );
 
 /**
  * Add root-level rewrite for /{city}/{service}/ → single service
+ * Excludes known base URLs like 'services', 'areas', etc.
  */
 function sunnysideac_add_city_service_root_rewrite() {
 	add_rewrite_rule(
-		'^([^/]+)/([^/]+)/?$',
+		'^(?!services|areas|category|tag|page)([^/]+)/([^/]+)/?$',
 		'index.php?post_type=service&name=$matches[2]&city_slug=$matches[1]',
 		'top'
 	);

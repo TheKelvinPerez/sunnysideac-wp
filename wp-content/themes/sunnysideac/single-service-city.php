@@ -23,6 +23,7 @@ if ( have_posts() ) :
 
 	if ( $city_post ) {
 		$city_neighborhoods     = get_field( 'neighborhoods', $city_post->ID );
+		$city_zip_codes         = get_field( 'zip_codes', $city_post->ID );
 		$city_climate_note      = get_field( 'climate_note', $city_post->ID );
 		$city_service_area_note = get_field( 'service_area_note', $city_post->ID );
 		$city_video_url         = get_field( 'city_video_url', $city_post->ID );
@@ -30,6 +31,18 @@ if ( have_posts() ) :
 		$city_video_description = get_field( 'city_video_description', $city_post->ID );
 		$city_video_thumbnail   = get_field( 'city_video_thumbnail', $city_post->ID );
 		$city_video_duration    = get_field( 'city_video_duration', $city_post->ID );
+		$city_faqs              = get_field( 'city_faqs', $city_post->ID );
+	}
+
+	// Merge city-specific FAQs with service FAQs for comprehensive coverage
+	$all_faqs = [];
+	if ( ! empty( $city_faqs ) && is_array( $city_faqs ) ) {
+		// Add city-specific FAQs first (they're more locally relevant)
+		$all_faqs = array_merge( $all_faqs, $city_faqs );
+	}
+	if ( ! empty( $service_faqs ) && is_array( $service_faqs ) ) {
+		// Add service FAQs after city FAQs
+		$all_faqs = array_merge( $all_faqs, $service_faqs );
 	}
 
 	// SEO Variables
@@ -445,39 +458,107 @@ if ( have_posts() ) :
 								</div>
 							<?php endif; ?>
 						<?php endif; ?>
+
+						<!-- Zip Codes Grid -->
+						<?php if ( $city_zip_codes ) : ?>
+							<?php
+							$zip_codes_array = array_filter( array_map( 'trim', explode( "\n", $city_zip_codes ) ) );
+							if ( ! empty( $zip_codes_array ) ) :
+								?>
+								<div class="mt-8">
+									<h3 class="text-xl font-semibold text-gray-900 mb-4">
+										Zip Codes:
+									</h3>
+									<div class="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-3">
+										<?php foreach ( $zip_codes_array as $zip_code ) : ?>
+											<div class="bg-orange-50 rounded-lg px-4 py-2 text-center text-sm font-medium text-orange-700 hover:bg-orange-100 transition-colors">
+												<?php echo esc_html( $zip_code ); ?>
+											</div>
+										<?php endforeach; ?>
+									</div>
+								</div>
+							<?php endif; ?>
+						<?php endif; ?>
 					</section>
 				<?php endif; ?>
 
-				<!-- FAQs - Redesigned with Accordion Style -->
-				<?php if ( $service_faqs ) : ?>
-					<section class="service-faqs bg-white rounded-[20px] p-6 md:p-10 mb-6" aria-labelledby="faq-heading">
-						<header class="text-center mb-8">
-							<h2 id="faq-heading" class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-								Frequently Asked Questions
-							</h2>
-							<p class="text-lg text-gray-600">
-								Got questions? We've got answers.
-							</p>
-						</header>
+				<!-- FAQs - Matching Homepage Style -->
+				<?php if ( ! empty( $all_faqs ) ) : ?>
+					<section class="w-full rounded-2xl bg-white px-4 py-12 md:px-10 md:py-16 lg:py-20 mb-6" id="faq-section" role="region" aria-labelledby="faq-heading">
+						<div class="mx-auto max-w-7xl">
+							<!-- Header -->
+							<header class="mb-12 text-center md:mb-16">
+								<h2 id="faq-heading" class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+									Frequently Asked Questions
+								</h2>
+								<p class="text-xl md:text-2xl font-medium text-gray-700 mb-4">
+									Got Questions? We've Got Answers!
+								</p>
+								<p class="text-base font-light text-gray-700 md:text-lg">
+									Find answers to common questions about <?php echo esc_html( $service_title ); ?> in <?php echo esc_html( $city_name ); ?>.
+								</p>
+							</header>
 
-						<div class="faq-list space-y-4 max-w-4xl mx-auto">
-							<?php foreach ( $service_faqs as $faq ) : ?>
-								<details class="faq-item bg-gray-50 rounded-2xl p-6 transition-all duration-300 hover:bg-orange-50 group" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-									<summary class="font-semibold text-lg cursor-pointer hover:text-orange-500 flex justify-between items-center" itemprop="name">
-										<span><?php echo esc_html( $faq['question'] ); ?></span>
-										<svg class="w-6 h-6 transform transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-										</svg>
-									</summary>
-									<div class="faq-answer mt-4 text-gray-600 leading-relaxed border-t border-gray-200 pt-4" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-										<div itemprop="text">
-											<?php echo wp_kses_post( wpautop( $faq['answer'] ) ); ?>
-										</div>
+							<!-- FAQ Grid -->
+							<div class="grid gap-4 md:gap-6">
+								<?php foreach ( $all_faqs as $index => $faq ) : ?>
+									<div class="faq-item w-full">
+										<input type="checkbox" id="faq-<?php echo esc_attr( $index + 1 ); ?>" class="faq-toggle hidden" />
+
+										<label for="faq-<?php echo esc_attr( $index + 1 ); ?>" class="block w-full cursor-pointer">
+											<div class="faq-container relative w-full rounded-[20px] border-2 border-transparent bg-[#f6f6f6] transition-all duration-300 ease-in-out hover:shadow-md" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+												<div class="flex items-start justify-between p-6">
+													<h3 class="pr-4 text-lg leading-relaxed font-semibold text-black md:text-xl" itemprop="name">
+														<?php echo esc_html( $faq['question'] ); ?>
+													</h3>
+
+													<div class="faq-chevron h-[35px] w-[35px] flex-shrink-0 rounded-full shadow-md transition-all duration-300 ease-in-out hover:scale-110">
+														<img class="chevron-icon h-full w-full transition-transform duration-300 ease-in-out"
+															 alt="Toggle FAQ"
+															 src="<?php echo esc_url( sunnysideac_asset_url('assets/images/home-page/faq-chevron-down-circle.svg') ); ?>"
+															 loading="lazy"
+															 decoding="async" />
+													</div>
+												</div>
+
+												<div class="faq-content max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+													<div class="px-6 pb-6 text-base leading-relaxed font-light text-gray-700 md:text-lg" itemprop="text">
+														<?php echo wp_kses_post( wpautop( $faq['answer'] ) ); ?>
+													</div>
+												</div>
+											</div>
+										</label>
 									</div>
-								</details>
-							<?php endforeach; ?>
+								<?php endforeach; ?>
+							</div>
 						</div>
 					</section>
+
+					<style>
+					/* CSS-only accordion functionality - matching homepage */
+					.faq-toggle:checked + label .faq-container {
+						background-color: #ffeac0;
+						border-color: #fed7aa;
+					}
+
+					.faq-toggle:checked + label .faq-content {
+						max-height: 1000px;
+						opacity: 1;
+					}
+
+					.faq-toggle:checked + label .chevron-icon {
+						transform: rotate(180deg);
+					}
+
+					.faq-toggle:checked + label .faq-chevron {
+						box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+					}
+
+					/* Enhanced hover effects */
+					.faq-item:hover .faq-chevron {
+						transform: scale(1.1);
+					}
+					</style>
 				<?php endif; ?>
 
 				<!-- Internal Links Section - Redesigned as Grid Cards -->
