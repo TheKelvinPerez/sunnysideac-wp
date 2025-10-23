@@ -280,7 +280,7 @@ function sunnysideac_setup() {
 	// Note: 'footer' menu kept for backwards compatibility, but footer also uses JSON config (config/footer-menu.json)
 	register_nav_menus(
 		[
-			'footer'  => __( 'Footer Menu (Legacy - uses JSON config)', 'sunnysideac' ),
+			'footer' => __( 'Footer Menu (Legacy - uses JSON config)', 'sunnysideac' ),
 		]
 	);
 }
@@ -501,12 +501,12 @@ if ( function_exists( 'acf_add_local_field_group' ) ) {
 					'placeholder'  => 'https://www.youtube.com/watch?v=...',
 				],
 				[
-					'key'          => 'field_city_video_title',
-					'label'        => 'Video Title',
-					'name'         => 'city_video_title',
-					'type'         => 'text',
-					'instructions' => 'Title of the video (for schema markup). Example: "HVAC Services in Miami, Florida"',
-					'placeholder'  => 'HVAC Services in Miami, Florida',
+					'key'               => 'field_city_video_title',
+					'label'             => 'Video Title',
+					'name'              => 'city_video_title',
+					'type'              => 'text',
+					'instructions'      => 'Title of the video (for schema markup). Example: "HVAC Services in Miami, Florida"',
+					'placeholder'       => 'HVAC Services in Miami, Florida',
 					'conditional_logic' => [
 						[
 							[
@@ -517,13 +517,13 @@ if ( function_exists( 'acf_add_local_field_group' ) ) {
 					],
 				],
 				[
-					'key'          => 'field_city_video_description',
-					'label'        => 'Video Description',
-					'name'         => 'city_video_description',
-					'type'         => 'textarea',
-					'instructions' => 'Brief description of the video content (for schema markup)',
-					'placeholder'  => 'Watch our HVAC technicians servicing homes and businesses throughout Miami...',
-					'rows'         => 3,
+					'key'               => 'field_city_video_description',
+					'label'             => 'Video Description',
+					'name'              => 'city_video_description',
+					'type'              => 'textarea',
+					'instructions'      => 'Brief description of the video content (for schema markup)',
+					'placeholder'       => 'Watch our HVAC technicians servicing homes and businesses throughout Miami...',
+					'rows'              => 3,
 					'conditional_logic' => [
 						[
 							[
@@ -534,14 +534,14 @@ if ( function_exists( 'acf_add_local_field_group' ) ) {
 					],
 				],
 				[
-					'key'          => 'field_city_video_thumbnail',
-					'label'        => 'Video Thumbnail (Optional)',
-					'name'         => 'city_video_thumbnail',
-					'type'         => 'image',
-					'instructions' => 'Custom thumbnail image (1280x720). If empty, will use video platform\'s default thumbnail.',
-					'return_format' => 'url',
-					'preview_size' => 'medium',
-					'library'      => 'all',
+					'key'               => 'field_city_video_thumbnail',
+					'label'             => 'Video Thumbnail (Optional)',
+					'name'              => 'city_video_thumbnail',
+					'type'              => 'image',
+					'instructions'      => 'Custom thumbnail image (1280x720). If empty, will use video platform\'s default thumbnail.',
+					'return_format'     => 'url',
+					'preview_size'      => 'medium',
+					'library'           => 'all',
 					'conditional_logic' => [
 						[
 							[
@@ -552,12 +552,12 @@ if ( function_exists( 'acf_add_local_field_group' ) ) {
 					],
 				],
 				[
-					'key'          => 'field_city_video_duration',
-					'label'        => 'Video Duration',
-					'name'         => 'city_video_duration',
-					'type'         => 'text',
-					'instructions' => 'Duration in ISO 8601 format (e.g., PT2M30S for 2 minutes 30 seconds). Used for schema markup.',
-					'placeholder'  => 'PT2M30S',
+					'key'               => 'field_city_video_duration',
+					'label'             => 'Video Duration',
+					'name'              => 'city_video_duration',
+					'type'              => 'text',
+					'instructions'      => 'Duration in ISO 8601 format (e.g., PT2M30S for 2 minutes 30 seconds). Used for schema markup.',
+					'placeholder'       => 'PT2M30S',
 					'conditional_logic' => [
 						[
 							[
@@ -741,7 +741,7 @@ function sunnysideac_handle_city_request( $query ) {
 			$query->set( 'post_type', 'city' );
 			$query->set( 'p', $city_post->ID );
 			$query->set( 'name', $city_slug );
-			$query->is_single = true;
+			$query->is_single   = true;
 			$query->is_singular = true;
 		}
 	}

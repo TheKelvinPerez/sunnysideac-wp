@@ -11,8 +11,14 @@ $star_icon = sunnysideac_asset_url( 'assets/icons/star-icon.svg' );
 
 // Page breadcrumbs
 $breadcrumbs = [
-	[ 'name' => 'Home', 'url' => home_url( '/' ) ],
-	[ 'name' => 'Projects', 'url' => '' ],
+	[
+		'name' => 'Home',
+		'url'  => home_url( '/' ),
+	],
+	[
+		'name' => 'Projects',
+		'url'  => '',
+	],
 ];
 
 // Project cards data
@@ -138,7 +144,7 @@ get_template_part(
 			role="contentinfo"
 			aria-labelledby="projects-grid-heading"
 		>
-			<div class="mx-auto max-w-6xl p-6 md:p-8 lg:p-10">
+			<div class="">
 				<!-- Residential vs Commercial Overview -->
 				<div class="lg:grid lg:grid-cols-2 lg:gap-6 mb-8">
 					<article class="rounded-[20px] bg-white p-6 md:p-8 lg:p-10 mb-6 lg:mb-0">
