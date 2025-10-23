@@ -693,7 +693,7 @@ add_filter( 'query_vars', 'sunnysideac_add_city_slug_query_var' );
  */
 function sunnysideac_add_city_service_root_rewrite() {
 	add_rewrite_rule(
-		'^(?!services|areas|category|tag|page)([^/]+)/([^/]+)/?$',
+		'^(?!services|areas|category|tag|page|cities)([^/]+)/([^/]+)/?$',
 		'index.php?post_type=service&name=$matches[2]&city_slug=$matches[1]',
 		'top'
 	);
@@ -706,12 +706,6 @@ add_action( 'init', 'sunnysideac_add_city_service_root_rewrite', 15 );
 function sunnysideac_add_areas_city_rewrite() {
 	add_rewrite_rule(
 		'^areas/([^/]+)/?$',
-		'index.php?city=$matches[1]',
-		'top'
-	);
-
-	add_rewrite_rule(
-		'^cities/([^/]+)/?$',
 		'index.php?city=$matches[1]',
 		'top'
 	);
@@ -754,6 +748,31 @@ function sunnysideac_handle_city_request( $query ) {
 }
 add_action( 'pre_get_posts', 'sunnysideac_handle_city_request' );
 
+
+/**
+ * Handle 404s for city posts and redirect to working URL
+ */
+function sunnysideac_handle_city_404s() {
+	// Only on frontend 404 requests
+	if ( is_404() && ! is_admin() ) {
+		$requested_url = $_SERVER['REQUEST_URI'];
+
+		// Check if this is a city request
+		if ( preg_match( '/cities/([^/]+)/?', $requested_url, $matches ) ) {
+			$city_slug = $matches[1];
+
+			// Check if city post exists
+			$city_post = get_page_by_path( $city_slug, OBJECT, 'city' );
+			if ( $city_post && $city_post->post_status === 'publish' ) {
+				// Redirect to working query URL
+				$redirect_url = home_url( "/?city={$city_slug}" );
+				wp_safe_redirect( $redirect_url, 301 );
+				exit;
+			}
+		}
+	}
+}
+add_action( 'template_redirect', 'sunnysideac_handle_city_404s' );
 
 /**
  * Force city templates for proper routing
