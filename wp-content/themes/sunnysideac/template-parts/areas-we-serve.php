@@ -49,11 +49,15 @@ $images = [
 					<!-- Service Areas Grid - 2x10 on mobile -->
 					<div class="grid grid-cols-2 gap-2">
 						<?php foreach ($service_areas as $area): ?>
-							<div class="rounded-lg bg-white px-2 py-1 text-center shadow-sm transition-shadow duration-200 hover:shadow-md">
+							<?php
+							$city_slug = sanitize_title($area);
+							$city_url = home_url("/cities/{$city_slug}/");
+							?>
+							<a href="<?php echo esc_url($city_url); ?>" class="rounded-lg bg-white px-2 py-1 text-center shadow-sm transition-shadow duration-200 hover:shadow-md block">
 								<span class="text-xs font-medium text-[#414141]">
 									<?php echo esc_html($area); ?>
 								</span>
-							</div>
+							</a>
 						<?php endforeach; ?>
 					</div>
 				</div>
@@ -95,11 +99,15 @@ $images = [
 							<!-- Service Areas Grid - 4x5 on desktop -->
 							<div class="grid grid-cols-4 gap-2">
 								<?php foreach ($service_areas as $area): ?>
-									<div class="rounded-lg bg-white px-2 py-1 text-center shadow-sm transition-shadow duration-200 hover:shadow-md">
+									<?php
+									$city_slug = sanitize_title($area);
+									$city_url = home_url("/cities/{$city_slug}/");
+									?>
+									<a href="<?php echo esc_url($city_url); ?>" class="rounded-lg bg-white px-2 py-1 text-center shadow-sm transition-shadow duration-200 hover:shadow-md block">
 										<span class="text-xs font-medium text-[#414141]">
 											<?php echo esc_html($area); ?>
 										</span>
-									</div>
+									</a>
 								<?php endforeach; ?>
 							</div>
 						</div>

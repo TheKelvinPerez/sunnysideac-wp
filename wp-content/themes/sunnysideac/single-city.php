@@ -32,66 +32,25 @@ if ( have_posts() ) :
 				<!-- Hero Section with City Title & CTA -->
 				<article id="post-<?php the_ID(); ?>" <?php post_class( 'city-page' ); ?>>
 
-					<!-- Page Header - Breadcrumbs & Title -->
-					<header class="entry-header bg-white rounded-[20px] p-6 md:p-10 mb-6">
-						<!-- Breadcrumbs -->
-						<nav aria-label="Breadcrumb" class="mb-6 flex justify-center" itemscope itemtype="https://schema.org/BreadcrumbList">
-							<ol class="flex flex-wrap items-center gap-2 text-sm text-gray-600">
-								<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-									<a itemprop="item" href="<?php echo esc_url( home_url( '/' ) ); ?>" class="hover:text-orange-500">
-										<span itemprop="name">Home</span>
-									</a>
-									<meta itemprop="position" content="1">
-								</li>
-								<li class="text-gray-400">/</li>
-								<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-									<a itemprop="item" href="<?php echo esc_url( home_url( '/cities/' ) ); ?>" class="hover:text-orange-500">
-										<span itemprop="name">Service Areas</span>
-									</a>
-									<meta itemprop="position" content="2">
-								</li>
-								<li class="text-gray-400">/</li>
-								<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-									<span itemprop="name" class="font-semibold text-orange-500"><?php echo esc_html( $city_title ); ?></span>
-									<meta itemprop="position" content="3">
-								</li>
-							</ol>
-						</nav>
+					<?php
+					// Page Header with Breadcrumbs (white background like you preferred)
+					get_template_part('template-parts/page-header', null, [
+						'breadcrumbs' => [
+							['name' => 'Home', 'url' => home_url('/')],
+							['name' => 'Service Areas', 'url' => home_url('/cities/')],
+							['name' => $city_title, 'url' => '']
+						],
+						'title' => 'HVAC Services in ' . $city_title,
+						'description' => 'Professional heating, cooling, and air quality services for the ' . $city_title . ' community',
+						'show_ctas' => true,
+						'bg_color' => 'white'
+					]);
+					?>
 
-						<!-- Main Title with Gradient -->
-						<div class="text-center mb-8">
-							<h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4" itemprop="name">
-								<span class="bg-gradient-to-r from-[#fb9939] to-[#e5462f] bg-clip-text text-transparent">
-									HVAC Services in <?php echo esc_html( $city_title ); ?>
-								</span>
-							</h1>
-
-							<p class="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-								Professional heating, cooling, and air quality services for the <?php echo esc_html( $city_title ); ?> community
-							</p>
-						</div>
-
-						<!-- CTA Buttons -->
-						<div class="flex flex-col sm:flex-row justify-center gap-4 mt-8">
-							<a href="tel:<?php echo esc_attr( SUNNYSIDE_TEL_HREF ); ?>"
-								class="inline-flex items-center justify-center gap-2 rounded-[35px] bg-gradient-to-r from-[#fb9939] to-[#e5462f] px-6 py-4 transition-opacity hover:opacity-90 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:outline-none"
-								aria-label="Call to schedule service - <?php echo esc_attr( SUNNYSIDE_PHONE_DISPLAY ); ?>">
-								<span class="text-base lg:text-lg font-medium text-white whitespace-nowrap">
-									<?php echo esc_html( SUNNYSIDE_PHONE_DISPLAY ); ?>
-								</span>
-							</a>
-
-							<a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"
-								class="inline-flex items-center justify-center gap-2 rounded-[35px] bg-gradient-to-r from-[#7fcbf2] to-[#594bf7] px-6 py-4 transition-opacity hover:opacity-90 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none">
-								<span class="text-base lg:text-lg font-medium text-white whitespace-nowrap">
-									Schedule Service
-								</span>
-							</a>
-						</div>
-
-						<!-- Featured Image (if exists) -->
-						<?php if ( has_post_thumbnail() ) : ?>
-							<figure class="mt-8" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+					<!-- Featured Image (if exists) -->
+					<?php if ( has_post_thumbnail() ) : ?>
+						<section class="bg-white rounded-[20px] p-6 md:p-10 mb-6">
+							<figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
 								<?php
 								the_post_thumbnail(
 									'large',
@@ -105,9 +64,8 @@ if ( have_posts() ) :
 								<meta itemprop="width" content="1200">
 								<meta itemprop="height" content="630">
 							</figure>
-						<?php endif; ?>
-
-					</header>
+						</section>
+					<?php endif; ?>
 
 					<!-- City Content (if exists) -->
 					<?php if ( get_the_content() || $city_service_hours || $city_service_area_note ) : ?>
@@ -162,33 +120,47 @@ if ( have_posts() ) :
 					<!-- Services Available in This City -->
 					<section class="bg-white rounded-[20px] p-6 md:p-10 mb-6">
 						<div class="text-center mb-12">
-							<h2 class="text-3xl font-bold text-gray-900 mb-4">Services Available in <?php echo esc_html( $city_title ); ?></h2>
-							<p class="text-xl text-gray-600">Complete HVAC solutions for your home or business</p>
+							<h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+								<span class="bg-gradient-to-r from-[#fb9939] to-[#e5462f] bg-clip-text text-transparent">
+									Services Available in <?php echo esc_html( $city_title ); ?>
+								</span>
+							</h2>
+							<p class="text-lg text-gray-600">Complete HVAC solutions for your home or business</p>
 						</div>
 
-						<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+						<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 							<?php
 							$services = SUNNYSIDE_SERVICES_BY_CATEGORY;
 							foreach ( $services as $category => $service_list ) :
 								foreach ( $service_list as $service_name ) :
 							?>
-								<div class="bg-gray-50 rounded-lg border border-gray-200 p-6 hover:border-[#fb9939] hover:shadow-md transition-all">
-									<div class="flex items-center gap-3 mb-3">
-										<div class="h-8 w-8 rounded-lg bg-[#ffc549] p-1">
-											<svg class="h-6 w-6 text-[#e5462f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<a href="<?php echo esc_url( home_url( sprintf( '/%s/%s', sanitize_title( $city_title ), sanitize_title( $service_name ) ) ) ); ?>"
+								   class="group block bg-gray-50 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-orange-50 hover:to-orange-100 hover:shadow-lg">
+									<!-- Icon Circle -->
+									<div class="mb-4">
+										<div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-orange-200 to-orange-300">
+											<svg class="h-6 w-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="<?php echo esc_attr( sunnysideac_get_service_icon( $service_name ) ); ?>" />
 											</svg>
 										</div>
-										<h3 class="font-semibold text-gray-900"><?php echo esc_html( $service_name ); ?></h3>
 									</div>
+
+									<!-- Service Content -->
+									<h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-orange-500">
+										<?php echo esc_html( $service_name ); ?>
+									</h3>
+
 									<p class="text-gray-600 text-sm mb-4">
 										Professional <?php echo strtolower( esc_html( $service_name ) ); ?> services for <?php echo esc_html( $city_title ); ?> residents and businesses
 									</p>
-									<a href="<?php echo esc_url( home_url( sprintf( '/%s/%s', sanitize_title( $service_name ), sanitize_title( $city_title ) ) ) ); ?>"
-									   class="text-[#e5462f] font-medium hover:text-[#fb9939] transition-colors">
-										Learn more →
-									</a>
-								</div>
+
+									<span class="inline-flex items-center text-orange-500 font-medium text-sm">
+										Learn more
+										<svg class="w-4 h-4 ml-1 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+										</svg>
+									</span>
+								</a>
 							<?php
 								endforeach;
 							endforeach;
@@ -243,11 +215,15 @@ if ( have_posts() ) :
 					<!-- Nearby Cities -->
 					<section class="bg-white rounded-[20px] p-6 md:p-10 mb-6">
 						<div class="text-center mb-12">
-							<h2 class="text-3xl font-bold text-gray-900 mb-4">Nearby Service Areas</h2>
-							<p class="text-xl text-gray-600">We also serve these surrounding communities</p>
+							<h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+								<span class="bg-gradient-to-r from-[#fb9939] to-[#e5462f] bg-clip-text text-transparent">
+									Nearby Service Areas
+								</span>
+							</h2>
+							<p class="text-lg text-gray-600">We also serve these surrounding communities</p>
 						</div>
 
-						<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+						<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 							<?php
 							$current_city = get_the_title();
 							$nearby_cities = array_slice( SUNNYSIDE_SERVICE_AREAS, 0, 12 ); // Show first 12 cities
@@ -256,11 +232,21 @@ if ( have_posts() ) :
 								if ( $city !== $current_city ) :
 							?>
 								<a href="<?php echo esc_url( home_url( sprintf( '/cities/%s', sanitize_title( $city ) ) ) ); ?>"
-								   class="flex items-center gap-2 p-3 rounded-lg border border-gray-200 hover:border-[#fb9939] hover:bg-[#ffc549] transition-all text-center justify-center">
-									<svg class="h-4 w-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-									</svg>
-									<span class="text-sm font-medium text-gray-700"><?php echo esc_html( $city ); ?></span>
+								   class="group block bg-gray-50 rounded-2xl p-4 text-center transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-orange-50 hover:to-orange-100 hover:shadow-lg">
+									<!-- Icon Circle -->
+									<div class="mb-3">
+										<div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-orange-200 to-orange-300">
+											<svg class="h-6 w-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+											</svg>
+										</div>
+									</div>
+
+									<!-- City Name -->
+									<h3 class="text-lg font-bold text-gray-900 group-hover:text-orange-500">
+										<?php echo esc_html( $city ); ?>
+									</h3>
 								</a>
 							<?php
 								endif;
@@ -278,6 +264,47 @@ if ( have_posts() ) :
 							</a>
 						</div>
 					</section>
+
+					<!-- FAQ Section -->
+					<?php
+					// City-specific FAQs
+					$city_faqs = [
+						[
+							'question' => 'Do you provide HVAC services in ' . $city_title . '?',
+							'answer' => 'Yes! We proudly serve ' . $city_title . ' with comprehensive HVAC services including air conditioning repair, installation, heating services, and preventive maintenance. Our technicians are familiar with the specific climate needs of ' . $city_title . ' and respond quickly to service calls in your area.',
+						],
+						[
+							'question' => 'What is the average response time for service calls in ' . $city_title . '?',
+							'answer' => 'We typically respond to service calls in ' . $city_title . ' within 2-4 hours during business hours. For emergency HVAC situations, we offer 24/7 emergency service with even faster response times to ensure your comfort is restored as quickly as possible.',
+						],
+						[
+							'question' => 'How often should ' . $city_title . ' residents service their AC units?',
+							'answer' => 'Due to South Florida\'s hot and humid climate, we recommend ' . $city_title . ' residents service their AC units at least twice per year - once before cooling season in spring and once in fall. Regular maintenance helps prevent breakdowns during peak summer heat and extends your system\'s lifespan.',
+						],
+						[
+							'question' => 'What HVAC services do you offer in ' . $city_title . '?',
+							'answer' => 'We offer complete HVAC services in ' . $city_title . ' including AC installation and replacement, AC repair and maintenance, heating services, indoor air quality solutions, duct cleaning and sealing, thermostat installation, and emergency 24/7 repairs. Our licensed technicians handle all major HVAC brands.',
+						],
+						[
+							'question' => 'Are your technicians licensed to work in ' . $city_title . '?',
+							'answer' => 'Yes, all our HVAC technicians are fully licensed, insured, and certified to work throughout South Florida including ' . $city_title . '. We maintain all required local permits and follow all building codes specific to ' . $city_title . ' and the surrounding areas.',
+						],
+						[
+							'question' => 'Do you offer financing for HVAC systems in ' . $city_title . '?',
+							'answer' => 'Yes, we offer flexible financing options for ' . $city_title . ' residents to make AC installation and replacement affordable. We work with various lenders to provide competitive rates and terms that fit your budget. Ask about our current financing programs when you schedule your consultation.',
+						],
+					];
+
+					get_template_part('template-parts/faq-component', null, [
+						'faq_data' => $city_faqs,
+						'title' => 'HVAC FAQs for ' . $city_title,
+						'mobile_title' => 'FAQ',
+						'subheading' => 'Common Questions About Our ' . $city_title . ' HVAC Services',
+						'description' => 'Get answers to frequently asked questions about heating and cooling services in ' . $city_title . '.',
+						'show_schema' => true,
+						'section_id' => 'city-faq-section',
+					]);
+					?>
 
 					<!-- CTA Section -->
 					<section class="bg-gradient-to-r from-[#e5462f] to-[#fb9939] text-white rounded-[20px] p-6 md:p-10 mb-6">

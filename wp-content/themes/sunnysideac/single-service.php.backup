@@ -325,25 +325,34 @@ if ( have_posts() ) :
 
 					<!-- FAQs -->
 					<?php if ( $service_faqs ) : ?>
-						<?php
-						// Transform ACF FAQ data to match component format
-						$formatted_faqs = array_map(function($faq) {
-							return [
-								'question' => $faq['question'],
-								'answer' => wp_strip_all_tags($faq['answer']),
-							];
-						}, $service_faqs);
+						<section class="service-faqs bg-white rounded-[20px] p-6 md:p-10 mb-6" aria-labelledby="faq-heading">
+							<header class="text-center mb-8">
+								<h2 id="faq-heading" class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+									Frequently Asked Questions
+								</h2>
+								<p class="text-lg text-gray-600">
+									Got questions? We've got answers.
+								</p>
+							</header>
 
-						get_template_part('template-parts/faq-component', null, [
-							'faq_data' => $formatted_faqs,
-							'title' => 'Frequently Asked Questions',
-							'mobile_title' => 'FAQ',
-							'subheading' => 'Got Questions About ' . $service_title . '? We\'ve Got Answers!',
-							'description' => 'Find answers to common questions about our ' . strtolower($service_title) . ' services.',
-							'show_schema' => false, // Schema already added in <head>
-							'section_id' => 'service-faq-section',
-						]);
-						?>
+							<div class="faq-list space-y-4 max-w-4xl mx-auto">
+								<?php foreach ( $service_faqs as $faq ) : ?>
+									<details class="faq-item bg-gray-50 rounded-2xl p-6 transition-all duration-300 hover:bg-orange-50 group" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+										<summary class="font-semibold text-lg cursor-pointer hover:text-orange-500 flex justify-between items-center" itemprop="name">
+											<span><?php echo esc_html( $faq['question'] ); ?></span>
+											<svg class="w-6 h-6 transform transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+											</svg>
+										</summary>
+										<div class="faq-answer mt-4 text-gray-600 leading-relaxed border-t border-gray-200 pt-4" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+											<div itemprop="text">
+												<?php echo wp_kses_post( wpautop( $faq['answer'] ) ); ?>
+											</div>
+										</div>
+									</details>
+								<?php endforeach; ?>
+							</div>
+						</section>
 					<?php endif; ?>
 
 					<!-- Cities We Serve This Service -->
