@@ -313,7 +313,7 @@ function register_city_cpt() {
 			'public'       => true,
 			'has_archive'  => true,
 			'rewrite'      => [
-				'slug'       => 'areas',
+				'slug'       => 'cities',
 				'with_front' => false,
 			],
 			'supports'     => [ 'title', 'editor', 'thumbnail' ],
@@ -701,16 +701,85 @@ function sunnysideac_add_city_service_root_rewrite() {
 add_action( 'init', 'sunnysideac_add_city_service_root_rewrite', 15 );
 
 /**
- * Add rewrite for /areas/{city}/ → city page
+ * Add rewrite for /areas/{city}/ → city page (backward compatibility only)
  */
 function sunnysideac_add_areas_city_rewrite() {
 	add_rewrite_rule(
 		'^areas/([^/]+)/?$',
-		'index.php?post_type=city&name=$matches[1]',
+		'index.php?city=$matches[1]',
+		'top'
+	);
+
+	add_rewrite_rule(
+		'^cities/([^/]+)/?$',
+		'index.php?city=$matches[1]',
 		'top'
 	);
 }
 add_action( 'init', 'sunnysideac_add_areas_city_rewrite', 16 );
+
+/**
+ * Add custom query vars for city routing
+ */
+function sunnysideac_add_city_query_vars( $query_vars ) {
+	$query_vars[] = 'city';
+	return $query_vars;
+}
+add_filter( 'query_vars', 'sunnysideac_add_city_query_vars' );
+
+/**
+ * Handle city query var requests
+ */
+function sunnysideac_handle_city_request( $query ) {
+	// Only on frontend requests
+	if ( is_admin() ) {
+		return;
+	}
+
+	// Check if this is a city query var request
+	$city_slug = get_query_var( 'city' );
+	if ( ! empty( $city_slug ) ) {
+		// Find the city post by slug
+		$city_post = get_page_by_path( $city_slug, OBJECT, 'city' );
+
+		if ( $city_post && $city_post->post_status === 'publish' ) {
+			// Set the correct query vars for single city display
+			$query->set( 'post_type', 'city' );
+			$query->set( 'p', $city_post->ID );
+			$query->set( 'name', $city_slug );
+			$query->is_single = true;
+			$query->is_singular = true;
+		}
+	}
+}
+add_action( 'pre_get_posts', 'sunnysideac_handle_city_request' );
+
+
+/**
+ * Force city templates for proper routing
+ */
+function sunnysideac_force_city_templates( $template ) {
+	// Only modify template for city requests on frontend
+	if ( ! is_admin() ) {
+		// Force single-city.php for single city requests
+		if ( is_singular( 'city' ) ) {
+			$city_template = locate_template( 'single-city.php' );
+			if ( $city_template ) {
+				return $city_template;
+			}
+		}
+
+		// Force archive-cities.php for city archive requests
+		if ( is_post_type_archive( 'city' ) ) {
+			$cities_template = locate_template( 'archive-cities.php' );
+			if ( $cities_template ) {
+				return $cities_template;
+			}
+		}
+	}
+	return $template;
+}
+add_filter( 'template_include', 'sunnysideac_force_city_templates' );
 
 /**
  * Validate the route at template_redirect
@@ -746,6 +815,9 @@ function sunnysideac_validate_city_service_route() {
 		$notfound = get_404_template();
 		if ( $notfound ) {
 			include $notfound;
+		} else {
+			wp_redirect( home_url( '/' ) );
+			exit;
 		}
 		exit;
 	}

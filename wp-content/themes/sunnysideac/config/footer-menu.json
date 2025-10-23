@@ -25,12 +25,12 @@
       "service_areas": {
         "title": "Service Areas",
         "links": [
-          {"name": "Pembroke Pines", "href": "/service-areas/pembroke-pines"},
-          {"name": "Miramar", "href": "/service-areas/miramar"},
-          {"name": "Weston", "href": "/service-areas/weston"},
-          {"name": "Hollywood", "href": "/service-areas/hollywood"},
-          {"name": "Fort Lauderdale", "href": "/service-areas/fort-lauderdale"},
-          {"name": "All Service Areas", "href": "/service-areas"}
+          {"name": "Pembroke Pines", "href": "/cities/pembroke-pines"},
+          {"name": "Miramar", "href": "/cities/miramar"},
+          {"name": "Weston", "href": "/cities/weston"},
+          {"name": "Hollywood", "href": "/cities/hollywood"},
+          {"name": "Fort Lauderdale", "href": "/cities/fort-lauderdale"},
+          {"name": "All Service Areas", "href": "/cities"}
         ]
       },
       "brands": {

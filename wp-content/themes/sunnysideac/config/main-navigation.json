@@ -12,8 +12,8 @@
       "mega_menu_type": "services"
     },
     {
-      "title": "Areas",
-      "href": "/areas",
+      "title": "Cities",
+      "href": "/cities",
       "type": "mega_menu",
       "mega_menu_type": "service_areas"
     },

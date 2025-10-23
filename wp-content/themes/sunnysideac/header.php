@@ -435,7 +435,7 @@ let isServiceAreasDropdownOpen = false;
 		if (itemName === 'Services') {
 			// Toggle dropdown
 			toggleServicesDropdown();
-		} else if (itemName === 'Areas') {
+		} else if (itemName === 'Cities') {
 			// Toggle dropdown
 			toggleServiceAreasDropdown();
 		} else {
@@ -521,7 +521,7 @@ let isServiceAreasDropdownOpen = false;
 			clearTimeout(hoverTimeout);
 			hoverTimeout = null;
 		}
-		// Close Services dropdown when opening Service Areas
+		// Close Services dropdown when opening Cities
 		isServicesDropdownOpen = false;
 		updateServicesDropdown();
 
@@ -600,7 +600,7 @@ let isServiceAreasDropdownOpen = false;
 		// Navigate to city page if a location was selected
 		if (value) {
 			const citySlug = value.toLowerCase().replace(/\s+/g, '-');
-			const cityUrl = '<?php echo home_url( '/areas/' ); ?>' + citySlug;
+			const cityUrl = '<?php echo home_url( '/cities/' ); ?>' + citySlug;
 			window.location.href = cityUrl;
 		}
 	}
@@ -635,8 +635,8 @@ let isServiceAreasDropdownOpen = false;
 				});
 				servicesDropdown.addEventListener('mouseleave', delayedCloseServicesDropdown);
 			}
-		} else if (itemName === 'Areas') {
-			// Areas dropdown toggle
+		} else if (itemName === 'Cities') {
+			// Cities dropdown toggle
 			if (serviceAreasDropdownBtn) {
 				serviceAreasDropdownBtn.addEventListener('click', (e) => {
 					e.preventDefault();
@@ -715,7 +715,7 @@ let isServiceAreasDropdownOpen = false;
 		link.addEventListener('click', closeMobileMenu);
 	});
 
-	// Mobile service areas links
+	// Mobile cities links
 	document.querySelectorAll('.mobile-area-link').forEach(link => {
 		link.addEventListener('click', closeMobileMenu);
 	});
@@ -811,7 +811,7 @@ let isServiceAreasDropdownOpen = false;
 
 		// Manual state control for Service Areas dropdown (bypasses debug mode check)
 		openServiceAreas: () => {
-			console.log('🟢 Debug: Opening Service Areas dropdown (manual control)');
+			console.log('🟢 Debug: Opening Cities dropdown (manual control)');
 			debugMode = true; // Enable debug mode automatically
 			isServicesDropdownOpen = false; // Close other dropdown
 			updateServicesDropdown();
@@ -819,7 +819,7 @@ let isServiceAreasDropdownOpen = false;
 			updateServiceAreasDropdown();
 		},
 		closeServiceAreas: () => {
-			console.log('🟢 Debug: Closing Service Areas dropdown (manual control)');
+			console.log('🟢 Debug: Closing Cities dropdown (manual control)');
 			const wasDebugMode = debugMode;
 			debugMode = false; // Temporarily disable to allow close
 			isServiceAreasDropdownOpen = false;
@@ -827,7 +827,7 @@ let isServiceAreasDropdownOpen = false;
 			debugMode = wasDebugMode; // Restore debug mode state
 		},
 		toggleServiceAreas: () => {
-			console.log('🟢 Debug: Toggling Service Areas dropdown (manual control)');
+			console.log('🟢 Debug: Toggling Cities dropdown (manual control)');
 			debugMode = true; // Enable debug mode automatically
 			if (!isServiceAreasDropdownOpen) {
 				isServicesDropdownOpen = false; // Close other dropdown
@@ -896,10 +896,10 @@ let isServiceAreasDropdownOpen = false;
 	navDebug.closeServices()       - Close Services dropdown
 	navDebug.toggleServices()      - Toggle Services dropdown (auto-enables debug mode)
 
-🟢 Service Areas Dropdown:
-	navDebug.openServiceAreas()    - Open Service Areas dropdown (auto-enables debug mode)
-	navDebug.closeServiceAreas()   - Close Service Areas dropdown
-	navDebug.toggleServiceAreas()  - Toggle Service Areas dropdown (auto-enables debug mode)
+🟢 Cities Dropdown:
+	navDebug.openServiceAreas()    - Open Cities dropdown (auto-enables debug mode)
+	navDebug.closeServiceAreas()   - Close Cities dropdown
+	navDebug.toggleServiceAreas()  - Toggle Cities dropdown (auto-enables debug mode)
 
 🔴 Advanced:
 	navDebug.forceOpenBoth()       - Force both dropdowns open (auto-enables debug mode)

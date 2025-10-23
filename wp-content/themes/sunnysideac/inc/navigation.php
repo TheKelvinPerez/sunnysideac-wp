@@ -44,7 +44,7 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 					$output .= '<div class="bg-gradient-to-r from-[#fb9939] to-[#e5462f] px-6 py-4">';
 					$output .= '<div class="flex items-center justify-between">';
 					$output .= '<div>';
-					$output .= '<h3 class="text-2xl font-bold text-white [font-family:\'Inter-Bold\',Helvetica]">Service Areas</h3>';
+					$output .= '<h3 class="text-2xl font-bold text-white [font-family:\'Inter-Bold\',Helvetica]">Cities We Serve</h3>';
 					$output .= '<p class="text-sm text-white/90 mt-1 font-normal [font-family:\'Inter\',Helvetica]">Proudly Serving South Florida</p>';
 					$output .= '</div>';
 					$output .= '<div class="text-white/80">';
@@ -108,7 +108,7 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 	}
 
 	/**
-	 * Output areas mega menu content from constants
+	 * Output cities mega menu content from constants
 	 */
 	private function output_areas_mega_menu( &$output ) {
 		if ( ! defined( 'SUNNYSIDE_PRIORITY_CITIES' ) ) {
@@ -121,7 +121,7 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 			$city_slug = sanitize_title( $city );
 			$city_url = home_url( sprintf( SUNNYSIDE_CITY_URL_PATTERN, $city_slug ) );
 
-			$output .= '<a href="' . esc_url( $city_url ) . '" class="flex items-center gap-2 p-2 rounded-[20px] transition-all duration-200 hover:bg-[#ffc549] hover:scale-105 hover:shadow-md focus:bg-[#ffc549] focus:outline-none group" aria-label="Navigate to ' . esc_attr( $city ) . ' service area">';
+			$output .= '<a href="' . esc_url( $city_url ) . '" class="flex items-center gap-2 p-2 rounded-[20px] transition-all duration-200 hover:bg-[#ffc549] hover:scale-105 hover:shadow-md focus:bg-[#ffc549] focus:outline-none group" aria-label="Navigate to ' . esc_attr( $city ) . ' city">';
 			$output .= '<div class="h-4 w-4 flex-shrink-0">';
 			$output .= '<svg class="h-4 w-4 text-gray-600 group-hover:text-[#e5462f] transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">';
 			$output .= '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />';
@@ -150,7 +150,7 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 				if ( $menu_type === 'services' ) {
 					$output .= 'View All HVAC Services';
 				} else {
-					$output .= 'View All Service Areas';
+					$output .= 'View All Cities';
 				}
 
 				$output .= '<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>';
@@ -178,8 +178,8 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 			$has_dropdown = in_array( 'menu-item-has-children', $item->classes );
 			$item_lower = strtolower( $item->title );
 
-			// Check if this is a mega menu item (Services or Areas)
-			$is_mega_menu_item = ( $item_lower === 'services' || $item_lower === 'areas' );
+			// Check if this is a mega menu item (Services or Cities)
+			$is_mega_menu_item = ( $item_lower === 'services' || $item_lower === 'cities' );
 
 			// Store for use in start_lvl
 			if ( $is_mega_menu_item && $has_dropdown ) {
@@ -190,7 +190,7 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 			$output .= '<li role="none">';
 
 			if ( $is_mega_menu_item && $has_dropdown ) {
-				// Services or Areas mega menu item
+				// Services or Cities mega menu item
 				$container_id = $item_lower === 'services' ? 'services-dropdown-container' : 'service-areas-dropdown-container';
 				$btn_class = $item_lower === 'services' ? 'services-dropdown-btn' : 'service-areas-dropdown-btn';
 				$chevron_icon = get_template_directory_uri() . '/assets/images/images/logos/navigation-chevron-down.svg';
@@ -221,7 +221,7 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 		if ( $depth === 0 ) {
 			$item_lower = strtolower( $item->title );
 			$has_dropdown = in_array( 'menu-item-has-children', $item->classes );
-			$is_mega_menu_item = ( $item_lower === 'services' || $item_lower === 'areas' );
+			$is_mega_menu_item = ( $item_lower === 'services' || $item_lower === 'cities' );
 
 			if ( $is_mega_menu_item && $has_dropdown ) {
 				$output .= '</div>'; // Close relative container
@@ -356,7 +356,7 @@ class Sunnyside_Footer_Nav_Walker extends Walker_Nav_Menu {
 				$company_section = $section;
 			} elseif ( $title_lower === 'brands' ) {
 				$brands_section = $section;
-			} elseif ( $title_lower === 'service areas' ) {
+			} elseif ( $title_lower === 'service areas' || $title_lower === 'cities' ) {
 				$service_areas_section = $section;
 			}
 		}
@@ -413,7 +413,7 @@ class Sunnyside_Footer_Nav_Walker extends Walker_Nav_Menu {
 		// Column 3: Service Areas & Brands
 		$output .= '<div class="space-y-6">';
 
-		// Service Areas section
+		// Service Areas / Cities section
 		if ( $service_areas_section ) {
 			$output .= '<div>';
 			$output .= '<h3 class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl">' . esc_html( $service_areas_section['title'] ) . '</h3>';

@@ -96,7 +96,7 @@ define('SUNNYSIDE_PRIORITY_CITIES', [
 
 // Service URL patterns
 define('SUNNYSIDE_SERVICE_URL_PATTERN', '/services/%s');
-define('SUNNYSIDE_CITY_URL_PATTERN', '/areas/%s');
+define('SUNNYSIDE_CITY_URL_PATTERN', '/cities/%s');
 
 // Social media links
 define('SUNNYSIDE_FACEBOOK_URL', 'https://facebook.com/sunnyside247ac');

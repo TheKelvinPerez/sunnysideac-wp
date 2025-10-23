@@ -1,7 +1,7 @@
 <?php
 /**
  * Template for displaying City archive page
- * URL: /city (or /areas if redirected)
+ * URL: /cities
  */
 
 get_header();
@@ -59,8 +59,8 @@ get_header();
 					<?php foreach (SUNNYSIDE_PRIORITY_CITIES as $city) : ?>
 						<?php
 						// Check if this city has a city post
-						$city_post = get_page_by_title($city, OBJECT, 'city');
-						$city_url = $city_post ? get_permalink($city_post->ID) : home_url(sprintf('/areas/%s', sanitize_title($city)));
+						$city_post = get_page_by_path( sanitize_title($city), OBJECT, 'city' );
+						$city_url = $city_post ? get_permalink($city_post->ID) : home_url(sprintf('/cities/%s', sanitize_title($city)));
 						?>
 						<a href="<?php echo esc_url($city_url); ?>"
 						   class="group block bg-gray-50 rounded-2xl p-6 text-center transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-orange-50 hover:to-orange-100 hover:shadow-lg">
@@ -130,7 +130,7 @@ get_header();
 						<?php endwhile; ?>
 					<?php else : ?>
 						<div class="col-span-full text-center py-12">
-							<p class="text-xl text-gray-600">No service areas found.</p>
+							<p class="text-xl text-gray-600">No service cities found.</p>
 						</div>
 					<?php endif; ?>
 				</div>

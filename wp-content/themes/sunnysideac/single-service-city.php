@@ -162,13 +162,13 @@ if ( have_posts() ) :
 				<?php endif; ?>
 			}
 			<?php
-			if ( $service_faqs ) :
+			if ( ! empty( $all_faqs ) ) :
 				?>
 				,
 			{
 				"@type": "FAQPage",
 				"mainEntity": [
-					<?php foreach ( $service_faqs as $index => $faq ) : ?>
+					<?php foreach ( $all_faqs as $index => $faq ) : ?>
 					{
 						"@type": "Question",
 						"name": "<?php echo esc_js( $faq['question'] ); ?>",
@@ -176,7 +176,7 @@ if ( have_posts() ) :
 							"@type": "Answer",
 							"text": "<?php echo esc_js( wp_strip_all_tags( $faq['answer'] ) ); ?>"
 						}
-					}<?php echo $index < count( $service_faqs ) - 1 ? ',' : ''; ?>
+					}<?php echo $index < count( $all_faqs ) - 1 ? ',' : ''; ?>
 					<?php endforeach; ?>
 				]
 			}

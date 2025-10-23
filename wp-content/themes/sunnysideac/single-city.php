@@ -179,7 +179,7 @@
 								foreach ($nearby_cities as $city) :
 									if ($city !== $current_city) :
 								?>
-									<a href="<?php echo esc_url(home_url(sprintf('/areas/%s', sanitize_title($city)))); ?>"
+									<a href="<?php echo esc_url(home_url(sprintf('/cities/%s', sanitize_title($city)))); ?>"
 									   class="flex items-center gap-2 p-3 rounded-lg border border-gray-200 hover:border-[#fb9939] hover:bg-[#ffc549] transition-all text-center justify-center">
 										<svg class="h-4 w-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -193,9 +193,9 @@
 							</div>
 
 							<div class="text-center mt-8">
-								<a href="<?php echo esc_url(home_url('/areas')); ?>"
+								<a href="<?php echo esc_url(home_url('/cities')); ?>"
 								   class="inline-flex items-center text-[#e5462f] font-medium hover:text-[#fb9939] transition-colors">
-									View all service areas
+									View all service cities
 									<svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
 									</svg>
@@ -234,8 +234,8 @@
 				<div class="container mx-auto px-4 text-center">
 					<h1 class="text-4xl font-bold text-gray-900 mb-4">City Not Found</h1>
 					<p class="text-xl text-gray-600 mb-8">The service area you're looking for doesn't exist.</p>
-					<a href="<?php echo esc_url(home_url('/areas')); ?>" class="bg-[#e5462f] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#fb9939] transition-colors inline-block">
-						View All Areas
+					<a href="<?php echo esc_url(home_url('/cities')); ?>" class="bg-[#e5462f] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#fb9939] transition-colors inline-block">
+						View All Cities
 					</a>
 				</div>
 			</section>

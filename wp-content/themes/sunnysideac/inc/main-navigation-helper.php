@@ -154,7 +154,7 @@ function sunnysideac_render_services_mega_menu() {
 }
 
 /**
- * Render Service Areas mega menu dropdown
+ * Render Service Areas / Cities mega menu dropdown
  */
 function sunnysideac_render_service_areas_mega_menu() {
     if (!defined('SUNNYSIDE_PRIORITY_CITIES')) {
@@ -169,7 +169,7 @@ function sunnysideac_render_service_areas_mega_menu() {
     echo '<div class="bg-gradient-to-r from-[#fb9939] to-[#e5462f] px-6 py-4">';
     echo '<div class="flex items-center justify-between">';
     echo '<div>';
-    echo '<h3 class="text-2xl font-bold text-white [font-family:\'Inter-Bold\',Helvetica]">Service Areas</h3>';
+    echo '<h3 class="text-2xl font-bold text-white [font-family:\'Inter-Bold\',Helvetica]">Cities We Serve</h3>';
     echo '<p class="text-sm text-white/90 mt-1 font-normal [font-family:\'Inter\',Helvetica]">Proudly Serving South Florida</p>';
     echo '</div>';
     echo '<div class="text-white/80">';
@@ -202,8 +202,8 @@ function sunnysideac_render_service_areas_mega_menu() {
 
     // Add "View All" CTA
     echo '<div class="pt-4 border-t-2 border-[#e6d4b8]">';
-    echo '<a href="' . esc_url(home_url('/areas')) . '" class="flex items-center justify-center gap-2 rounded-[20px] bg-gradient-to-r from-[#fb9939] to-[#e5462f] px-6 py-3 text-center font-bold text-white text-base transition-all duration-200 hover:scale-105 hover:shadow-lg focus:scale-105 focus:outline-none [font-family:\'Inter-Bold\',Helvetica]">';
-    echo 'View All Service Areas';
+    echo '<a href="' . esc_url(home_url('/cities')) . '" class="flex items-center justify-center gap-2 rounded-[20px] bg-gradient-to-r from-[#fb9939] to-[#e5462f] px-6 py-3 text-center font-bold text-white text-base transition-all duration-200 hover:scale-105 hover:shadow-lg focus:scale-105 focus:outline-none [font-family:\'Inter-Bold\',Helvetica]">';
+    echo 'View All Cities';
     echo '<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>';
     echo '</a>';
     echo '</div>';
@@ -259,7 +259,7 @@ function sunnysideac_render_mobile_nav_from_config() {
         }
     }
 
-    echo '<a href="' . esc_url(home_url('/areas')) . '" class="block w-full py-2 text-left font-medium text-[#fb9939] transition-colors duration-200 hover:text-[#e5462f]">→ View All Areas</a>';
+    echo '<a href="' . esc_url(home_url('/cities')) . '" class="block w-full py-2 text-left font-medium text-[#fb9939] transition-colors duration-200 hover:text-[#e5462f]">→ View All Cities</a>';
     echo '</div></div>';
 
     // Other Navigation Links from JSON
