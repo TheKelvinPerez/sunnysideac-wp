@@ -112,7 +112,7 @@ if ( $show_schema ) {
 						</h3>
 
 						<div class="faq-chevron h-[35px] w-[35px] flex-shrink-0 rounded-full bg-gradient-to-l from-[#F79E37] to-[#E5462F] shadow-md transition-all duration-300 ease-in-out group-hover:scale-110 group-open:shadow-lg">
-							<img class="chevron-icon h-full w-full transition-transform duration-300 ease-in-out group-open:rotate-180"
+							<img class="chevron-icon h-full w-full transition-transform duration-300 ease-in-out"
 								alt="Toggle FAQ"
 								src="<?php echo esc_url( $icons['faq_chevron'] ); ?>"
 								loading="lazy"

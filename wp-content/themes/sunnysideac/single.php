@@ -10,6 +10,7 @@ get_header();
 $post_id            = get_the_ID();
 $post_title         = get_the_title();
 $post_date          = get_the_date();
+$author_id          = get_the_author_meta('ID');
 $author_name        = 'SunnySide247AC';
 $author_description = 'Professional HVAC company serving South Florida with 24/7 emergency AC repair, installation, and maintenance services. Family-owned and operated since 2014.';
 $author_avatar      = get_template_directory_uri() . '/assets/images/images/logos/sunny-side-logo.png';
@@ -109,7 +110,7 @@ get_template_part(
 							<?php foreach ( $categories as $category ) : ?>
 								<a href="<?php echo esc_url( get_category_link( $category ) ); ?>"
 									class="text-[#F79E37] hover:text-[#E64B30] transition-colors duration-200">
-									<?php echo esc_html( $category->name ); ?>
+									<?php echo esc_html( isset( $category->name ) ? $category->name : 'Uncategorized' ); ?>
 								</a>
 							<?php endforeach; ?>
 						</div>

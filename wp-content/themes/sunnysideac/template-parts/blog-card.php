@@ -115,7 +115,10 @@ $year       = $date_parts[2] ?? '';
 							alt="Category"
 							class="h-4 w-4">
 						<span class="text-sm font-medium text-[#F79E37]">
-							<?php echo esc_html( $categories[0]->name ); ?>
+							<?php
+							$category_name = isset( $categories[0]->name ) ? $categories[0]->name : 'Uncategorized';
+							echo esc_html( $category_name );
+							?>
 						</span>
 					</div>
 				<?php endif; ?>
