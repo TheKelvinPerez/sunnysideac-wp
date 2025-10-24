@@ -11,49 +11,49 @@ $company_logos = array(
 		'name'    => 'Bryant',
 		'src'     => get_template_directory_uri() . '/assets/images/company-logos/Bryant-Logo.png',
 		'alt'     => 'Bryant HVAC logo',
-		'website' => 'https://www.bryant.com',
+		'website' => home_url( '/brands/bryant/' ),
 	),
 	array(
 		'id'      => 2,
 		'name'    => 'Carrier',
 		'src'     => get_template_directory_uri() . '/assets/images/company-logos/Carrier-Logo.png',
 		'alt'     => 'Carrier air conditioning logo',
-		'website' => 'https://www.carrier.com',
+		'website' => home_url( '/brands/carrier/' ),
 	),
 	array(
 		'id'      => 3,
 		'name'    => 'Goodman',
 		'src'     => get_template_directory_uri() . '/assets/images/company-logos/Goodman-Logo.png',
 		'alt'     => 'Goodman HVAC logo',
-		'website' => 'https://www.goodmanmfg.com',
+		'website' => home_url( '/brands/goodman/' ),
 	),
 	array(
 		'id'      => 4,
 		'name'    => 'Lennox',
 		'src'     => get_template_directory_uri() . '/assets/images/company-logos/Lennox-Logo.png',
 		'alt'     => 'Lennox HVAC logo',
-		'website' => 'https://www.lennox.com',
+		'website' => home_url( '/brands/lennox/' ),
 	),
 	array(
 		'id'      => 5,
 		'name'    => 'Rheem',
 		'src'     => get_template_directory_uri() . '/assets/images/company-logos/Rheem-Logo.png',
 		'alt'     => 'Rheem HVAC logo',
-		'website' => 'https://www.rheem.com',
+		'website' => home_url( '/brands/rheem/' ),
 	),
 	array(
 		'id'      => 6,
 		'name'    => 'Trane',
 		'src'     => get_template_directory_uri() . '/assets/images/company-logos/Trane-Logo.png',
 		'alt'     => 'Trane air conditioning logo',
-		'website' => 'https://www.trane.com',
+		'website' => home_url( '/brands/trane/' ),
 	),
 	array(
 		'id'      => 7,
 		'name'    => 'Daikin',
 		'src'     => get_template_directory_uri() . '/assets/images/company-logos/daikin-logo.png',
 		'alt'     => 'Daikin HVAC logo',
-		'website' => 'https://www.daikin.com',
+		'website' => home_url( '/brands/daikin/' ),
 	),
 );
 
@@ -158,7 +158,7 @@ $icon_url = get_template_directory_uri() . '/assets/images/home-page/trusted-bra
 		div.setAttribute('data-name', instance.logo.name);
 		div.setAttribute('data-set-id', instance.setId);
 		div.setAttribute('data-global-index', instance.globalIndex);
-		div.setAttribute('title', 'Visit ' + instance.logo.name + ' website');
+		div.setAttribute('title', 'View ' + instance.logo.name + ' HVAC services');
 
 		div.innerHTML = '<img src="' + instance.logo.src + '" alt="' + instance.logo.alt + '" class="max-h-full max-w-full object-contain" loading="lazy" decoding="async" sizes="(max-width: 768px) 96px, (max-width: 1024px) 128px, 160px" />';
 
@@ -197,7 +197,7 @@ $icon_url = get_template_directory_uri() . '/assets/images/home-page/trusted-bra
 
 	// Handle logo click
 	function handleLogoClick(website) {
-		window.open(website, '_blank', 'noopener,noreferrer');
+		window.location.href = website;
 	}
 
 	// Animation function

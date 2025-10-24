@@ -736,11 +736,11 @@ add_action( 'init', 'sunnysideac_add_cities_city_rewrite', 15 );
 
 /**
  * Add root-level rewrite for /{city}/{service}/ → single service
- * Excludes known base URLs like 'services', 'category', 'tag', 'page', 'cities'
+ * Excludes known base URLs like 'services', 'category', 'tag', 'page', 'cities', 'brands'
  */
 function sunnysideac_add_city_service_root_rewrite() {
 	add_rewrite_rule(
-		'^(?!services|category|tag|page|cities)([^/]+)/([^/]+)/?$',
+		'^(?!services|category|tag|page|cities|brands)([^/]+)/([^/]+)/?$',
 		'index.php?post_type=service&name=$matches[2]&city_slug=$matches[1]',
 		'top'
 	);
