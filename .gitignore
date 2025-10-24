@@ -1,8 +1,12 @@
 # Ignore everything by default
 /*
 
-# But track these directories
+# But track these directories and files
 !wp-content/
+!wp-config-template.php
+!robots-template.txt
+!SECURITY-SETUP.md
+!.gitignore
 
 # Within wp-content, ignore everything
 wp-content/*
@@ -19,13 +23,6 @@ wp-content/themes/twenty*/
 
 # Track must-use plugins (security hardening)
 !wp-content/mu-plugins/
-wp-content/mu-plugins/*
-!wp-content/mu-plugins/.htaccess
-!wp-content/mu-plugins/waf-protection.php
-!wp-content/mu-plugins/login-security.php
-!wp-content/mu-plugins/file-security.php
-!wp-content/mu-plugins/security-hardening.php
-!wp-content/mu-plugins/security-monitoring.php
 
 # Track custom plugins (add your custom plugins here)
 # Example: !wp-content/plugins/your-custom-plugin/
@@ -64,5 +61,3 @@ Thumbs.db
 
 # Track .gitignore itself
 !.gitignore
-wp-content/plugins
-wp-content/themes/sunnysideac/docs
