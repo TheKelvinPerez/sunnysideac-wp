@@ -117,17 +117,39 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 
 		$priority_cities = SUNNYSIDE_PRIORITY_CITIES;
 
+		// Get current city for active state
+		$current_city_name = '';
+		if ( is_singular( 'city' ) ) {
+			$current_city_name = get_the_title();
+		} elseif ( is_post_type_archive( 'city' ) ) {
+			// On cities archive, don't highlight any specific city
+			$current_city_name = '';
+		}
+
 		foreach ( $priority_cities as $city ) {
 			$city_slug = sanitize_title( $city );
 			$city_url  = home_url( sprintf( SUNNYSIDE_CITY_URL_PATTERN, $city_slug ) );
 
-			$output .= '<a href="' . esc_url( $city_url ) . '" class="flex items-center gap-2 p-2 rounded-[20px] transition-all duration-200 hover:bg-[#ffc549] hover:scale-105 hover:shadow-md focus:bg-[#ffc549] focus:outline-none group" aria-label="Navigate to ' . esc_attr( $city ) . ' city">';
+			// Check if this is the active city
+			$is_active = ( $current_city_name === $city );
+
+			// Build CSS classes
+			$base_classes = 'flex items-center gap-2 p-2 rounded-[20px] transition-all duration-200 focus:outline-none group';
+			$hover_classes = 'hover:bg-[#ffc549] hover:scale-105 hover:shadow-md focus:bg-[#ffc549]';
+			$active_classes = 'bg-[#ffc549] shadow-md scale-105';
+
+			$css_classes = $base_classes . ' ' . $hover_classes;
+			if ( $is_active ) {
+				$css_classes .= ' ' . $active_classes;
+			}
+
+			$output .= '<a href="' . esc_url( $city_url ) . '" class="' . esc_attr( $css_classes ) . '" aria-label="Navigate to ' . esc_attr( $city ) . ' city" ' . ( $is_active ? 'aria-current="page"' : '' ) . '>';
 			$output .= '<div class="h-4 w-4 flex-shrink-0">';
-			$output .= '<svg class="h-4 w-4 text-gray-600 group-hover:text-[#e5462f] transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">';
+			$output .= '<svg class="h-4 w-4 transition-colors duration-200 ' . ( $is_active ? 'text-[#e5462f]' : 'text-gray-600 group-hover:text-[#e5462f]' ) . '" fill="none" stroke="currentColor" viewBox="0 0 24 24">';
 			$output .= '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />';
 			$output .= '</svg>';
 			$output .= '</div>';
-			$output .= '<span class="[font-family:\'Inter-Medium\',Helvetica] text-sm font-medium text-black group-hover:text-[#e5462f] transition-colors duration-200">' . esc_html( $city ) . '</span>';
+			$output .= '<span class="[font-family:\'Inter-Medium\',Helvetica] text-sm font-medium transition-colors duration-200 ' . ( $is_active ? 'text-[#e5462f]' : 'text-black group-hover:text-[#e5462f]' ) . '">' . esc_html( $city ) . '</span>';
 			$output .= '</a>';
 		}
 	}
@@ -181,6 +203,12 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 			// Check if this is a mega menu item (Services or Cities)
 			$is_mega_menu_item = ( $item_lower === 'services' || $item_lower === 'cities' );
 
+			// Check if this menu item should be active
+			$is_active = false;
+			if ( $item_lower === 'cities' && ( is_singular( 'city' ) || is_post_type_archive( 'city' ) ) ) {
+				$is_active = true;
+			}
+
 			// Store for use in start_lvl
 			if ( $is_mega_menu_item && $has_dropdown ) {
 				$this->is_mega_menu = true;
@@ -195,9 +223,17 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 				$btn_class    = $item_lower === 'services' ? 'services-dropdown-btn' : 'service-areas-dropdown-btn';
 				$chevron_icon = get_template_directory_uri() . '/assets/images/images/logos/navigation-chevron-down.svg';
 
+				// Build CSS classes for the menu item
+				$menu_item_classes = 'inline-flex cursor-pointer items-center gap-1 rounded-full px-6 py-3 transition-colors duration-200 focus:ring-2 focus:ring-[#ffc549] focus:ring-offset-2 focus:outline-none nav-item';
+				if ( $is_active ) {
+					$menu_item_classes .= ' bg-[#ffc549]';
+				} else {
+					$menu_item_classes .= ' hover:bg-[#ffc549] bg-[#fde0a0]';
+				}
+
 				$output .= '<div class="relative" id="' . $container_id . '">';
-				$output .= '<div class="inline-flex cursor-pointer items-center gap-1 rounded-full px-6 py-3 transition-colors duration-200 hover:bg-[#ffc549] focus:ring-2 focus:ring-[#ffc549] focus:ring-offset-2 focus:outline-none bg-[#fde0a0] nav-item" data-item="' . esc_attr( $item->title ) . '" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-label="' . esc_attr( $item->title ) . ' menu">';
-				$output .= '<a href="' . esc_url( $item->url ) . '" class="[font-family:\'Inter-Medium\',Helvetica] text-lg font-medium whitespace-nowrap text-black hover:text-black focus:text-black">' . esc_html( $item->title ) . '</a>';
+				$output .= '<div class="' . esc_attr( $menu_item_classes ) . '" data-item="' . esc_attr( $item->title ) . '" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-label="' . esc_attr( $item->title ) . ' menu" ' . ( $is_active ? 'aria-current="page"' : '' ) . '>';
+				$output .= '<a href="' . esc_url( $item->url ) . '" class="[font-family:\'Inter-Medium\',Helvetica] text-lg font-medium whitespace-nowrap transition-colors duration-200 ' . ( $is_active ? 'text-[#e5462f]' : 'text-black hover:text-black focus:text-black' ) . '">' . esc_html( $item->title ) . '</a>';
 				$output .= '<button class="ml-1 border-none bg-transparent p-0 focus:outline-none ' . $btn_class . '" aria-label="Toggle ' . $item_lower . ' dropdown">';
 				$output .= '<img src="' . esc_url( $chevron_icon ) . '" alt="" class="h-4 w-4 text-current transition-transform duration-200 chevron-icon" role="presentation" loading="lazy" decoding="async" />';
 				$output .= '</button>';
