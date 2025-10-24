@@ -7,28 +7,28 @@
 // Component data (like props in React)
 $company_email = 'support@sunnyside247ac.com';
 
-$service_types = [
+$service_types = array(
 	'Air Conditioning Repair',
 	'Heating Repair',
 	'Installation',
 	'Maintenance',
 	'Emergency Service',
-];
+);
 
-$select_options = [
+$select_options = array(
 	'Residential',
 	'Commercial',
 	'Emergency',
 	'Consultation',
-];
+);
 
-$images = [
+$images = array(
 	'contact_us_icon' => sunnysideac_asset_url( 'assets/images/home-page/contact-us/contact-us-icon.svg' ),
 	'email_icon'      => sunnysideac_asset_url( 'assets/images/home-page/contact-us/email-contact-icon.svg' ),
 	'phone_icon'      => sunnysideac_asset_url( 'assets/images/home-page/contact-us/phone-contact-icon.svg' ),
 	'location_icon'   => sunnysideac_asset_url( 'assets/images/home-page/contact-us/location-contact-icon.svg' ),
 	'chevron_down'    => sunnysideac_asset_url( 'assets/images/home-page/contact-us/chevron-down-contact-form.svg' ),
-];
+);
 ?>
 
 <section
@@ -41,20 +41,20 @@ $images = [
 		get_template_part(
 			'template-parts/title',
 			null,
-			[
+			array(
 				'icon'  => $images['contact_us_icon'],
 				'title' => 'Contact Us',
-			]
+			)
 		);
 		?>
 		<?php
 		get_template_part(
 			'template-parts/subheading',
 			null,
-			[
+			array(
 				'text'  => 'Fast, Friendly HVAC Support — 24/7',
 				'class' => 'mt-4 text-center',
-			]
+			)
 		);
 		?>
 	</header>
@@ -347,7 +347,7 @@ $images = [
 					Follow Us:
 				</h3>
 				<div class="flex justify-center">
-					<?php get_template_part( 'template-parts/social-icons', null, [ 'size' => 'md' ] ); ?>
+					<?php get_template_part( 'template-parts/social-icons', null, array( 'size' => 'md' ) ); ?>
 				</div>
 			</nav>
 		</aside>

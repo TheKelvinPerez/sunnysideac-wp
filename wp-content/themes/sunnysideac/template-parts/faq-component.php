@@ -20,52 +20,52 @@
  */
 
 // Extract args with defaults
-$faq_data = $args['faq_data'] ?? [];
-$title = $args['title'] ?? 'Frequently Asked Questions!';
+$faq_data     = $args['faq_data'] ?? array();
+$title        = $args['title'] ?? 'Frequently Asked Questions!';
 $mobile_title = $args['mobile_title'] ?? 'FAQ';
-$subheading = $args['subheading'] ?? 'Got Questions? We\'ve Got Answers!';
-$description = $args['description'] ?? '';
-$show_schema = $args['show_schema'] ?? true;
-$section_id = $args['section_id'] ?? 'faq-section';
+$subheading   = $args['subheading'] ?? 'Got Questions? We\'ve Got Answers!';
+$description  = $args['description'] ?? '';
+$show_schema  = $args['show_schema'] ?? true;
+$section_id   = $args['section_id'] ?? 'faq-section';
 
 // Return early if no FAQ data provided
-if (empty($faq_data)) {
+if ( empty( $faq_data ) ) {
 	return;
 }
 
 // Add unique IDs if not present
-foreach ($faq_data as $index => &$faq) {
-	if (!isset($faq['id'])) {
+foreach ( $faq_data as $index => &$faq ) {
+	if ( ! isset( $faq['id'] ) ) {
 		$faq['id'] = $index + 1;
 	}
 }
-unset($faq); // Break reference
+unset( $faq ); // Break reference
 
 // Icons data
-$icons = [
-	'faq_section' => sunnysideac_asset_url('assets/images/home-page/faq-section-icon.svg'),
-	'faq_chevron' => sunnysideac_asset_url('assets/images/home-page/faq-chevron-down-circle.svg'),
-];
+$icons = array(
+	'faq_section' => sunnysideac_asset_url( 'assets/images/home-page/faq-section-icon.svg' ),
+	'faq_chevron' => sunnysideac_asset_url( 'assets/images/home-page/faq-chevron-down-circle.svg' ),
+);
 
 // Generate JSON-LD FAQ Schema
-if ($show_schema) {
-	$faq_schema_items = [];
-	foreach ($faq_data as $faq) {
+if ( $show_schema ) {
+	$faq_schema_items = array();
+	foreach ( $faq_data as $faq ) {
 		$faq_schema_items[] = sprintf(
 			'{"@type":"Question","name":"%s","acceptedAnswer":{"@type":"Answer","text":"%s"}}',
-			esc_js($faq['question']),
-			esc_js($faq['answer'])
+			esc_js( $faq['question'] ),
+			esc_js( $faq['answer'] )
 		);
 	}
 	$faq_schema = sprintf(
 		'<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[%s]}</script>',
-		implode(',', $faq_schema_items)
+		implode( ',', $faq_schema_items )
 	);
 	echo $faq_schema . "\n";
 }
 ?>
 
-<section class="w-full rounded-2xl bg-white px-4 py-12 md:px-10 md:py-16 lg:py-20" id="<?php echo esc_attr($section_id); ?>" itemscope itemtype="https://schema.org/FAQPage" aria-labelledby="<?php echo esc_attr($section_id); ?>-heading">
+<section class="w-full rounded-2xl bg-white px-4 py-12 md:px-10 md:py-16 lg:py-20" id="<?php echo esc_attr( $section_id ); ?>" itemscope itemtype="https://schema.org/FAQPage" aria-labelledby="<?php echo esc_attr( $section_id ); ?>-heading">
 	<div class="mx-auto max-w-7xl">
 		<!-- Header -->
 		<header class="mb-12 text-center md:mb-16">
@@ -73,56 +73,56 @@ if ($show_schema) {
 			get_template_part(
 				'template-parts/title',
 				null,
-				[
-					'icon' => $icons['faq_section'],
-					'title' => $title,
+				array(
+					'icon'         => $icons['faq_section'],
+					'title'        => $title,
 					'mobile_title' => $mobile_title,
-					'id' => esc_attr($section_id) . '-heading',
-				]
+					'id'           => esc_attr( $section_id ) . '-heading',
+				)
 			);
 			?>
 
-			<?php if (!empty($subheading)) : ?>
+			<?php if ( ! empty( $subheading ) ) : ?>
 				<?php
 				get_template_part(
 					'template-parts/subheading',
 					null,
-					[
-						'text' => $subheading,
+					array(
+						'text'  => $subheading,
 						'class' => 'mb-4 text-gray-600 md:text-4xl md:leading-tight lg:text-5xl',
-					]
+					)
 				);
 				?>
 			<?php endif; ?>
 
-			<?php if (!empty($description)) : ?>
+			<?php if ( ! empty( $description ) ) : ?>
 				<p class="text-base font-light text-gray-700 md:text-lg">
-					<?php echo esc_html($description); ?>
+					<?php echo esc_html( $description ); ?>
 				</p>
 			<?php endif; ?>
 		</header>
 
 		<!-- FAQ Grid with Native Details Elements -->
 		<div class="grid gap-4 md:gap-6 max-w-4xl mx-auto">
-			<?php foreach ($faq_data as $faq): ?>
+			<?php foreach ( $faq_data as $faq ) : ?>
 				<details class="faq-details group w-full rounded-[20px] border-2 border-transparent bg-[#f6f6f6] transition-all duration-300 ease-in-out hover:shadow-md open:bg-[#ffeac0] open:border-[#fed7aa]" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
 					<summary class="flex items-start justify-between p-6 cursor-pointer list-none" itemprop="name">
 						<h3 class="pr-4 text-lg leading-relaxed font-semibold text-black md:text-xl">
-							<?php echo esc_html($faq['question']); ?>
+							<?php echo esc_html( $faq['question'] ); ?>
 						</h3>
 
 						<div class="faq-chevron h-[35px] w-[35px] flex-shrink-0 rounded-full bg-gradient-to-l from-[#F79E37] to-[#E5462F] shadow-md transition-all duration-300 ease-in-out group-hover:scale-110 group-open:shadow-lg">
 							<img class="chevron-icon h-full w-full transition-transform duration-300 ease-in-out group-open:rotate-180"
-								 alt="Toggle FAQ"
-								 src="<?php echo esc_url($icons['faq_chevron']); ?>"
-								 loading="lazy"
-								 decoding="async" />
+								alt="Toggle FAQ"
+								src="<?php echo esc_url( $icons['faq_chevron'] ); ?>"
+								loading="lazy"
+								decoding="async" />
 						</div>
 					</summary>
 
 					<div class="faq-answer px-6 pb-6 text-base leading-relaxed font-light text-gray-700 md:text-lg" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
 						<div itemprop="text">
-							<?php echo esc_html($faq['answer']); ?>
+							<?php echo esc_html( $faq['answer'] ); ?>
 						</div>
 					</div>
 				</details>

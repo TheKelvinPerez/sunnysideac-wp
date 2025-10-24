@@ -11,16 +11,16 @@ $contact_us_icon    = sunnysideac_asset_url( 'assets/images/home-page/contact-us
 $service_areas_icon = sunnysideac_asset_url( 'assets/icons/best-at-keeping-refreshed-icon.svg' );
 
 // Page breadcrumbs
-$breadcrumbs = [
-	[
+$breadcrumbs = array(
+	array(
 		'name' => 'Home',
 		'url'  => home_url( '/' ),
-	],
-	[
+	),
+	array(
 		'name' => 'Contact',
 		'url'  => '',
-	],
-];
+	),
+);
 ?>
 
 <!-- Page Header with Breadcrumbs -->
@@ -28,13 +28,13 @@ $breadcrumbs = [
 get_template_part(
 	'template-parts/page-header',
 	null,
-	[
+	array(
 		'breadcrumbs' => $breadcrumbs,
 		'title'       => 'Contact Us',
 		'description' => '',
 		'show_ctas'   => false,
 		'bg_color'    => 'white',
-	]
+	)
 );
 ?>
 
@@ -51,12 +51,12 @@ get_template_part(
 				get_template_part(
 					'template-parts/title',
 					null,
-					[
+					array(
 						'icon'  => $contact_us_icon,
 						'title' => 'Get In Touch',
 						'id'    => 'contact-info-heading',
 						'align' => 'center',
-					]
+					)
 				);
 				?>
 
@@ -64,9 +64,9 @@ get_template_part(
 				get_template_part(
 					'template-parts/subheading',
 					null,
-					[
+					array(
 						'text' => '24/7 emergency service • Same-day repairs • Professional HVAC solutions',
-					]
+					)
 				);
 				?>
 
@@ -93,21 +93,21 @@ get_template_part(
 					get_template_part(
 						'template-parts/title',
 						null,
-						[
+						array(
 							'icon'  => $service_areas_icon,
 							'title' => 'Service Areas',
 							'id'    => 'service-areas-heading',
 							'align' => 'center',
-						]
+						)
 					);
 					?>
 					<?php
 					get_template_part(
 						'template-parts/subheading',
 						null,
-						[
+						array(
 							'text' => 'Proudly serving South Florida communities',
-						]
+						)
 					);
 					?>
 				</div>

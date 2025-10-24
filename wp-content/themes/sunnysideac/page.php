@@ -6,7 +6,10 @@
 	<div class="lg:px-0 max-w-7xl mx-auto">
 		<section class="flex gap-10 flex-col">
 			<?php if ( have_posts() ) : ?>
-				<?php while ( have_posts() ) : the_post(); ?>
+				<?php
+				while ( have_posts() ) :
+					the_post();
+					?>
 					<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 						<!-- Page Header -->
 						<header class="bg-gradient-to-r from-[#fb9939] to-[#e5462f] rounded-[20px] p-6 md:p-10 text-white text-center">

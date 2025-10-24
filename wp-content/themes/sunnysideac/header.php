@@ -108,7 +108,7 @@ $phone_icon   = get_template_directory_uri() . '/assets/images/images/logos/navi
 				</div>
 
 				<!-- Social icons -->
-				<?php get_template_part( 'template-parts/social-icons', null, [ 'size' => 'md' ] ); ?>
+				<?php get_template_part( 'template-parts/social-icons', null, array( 'size' => 'md' ) ); ?>
 			</div>
 		</div>
 
@@ -360,7 +360,7 @@ $phone_icon   = get_template_directory_uri() . '/assets/images/images/logos/navi
 								<div class="mt-6 text-center">
 									<div class="mb-3 text-sm font-medium text-gray-800">Follow Us:</div>
 									<div class="flex justify-center">
-										<?php get_template_part( 'template-parts/social-icons', null, [ 'size' => 'sm' ] ); ?>
+										<?php get_template_part( 'template-parts/social-icons', null, array( 'size' => 'sm' ) ); ?>
 									</div>
 								</div>
 							</div>

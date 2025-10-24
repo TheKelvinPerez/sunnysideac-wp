@@ -10,54 +10,54 @@ get_header();
 $archive_icon = sunnysideac_asset_url( 'assets/images/home-page/blog/blog-title-icon.svg' );
 
 // Page breadcrumbs
-$breadcrumbs = [
-	[
+$breadcrumbs = array(
+	array(
 		'name' => 'Home',
 		'url'  => home_url( '/' ),
-	],
-];
+	),
+);
 
 // Determine archive type and set appropriate title
-$archive_type = '';
-$archive_title = 'Blog Archives';
+$archive_type        = '';
+$archive_title       = 'Blog Archives';
 $archive_description = '';
 
 if ( is_category() ) {
-	$archive_type = 'category';
-	$archive_title = single_cat_title( 'Category: ', false );
+	$archive_type        = 'category';
+	$archive_title       = single_cat_title( 'Category: ', false );
 	$archive_description = category_description();
-	$breadcrumbs[] = [
+	$breadcrumbs[]       = array(
 		'name' => 'Categories',
 		'url'  => home_url( '/category/' ),
-	];
-	$breadcrumbs[] = [
+	);
+	$breadcrumbs[]       = array(
 		'name' => single_cat_title( '', false ),
 		'url'  => '',
-	];
+	);
 } elseif ( is_tag() ) {
-	$archive_type = 'tag';
-	$archive_title = single_tag_title( 'Tag: ', false );
+	$archive_type        = 'tag';
+	$archive_title       = single_tag_title( 'Tag: ', false );
 	$archive_description = tag_description();
-	$breadcrumbs[] = [
+	$breadcrumbs[]       = array(
 		'name' => 'Tags',
 		'url'  => home_url( '/tag/' ),
-	];
-	$breadcrumbs[] = [
+	);
+	$breadcrumbs[]       = array(
 		'name' => single_tag_title( '', false ),
 		'url'  => '',
-	];
+	);
 } elseif ( is_author() ) {
-	$archive_type = 'author';
-	$archive_title = 'Author: ' . get_the_author();
+	$archive_type        = 'author';
+	$archive_title       = 'Author: ' . get_the_author();
 	$archive_description = get_the_author_meta( 'description' );
-	$breadcrumbs[] = [
+	$breadcrumbs[]       = array(
 		'name' => 'Authors',
 		'url'  => home_url( '/author/' ),
-	];
-	$breadcrumbs[] = [
+	);
+	$breadcrumbs[]       = array(
 		'name' => get_the_author(),
 		'url'  => '',
-	];
+	);
 } elseif ( is_date() ) {
 	$archive_type = 'date';
 	if ( is_day() ) {
@@ -67,31 +67,31 @@ if ( is_category() ) {
 	} elseif ( is_year() ) {
 		$archive_title = 'Yearly Archives: ' . get_the_date( 'Y' );
 	}
-	$breadcrumbs[] = [
+	$breadcrumbs[] = array(
 		'name' => 'Archives',
 		'url'  => home_url( '/archives/' ),
-	];
-	$breadcrumbs[] = [
+	);
+	$breadcrumbs[] = array(
 		'name' => $archive_title,
 		'url'  => '',
-	];
+	);
 } elseif ( is_home() && ! is_front_page() ) {
 	// This is the blog posts page
-	$archive_type = 'blog';
-	$archive_title = 'Our Blog';
+	$archive_type        = 'blog';
+	$archive_title       = 'Our Blog';
 	$archive_description = 'Stay Cool, Stay Warm, Stay Informed';
-	$breadcrumbs[] = [
+	$breadcrumbs[]       = array(
 		'name' => 'Blog',
 		'url'  => '',
-	];
+	);
 }
 
 // Blog post icons
-$images = [
+$images = array(
 	'air_con_blog_icon' => sunnysideac_asset_url( 'assets/images/home-page/blog/air-con-blog-icon.svg' ),
 	'blog_auther_icon'  => sunnysideac_asset_url( 'assets/images/home-page/blog/blog-auther-icon.svg' ),
 	'read_more_arrow'   => sunnysideac_asset_url( 'assets/images/home-page/blog/read-more-arrow-up-right.svg' ),
-];
+);
 ?>
 
 <!-- Page Header with Breadcrumbs -->
@@ -99,13 +99,13 @@ $images = [
 get_template_part(
 	'template-parts/page-header',
 	null,
-	[
+	array(
 		'breadcrumbs' => $breadcrumbs,
 		'title'       => $archive_title,
 		'description' => $archive_description,
 		'show_ctas'   => false,
 		'bg_color'    => 'white',
-	]
+	)
 );
 ?>
 
@@ -123,12 +123,12 @@ get_template_part(
 					get_template_part(
 						'template-parts/title',
 						null,
-						[
+						array(
 							'icon'  => $archive_icon,
 							'title' => 'HVAC Tips & Insights',
 							'id'    => 'blog-overview-heading',
 							'align' => 'center',
-						]
+						)
 					);
 					?>
 
@@ -136,9 +136,9 @@ get_template_part(
 					get_template_part(
 						'template-parts/subheading',
 						null,
-						[
+						array(
 							'text' => $archive_description,
-						]
+						)
 					);
 					?>
 
@@ -159,12 +159,12 @@ get_template_part(
 					<div class="prose prose-gray max-w-none">
 						<?php
 						// Get the raw description without WordPress processing
-						if (is_category()) {
-							$cat_id = get_queried_object_id();
-							$raw_desc = get_term_field('description', $cat_id, 'category', 'raw');
-							echo wpautop($raw_desc);
+						if ( is_category() ) {
+							$cat_id   = get_queried_object_id();
+							$raw_desc = get_term_field( 'description', $cat_id, 'category', 'raw' );
+							echo wpautop( $raw_desc );
 						} else {
-							echo wpautop($archive_description);
+							echo wpautop( $archive_description );
 						}
 						?>
 					</div>
@@ -193,7 +193,7 @@ get_template_part(
 								<?php
 								if ( $archive_type === 'category' ) {
 									$category = get_queried_object();
-									echo count( get_categories( [ 'child_of' => $category->term_id ] ) );
+									echo count( get_categories( array( 'child_of' => $category->term_id ) ) );
 								} else {
 									// Related tags logic could go here
 									echo 'Related';
@@ -207,18 +207,20 @@ get_template_part(
 						<div class="bg-gray-50 rounded-lg p-4">
 							<div class="text-2xl font-bold text-[#F79E37]">
 								<?php
-								$latest_post = get_posts( [
-									'numberposts' => 1,
-									'post_type'   => 'post',
-									$post_type    => $archive_type,
-									'tax_query'   => [
-										[
-											'taxonomy' => $archive_type,
-											'field'    => 'slug',
-											'terms'    => get_queried_object()->slug,
-										],
-									],
-								] );
+								$latest_post = get_posts(
+									array(
+										'numberposts' => 1,
+										'post_type'   => 'post',
+										$post_type    => $archive_type,
+										'tax_query'   => array(
+											array(
+												'taxonomy' => $archive_type,
+												'field'    => 'slug',
+												'terms'    => get_queried_object()->slug,
+											),
+										),
+									)
+								);
 								echo $latest_post ? human_time_diff( strtotime( $latest_post[0]->post_date ), current_time( 'timestamp' ) ) : 'No';
 								?>
 							</div>
@@ -239,38 +241,46 @@ get_template_part(
 					<div class="flex flex-wrap gap-2">
 						<?php
 						if ( $archive_type === 'category' ) {
-							$current_cat = get_queried_object();
-							$related_cats = get_categories( [
-								'exclude'   => $current_cat->term_id,
-								'number'    => 8,
-								'orderby'   => 'count',
-								'order'     => 'DESC',
-							] );
+							$current_cat  = get_queried_object();
+							$related_cats = get_categories(
+								array(
+									'exclude' => $current_cat->term_id,
+									'number'  => 8,
+									'orderby' => 'count',
+									'order'   => 'DESC',
+								)
+							);
 							foreach ( $related_cats as $cat ) :
 								// Skip categories with numeric names or empty names
-								if (empty($cat->name) || is_numeric($cat->name)) continue;
+								if ( empty( $cat->name ) || is_numeric( $cat->name ) ) {
+									continue;
+								}
 								?>
 								<a href="<?php echo esc_url( get_category_link( $cat ) ); ?>"
-								   class="inline-block bg-gray-100 hover:bg-[#F79E37] hover:text-white text-gray-700 px-3 py-1 rounded-full text-sm transition-colors duration-200">
+									class="inline-block bg-gray-100 hover:bg-[#F79E37] hover:text-white text-gray-700 px-3 py-1 rounded-full text-sm transition-colors duration-200">
 									<?php echo esc_html( $cat->name ); ?>
 									<span class="text-xs opacity-75">(<?php echo $cat->count; ?>)</span>
 								</a>
 							<?php endforeach; ?>
 						<?php } else { // Tags ?>
 							<?php
-							$current_tag = get_queried_object();
-							$related_tags = get_tags( [
-								'exclude'   => $current_tag->term_id,
-								'number'    => 8,
-								'orderby'   => 'count',
-								'order'     => 'DESC',
-							] );
+							$current_tag  = get_queried_object();
+							$related_tags = get_tags(
+								array(
+									'exclude' => $current_tag->term_id,
+									'number'  => 8,
+									'orderby' => 'count',
+									'order'   => 'DESC',
+								)
+							);
 							foreach ( $related_tags as $tag ) :
 								// Skip tags with numeric names or empty names
-								if (empty($tag->name) || is_numeric($tag->name)) continue;
+								if ( empty( $tag->name ) || is_numeric( $tag->name ) ) {
+									continue;
+								}
 								?>
 								<a href="<?php echo esc_url( get_tag_link( $tag ) ); ?>"
-								   class="inline-block bg-gray-100 hover:bg-[#F79E37] hover:text-white text-gray-700 px-3 py-1 rounded-full text-sm transition-colors duration-200">
+									class="inline-block bg-gray-100 hover:bg-[#F79E37] hover:text-white text-gray-700 px-3 py-1 rounded-full text-sm transition-colors duration-200">
 									<?php echo esc_html( $tag->name ); ?>
 									<span class="text-xs opacity-75">(<?php echo $tag->count; ?>)</span>
 								</a>
@@ -298,11 +308,11 @@ get_template_part(
 						<p class="text-sm text-gray-600">
 							<?php
 							global $wp_query;
-							$found_posts = $wp_query->found_posts;
-							$paged = max( 1, get_query_var( 'paged' ) );
+							$found_posts    = $wp_query->found_posts;
+							$paged          = max( 1, get_query_var( 'paged' ) );
 							$posts_per_page = get_query_var( 'posts_per_page' );
-							$from = ( $paged - 1 ) * $posts_per_page + 1;
-							$to = min( $paged * $posts_per_page, $found_posts );
+							$from           = ( $paged - 1 ) * $posts_per_page + 1;
+							$to             = min( $paged * $posts_per_page, $found_posts );
 
 							printf(
 								esc_html(
@@ -323,22 +333,29 @@ get_template_part(
 
 					<!-- Blog Cards Grid -->
 					<div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-						<?php while ( have_posts() ) : the_post(); ?>
+						<?php
+						while ( have_posts() ) :
+							the_post();
+							?>
 							<?php
-							get_template_part('template-parts/blog-card', null, [
-								'post'          => get_post(),
-								'show_excerpt'  => true,
-								'excerpt_length'=> 20,
-								'image_size'    => 'large',
-								'show_author'   => true,
-								'show_category' => true,
-								'show_date'     => true,
-								'card_class'    => 'max-w-[375px]',
-								'author_icon'   => $images['blog_auther_icon'],
-								'category_icon' => $images['air_con_blog_icon'],
-								'read_more_arrow' => $images['read_more_arrow'],
-								'fallback_image'  => sunnysideac_asset_url('assets/images/home-page/blog/blog-post-image-1.png'),
-							]);
+							get_template_part(
+								'template-parts/blog-card',
+								null,
+								array(
+									'post'            => get_post(),
+									'show_excerpt'    => true,
+									'excerpt_length'  => 20,
+									'image_size'      => 'large',
+									'show_author'     => true,
+									'show_category'   => true,
+									'show_date'       => true,
+									'card_class'      => 'max-w-[375px]',
+									'author_icon'     => $images['blog_auther_icon'],
+									'category_icon'   => $images['air_con_blog_icon'],
+									'read_more_arrow' => $images['read_more_arrow'],
+									'fallback_image'  => sunnysideac_asset_url( 'assets/images/home-page/blog/blog-post-image-1.png' ),
+								)
+							);
 							?>
 						<?php endwhile; ?>
 					</div>
@@ -348,13 +365,13 @@ get_template_part(
 						<div class="flex gap-2">
 							<?php
 							the_posts_pagination(
-								[
+								array(
 									'mid_size'  => 2,
 									'prev_text' => '&laquo; Previous',
 									'next_text' => 'Next &raquo;',
 									'type'      => 'list',
 									'class'     => 'pagination',
-								]
+								)
 							);
 							?>
 						</div>

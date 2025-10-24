@@ -10,10 +10,9 @@ get_header();
 $post_id            = get_the_ID();
 $post_title         = get_the_title();
 $post_date          = get_the_date();
-$author_id          = get_the_author_meta( 'ID' );
-$author_name        = get_the_author();
-$author_description = get_the_author_meta( 'description' );
-$author_avatar      = get_avatar_url( $author_id, [ 'size' => 100 ] );
+$author_name        = 'SunnySide247AC';
+$author_description = 'Professional HVAC company serving South Florida with 24/7 emergency AC repair, installation, and maintenance services. Family-owned and operated since 2014.';
+$author_avatar      = get_template_directory_uri() . '/assets/images/images/logos/sunny-side-logo.png';
 
 // Get icons from theme assets
 $blog_icon     = sunnysideac_asset_url( 'assets/images/home-page/blog/blog-title-icon.svg' );
@@ -21,20 +20,20 @@ $author_icon   = sunnysideac_asset_url( 'assets/images/home-page/blog/blog-authe
 $category_icon = sunnysideac_asset_url( 'assets/images/home-page/blog/air-con-blog-icon.svg' );
 
 // Page breadcrumbs
-$breadcrumbs = [
-	[
+$breadcrumbs = array(
+	array(
 		'name' => 'Home',
 		'url'  => home_url( '/' ),
-	],
-	[
+	),
+	array(
 		'name' => 'Blog',
 		'url'  => home_url( '/blog/' ),
-	],
-	[
+	),
+	array(
 		'name' => $post_title,
 		'url'  => '',
-	],
-];
+	),
+);
 
 // Get post categories and tags
 $categories = get_the_category();
@@ -42,21 +41,21 @@ $tags       = get_the_tags();
 
 // Get related posts
 $related_posts = new WP_Query(
-	[
+	array(
 		'post_type'      => 'post',
 		'post_status'    => 'publish',
 		'posts_per_page' => 3,
-		'post__not_in'   => [ $post_id ],
+		'post__not_in'   => array( $post_id ),
 		'orderby'        => 'rand',
-		'tax_query'      => [
+		'tax_query'      => array(
 			'relation' => 'OR',
-			[
+			array(
 				'taxonomy' => 'category',
 				'field'    => 'term_id',
 				'terms'    => wp_list_pluck( $categories, 'term_id' ),
-			],
-		],
-	]
+			),
+		),
+	)
 );
 ?>
 
@@ -65,13 +64,13 @@ $related_posts = new WP_Query(
 get_template_part(
 	'template-parts/page-header',
 	null,
-	[
+	array(
 		'breadcrumbs' => $breadcrumbs,
 		'title'       => '',
 		'description' => '',
 		'show_ctas'   => false,
 		'bg_color'    => 'white',
-	]
+	)
 );
 ?>
 
@@ -124,10 +123,10 @@ get_template_part(
 					<?php
 					the_post_thumbnail(
 						'large',
-						[
+						array(
 							'class' => 'w-full h-[400px] object-cover',
 							'alt'   => get_the_title(),
-						]
+						)
 					);
 					?>
 				</div>
@@ -141,12 +140,12 @@ get_template_part(
 
 			// Link pages for paginated posts
 			wp_link_pages(
-				[
+				array(
 					'before'      => '<div class="page-links">',
 					'after'       => '</div>',
 					'link_before' => '<span>',
 					'link_after'  => '</span>',
-				]
+				)
 			);
 			?>
 		</div>
@@ -254,7 +253,7 @@ get_template_part(
 						get_template_part(
 							'template-parts/blog-card',
 							null,
-							[
+							array(
 								'post'            => get_post(),
 								'show_excerpt'    => true,
 								'excerpt_length'  => 15,
@@ -267,7 +266,7 @@ get_template_part(
 								'category_icon'   => $category_icon,
 								'read_more_arrow' => sunnysideac_asset_url( 'assets/images/home-page/blog/read-more-arrow-up-right.svg' ),
 								'fallback_image'  => sunnysideac_asset_url( 'assets/images/home-page/blog/blog-post-image-1.png' ),
-							]
+							)
 						);
 						?>
 					<?php endwhile; ?>

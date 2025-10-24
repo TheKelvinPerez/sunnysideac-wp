@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<ruleset name="Sunnyside AC WordPress">
+	<description>WordPress coding standards for Sunnyside AC theme with some relaxed rules</description>
+
+	<!-- Include the WordPress standards -->
+	<rule ref="WordPress">
+		<!-- Exclude some overly strict rules -->
+		<exclude name="WordPress.VIP.SuperGlobalInputUsage" />
+		<exclude name="WordPress.PHP.YodaConditions" />
+		<exclude name="WordPress.Arrays.ArrayDeclarationSpacing" />
+		<exclude name="WordPress.NamingConventions.ValidVariableName" />
+		<exclude name="WordPress.Files.FileName" />
+		<exclude name="WordPress.WhiteSpace.ControlStructureSpacing" />
+		<exclude name="WordPress.PHP.DisallowShortTernary" />
+	</rule>
+
+	<!-- Add file extensions -->
+	<arg name="extensions" value="php" />
+
+	<!-- Exclude directories -->
+	<exclude-pattern>vendor/*</exclude-pattern>
+	<exclude-pattern>node_modules/*</exclude-pattern>
+	<exclude-pattern>wp-cache.php</exclude-pattern>
+</ruleset>

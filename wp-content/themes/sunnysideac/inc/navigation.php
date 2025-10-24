@@ -22,7 +22,7 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 		if ( $depth === 0 ) {
 			// Check if parent is Services or Areas by checking the walker's stored parent title
 			if ( $this->is_mega_menu ) {
-				$menu_type = $this->parent_title;
+				$menu_type      = $this->parent_title;
 				$dropdown_class = $menu_type === 'services' ? 'services-dropdown' : 'service-areas-dropdown';
 
 				// Output mega menu container
@@ -89,8 +89,8 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 			// Output services in this category
 			foreach ( $services as $service_name ) {
 				$service_slug = sanitize_title( $service_name );
-				$service_url = home_url( sprintf( SUNNYSIDE_SERVICE_URL_PATTERN, $service_slug ) );
-				$icon_path = sunnysideac_get_service_icon( $service_name );
+				$service_url  = home_url( sprintf( SUNNYSIDE_SERVICE_URL_PATTERN, $service_slug ) );
+				$icon_path    = sunnysideac_get_service_icon( $service_name );
 
 				$output .= '<a href="' . esc_url( $service_url ) . '" class="flex items-start gap-2 p-2 rounded-[20px] transition-all duration-200 hover:bg-[#ffc549] hover:scale-105 hover:shadow-md focus:bg-[#ffc549] focus:outline-none group" aria-label="Navigate to ' . esc_attr( $service_name ) . '">';
 				$output .= '<div class="h-4 w-4 flex-shrink-0 mt-0.5">';
@@ -119,7 +119,7 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 
 		foreach ( $priority_cities as $city ) {
 			$city_slug = sanitize_title( $city );
-			$city_url = home_url( sprintf( SUNNYSIDE_CITY_URL_PATTERN, $city_slug ) );
+			$city_url  = home_url( sprintf( SUNNYSIDE_CITY_URL_PATTERN, $city_slug ) );
 
 			$output .= '<a href="' . esc_url( $city_url ) . '" class="flex items-center gap-2 p-2 rounded-[20px] transition-all duration-200 hover:bg-[#ffc549] hover:scale-105 hover:shadow-md focus:bg-[#ffc549] focus:outline-none group" aria-label="Navigate to ' . esc_attr( $city ) . ' city">';
 			$output .= '<div class="h-4 w-4 flex-shrink-0">';
@@ -176,7 +176,7 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 		// Top level items
 		if ( $depth === 0 ) {
 			$has_dropdown = in_array( 'menu-item-has-children', $item->classes );
-			$item_lower = strtolower( $item->title );
+			$item_lower   = strtolower( $item->title );
 
 			// Check if this is a mega menu item (Services or Cities)
 			$is_mega_menu_item = ( $item_lower === 'services' || $item_lower === 'cities' );
@@ -192,7 +192,7 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 			if ( $is_mega_menu_item && $has_dropdown ) {
 				// Services or Cities mega menu item
 				$container_id = $item_lower === 'services' ? 'services-dropdown-container' : 'service-areas-dropdown-container';
-				$btn_class = $item_lower === 'services' ? 'services-dropdown-btn' : 'service-areas-dropdown-btn';
+				$btn_class    = $item_lower === 'services' ? 'services-dropdown-btn' : 'service-areas-dropdown-btn';
 				$chevron_icon = get_template_directory_uri() . '/assets/images/images/logos/navigation-chevron-down.svg';
 
 				$output .= '<div class="relative" id="' . $container_id . '">';
@@ -209,7 +209,6 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 				$output .= '<span class="[font-family:\'Inter-Medium\',Helvetica] text-lg font-medium whitespace-nowrap text-black">' . esc_html( $item->title ) . '</span>';
 				$output .= '</button>';
 			}
-
 		}
 		// We don't output child items here - they're generated from constants in the mega menu
 	}
@@ -219,8 +218,8 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 	 */
 	public function end_el( &$output, $item, $depth = 0, $args = null ) {
 		if ( $depth === 0 ) {
-			$item_lower = strtolower( $item->title );
-			$has_dropdown = in_array( 'menu-item-has-children', $item->classes );
+			$item_lower        = strtolower( $item->title );
+			$has_dropdown      = in_array( 'menu-item-has-children', $item->classes );
 			$is_mega_menu_item = ( $item_lower === 'services' || $item_lower === 'cities' );
 
 			if ( $is_mega_menu_item && $has_dropdown ) {
@@ -239,7 +238,7 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
  */
 function sunnysideac_desktop_nav_menu() {
 	// Try JSON config first, then fallback
-	if (function_exists('sunnysideac_render_desktop_nav_from_config')) {
+	if ( function_exists( 'sunnysideac_render_desktop_nav_from_config' ) ) {
 		sunnysideac_render_desktop_nav_from_config();
 	} else {
 		sunnysideac_fallback_menu();
@@ -263,7 +262,7 @@ function sunnysideac_fallback_menu() {
  */
 function sunnysideac_mobile_nav_menu() {
 	// Try JSON config first, then fallback
-	if (function_exists('sunnysideac_render_mobile_nav_from_config')) {
+	if ( function_exists( 'sunnysideac_render_mobile_nav_from_config' ) ) {
 		sunnysideac_render_mobile_nav_from_config();
 	} else {
 		sunnysideac_mobile_nav_menu_fallback();
@@ -277,7 +276,7 @@ function sunnysideac_mobile_nav_menu() {
  */
 class Sunnyside_Footer_Nav_Walker extends Walker_Nav_Menu {
 
-	private $sections = [];
+	private $sections        = array();
 	private $current_section = null;
 
 	/**
@@ -307,11 +306,11 @@ class Sunnyside_Footer_Nav_Walker extends Walker_Nav_Menu {
 			$has_children = in_array( 'menu-item-has-children', $item->classes );
 
 			// Store section info
-			$this->sections[] = [
-				'title' => $item->title,
+			$this->sections[] = array(
+				'title'        => $item->title,
 				'has_children' => $has_children,
-				'children' => []
-			];
+				'children'     => array(),
+			);
 
 			if ( $has_children ) {
 				$this->current_section = count( $this->sections ) - 1;
@@ -343,9 +342,9 @@ class Sunnyside_Footer_Nav_Walker extends Walker_Nav_Menu {
 		$output = '';
 
 		// Reorganize sections according to our desired structure
-		$services_section = null;
-		$company_section = null;
-		$brands_section = null;
+		$services_section      = null;
+		$company_section       = null;
+		$brands_section        = null;
 		$service_areas_section = null;
 
 		foreach ( $this->sections as $section ) {
@@ -459,14 +458,32 @@ class Sunnyside_Footer_Nav_Walker extends Walker_Nav_Menu {
 			$output .= '</div>';
 		} else {
 			// If no Brands section in menu, use fallback brands
-			$brands_links = [
-				['name' => 'Daikin', 'href' => home_url('/brands/daikin')],
-				['name' => 'Goodman', 'href' => home_url('/brands/goodman')],
-				['name' => 'Rheem', 'href' => home_url('/brands/rheem')],
-				['name' => 'Trane', 'href' => home_url('/brands/trane')],
-				['name' => 'Carrier', 'href' => home_url('/brands/carrier')],
-				['name' => 'All Brands', 'href' => home_url('/brands')]
-			];
+			$brands_links = array(
+				array(
+					'name' => 'Daikin',
+					'href' => home_url( '/brands/daikin' ),
+				),
+				array(
+					'name' => 'Goodman',
+					'href' => home_url( '/brands/goodman' ),
+				),
+				array(
+					'name' => 'Rheem',
+					'href' => home_url( '/brands/rheem' ),
+				),
+				array(
+					'name' => 'Trane',
+					'href' => home_url( '/brands/trane' ),
+				),
+				array(
+					'name' => 'Carrier',
+					'href' => home_url( '/brands/carrier' ),
+				),
+				array(
+					'name' => 'All Brands',
+					'href' => home_url( '/brands' ),
+				),
+			);
 
 			$output .= '<div>';
 			$output .= '<h3 class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl">Brands</h3>';
@@ -485,7 +502,7 @@ class Sunnyside_Footer_Nav_Walker extends Walker_Nav_Menu {
 		$output .= '</div>';
 
 		// Reset data for next use
-		$this->sections = [];
+		$this->sections        = array();
 		$this->current_section = null;
 
 		return $output;
@@ -498,15 +515,17 @@ class Sunnyside_Footer_Nav_Walker extends Walker_Nav_Menu {
 function sunnysideac_footer_nav_menu() {
 	// Check if footer menu is assigned
 	if ( has_nav_menu( 'footer' ) ) {
-		wp_nav_menu( [
-			'theme_location'  => 'footer',
-			'container'       => false,
-			'menu_class'      => '',
-			'items_wrap'      => '%3$s',
-			'walker'          => new Sunnyside_Footer_Nav_Walker(),
-			'depth'           => 2,
-			'fallback_cb'     => 'sunnysideac_footer_fallback_menu',
-		] );
+		wp_nav_menu(
+			array(
+				'theme_location' => 'footer',
+				'container'      => false,
+				'menu_class'     => '',
+				'items_wrap'     => '%3$s',
+				'walker'         => new Sunnyside_Footer_Nav_Walker(),
+				'depth'          => 2,
+				'fallback_cb'    => 'sunnysideac_footer_fallback_menu',
+			)
+		);
 	} else {
 		sunnysideac_footer_fallback_menu();
 	}
@@ -517,48 +536,93 @@ function sunnysideac_footer_nav_menu() {
  * Maintains the same structure and styling as the hardcoded footer
  */
 function sunnysideac_footer_fallback_menu() {
-	$footer_links = [
-		'services' => [
+	$footer_links = array(
+		'services' => array(
 			'title' => 'Services',
-			'links' => [
-				['name' => 'AC Repair', 'href' => home_url('/service/ac-repair')],
-				['name' => 'AC Installation', 'href' => home_url('/service/ac-installation')],
-				['name' => 'AC Maintenance', 'href' => home_url('/service/ac-maintenance')],
-				['name' => 'Heating Services', 'href' => home_url('/service/heating-repair')],
-				['name' => 'All HVAC Services', 'href' => home_url('/services')]
-			]
-		],
-		'company' => [
+			'links' => array(
+				array(
+					'name' => 'AC Repair',
+					'href' => home_url( '/service/ac-repair' ),
+				),
+				array(
+					'name' => 'AC Installation',
+					'href' => home_url( '/service/ac-installation' ),
+				),
+				array(
+					'name' => 'AC Maintenance',
+					'href' => home_url( '/service/ac-maintenance' ),
+				),
+				array(
+					'name' => 'Heating Services',
+					'href' => home_url( '/service/heating-repair' ),
+				),
+				array(
+					'name' => 'All HVAC Services',
+					'href' => home_url( '/services' ),
+				),
+			),
+		),
+		'company'  => array(
 			'title' => 'Company',
-			'links' => [
-				['name' => 'About Us', 'href' => home_url('/about')],
-				['name' => 'Financing', 'href' => home_url('/financing')],
-				['name' => 'Maintenance Plan', 'href' => home_url('/maintenance-plan')],
-				['name' => 'Careers', 'href' => home_url('/careers')]
-			]
-		],
-		'brands' => [
+			'links' => array(
+				array(
+					'name' => 'About Us',
+					'href' => home_url( '/about' ),
+				),
+				array(
+					'name' => 'Financing',
+					'href' => home_url( '/financing' ),
+				),
+				array(
+					'name' => 'Maintenance Plan',
+					'href' => home_url( '/maintenance-plan' ),
+				),
+				array(
+					'name' => 'Careers',
+					'href' => home_url( '/careers' ),
+				),
+			),
+		),
+		'brands'   => array(
 			'title' => 'Brands',
-			'links' => [
-				['name' => 'Daikin', 'href' => home_url('/brands/daikin')],
-				['name' => 'Goodman', 'href' => home_url('/brands/goodman')],
-				['name' => 'Rheem', 'href' => home_url('/brands/rheem')],
-				['name' => 'Trane', 'href' => home_url('/brands/trane')],
-				['name' => 'Carrier', 'href' => home_url('/brands/carrier')],
-				['name' => 'All Brands', 'href' => home_url('/brands')]
-			]
-		]
-	];
+			'links' => array(
+				array(
+					'name' => 'Daikin',
+					'href' => home_url( '/brands/daikin' ),
+				),
+				array(
+					'name' => 'Goodman',
+					'href' => home_url( '/brands/goodman' ),
+				),
+				array(
+					'name' => 'Rheem',
+					'href' => home_url( '/brands/rheem' ),
+				),
+				array(
+					'name' => 'Trane',
+					'href' => home_url( '/brands/trane' ),
+				),
+				array(
+					'name' => 'Carrier',
+					'href' => home_url( '/brands/carrier' ),
+				),
+				array(
+					'name' => 'All Brands',
+					'href' => home_url( '/brands' ),
+				),
+			),
+		),
+	);
 
 	// Column 2: Services at top, Company at bottom
 	echo '<div class="space-y-6">';
 	echo '<div>';
-	echo '<h3 class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl">' . esc_html($footer_links['services']['title']) . '</h3>';
+	echo '<h3 class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl">' . esc_html( $footer_links['services']['title'] ) . '</h3>';
 	echo '<ul class="space-y-2">';
-	foreach ($footer_links['services']['links'] as $link) {
+	foreach ( $footer_links['services']['links'] as $link ) {
 		echo '<li>';
-		echo '<a href="' . esc_url($link['href']) . '" class="font-light text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500">';
-		echo esc_html($link['name']);
+		echo '<a href="' . esc_url( $link['href'] ) . '" class="font-light text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500">';
+		echo esc_html( $link['name'] );
 		echo '</a>';
 		echo '</li>';
 	}
@@ -566,12 +630,12 @@ function sunnysideac_footer_fallback_menu() {
 	echo '</div>';
 
 	echo '<div>';
-	echo '<h3 class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl">' . esc_html($footer_links['company']['title']) . '</h3>';
+	echo '<h3 class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl">' . esc_html( $footer_links['company']['title'] ) . '</h3>';
 	echo '<ul class="space-y-2">';
-	foreach ($footer_links['company']['links'] as $link) {
+	foreach ( $footer_links['company']['links'] as $link ) {
 		echo '<li>';
-		echo '<a href="' . esc_url($link['href']) . '" class="font-light text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500">';
-		echo esc_html($link['name']);
+		echo '<a href="' . esc_url( $link['href'] ) . '" class="font-light text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500">';
+		echo esc_html( $link['name'] );
 		echo '</a>';
 		echo '</li>';
 	}
@@ -582,12 +646,12 @@ function sunnysideac_footer_fallback_menu() {
 	// Column 3: Brands
 	echo '<div class="space-y-6">';
 	echo '<div>';
-	echo '<h3 class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl">' . esc_html($footer_links['brands']['title']) . '</h3>';
+	echo '<h3 class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl">' . esc_html( $footer_links['brands']['title'] ) . '</h3>';
 	echo '<ul class="space-y-2">';
-	foreach ($footer_links['brands']['links'] as $link) {
+	foreach ( $footer_links['brands']['links'] as $link ) {
 		echo '<li>';
-		echo '<a href="' . esc_url($link['href']) . '" class="font-light text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500">';
-		echo esc_html($link['name']);
+		echo '<a href="' . esc_url( $link['href'] ) . '" class="font-light text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500">';
+		echo esc_html( $link['name'] );
 		echo '</a>';
 		echo '</li>';
 	}

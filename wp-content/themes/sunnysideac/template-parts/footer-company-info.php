@@ -5,15 +5,15 @@
  */
 
 // Component data (like props in React)
-$images = [
-	'company_logo' => sunnysideac_asset_url('assets/images/home-page/footer/new-sunny-side-logo.png'),
-];
+$images = array(
+	'company_logo' => sunnysideac_asset_url( 'assets/images/home-page/footer/new-sunny-side-logo.png' ),
+);
 
-$company_info = [
+$company_info = array(
 	'name'        => 'Sunny Side Air Conditioning',
 	'description' => 'Your trusted HVAC service provider in South Florida. We offer professional, reliable, and affordable air conditioning services with 24/7 emergency support.',
 	'tagline'     => 'Keeping South Florida Cool Since 2025',
-];
+);
 ?>
 
 <section class="space-y-6" aria-labelledby="company-heading">
@@ -27,7 +27,7 @@ $company_info = [
 			<img
 				class="h-16 w-auto sm:h-20"
 				alt="SunnySide 24/7 AC Logo"
-				src="<?php echo esc_url($images['company_logo']); ?>"
+				src="<?php echo esc_url( $images['company_logo'] ); ?>"
 			>
 			<div class="flex flex-col">
 				<div class="bg-gradient-to-r from-[#FFC13B] to-[#E5462F] bg-clip-text text-2xl font-extrabold text-transparent sm:text-3xl">
@@ -43,7 +43,7 @@ $company_info = [
 	<!-- Company Description -->
 	<div class="space-y-3">
 		<p class="font-light text-gray-700 leading-relaxed">
-			<?php echo esc_html($company_info['description']); ?>
+			<?php echo esc_html( $company_info['description'] ); ?>
 		</p>
 
 		<!-- Additional Company Info -->
@@ -70,11 +70,15 @@ $company_info = [
 		</h3>
 
 		<?php
-		get_template_part('template-parts/social-icons', null, [
-			'size' => 'md',
-			'direction' => 'horizontal',
-			'class' => 'justify-start'
-		]);
+		get_template_part(
+			'template-parts/social-icons',
+			null,
+			array(
+				'size'      => 'md',
+				'direction' => 'horizontal',
+				'class'     => 'justify-start',
+			)
+		);
 		?>
 	</div>
 </section>

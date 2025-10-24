@@ -10,20 +10,20 @@ get_header();
 $star_icon = sunnysideac_asset_url( 'assets/icons/star-icon.svg' );
 
 // Page breadcrumbs
-$breadcrumbs = [
-	[
+$breadcrumbs = array(
+	array(
 		'name' => 'Home',
 		'url'  => home_url( '/' ),
-	],
-	[
+	),
+	array(
 		'name' => 'Projects',
 		'url'  => '',
-	],
-];
+	),
+);
 
 // Project cards data
-$projects = [
-	[
+$projects = array(
+	array(
 		'image'       => 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&h=250&fit=crop&crop=center',
 		'image_alt'   => 'Commercial multi-zone cooling system installation showing modern HVAC equipment',
 		'category'    => 'Commercial',
@@ -31,8 +31,8 @@ $projects = [
 		'description' => 'Complete HVAC system installation for a 15,000 sq ft office building with individual zone controls.',
 		'duration'    => '2 weeks',
 		'location'    => 'Downtown Office Complex',
-	],
-	[
+	),
+	array(
 		'image'       => 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=250&fit=crop&crop=center',
 		'image_alt'   => 'Hotel HVAC maintenance showing technician working on rooftop unit',
 		'category'    => 'Maintenance',
@@ -40,8 +40,8 @@ $projects = [
 		'description' => 'Annual maintenance program for a 120-room hotel including preventive care and emergency repairs.',
 		'duration'    => 'Ongoing',
 		'location'    => 'Beachfront Resort',
-	],
-	[
+	),
+	array(
 		'image'       => 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=400&h=250&fit=crop&crop=center',
 		'image_alt'   => 'Residential AC installation showing new outdoor unit and indoor components',
 		'category'    => 'Installation',
@@ -49,8 +49,8 @@ $projects = [
 		'description' => 'New central air system installation for a 3,500 sq ft family home with smart thermostat integration.',
 		'duration'    => '3 days',
 		'location'    => 'Suburban Residence',
-	],
-	[
+	),
+	array(
 		'image'       => 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400&h=250&fit=crop&crop=center',
 		'image_alt'   => 'Smart thermostat upgrade showing modern digital display and installation process',
 		'category'    => 'Upgrade',
@@ -58,8 +58,8 @@ $projects = [
 		'description' => 'Installation of WiFi-enabled smart thermostats in 25 residential units with mobile app integration.',
 		'duration'    => '1 week',
 		'location'    => 'Apartment Complex',
-	],
-	[
+	),
+	array(
 		'image'       => 'https://images.unsplash.com/photo-1504309092620-4d0ec726efa4?w=400&h=250&fit=crop&crop=center',
 		'image_alt'   => 'Industrial warehouse heating system with large commercial HVAC units',
 		'category'    => 'Industrial',
@@ -67,8 +67,8 @@ $projects = [
 		'description' => 'Industrial heating and cooling solution for a 50,000 sq ft distribution warehouse with energy recovery.',
 		'duration'    => '4 weeks',
 		'location'    => 'Industrial Park',
-	],
-	[
+	),
+	array(
 		'image'       => 'https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=400&h=250&fit=crop&crop=center',
 		'image_alt'   => 'Emergency HVAC repair showing technician working on system during after-hours service call',
 		'category'    => 'Emergency',
@@ -76,8 +76,8 @@ $projects = [
 		'description' => 'Round-the-clock emergency repair services for residential and commercial clients during peak season.',
 		'duration'    => 'Same day',
 		'location'    => '24/7 Service',
-	],
-];
+	),
+);
 ?>
 
 <!-- Page Header with Breadcrumbs -->
@@ -85,13 +85,13 @@ $projects = [
 get_template_part(
 	'template-parts/page-header',
 	null,
-	[
+	array(
 		'breadcrumbs' => $breadcrumbs,
 		'title'       => 'Our Projects',
 		'description' => '',
 		'show_ctas'   => false,
 		'bg_color'    => 'white',
-	]
+	)
 );
 ?>
 
@@ -108,12 +108,12 @@ get_template_part(
 				get_template_part(
 					'template-parts/title',
 					null,
-					[
+					array(
 						'icon'  => $star_icon,
 						'title' => 'Featured Projects',
 						'id'    => 'overview-heading',
 						'align' => 'center',
-					]
+					)
 				);
 				?>
 
@@ -121,9 +121,9 @@ get_template_part(
 				get_template_part(
 					'template-parts/subheading',
 					null,
-					[
+					array(
 						'text' => 'Showcasing our expertise in residential and commercial HVAC solutions',
-					]
+					)
 				);
 				?>
 

@@ -10,35 +10,35 @@ get_header();
 $blog_icon = sunnysideac_asset_url( 'assets/images/home-page/blog/blog-title-icon.svg' );
 
 // Page breadcrumbs
-$breadcrumbs = [
-	[
+$breadcrumbs = array(
+	array(
 		'name' => 'Home',
 		'url'  => home_url( '/' ),
-	],
-	[
+	),
+	array(
 		'name' => 'Blog',
 		'url'  => '',
-	],
-];
+	),
+);
 
 // Blog post icons
-$images = [
+$images = array(
 	'air_con_blog_icon' => sunnysideac_asset_url( 'assets/images/home-page/blog/air-con-blog-icon.svg' ),
 	'blog_auther_icon'  => sunnysideac_asset_url( 'assets/images/home-page/blog/blog-auther-icon.svg' ),
 	'read_more_arrow'   => sunnysideac_asset_url( 'assets/images/home-page/blog/read-more-arrow-up-right.svg' ),
-];
+);
 
 // Query blog posts
-$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+$paged      = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 $blog_query = new WP_Query(
-	[
+	array(
 		'post_type'      => 'post',
 		'post_status'    => 'publish',
 		'posts_per_page' => 9,
 		'paged'          => $paged,
 		'orderby'        => 'date',
 		'order'          => 'DESC',
-	]
+	)
 );
 ?>
 
@@ -47,13 +47,13 @@ $blog_query = new WP_Query(
 get_template_part(
 	'template-parts/page-header',
 	null,
-	[
+	array(
 		'breadcrumbs' => $breadcrumbs,
 		'title'       => 'Our Blog',
 		'description' => '',
 		'show_ctas'   => false,
 		'bg_color'    => 'white',
-	]
+	)
 );
 ?>
 
@@ -70,12 +70,12 @@ get_template_part(
 				get_template_part(
 					'template-parts/title',
 					null,
-					[
+					array(
 						'icon'  => $blog_icon,
 						'title' => 'HVAC Tips & Insights',
 						'id'    => 'blog-overview-heading',
 						'align' => 'center',
-					]
+					)
 				);
 				?>
 
@@ -83,9 +83,9 @@ get_template_part(
 				get_template_part(
 					'template-parts/subheading',
 					null,
-					[
+					array(
 						'text' => 'Stay Cool, Stay Warm, Stay Informed',
-					]
+					)
 				);
 				?>
 
@@ -112,7 +112,10 @@ get_template_part(
 				<?php if ( $blog_query->have_posts() ) : ?>
 					<!-- Blog Cards Grid -->
 					<div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-						<?php while ( $blog_query->have_posts() ) : $blog_query->the_post(); ?>
+						<?php
+						while ( $blog_query->have_posts() ) :
+							$blog_query->the_post();
+							?>
 							<article class="group mx-auto block max-w-[375px] overflow-hidden rounded-b-2xl bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
 								<a
 									href="<?php the_permalink(); ?>"
@@ -122,13 +125,15 @@ get_template_part(
 									<!-- Image Container with Date Badge -->
 									<div class="relative h-[292px] w-full overflow-hidden rounded-[20px]">
 										<?php if ( has_post_thumbnail() ) : ?>
-											<?php the_post_thumbnail(
+											<?php
+											the_post_thumbnail(
 												'large',
-												[
+												array(
 													'class' => 'h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105',
-													'alt'   => get_the_title(),
-												]
-											); ?>
+													'alt' => get_the_title(),
+												)
+											);
+											?>
 										<?php else : ?>
 											<img
 												src="<?php echo esc_url( sunnysideac_asset_url( 'assets/images/home-page/blog/blog-post-image-1.png' ) ); ?>"
@@ -232,14 +237,14 @@ get_template_part(
 							<div class="flex gap-2">
 								<?php
 								echo paginate_links(
-									[
+									array(
 										'total'     => $blog_query->max_num_pages,
 										'current'   => max( 1, $paged ),
 										'prev_text' => '&laquo; Previous',
 										'next_text' => 'Next &raquo;',
 										'type'      => 'list',
 										'class'     => 'pagination',
-									]
+									)
 								);
 								?>
 							</div>

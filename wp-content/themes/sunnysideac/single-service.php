@@ -10,20 +10,20 @@ get_header();
 if ( have_posts() ) :
 	the_post();
 
-	$service_id = get_the_ID();
+	$service_id    = get_the_ID();
 	$service_title = get_the_title();
 
 	// Get ACF fields
 	$service_description = get_field( 'service_description', $service_id );
-	$service_benefits = get_field( 'service_benefits', $service_id );
-	$service_process = get_field( 'service_process', $service_id );
-	$service_faqs = get_field( 'service_faqs', $service_id );
+	$service_benefits    = get_field( 'service_benefits', $service_id );
+	$service_process     = get_field( 'service_process', $service_id );
+	$service_faqs        = get_field( 'service_faqs', $service_id );
 
 	// SEO Variables
-	$page_title = $service_title . ' - Sunnyside AC';
-	$meta_desc = $service_description ? wp_trim_words( $service_description, 20 ) : 'Expert ' . strtolower( $service_title ) . ' services in South Florida. Licensed technicians, same-day service, 24/7 emergency repairs.';
+	$page_title    = $service_title . ' - Sunnyside AC';
+	$meta_desc     = $service_description ? wp_trim_words( $service_description, 20 ) : 'Expert ' . strtolower( $service_title ) . ' services in South Florida. Licensed technicians, same-day service, 24/7 emergency repairs.';
 	$canonical_url = get_permalink();
-	$og_image = has_post_thumbnail() ? get_the_post_thumbnail_url( $service_id, 'large' ) : get_template_directory_uri() . '/assets/images/default-og.jpg';
+	$og_image      = has_post_thumbnail() ? get_the_post_thumbnail_url( $service_id, 'large' ) : get_template_directory_uri() . '/assets/images/default-og.jpg';
 
 	?>
 
@@ -227,11 +227,11 @@ if ( have_posts() ) :
 								<?php
 								the_post_thumbnail(
 									'large',
-									[
+									array(
 										'class'    => 'w-full h-auto rounded-2xl shadow-lg',
 										'itemprop' => 'url',
 										'alt'      => esc_attr( $service_title . ' services in South Florida' ),
-									]
+									)
 								);
 								?>
 								<meta itemprop="width" content="1200">
@@ -327,22 +327,29 @@ if ( have_posts() ) :
 					<?php if ( $service_faqs ) : ?>
 						<?php
 						// Transform ACF FAQ data to match component format
-						$formatted_faqs = array_map(function($faq) {
-							return [
-								'question' => $faq['question'],
-								'answer' => wp_strip_all_tags($faq['answer']),
-							];
-						}, $service_faqs);
+						$formatted_faqs = array_map(
+							function ( $faq ) {
+								return array(
+									'question' => $faq['question'],
+									'answer'   => wp_strip_all_tags( $faq['answer'] ),
+								);
+							},
+							$service_faqs
+						);
 
-						get_template_part('template-parts/faq-component', null, [
-							'faq_data' => $formatted_faqs,
-							'title' => 'Frequently Asked Questions',
-							'mobile_title' => 'FAQ',
-							'subheading' => 'Got Questions About ' . $service_title . '? We\'ve Got Answers!',
-							'description' => 'Find answers to common questions about our ' . strtolower($service_title) . ' services.',
-							'show_schema' => false, // Schema already added in <head>
-							'section_id' => 'service-faq-section',
-						]);
+						get_template_part(
+							'template-parts/faq-component',
+							null,
+							array(
+								'faq_data'     => $formatted_faqs,
+								'title'        => 'Frequently Asked Questions',
+								'mobile_title' => 'FAQ',
+								'subheading'   => 'Got Questions About ' . $service_title . '? We\'ve Got Answers!',
+								'description'  => 'Find answers to common questions about our ' . strtolower( $service_title ) . ' services.',
+								'show_schema'  => false, // Schema already added in <head>
+								'section_id'   => 'service-faq-section',
+							)
+						);
 						?>
 					<?php endif; ?>
 
@@ -361,7 +368,7 @@ if ( have_posts() ) :
 							<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 								<?php foreach ( SUNNYSIDE_SERVICE_AREAS as $city ) : ?>
 									<a href="<?php echo esc_url( home_url( '/' . sanitize_title( $city ) . '/' . get_post_field( 'post_name', $service_id ) . '/' ) ); ?>"
-									   class="group block bg-gray-50 rounded-2xl p-4 text-center transition-all duration-300 hover:scale-105 hover:bg-orange-50 hover:shadow-lg">
+										class="group block bg-gray-50 rounded-2xl p-4 text-center transition-all duration-300 hover:scale-105 hover:bg-orange-50 hover:shadow-lg">
 										<h3 class="font-semibold text-gray-900 group-hover:text-orange-500">
 											<?php echo esc_html( $city ); ?>
 										</h3>

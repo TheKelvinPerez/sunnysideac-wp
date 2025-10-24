@@ -76,7 +76,7 @@
 					<article class="bg-gray-50 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow">
 						<?php if ( has_post_thumbnail() ) : ?>
 							<a href="<?php the_permalink(); ?>">
-								<?php the_post_thumbnail( 'medium', [ 'class' => 'w-full h-48 object-cover' ] ); ?>
+								<?php the_post_thumbnail( 'medium', array( 'class' => 'w-full h-48 object-cover' ) ); ?>
 							</a>
 						<?php else : ?>
 							<div class="w-full h-48 bg-gradient-to-br from-blue-400 to-blue-600"></div>
@@ -109,12 +109,12 @@
 			<div class="mt-12 text-center">
 				<?php
 				the_posts_pagination(
-					[
+					array(
 						'mid_size'  => 2,
 						'prev_text' => '← Previous',
 						'next_text' => 'Next →',
 						'class'     => 'inline-flex gap-2',
-					]
+					)
 				);
 				?>
 			</div>

@@ -23,7 +23,7 @@ define( 'SUNNYSIDE_ADDRESS_GOOGLE_MAPS_URL', 'https://maps.google.com/?q=6609+Em
 // Service areas
 define(
 	'SUNNYSIDE_SERVICE_AREAS',
-	[
+	array(
 		'Miramar',
 		'Pembroke Pines',
 		'South West Ranches',
@@ -54,36 +54,36 @@ define(
 		'Royal Palm Beach',
 		'West Palm Beach',
 		'Palm Beach',
-	]
+	)
 );
 
 // Service categorization for menu organization
 define(
 	'SUNNYSIDE_SERVICES_BY_CATEGORY',
-	[
-		'cooling'     => [
+	array(
+		'cooling'     => array(
 			'AC Repair',
 			'AC Installation',
 			'AC Maintenance',
 			'AC Replacement',
-		],
-		'heating'     => [
+		),
+		'heating'     => array(
 			'Heating Repair',
 			'Heating Installation',
 			'Heat Pumps',
-		],
-		'air_quality' => [
+		),
+		'air_quality' => array(
 			'Ductless / Mini Split',
 			'Indoor Air Quality',
 			'Water Heaters',
-		],
-	]
+		),
+	)
 );
 
 // Priority cities for dropdown (top 16)
 define(
 	'SUNNYSIDE_PRIORITY_CITIES',
-	[
+	array(
 		'Pembroke Pines',
 		'Miramar',
 		'Weston',
@@ -100,7 +100,7 @@ define(
 		'Hialeah Lakes',
 		'Coral Gables',
 		'Deerfield Beach',
-	]
+	)
 );
 
 // Service URL patterns
@@ -113,3 +113,26 @@ define( 'SUNNYSIDE_INSTAGRAM_URL', 'https://instagram.com/sunnyside247ac' );
 define( 'SUNNYSIDE_TWITTER_URL', 'https://twitter.com/sunnyside247ac' );
 define( 'SUNNYSIDE_YOUTUBE_URL', 'https://youtube.com/@sunnyside247ac' );
 define( 'SUNNYSIDE_LINKEDIN_URL', 'https://linkedin.com/company/sunnyside247ac' );
+
+// Business hours and coordinates for Local SEO
+define(
+	'SUNNYSIDE_BUSINESS_HOURS',
+	array(
+		'Monday'    => '07:00-22:00',
+		'Tuesday'   => '07:00-22:00',
+		'Wednesday' => '07:00-22:00',
+		'Thursday'  => '07:00-22:00',
+		'Friday'    => '07:00-22:00',
+		'Saturday'  => '07:00-22:00',
+		'Sunday'    => '07:00-22:00',
+	)
+);
+
+// Geo-coordinates for Miramar, FL office
+define( 'SUNNYSIDE_LATITUDE', '25.9763' );
+define( 'SUNNYSIDE_LONGITUDE', '-80.2989' );
+
+// Business identifiers
+define( 'SUNNYSIDE_FOUNDING_DATE', '2014' );
+define( 'SUNNYSIDE_BUSINESS_TYPE', 'HVACContractor' );
+define( 'SUNNYSIDE_TAX_ID', '' ); // Add if needed for verification

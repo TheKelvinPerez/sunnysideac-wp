@@ -7,7 +7,7 @@
  * @param string $class Additional CSS classes (optional)
  */
 
-$text = isset( $args['text'] ) ? $args['text'] : '';
+$text  = isset( $args['text'] ) ? $args['text'] : '';
 $class = isset( $args['class'] ) ? $args['class'] : '';
 ?>
 

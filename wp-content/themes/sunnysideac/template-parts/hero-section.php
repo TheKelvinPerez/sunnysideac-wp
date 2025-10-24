@@ -5,7 +5,7 @@
  */
 
 // Icons data
-$icons = [
+$icons = array(
 	'best_refreshed'        => sunnysideac_asset_url( 'assets/icons/best-at-keeping-refreshed-icon.svg' ),
 	'mobile_best_refreshed' => sunnysideac_asset_url( 'assets/icons/mobile-best-refreshed-icon.svg' ),
 	'schedule_service'      => sunnysideac_asset_url( 'assets/icons/schedule-service-now-icon.svg' ),
@@ -13,35 +13,35 @@ $icons = [
 	'google'                => sunnysideac_asset_url( 'assets/icons/google-icon.svg' ),
 	'star'                  => sunnysideac_asset_url( 'assets/icons/star-icon.svg' ),
 	'hero_line_break'       => sunnysideac_asset_url( 'assets/icons/hero-line-break.svg' ),
-];
+);
 
 // Images data
-$images = [
+$images = array(
 	'hero_right'    => sunnysideac_asset_url( 'assets/images/images/hero/hero-right-image.png' ),
 	'mobile_hero'   => sunnysideac_asset_url( 'assets/images/images/hero/mobile-hero-image.png' ),
-	'review_photos' => [
+	'review_photos' => array(
 		sunnysideac_asset_url( 'assets/images/images/hero/review_photo_1.png' ),
 		sunnysideac_asset_url( 'assets/images/images/hero/review_photo_2.png' ),
 		sunnysideac_asset_url( 'assets/images/images/hero/review_photo_3.png' ),
 		sunnysideac_asset_url( 'assets/images/images/hero/review_photo_4.png' ),
-	],
-];
+	),
+);
 
 // Statistics data
-$statistics = [
-	[
+$statistics = array(
+	array(
 		'number'      => '1.5K+',
 		'description' => "Project Completed\nWith Excellence",
-	],
-	[
+	),
+	array(
 		'number'      => '2014',
 		'description' => "Family-Owned\n& Operated Since",
-	],
-	[
+	),
+	array(
 		'number'      => '2.5K+',
 		'description' => "Happy Customers\nServed",
-	],
-];
+	),
+);
 
 // Get WordPress data
 $home_page_id  = get_option( 'page_on_front' );

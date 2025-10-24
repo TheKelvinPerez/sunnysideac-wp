@@ -35,7 +35,7 @@ if ( have_posts() ) :
 	}
 
 	// Merge city-specific FAQs with service FAQs for comprehensive coverage
-	$all_faqs = [];
+	$all_faqs = array();
 	if ( ! empty( $city_faqs ) && is_array( $city_faqs ) ) {
 		// Add city-specific FAQs first (they're more locally relevant)
 		$all_faqs = array_merge( $all_faqs, $city_faqs );
@@ -310,11 +310,11 @@ if ( have_posts() ) :
 							<?php
 							the_post_thumbnail(
 								'large',
-								[
+								array(
 									'class'    => 'w-full h-auto rounded-2xl shadow-lg',
 									'itemprop' => 'url',
 									'alt'      => esc_attr( $service_title . ' services in ' . $city_name . ', Florida' ),
-								]
+								)
 							);
 							?>
 							<meta itemprop="width" content="1200">
@@ -514,10 +514,10 @@ if ( have_posts() ) :
 
 													<div class="faq-chevron h-[35px] w-[35px] flex-shrink-0 rounded-full shadow-md transition-all duration-300 ease-in-out hover:scale-110">
 														<img class="chevron-icon h-full w-full transition-transform duration-300 ease-in-out"
-															 alt="Toggle FAQ"
-															 src="<?php echo esc_url( sunnysideac_asset_url('assets/images/home-page/faq-chevron-down-circle.svg') ); ?>"
-															 loading="lazy"
-															 decoding="async" />
+															alt="Toggle FAQ"
+															src="<?php echo esc_url( sunnysideac_asset_url( 'assets/images/home-page/faq-chevron-down-circle.svg' ) ); ?>"
+															loading="lazy"
+															decoding="async" />
 													</div>
 												</div>
 
@@ -565,12 +565,12 @@ if ( have_posts() ) :
 				<?php
 				// Get related services for internal linking
 				$all_services = get_posts(
-					[
+					array(
 						'post_type'      => 'service',
 						'posts_per_page' => 6,
-						'post__not_in'   => [ $service_id ],
+						'post__not_in'   => array( $service_id ),
 						'orderby'        => 'rand',
-					]
+					)
 				);
 
 				if ( $all_services && $city_post ) :

@@ -26,7 +26,7 @@ if ( $_ENV['APP_ENV'] === 'development' ) {
  */
 if ( ! function_exists( 'dd_flatten_array' ) ) {
 	function dd_flatten_array( $array, $prefix = '' ) {
-		$result = [];
+		$result = array();
 		foreach ( $array as $key => $value ) {
 			$newKey = $prefix === '' ? $key : $prefix . '.' . $key;
 
@@ -77,7 +77,7 @@ if ( ! function_exists( 'dd' ) ) {
 					} elseif ( is_null( $var ) ) {
 						$displayValue = 'null';
 					}
-					$handler->addDataTable( $varLabel, [ 'Value' => $displayValue ] );
+					$handler->addDataTable( $varLabel, array( 'Value' => $displayValue ) );
 				} elseif ( is_array( $var ) && ! empty( $var ) ) {
 					// Check if it's a numeric array with complex items (arrays/objects)
 					$isNumericArray  = array_keys( $var ) === range( 0, count( $var ) - 1 );
@@ -110,7 +110,7 @@ if ( ! function_exists( 'dd' ) ) {
 					$handler->addDataTable( $varLabel, $flattened );
 				} else {
 					// Fallback for any other type
-					$handler->addDataTable( $varLabel, [ 'Value' => print_r( $var, true ) ] );
+					$handler->addDataTable( $varLabel, array( 'Value' => print_r( $var, true ) ) );
 				}
 			}
 
@@ -179,12 +179,12 @@ function sunnysideac_is_vite_dev_server_running() {
 
 	// Use file_get_contents with stream context for better compatibility
 	$context = stream_context_create(
-		[
-			'http' => [
+		array(
+			'http' => array(
 				'timeout'       => 1,
 				'ignore_errors' => true,
-			],
-		]
+			),
+		)
 	);
 
 	$result = @file_get_contents( $vite_dev_server, false, $context );
@@ -205,7 +205,7 @@ function sunnysideac_enqueue_assets() {
 		wp_enqueue_script(
 			'sunnysideac-vite-client',
 			$vite_server_url . '/@vite/client',
-			[],
+			array(),
 			null,
 			false
 		);
@@ -214,7 +214,7 @@ function sunnysideac_enqueue_assets() {
 		wp_enqueue_script(
 			'sunnysideac-main',
 			$vite_server_url . '/src/main.js',
-			[ 'sunnysideac-vite-client' ],
+			array( 'sunnysideac-vite-client' ),
 			null,
 			false
 		);
@@ -235,7 +235,7 @@ function sunnysideac_enqueue_assets() {
 						wp_enqueue_style(
 							'sunnysideac-main',
 							get_template_directory_uri() . '/dist/' . $css_file,
-							[],
+							array(),
 							null
 						);
 					}
@@ -245,7 +245,7 @@ function sunnysideac_enqueue_assets() {
 				wp_enqueue_script(
 					'sunnysideac-main',
 					get_template_directory_uri() . '/dist/' . $main['file'],
-					[],
+					array(),
 					null,
 					true
 				);
@@ -266,22 +266,22 @@ function sunnysideac_setup() {
 	add_theme_support( 'custom-logo' );
 	add_theme_support(
 		'html5',
-		[
+		array(
 			'search-form',
 			'comment-form',
 			'comment-list',
 			'gallery',
 			'caption',
-		]
+		)
 	);
 
 	// Register navigation menus
 	// Note: 'primary' menu removed - main navigation now uses JSON config (config/main-navigation.json)
 	// Note: 'footer' menu kept for backwards compatibility, but footer also uses JSON config (config/footer-menu.json)
 	register_nav_menus(
-		[
+		array(
 			'footer' => __( 'Footer Menu (Legacy - uses JSON config)', 'sunnysideac' ),
-		]
+		)
 	);
 }
 add_action( 'after_setup_theme', 'sunnysideac_setup' );
@@ -303,23 +303,23 @@ add_filter( 'script_loader_tag', 'sunnysideac_add_type_attribute', 10, 3 );
 function register_city_cpt() {
 	register_post_type(
 		'city',
-		[
-			'labels'       => [
+		array(
+			'labels'       => array(
 				'name'          => 'Cities',
 				'singular_name' => 'City',
 				'add_new_item'  => 'Add New City',
 				'edit_item'     => 'Edit City',
-			],
+			),
 			'public'       => true,
 			'has_archive'  => true,
-			'rewrite'      => [
+			'rewrite'      => array(
 				'slug'       => 'cities',
 				'with_front' => false,
-			],
-			'supports'     => [ 'title', 'editor', 'thumbnail' ],
+			),
+			'supports'     => array( 'title', 'editor', 'thumbnail' ),
 			'menu_icon'    => 'dashicons-location-alt',
 			'show_in_rest' => true,
-		]
+		)
 	);
 }
 
@@ -329,23 +329,23 @@ add_action( 'init', 'register_city_cpt' );
 function register_service_cpt() {
 	register_post_type(
 		'service',
-		[
-			'labels'       => [
+		array(
+			'labels'       => array(
 				'name'          => 'Services',
 				'singular_name' => 'Service',
 				'add_new_item'  => 'Add New Service',
 				'edit_item'     => 'Edit Service',
-			],
+			),
 			'public'       => true,
 			'has_archive'  => true,
-			'rewrite'      => [
+			'rewrite'      => array(
 				'slug'       => 'services',
 				'with_front' => false,
-			],
-			'supports'     => [ 'title', 'editor', 'thumbnail' ],
+			),
+			'supports'     => array( 'title', 'editor', 'thumbnail' ),
 			'menu_icon'    => 'dashicons-hammer',
 			'show_in_rest' => true,
-		]
+		)
 	);
 }
 
@@ -355,20 +355,20 @@ add_action( 'init', 'register_service_cpt' );
 function register_brand_cpt() {
 	register_post_type(
 		'brand',
-		[
-			'labels'       => [
+		array(
+			'labels'       => array(
 				'name'          => 'Brands',
 				'singular_name' => 'Brand',
 				'add_new_item'  => 'Add New Brand',
 				'edit_item'     => 'Edit Brand',
-			],
+			),
 			'public'       => true,
 			'has_archive'  => true,
-			'rewrite'      => [ 'slug' => 'brands' ],
-			'supports'     => [ 'title', 'editor', 'thumbnail' ],
+			'rewrite'      => array( 'slug' => 'brands' ),
+			'supports'     => array( 'title', 'editor', 'thumbnail' ),
 			'menu_icon'    => 'dashicons-awards',
 			'show_in_rest' => true,
-		]
+		)
 	);
 }
 
@@ -377,9 +377,9 @@ add_action( 'init', 'register_brand_cpt' );
 function register_service_category_taxonomy() {
 	register_taxonomy(
 		'service_category',
-		[ 'service' ],
-		[
-			'labels'            => [
+		array( 'service' ),
+		array(
+			'labels'            => array(
 				'name'          => 'Service Categories',
 				'singular_name' => 'Service Category',
 				'search_items'  => 'Search Service Categoreis',
@@ -390,17 +390,17 @@ function register_service_category_taxonomy() {
 				'add_new_item'  => 'Add New Service Category',
 				'new_item_name' => 'New Service Category Name',
 				'menu_name'     => 'Categories',
-			],
+			),
 			'hierarchical'      => true,
 			'show_ui'           => true,
 			'show_admin_column' => true,
 			'query_var'         => true,
-			'rewrite'           => [
+			'rewrite'           => array(
 				'slug'       => 'service-category',
 				'with_front' => false,
-			],
+			),
 			'show_in_rest'      => true,
-		]
+		)
 	);
 }
 
@@ -418,36 +418,36 @@ add_action( 'init', 'register_service_category_taxonomy' );
  */
 if ( function_exists( 'acf_add_local_field_group' ) ) {
 	acf_add_local_field_group(
-		[
+		array(
 			'key'                   => 'group_service_city_relationship',
 			'title'                 => 'City Assignment',
-			'fields'                => [
-				[
+			'fields'                => array(
+				array(
 					'key'           => 'field_service_city_id',
 					'label'         => 'Cities',
 					'name'          => '_service_city_id',
 					'type'          => 'post_object',
 					'instructions'  => 'Select the cities where this service is offered.',
 					'required'      => 0,
-					'post_type'     => [
+					'post_type'     => array(
 						0 => 'city',
-					],
+					),
 					'taxonomy'      => '',
 					'allow_null'    => 1,
 					'multiple'      => 1,
 					'return_format' => 'id',
 					'ui'            => 1,
-				],
-			],
-			'location'              => [
-				[
-					[
+				),
+			),
+			'location'              => array(
+				array(
+					array(
 						'param'    => 'post_type',
 						'operator' => '==',
 						'value'    => 'service',
-					],
-				],
-			],
+					),
+				),
+			),
 			'menu_order'            => 0,
 			'position'              => 'normal',
 			'style'                 => 'default',
@@ -456,34 +456,34 @@ if ( function_exists( 'acf_add_local_field_group' ) ) {
 			'hide_on_screen'        => '',
 			'active'                => true,
 			'description'           => '',
-		]
+		)
 	);
 
 	/**
 	 * City CPT - Local SEO Content Fields
 	 */
 	acf_add_local_field_group(
-		[
+		array(
 			'key'      => 'group_city_seo_content',
 			'title'    => 'Local SEO Content',
-			'fields'   => [
-				[
+			'fields'   => array(
+				array(
 					'key'          => 'field_city_neighborhoods',
 					'label'        => 'Neighborhoods & Areas Served',
 					'name'         => 'neighborhoods',
 					'type'         => 'textarea',
 					'instructions' => 'List specific neighborhoods, zip codes, or areas. This makes content unique per city.',
 					'placeholder'  => 'Example: Downtown Miami, Brickell, Coral Way, Little Havana, Coconut Grove',
-				],
-				[
+				),
+				array(
 					'key'          => 'field_city_climate_note',
 					'label'        => 'Climate/Weather Note',
 					'name'         => 'climate_note',
 					'type'         => 'textarea',
 					'instructions' => 'Local climate considerations for HVAC services.',
 					'placeholder'  => 'Example: Miami\'s humid subtropical climate means AC systems work harder year-round...',
-				],
-				[
+				),
+				array(
 					'key'          => 'field_city_service_area_note',
 					'label'        => 'Service Area Details',
 					'name'         => 'service_area_note',
@@ -491,32 +491,32 @@ if ( function_exists( 'acf_add_local_field_group' ) ) {
 					'instructions' => 'Additional details about serving this city (response time, local permits, etc.)',
 					'toolbar'      => 'basic',
 					'media_upload' => 0,
-				],
-				[
+				),
+				array(
 					'key'          => 'field_city_video_url',
 					'label'        => 'City Video URL',
 					'name'         => 'city_video_url',
 					'type'         => 'url',
 					'instructions' => 'YouTube or Vimeo URL for city-specific video (e.g., "HVAC Services in Miami"). HIGHLY recommended for local SEO!',
 					'placeholder'  => 'https://www.youtube.com/watch?v=...',
-				],
-				[
+				),
+				array(
 					'key'               => 'field_city_video_title',
 					'label'             => 'Video Title',
 					'name'              => 'city_video_title',
 					'type'              => 'text',
 					'instructions'      => 'Title of the video (for schema markup). Example: "HVAC Services in Miami, Florida"',
 					'placeholder'       => 'HVAC Services in Miami, Florida',
-					'conditional_logic' => [
-						[
-							[
+					'conditional_logic' => array(
+						array(
+							array(
 								'field'    => 'field_city_video_url',
 								'operator' => '!=empty',
-							],
-						],
-					],
-				],
-				[
+							),
+						),
+					),
+				),
+				array(
 					'key'               => 'field_city_video_description',
 					'label'             => 'Video Description',
 					'name'              => 'city_video_description',
@@ -524,16 +524,16 @@ if ( function_exists( 'acf_add_local_field_group' ) ) {
 					'instructions'      => 'Brief description of the video content (for schema markup)',
 					'placeholder'       => 'Watch our HVAC technicians servicing homes and businesses throughout Miami...',
 					'rows'              => 3,
-					'conditional_logic' => [
-						[
-							[
+					'conditional_logic' => array(
+						array(
+							array(
 								'field'    => 'field_city_video_url',
 								'operator' => '!=empty',
-							],
-						],
-					],
-				],
-				[
+							),
+						),
+					),
+				),
+				array(
 					'key'               => 'field_city_video_thumbnail',
 					'label'             => 'Video Thumbnail (Optional)',
 					'name'              => 'city_video_thumbnail',
@@ -542,54 +542,54 @@ if ( function_exists( 'acf_add_local_field_group' ) ) {
 					'return_format'     => 'url',
 					'preview_size'      => 'medium',
 					'library'           => 'all',
-					'conditional_logic' => [
-						[
-							[
+					'conditional_logic' => array(
+						array(
+							array(
 								'field'    => 'field_city_video_url',
 								'operator' => '!=empty',
-							],
-						],
-					],
-				],
-				[
+							),
+						),
+					),
+				),
+				array(
 					'key'               => 'field_city_video_duration',
 					'label'             => 'Video Duration',
 					'name'              => 'city_video_duration',
 					'type'              => 'text',
 					'instructions'      => 'Duration in ISO 8601 format (e.g., PT2M30S for 2 minutes 30 seconds). Used for schema markup.',
 					'placeholder'       => 'PT2M30S',
-					'conditional_logic' => [
-						[
-							[
+					'conditional_logic' => array(
+						array(
+							array(
 								'field'    => 'field_city_video_url',
 								'operator' => '!=empty',
-							],
-						],
-					],
-				],
-			],
-			'location' => [
-				[
-					[
+							),
+						),
+					),
+				),
+			),
+			'location' => array(
+				array(
+					array(
 						'param'    => 'post_type',
 						'operator' => '==',
 						'value'    => 'city',
-					],
-				],
-			],
+					),
+				),
+			),
 			'position' => 'normal',
-		]
+		)
 	);
 
 	/**
 	 * Service CPT - SEO Content Blocks
 	 */
 	acf_add_local_field_group(
-		[
+		array(
 			'key'      => 'group_service_seo_content',
 			'title'    => 'Service Content Blocks',
-			'fields'   => [
-				[
+			'fields'   => array(
+				array(
 					'key'          => 'field_service_description',
 					'label'        => 'Service Description',
 					'name'         => 'service_description',
@@ -597,8 +597,8 @@ if ( function_exists( 'acf_add_local_field_group' ) ) {
 					'instructions' => 'Main service description (applies to all cities)',
 					'toolbar'      => 'full',
 					'media_upload' => 1,
-				],
-				[
+				),
+				array(
 					'key'          => 'field_service_benefits',
 					'label'        => 'Key Benefits',
 					'name'         => 'service_benefits',
@@ -606,16 +606,16 @@ if ( function_exists( 'acf_add_local_field_group' ) ) {
 					'instructions' => 'List of benefits for this service',
 					'layout'       => 'table',
 					'button_label' => 'Add Benefit',
-					'sub_fields'   => [
-						[
+					'sub_fields'   => array(
+						array(
 							'key'   => 'field_benefit_text',
 							'label' => 'Benefit',
 							'name'  => 'benefit',
 							'type'  => 'text',
-						],
-					],
-				],
-				[
+						),
+					),
+				),
+				array(
 					'key'          => 'field_service_process',
 					'label'        => 'Service Process/Steps',
 					'name'         => 'service_process',
@@ -623,23 +623,23 @@ if ( function_exists( 'acf_add_local_field_group' ) ) {
 					'instructions' => 'Step-by-step process',
 					'layout'       => 'row',
 					'button_label' => 'Add Step',
-					'sub_fields'   => [
-						[
+					'sub_fields'   => array(
+						array(
 							'key'   => 'field_process_step_title',
 							'label' => 'Step Title',
 							'name'  => 'title',
 							'type'  => 'text',
-						],
-						[
+						),
+						array(
 							'key'   => 'field_process_step_description',
 							'label' => 'Description',
 							'name'  => 'description',
 							'type'  => 'textarea',
 							'rows'  => 3,
-						],
-					],
-				],
-				[
+						),
+					),
+				),
+				array(
 					'key'          => 'field_service_faqs',
 					'label'        => 'FAQs',
 					'name'         => 'service_faqs',
@@ -647,34 +647,34 @@ if ( function_exists( 'acf_add_local_field_group' ) ) {
 					'instructions' => 'Frequently asked questions about this service',
 					'layout'       => 'row',
 					'button_label' => 'Add FAQ',
-					'sub_fields'   => [
-						[
+					'sub_fields'   => array(
+						array(
 							'key'   => 'field_faq_question',
 							'label' => 'Question',
 							'name'  => 'question',
 							'type'  => 'text',
-						],
-						[
+						),
+						array(
 							'key'   => 'field_faq_answer',
 							'label' => 'Answer',
 							'name'  => 'answer',
 							'type'  => 'textarea',
 							'rows'  => 4,
-						],
-					],
-				],
-			],
-			'location' => [
-				[
-					[
+						),
+					),
+				),
+			),
+			'location' => array(
+				array(
+					array(
 						'param'    => 'post_type',
 						'operator' => '==',
 						'value'    => 'service',
-					],
-				],
-			],
+					),
+				),
+			),
 			'position' => 'normal',
-		]
+		)
 	);
 }
 
@@ -862,7 +862,7 @@ add_filter(
 	'template_include',
 	function ( $template ) {
 		if ( is_singular( 'service' ) && get_query_var( 'city_slug' ) ) {
-			$new_template = locate_template( [ 'single-service-city.php' ] );
+			$new_template = locate_template( array( 'single-service-city.php' ) );
 			if ( $new_template ) {
 				return $new_template;
 			}
@@ -870,3 +870,221 @@ add_filter(
 		return $template;
 	}
 );
+
+/**
+ * Generate LocalBusiness JSON-LD Schema for Homepage
+ *
+ * @return string JSON-LD schema markup
+ */
+function sunnysideac_get_localbusiness_schema() {
+	$schema = array(
+		'@context'                  => 'https://schema.org',
+		'@type'                     => 'LocalBusiness',
+		'name'                      => 'SunnySide 24/7 AC',
+		'alternateName'             => 'Sunnyside AC',
+		'description'               => 'Professional HVAC services including AC repair, installation, and maintenance. Family-owned and operated since 2014, serving South Florida with 24/7 emergency service.',
+		'url'                       => home_url( '/' ),
+		'telephone'                 => SUNNYSIDE_PHONE_DISPLAY,
+		'email'                     => SUNNYSIDE_EMAIL_ADDRESS,
+		'address'                   => array(
+			'@type'           => 'PostalAddress',
+			'streetAddress'   => SUNNYSIDE_ADDRESS_STREET,
+			'addressLocality' => SUNNYSIDE_ADDRESS_CITY,
+			'addressRegion'   => SUNNYSIDE_ADDRESS_STATE,
+			'postalCode'      => SUNNYSIDE_ADDRESS_ZIP,
+			'addressCountry'  => 'US',
+		),
+		'geo'                       => array(
+			'@type'     => 'GeoCoordinates',
+			'latitude'  => SUNNYSIDE_LATITUDE,
+			'longitude' => SUNNYSIDE_LONGITUDE,
+		),
+		'openingHoursSpecification' => array(),
+		'areaServed'                => array(),
+		'hasOfferCatalog'           => array(
+			'@type'           => 'OfferCatalog',
+			'name'            => 'HVAC Services',
+			'itemListElement' => array(),
+		),
+		'sameAs'                    => array(
+			SUNNYSIDE_FACEBOOK_URL,
+			SUNNYSIDE_INSTAGRAM_URL,
+			SUNNYSIDE_TWITTER_URL,
+			SUNNYSIDE_YOUTUBE_URL,
+			SUNNYSIDE_LINKEDIN_URL,
+		),
+		'foundingDate'              => SUNNYSIDE_FOUNDING_DATE . '-01-01',
+		'priceRange'                => '$$',
+		'paymentAccepted'           => array( 'Cash', 'Credit Card', 'Check' ),
+		'languagesSpoken'           => array( 'English', 'Spanish' ),
+	);
+
+	// Add opening hours
+	foreach ( SUNNYSIDE_BUSINESS_HOURS as $day => $hours ) {
+		$schema['openingHoursSpecification'][] = array(
+			'@type'     => 'OpeningHoursSpecification',
+			'dayOfWeek' => $day,
+			'opens'     => substr( $hours, 0, 5 ),
+			'closes'    => substr( $hours, -5 ),
+		);
+	}
+
+	// Add service areas
+	foreach ( SUNNYSIDE_SERVICE_AREAS as $area ) {
+		$schema['areaServed'][] = array(
+			'@type'         => 'City',
+			'name'          => $area,
+			'addressRegion' => 'FL',
+		);
+	}
+
+	// Add services to catalog
+	$services_by_category = SUNNYSIDE_SERVICES_BY_CATEGORY;
+	$all_services         = array_merge( $services_by_category['cooling'], $services_by_category['heating'], $services_by_category['air_quality'] );
+
+	foreach ( $all_services as $service ) {
+		$schema['hasOfferCatalog']['itemListElement'][] = array(
+			'@type'             => 'Offer',
+			'itemOffered'       => array(
+				'@type' => 'Service',
+				'name'  => $service,
+			),
+			'areaServed'        => 'South Florida',
+			'availableAtOrFrom' => array(
+				'@type'   => 'Place',
+				'address' => array(
+					'@type'         => 'PostalAddress',
+					'addressRegion' => 'FL',
+				),
+			),
+		);
+	}
+
+	return json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT );
+}
+
+/**
+ * Generate Organization JSON-LD Schema for Homepage
+ *
+ * @return string JSON-LD schema markup
+ */
+function sunnysideac_get_organization_schema() {
+	$schema = array(
+		'@context'      => 'https://schema.org',
+		'@type'         => 'Organization',
+		'name'          => 'SunnySide 24/7 AC',
+		'alternateName' => 'Sunnyside AC',
+		'url'           => home_url( '/' ),
+		'logo'          => get_template_directory_uri() . '/assets/images/images/logos/sunny-side-logo.png',
+		'description'   => 'Family-owned and operated HVAC company serving South Florida since 2014. Specializing in AC repair, installation, and maintenance with 24/7 emergency service.',
+		'contactPoint'  => array(
+			'@type'             => 'ContactPoint',
+			'telephone'         => SUNNYSIDE_PHONE_DISPLAY,
+			'contactType'       => 'customer service',
+			'areaServed'        => 'South Florida',
+			'availableLanguage' => array( 'English', 'Spanish' ),
+		),
+		'address'       => array(
+			'@type'           => 'PostalAddress',
+			'streetAddress'   => SUNNYSIDE_ADDRESS_STREET,
+			'addressLocality' => SUNNYSIDE_ADDRESS_CITY,
+			'addressRegion'   => SUNNYSIDE_ADDRESS_STATE,
+			'postalCode'      => SUNNYSIDE_ADDRESS_ZIP,
+			'addressCountry'  => 'US',
+		),
+		'sameAs'        => array(
+			SUNNYSIDE_FACEBOOK_URL,
+			SUNNYSIDE_INSTAGRAM_URL,
+			SUNNYSIDE_TWITTER_URL,
+			SUNNYSIDE_YOUTUBE_URL,
+			SUNNYSIDE_LINKEDIN_URL,
+		),
+		'foundingDate'  => SUNNYSIDE_FOUNDING_DATE . '-01-01',
+		'areaServed'    => array(),
+	);
+
+	// Add service areas
+	foreach ( SUNNYSIDE_SERVICE_AREAS as $area ) {
+		$schema['areaServed'][] = array(
+			'@type' => 'City',
+			'name'  => $area,
+		);
+	}
+
+	return json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT );
+}
+
+/**
+ * Output homepage schemas in head
+ */
+function sunnysideac_homepage_schemas() {
+	// Only run on homepage
+	if ( ! is_front_page() ) {
+		return;
+	}
+	?>
+	<!-- Local SEO Schema Markup -->
+	<script type="application/ld+json">
+	<?php echo sunnysideac_get_localbusiness_schema(); ?>
+	</script>
+
+	<script type="application/ld+json">
+	<?php echo sunnysideac_get_organization_schema(); ?>
+	</script>
+	<?php
+}
+add_action( 'wp_head', 'sunnysideac_homepage_schemas', 5 );
+
+/**
+ * Add homepage meta tags
+ */
+function sunnysideac_homepage_meta_tags() {
+	// Only run on homepage
+	if ( ! is_front_page() ) {
+		return;
+	}
+
+	$site_title       = get_bloginfo( 'name' );
+	$site_description = get_bloginfo( 'description' );
+	$home_url         = home_url( '/' );
+	$logo_url         = get_template_directory_uri() . '/assets/images/images/logos/sunny-side-logo.png';
+
+	?>
+	<!-- Enhanced Meta Tags for Local SEO -->
+	<meta name="description" content="<?php echo esc_attr( $site_description . ' | 24/7 Emergency AC Repair, Installation & Maintenance in South Florida. Family-owned since 2014. Call ' . SUNNYSIDE_PHONE_DISPLAY . ' for fast service!' ); ?>">
+
+	<!-- Open Graph Meta Tags -->
+	<meta property="og:title" content="<?php echo esc_attr( $site_title ); ?> | 24/7 AC Repair South Florida">
+	<meta property="og:description" content="<?php echo esc_attr( $site_description . ' | Professional HVAC services with 24/7 emergency response. Serving all of South Florida.' ); ?>">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="<?php echo esc_url( $home_url ); ?>">
+	<meta property="og:image" content="<?php echo esc_url( $logo_url ); ?>">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="630">
+	<meta property="og:site_name" content="<?php echo esc_attr( $site_title ); ?>">
+	<meta property="og:locale" content="en_US">
+
+	<!-- Twitter Card Meta Tags -->
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="<?php echo esc_attr( $site_title ); ?> | 24/7 AC Repair">
+	<meta name="twitter:description" content="<?php echo esc_attr( $site_description . ' | Fast, professional HVAC service available 24/7.' ); ?>">
+	<meta name="twitter:image" content="<?php echo esc_url( $logo_url ); ?>">
+	<meta name="twitter:site" content="@sunnyside247ac">
+
+	<!-- Additional Local SEO Meta Tags -->
+	<meta name="geo.region" content="US-FL">
+	<meta name="geo.placename" content="<?php echo esc_attr( SUNNYSIDE_ADDRESS_CITY ); ?>">
+	<meta name="geo.position" content="<?php echo esc_attr( SUNNYSIDE_LATITUDE . ';' . SUNNYSIDE_LONGITUDE ); ?>">
+	<meta name="ICBM" content="<?php echo esc_attr( SUNNYSIDE_LATITUDE . ',' . SUNNYSIDE_LONGITUDE ); ?>">
+
+	<!-- Business Information -->
+	<meta name="business:contact_data:street_address" content="<?php echo esc_attr( SUNNYSIDE_ADDRESS_STREET ); ?>">
+	<meta name="business:contact_data:locality" content="<?php echo esc_attr( SUNNYSIDE_ADDRESS_CITY ); ?>">
+	<meta name="business:contact_data:region" content="<?php echo esc_attr( SUNNYSIDE_ADDRESS_STATE ); ?>">
+	<meta name="business:contact_data:postal_code" content="<?php echo esc_attr( SUNNYSIDE_ADDRESS_ZIP ); ?>">
+	<meta name="business:contact_data:country_name" content="USA">
+	<meta name="business:contact_data:phone_number" content="<?php echo esc_attr( SUNNYSIDE_PHONE_DISPLAY ); ?>">
+	<meta name="business:contact_data:email" content="<?php echo esc_attr( SUNNYSIDE_EMAIL_ADDRESS ); ?>">
+	<?php
+}
+add_action( 'wp_head', 'sunnysideac_homepage_meta_tags', 1 );

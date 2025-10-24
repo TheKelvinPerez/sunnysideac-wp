@@ -17,7 +17,7 @@
  */
 
 // Default arguments
-$defaults = [
+$defaults = array(
 	'post'            => get_post(),
 	'show_excerpt'    => true,
 	'excerpt_length'  => 20,
@@ -30,7 +30,7 @@ $defaults = [
 	'category_icon'   => sunnysideac_asset_url( 'assets/images/home-page/blog/air-con-blog-icon.svg' ),
 	'read_more_arrow' => sunnysideac_asset_url( 'assets/images/home-page/blog/read-more-arrow-up-right.svg' ),
 	'fallback_image'  => sunnysideac_asset_url( 'assets/images/home-page/blog/blog-post-image-1.png' ),
-];
+);
 
 $args = wp_parse_args( $args, $defaults );
 
@@ -44,7 +44,7 @@ $post_id    = $post->ID;
 $post_title = get_the_title( $post );
 $post_url   = get_permalink( $post );
 $post_date  = get_the_date( '', $post );
-$author     = get_the_author( $post );
+$author     = 'SunnySide247AC';
 $excerpt    = has_excerpt( $post ) ? get_the_excerpt( $post ) : wp_trim_words( get_the_content( '', false, $post ), $args['excerpt_length'], '...' );
 $categories = get_the_category( $post );
 

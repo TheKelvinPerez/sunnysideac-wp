@@ -10,23 +10,23 @@ get_header();
 $blog_icon = sunnysideac_asset_url( 'assets/images/home-page/blog/blog-title-icon.svg' );
 
 // Page breadcrumbs
-$breadcrumbs = [
-	[
+$breadcrumbs = array(
+	array(
 		'name' => 'Home',
 		'url'  => home_url( '/' ),
-	],
-	[
+	),
+	array(
 		'name' => 'Blog',
 		'url'  => '',
-	],
-];
+	),
+);
 
 // Blog post icons
-$images = [
+$images = array(
 	'air_con_blog_icon' => sunnysideac_asset_url( 'assets/images/home-page/blog/air-con-blog-icon.svg' ),
 	'blog_auther_icon'  => sunnysideac_asset_url( 'assets/images/home-page/blog/blog-auther-icon.svg' ),
 	'read_more_arrow'   => sunnysideac_asset_url( 'assets/images/home-page/blog/read-more-arrow-up-right.svg' ),
-];
+);
 ?>
 
 <!-- Page Header with Breadcrumbs -->
@@ -34,13 +34,13 @@ $images = [
 get_template_part(
 	'template-parts/page-header',
 	null,
-	[
+	array(
 		'breadcrumbs' => $breadcrumbs,
 		'title'       => 'Our Blog',
 		'description' => '',
 		'show_ctas'   => false,
 		'bg_color'    => 'white',
-	]
+	)
 );
 ?>
 
@@ -57,12 +57,12 @@ get_template_part(
 				get_template_part(
 					'template-parts/title',
 					null,
-					[
+					array(
 						'icon'  => $blog_icon,
 						'title' => 'HVAC Tips & Insights',
 						'id'    => 'blog-overview-heading',
 						'align' => 'center',
-					]
+					)
 				);
 				?>
 
@@ -70,9 +70,9 @@ get_template_part(
 				get_template_part(
 					'template-parts/subheading',
 					null,
-					[
+					array(
 						'text' => 'Stay Cool, Stay Warm, Stay Informed',
-					]
+					)
 				);
 				?>
 
@@ -99,22 +99,29 @@ get_template_part(
 				<?php if ( have_posts() ) : ?>
 					<!-- Blog Cards Grid -->
 					<div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-						<?php while ( have_posts() ) : the_post(); ?>
+						<?php
+						while ( have_posts() ) :
+							the_post();
+							?>
 							<?php
-							get_template_part('template-parts/blog-card', null, [
-								'post'          => get_post(),
-								'show_excerpt'  => true,
-								'excerpt_length'=> 20,
-								'image_size'    => 'large',
-								'show_author'   => true,
-								'show_category' => true,
-								'show_date'     => true,
-								'card_class'    => 'max-w-[375px]',
-								'author_icon'   => $images['blog_auther_icon'],
-								'category_icon' => $images['air_con_blog_icon'],
-								'read_more_arrow' => $images['read_more_arrow'],
-								'fallback_image'  => sunnysideac_asset_url('assets/images/home-page/blog/blog-post-image-1.png'),
-							]);
+							get_template_part(
+								'template-parts/blog-card',
+								null,
+								array(
+									'post'            => get_post(),
+									'show_excerpt'    => true,
+									'excerpt_length'  => 20,
+									'image_size'      => 'large',
+									'show_author'     => true,
+									'show_category'   => true,
+									'show_date'       => true,
+									'card_class'      => 'max-w-[375px]',
+									'author_icon'     => $images['blog_auther_icon'],
+									'category_icon'   => $images['air_con_blog_icon'],
+									'read_more_arrow' => $images['read_more_arrow'],
+									'fallback_image'  => sunnysideac_asset_url( 'assets/images/home-page/blog/blog-post-image-1.png' ),
+								)
+							);
 							?>
 						<?php endwhile; ?>
 					</div>
@@ -124,13 +131,13 @@ get_template_part(
 						<div class="flex gap-2">
 							<?php
 							the_posts_pagination(
-								[
+								array(
 									'mid_size'  => 2,
 									'prev_text' => '&laquo; Previous',
 									'next_text' => 'Next &raquo;',
 									'type'      => 'list',
 									'class'     => 'pagination',
-								]
+								)
 							);
 							?>
 						</div>

@@ -10,15 +10,15 @@ get_header();
 if ( have_posts() ) :
 	the_post();
 
-	$city_id = get_the_ID();
+	$city_id    = get_the_ID();
 	$city_title = get_the_title();
 
 	// Get ACF fields
-	$city_description = get_field( 'city_description', $city_id );
-	$city_service_hours = get_field( 'city_service_hours', $city_id );
+	$city_description       = get_field( 'city_description', $city_id );
+	$city_service_hours     = get_field( 'city_service_hours', $city_id );
 	$city_service_area_note = get_field( 'city_service_area_note', $city_id );
-	$city_video_url = get_field( 'city_video_url', $city_id );
-	$city_video_title = get_field( 'city_video_title', $city_id );
+	$city_video_url         = get_field( 'city_video_url', $city_id );
+	$city_video_title       = get_field( 'city_video_title', $city_id );
 	$city_video_description = get_field( 'city_video_description', $city_id );
 
 	?>
@@ -34,17 +34,30 @@ if ( have_posts() ) :
 
 					<?php
 					// Page Header with Breadcrumbs (using template part)
-					get_template_part('template-parts/page-header', null, [
-						'breadcrumbs' => [
-							['name' => 'Home', 'url' => home_url('/')],
-							['name' => 'Service Areas', 'url' => home_url('/cities/')],
-							['name' => $city_title, 'url' => '']
-						],
-						'title' => 'HVAC Services in ' . $city_title,
-						'description' => 'Professional heating, cooling, and air quality services for the ' . $city_title . ' community',
-						'show_ctas' => true,
-						'bg_color' => 'white'
-					]);
+					get_template_part(
+						'template-parts/page-header',
+						null,
+						array(
+							'breadcrumbs' => array(
+								array(
+									'name' => 'Home',
+									'url'  => home_url( '/' ),
+								),
+								array(
+									'name' => 'Service Areas',
+									'url'  => home_url( '/cities/' ),
+								),
+								array(
+									'name' => $city_title,
+									'url'  => '',
+								),
+							),
+							'title'       => 'HVAC Services in ' . $city_title,
+							'description' => 'Professional heating, cooling, and air quality services for the ' . $city_title . ' community',
+							'show_ctas'   => true,
+							'bg_color'    => 'white',
+						)
+					);
 					?>
 
 					<!-- Featured Image (if exists) -->
@@ -54,11 +67,11 @@ if ( have_posts() ) :
 								<?php
 								the_post_thumbnail(
 									'large',
-									[
-										'class' => 'w-full h-auto rounded-lg shadow-lg',
+									array(
+										'class'    => 'w-full h-auto rounded-lg shadow-lg',
 										'itemprop' => 'url',
-										'alt' => get_the_title(),
-									]
+										'alt'      => get_the_title(),
+									)
 								);
 								?>
 								<meta itemprop="width" content="1200">
@@ -106,7 +119,7 @@ if ( have_posts() ) :
 									<?php echo esc_html( $city_video_title ?: 'HVAC Services in ' . $city_title ); ?>
 								</h2>
 								<div class="rounded-lg overflow-hidden shadow-xl">
-									<?php echo sunnysideac_get_video_embed( $city_video_url, ['class' => 'w-full aspect-video'] ); ?>
+									<?php echo sunnysideac_get_video_embed( $city_video_url, array( 'class' => 'w-full aspect-video' ) ); ?>
 								</div>
 								<?php if ( $city_video_description ) : ?>
 									<p class="mt-4 text-gray-600 text-center">
@@ -133,9 +146,9 @@ if ( have_posts() ) :
 							$services = SUNNYSIDE_SERVICES_BY_CATEGORY;
 							foreach ( $services as $category => $service_list ) :
 								foreach ( $service_list as $service_name ) :
-							?>
+									?>
 								<a href="<?php echo esc_url( home_url( sprintf( '/%s/%s', sanitize_title( $city_title ), sanitize_title( $service_name ) ) ) ); ?>"
-								   class="group block bg-gray-50 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-orange-50 hover:to-orange-100 hover:shadow-lg">
+									class="group block bg-gray-50 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-orange-50 hover:to-orange-100 hover:shadow-lg">
 									<!-- Icon Circle -->
 									<div class="mb-4">
 										<div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-orange-200 to-orange-300">
@@ -161,7 +174,7 @@ if ( have_posts() ) :
 										</svg>
 									</span>
 								</a>
-							<?php
+									<?php
 								endforeach;
 							endforeach;
 							?>
@@ -225,14 +238,14 @@ if ( have_posts() ) :
 
 						<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 							<?php
-							$current_city = get_the_title();
+							$current_city  = get_the_title();
 							$nearby_cities = array_slice( SUNNYSIDE_SERVICE_AREAS, 0, 12 ); // Show first 12 cities
 
 							foreach ( $nearby_cities as $city ) :
 								if ( $city !== $current_city ) :
-							?>
+									?>
 								<a href="<?php echo esc_url( home_url( sprintf( '/cities/%s', sanitize_title( $city ) ) ) ); ?>"
-								   class="group block bg-gray-50 rounded-2xl p-4 text-center transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-orange-50 hover:to-orange-100 hover:shadow-lg">
+									class="group block bg-gray-50 rounded-2xl p-4 text-center transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-orange-50 hover:to-orange-100 hover:shadow-lg">
 									<!-- Icon Circle -->
 									<div class="mb-3">
 										<div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-orange-200 to-orange-300">
@@ -248,7 +261,7 @@ if ( have_posts() ) :
 										<?php echo esc_html( $city ); ?>
 									</h3>
 								</a>
-							<?php
+									<?php
 								endif;
 							endforeach;
 							?>
@@ -256,7 +269,7 @@ if ( have_posts() ) :
 
 						<div class="text-center mt-8">
 							<a href="<?php echo esc_url( home_url( '/cities' ) ); ?>"
-							   class="inline-flex items-center text-[#e5462f] font-medium hover:text-[#fb9939] transition-colors">
+								class="inline-flex items-center text-[#e5462f] font-medium hover:text-[#fb9939] transition-colors">
 								View all service cities
 								<svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -268,42 +281,46 @@ if ( have_posts() ) :
 					<!-- FAQ Section -->
 					<?php
 					// City-specific FAQs
-					$city_faqs = [
-						[
+					$city_faqs = array(
+						array(
 							'question' => 'Do you provide HVAC services in ' . $city_title . '?',
-							'answer' => 'Yes! We proudly serve ' . $city_title . ' with comprehensive HVAC services including air conditioning repair, installation, heating services, and preventive maintenance. Our technicians are familiar with the specific climate needs of ' . $city_title . ' and respond quickly to service calls in your area.',
-						],
-						[
+							'answer'   => 'Yes! We proudly serve ' . $city_title . ' with comprehensive HVAC services including air conditioning repair, installation, heating services, and preventive maintenance. Our technicians are familiar with the specific climate needs of ' . $city_title . ' and respond quickly to service calls in your area.',
+						),
+						array(
 							'question' => 'What is the average response time for service calls in ' . $city_title . '?',
-							'answer' => 'We typically respond to service calls in ' . $city_title . ' within 2-4 hours during business hours. For emergency HVAC situations, we offer 24/7 emergency service with even faster response times to ensure your comfort is restored as quickly as possible.',
-						],
-						[
+							'answer'   => 'We typically respond to service calls in ' . $city_title . ' within 2-4 hours during business hours. For emergency HVAC situations, we offer 24/7 emergency service with even faster response times to ensure your comfort is restored as quickly as possible.',
+						),
+						array(
 							'question' => 'How often should ' . $city_title . ' residents service their AC units?',
-							'answer' => 'Due to South Florida\'s hot and humid climate, we recommend ' . $city_title . ' residents service their AC units at least twice per year - once before cooling season in spring and once in fall. Regular maintenance helps prevent breakdowns during peak summer heat and extends your system\'s lifespan.',
-						],
-						[
+							'answer'   => 'Due to South Florida\'s hot and humid climate, we recommend ' . $city_title . ' residents service their AC units at least twice per year - once before cooling season in spring and once in fall. Regular maintenance helps prevent breakdowns during peak summer heat and extends your system\'s lifespan.',
+						),
+						array(
 							'question' => 'What HVAC services do you offer in ' . $city_title . '?',
-							'answer' => 'We offer complete HVAC services in ' . $city_title . ' including AC installation and replacement, AC repair and maintenance, heating services, indoor air quality solutions, duct cleaning and sealing, thermostat installation, and emergency 24/7 repairs. Our licensed technicians handle all major HVAC brands.',
-						],
-						[
+							'answer'   => 'We offer complete HVAC services in ' . $city_title . ' including AC installation and replacement, AC repair and maintenance, heating services, indoor air quality solutions, duct cleaning and sealing, thermostat installation, and emergency 24/7 repairs. Our licensed technicians handle all major HVAC brands.',
+						),
+						array(
 							'question' => 'Are your technicians licensed to work in ' . $city_title . '?',
-							'answer' => 'Yes, all our HVAC technicians are fully licensed, insured, and certified to work throughout South Florida including ' . $city_title . '. We maintain all required local permits and follow all building codes specific to ' . $city_title . ' and the surrounding areas.',
-						],
-						[
+							'answer'   => 'Yes, all our HVAC technicians are fully licensed, insured, and certified to work throughout South Florida including ' . $city_title . '. We maintain all required local permits and follow all building codes specific to ' . $city_title . ' and the surrounding areas.',
+						),
+						array(
 							'question' => 'Do you offer financing for HVAC systems in ' . $city_title . '?',
-							'answer' => 'Yes, we offer flexible financing options for ' . $city_title . ' residents to make AC installation and replacement affordable. We work with various lenders to provide competitive rates and terms that fit your budget. Ask about our current financing programs when you schedule your consultation.',
-						],
-					];
+							'answer'   => 'Yes, we offer flexible financing options for ' . $city_title . ' residents to make AC installation and replacement affordable. We work with various lenders to provide competitive rates and terms that fit your budget. Ask about our current financing programs when you schedule your consultation.',
+						),
+					);
 
-					get_template_part('template-parts/faq-component', null, [
-						'faq_data' => $city_faqs,
-						'title' => 'HVAC FAQs for ' . $city_title,
-						'mobile_title' => 'FAQ',
-						'subheading' => 'Common Questions About Our ' . $city_title . ' HVAC Services',
-						'description' => 'Get answers to frequently asked questions about heating and cooling services in ' . $city_title . '.',
-						'show_schema' => true,
-						'section_id' => 'city-faq-section',
-					]);
+					get_template_part(
+						'template-parts/faq-component',
+						null,
+						array(
+							'faq_data'     => $city_faqs,
+							'title'        => 'HVAC FAQs for ' . $city_title,
+							'mobile_title' => 'FAQ',
+							'subheading'   => 'Common Questions About Our ' . $city_title . ' HVAC Services',
+							'description'  => 'Get answers to frequently asked questions about heating and cooling services in ' . $city_title . '.',
+							'show_schema'  => true,
+							'section_id'   => 'city-faq-section',
+						)
+					);
 					?>
 
 					<!-- CTA Section -->
@@ -315,13 +332,13 @@ if ( have_posts() ) :
 							</p>
 							<div class="flex flex-col sm:flex-row gap-4 justify-center">
 								<a href="tel:<?php echo esc_attr( SUNNYSIDE_TEL_HREF ); ?>"
-								   class="inline-flex items-center justify-center gap-2 rounded-[35px] bg-white text-[#e5462f] px-8 py-4 transition-opacity hover:opacity-90 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-orange-500 focus:outline-none">
+									class="inline-flex items-center justify-center gap-2 rounded-[35px] bg-white text-[#e5462f] px-8 py-4 transition-opacity hover:opacity-90 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-orange-500 focus:outline-none">
 									<span class="text-base lg:text-lg font-medium whitespace-nowrap">
 										<?php echo esc_html( SUNNYSIDE_PHONE_DISPLAY ); ?>
 									</span>
 								</a>
 								<a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"
-								   class="inline-flex items-center justify-center gap-2 rounded-[35px] bg-transparent border-2 border-white text-white px-8 py-4 transition-opacity hover:opacity-90 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-orange-500 focus:outline-none">
+									class="inline-flex items-center justify-center gap-2 rounded-[35px] bg-transparent border-2 border-white text-white px-8 py-4 transition-opacity hover:opacity-90 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-orange-500 focus:outline-none">
 									<span class="text-base lg:text-lg font-medium whitespace-nowrap">
 										Schedule Service
 									</span>

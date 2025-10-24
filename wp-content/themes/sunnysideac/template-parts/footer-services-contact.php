@@ -8,4 +8,3 @@
 // This component is now rendered by footer-menu-helper.php
 // It's kept as a placeholder that calls the helper function
 sunnysideac_render_footer_column_4();
-?>

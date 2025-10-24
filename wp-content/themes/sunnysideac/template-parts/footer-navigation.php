@@ -7,4 +7,3 @@
 
 // Use the new elegant approach - JSON config + components
 sunnysideac_footer_nav_menu_v2();
-?>

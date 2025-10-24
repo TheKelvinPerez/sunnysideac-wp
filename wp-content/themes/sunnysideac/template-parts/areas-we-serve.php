@@ -7,10 +7,10 @@
 // Component data (like props in React)
 $service_areas = SUNNYSIDE_SERVICE_AREAS;
 
-$images = [
-	'areas_we_serve_icon'     => sunnysideac_asset_url('assets/images/home-page/areas-we-serve/areas-we-serve-icon.svg'),
-	'map_background_placeholder' => sunnysideac_asset_url('assets/images/home-page/areas-we-serve/map-background-place-holder.png'),
-];
+$images = array(
+	'areas_we_serve_icon'        => sunnysideac_asset_url( 'assets/images/home-page/areas-we-serve/areas-we-serve-icon.svg' ),
+	'map_background_placeholder' => sunnysideac_asset_url( 'assets/images/home-page/areas-we-serve/map-background-place-holder.png' ),
+);
 ?>
 
 <section
@@ -21,16 +21,24 @@ $images = [
 		<!-- Header Section -->
 		<header class="mb-8 text-center">
 			<?php
-			get_template_part('template-parts/title', null, [
-				'icon'  => $images['areas_we_serve_icon'],
-				'title' => 'Areas We Serve',
-				'id'    => 'areas-we-serve'
-			]);
+			get_template_part(
+				'template-parts/title',
+				null,
+				array(
+					'icon'  => $images['areas_we_serve_icon'],
+					'title' => 'Areas We Serve',
+					'id'    => 'areas-we-serve',
+				)
+			);
 			?>
 			<?php
-			get_template_part('template-parts/subheading', null, [
-				'text' => 'Cooling South Florida, One Home at a Time'
-			]);
+			get_template_part(
+				'template-parts/subheading',
+				null,
+				array(
+					'text' => 'Cooling South Florida, One Home at a Time',
+				)
+			);
 			?>
 		</header>
 
@@ -48,14 +56,14 @@ $images = [
 
 					<!-- Service Areas Grid - 2x10 on mobile -->
 					<div class="grid grid-cols-2 gap-2">
-						<?php foreach ($service_areas as $area): ?>
+						<?php foreach ( $service_areas as $area ) : ?>
 							<?php
-							$city_slug = sanitize_title($area);
-							$city_url = home_url("/cities/{$city_slug}/");
+							$city_slug = sanitize_title( $area );
+							$city_url  = home_url( "/cities/{$city_slug}/" );
 							?>
-							<a href="<?php echo esc_url($city_url); ?>" class="rounded-lg bg-white px-2 py-1 text-center shadow-sm transition-shadow duration-200 hover:shadow-md block">
+							<a href="<?php echo esc_url( $city_url ); ?>" class="rounded-lg bg-white px-2 py-1 text-center shadow-sm transition-shadow duration-200 hover:shadow-md block">
 								<span class="text-xs font-medium text-[#414141]">
-									<?php echo esc_html($area); ?>
+									<?php echo esc_html( $area ); ?>
 								</span>
 							</a>
 						<?php endforeach; ?>
@@ -69,7 +77,7 @@ $images = [
 					<img
 						class="h-full w-auto object-cover object-right"
 						alt="Service area map covering South Florida"
-						src="<?php echo esc_url($images['map_background_placeholder']); ?>"
+						src="<?php echo esc_url( $images['map_background_placeholder'] ); ?>"
 					/>
 				</div>
 			</div>
@@ -83,7 +91,7 @@ $images = [
 					<img
 						class="h-full w-full rounded-lg object-cover object-center shadow-lg"
 						alt="Service area map covering South Florida"
-						src="<?php echo esc_url($images['map_background_placeholder']); ?>"
+						src="<?php echo esc_url( $images['map_background_placeholder'] ); ?>"
 					/>
 
 					<!-- Service Areas Card - Floating Overlay -->
@@ -98,14 +106,14 @@ $images = [
 
 							<!-- Service Areas Grid - 4x5 on desktop -->
 							<div class="grid grid-cols-4 gap-2">
-								<?php foreach ($service_areas as $area): ?>
+								<?php foreach ( $service_areas as $area ) : ?>
 									<?php
-									$city_slug = sanitize_title($area);
-									$city_url = home_url("/cities/{$city_slug}/");
+									$city_slug = sanitize_title( $area );
+									$city_url  = home_url( "/cities/{$city_slug}/" );
 									?>
-									<a href="<?php echo esc_url($city_url); ?>" class="rounded-lg bg-white px-2 py-1 text-center shadow-sm transition-shadow duration-200 hover:shadow-md block">
+									<a href="<?php echo esc_url( $city_url ); ?>" class="rounded-lg bg-white px-2 py-1 text-center shadow-sm transition-shadow duration-200 hover:shadow-md block">
 										<span class="text-xs font-medium text-[#414141]">
-											<?php echo esc_html($area); ?>
+											<?php echo esc_html( $area ); ?>
 										</span>
 									</a>
 								<?php endforeach; ?>
