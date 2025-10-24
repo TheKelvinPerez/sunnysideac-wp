@@ -17,6 +17,12 @@
   /* --spacing-huge: 5rem; */
 }
 
+/* Fix for Cities navigation active state - ensure proper background color */
+.nav-item.cities-debug-active {
+  background-color: #ffc549 !important;
+}
+
+
 /*
  * Custom Component Styles
  * Use @layer components for reusable component classes

@@ -56,24 +56,12 @@ function sunnysideac_is_city_page() {
  * Simple helper to get current page identifier for active states
  */
 function sunnysideac_get_current_page_type() {
-	if ( is_front_page() ) {
-		return 'home';
-	}
-	if ( is_page( 'contact' ) ) {
-		return 'contact';
-	}
-	if ( is_page( 'projects' ) ) {
-		return 'projects';
-	}
-	if ( sunnysideac_is_service_page() ) {
-		return 'services';
-	}
-	if ( sunnysideac_is_city_page() ) {
-		return 'cities';
-	}
-	if ( is_home() || is_singular( 'post' ) ) {
-		return 'blog';
-	}
+	if ( is_front_page() ) return 'home';
+	if ( is_page( 'contact' ) ) return 'contact';
+	if ( is_page( 'projects' ) ) return 'projects';
+	if ( sunnysideac_is_service_page() ) return 'services';
+	if ( sunnysideac_is_city_page() ) return 'cities';
+	if ( is_home() || is_singular( 'post' ) ) return 'blog';
 	return 'other';
 }
 
@@ -147,11 +135,12 @@ function sunnysideac_render_desktop_nav_from_config() {
 
 			// Debug for Cities menu item
 			if ( $item['title'] === 'Cities' ) {
+				$menu_item_classes .= ' cities-debug-' . ($is_active ? 'active' : 'inactive');
 			}
 
 			echo '<div class="relative" id="' . esc_attr( $container_id ) . '">';
 			echo '<div class="' . esc_attr( $menu_item_classes ) . '" data-item="' . esc_attr( $item['title'] ) . '" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-label="' . esc_attr( $item['title'] ) . ' menu" ' . ( $is_active ? 'aria-current="page"' : '' ) . '>';
-			echo '<a href="' . esc_url( home_url( $item['href'] ) ) . '" class="[font-family:\'Inter-Medium\',Helvetica] text-lg font-medium whitespace-nowrap transition-colors duration-200 ' . 'text-black hover:text-black focus:text-black' . '">' . esc_html( $item['title'] ) . '</a>';
+			echo '<a href="' . esc_url( home_url( $item['href'] ) ) . '" class="[font-family:\'Inter-Medium\',Helvetica] text-lg font-medium whitespace-nowrap transition-colors duration-200 ' . ( $is_active ? 'text-[#e5462f]' : 'text-black hover:text-black focus:text-black' ) . '">' . esc_html( $item['title'] ) . '</a>';
 			echo '<button class="ml-1 border-none bg-transparent p-0 focus:outline-none ' . esc_attr( $btn_class ) . '" aria-label="Toggle ' . esc_attr( strtolower( $item['title'] ) ) . ' dropdown">';
 			echo '<img src="' . esc_url( $chevron_icon ) . '" alt="" class="h-4 w-4 text-current transition-transform duration-200 chevron-icon" role="presentation" loading="lazy" decoding="async" />';
 			echo '</button>';
@@ -233,8 +222,8 @@ function sunnysideac_render_services_mega_menu() {
 			$is_active = ( $current_service_name === $service_name );
 
 			// Build CSS classes
-			$base_classes   = 'flex items-start gap-2 p-2 rounded-[20px] transition-all duration-200 focus:outline-none group';
-			$hover_classes  = 'hover:bg-[#ffc549] hover:scale-105 hover:shadow-md focus:bg-[#ffc549]';
+			$base_classes = 'flex items-start gap-2 p-2 rounded-[20px] transition-all duration-200 focus:outline-none group';
+			$hover_classes = 'hover:bg-[#ffc549] hover:scale-105 hover:shadow-md focus:bg-[#ffc549]';
 			$active_classes = 'bg-[#ffc549] shadow-md scale-105';
 
 			$css_classes = $base_classes . ' ' . $hover_classes;
@@ -318,8 +307,8 @@ function sunnysideac_render_service_areas_mega_menu() {
 		$is_active = ( $current_city_name === $city );
 
 		// Build CSS classes
-		$base_classes   = 'flex items-center gap-2 p-2 rounded-[20px] transition-all duration-200 focus:outline-none group';
-		$hover_classes  = 'hover:bg-[#ffc549] hover:scale-105 hover:shadow-md focus:bg-[#ffc549]';
+		$base_classes = 'flex items-center gap-2 p-2 rounded-[20px] transition-all duration-200 focus:outline-none group';
+		$hover_classes = 'hover:bg-[#ffc549] hover:scale-105 hover:shadow-md focus:bg-[#ffc549]';
 		$active_classes = 'bg-[#ffc549] shadow-md scale-105';
 
 		$css_classes = $base_classes . ' ' . $hover_classes;
@@ -386,7 +375,7 @@ function sunnysideac_render_mobile_nav_from_config() {
 
 			foreach ( $services as $service_name ) {
 				$service_url = home_url( sprintf( SUNNYSIDE_SERVICE_URL_PATTERN, sanitize_title( $service_name ) ) );
-				$is_active   = ( $current_service_name === $service_name );
+				$is_active = ( $current_service_name === $service_name );
 
 				$link_classes = 'block w-full py-2 pl-3 text-left transition-colors duration-200 mobile-service-link';
 				if ( $is_active ) {
@@ -415,7 +404,7 @@ function sunnysideac_render_mobile_nav_from_config() {
 		}
 
 		foreach ( SUNNYSIDE_PRIORITY_CITIES as $city ) {
-			$city_url  = home_url( sprintf( SUNNYSIDE_CITY_URL_PATTERN, sanitize_title( $city ) ) );
+			$city_url = home_url( sprintf( SUNNYSIDE_CITY_URL_PATTERN, sanitize_title( $city ) ) );
 			$is_active = ( $current_city_name === $city );
 
 			$link_classes = 'block w-full py-2 text-left transition-colors duration-200 mobile-area-link';
@@ -468,4 +457,3 @@ function sunnysideac_mobile_nav_menu_fallback() {
 
 	echo '</div></div>';
 }
-

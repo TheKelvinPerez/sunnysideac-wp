@@ -416,12 +416,22 @@ let isServiceAreasDropdownOpen = false;
 		activeMenuItem = itemName;
 		document.querySelectorAll('.nav-item').forEach(item => {
 			const itemData = item.dataset.item;
+			const linkElement = item.querySelector('a');
+
 			if (itemData === itemName) {
+				// Set active state
 				item.classList.remove('bg-[#fde0a0]');
 				item.classList.add('bg-[#ffc549]');
+				// Update text colors
+				linkElement.classList.remove('text-black');
+				linkElement.classList.add('text-[#e5462f]');
 			} else {
+				// Set inactive state
 				item.classList.remove('bg-[#ffc549]');
 				item.classList.add('bg-[#fde0a0]');
+				// Update text colors
+				linkElement.classList.remove('text-[#e5462f]');
+				linkElement.classList.add('text-black');
 			}
 		});
 	}
@@ -938,6 +948,8 @@ Use navDebug.disableDebugMode() when done debugging to restore normal behavior.
 		detectedMenuItem = 'About';
 	} else if (currentPath.includes('/services')) {
 		detectedMenuItem = 'Services';
+	} else if (currentPath.includes('/cities')) {
+		detectedMenuItem = 'Cities';
 	} else if (currentPath.includes('/projects')) {
 		detectedMenuItem = 'Projects';
 	} else if (currentPath.includes('/blog')) {
