@@ -380,7 +380,7 @@ if ( have_posts() ) :
 								<article class="group bg-gray-50 rounded-2xl p-6 transition-all duration-300 hover:scale-[1.02] hover:bg-orange-50 hover:shadow-lg">
 									<div class="flex items-center mb-4">
 										<!-- Feature Icon -->
-										<div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-orange-200 to-orange-300 mr-4">
+										<div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-orange-200 to-orange-300 mr-6">
 											<?php if ( $feature['icon'] === 'history' ) : ?>
 												<svg class="h-6 w-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -509,6 +509,17 @@ if ( have_posts() ) :
 
 					<!-- Login/Signup Section -->
 					<section class="portal-access bg-gradient-to-br from-blue-50 to-orange-50 rounded-[20px] p-6 md:p-10 mb-6">
+						<!-- Construction Notice -->
+						<div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mb-6 text-center">
+							<div class="flex items-center justify-center mb-2">
+								<svg class="w-6 h-6 text-yellow-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+								</svg>
+								<span class="text-yellow-800 font-semibold">Coming Soon!</span>
+							</div>
+							<p class="text-yellow-700 text-sm">We're currently building our Customer Portal. Sign up below to be notified when it launches!</p>
+						</div>
+
 						<div class="grid md:grid-cols-2 gap-8">
 							<!-- Login Section -->
 							<div id="login-section" class="bg-white rounded-2xl p-6 md:p-8">
@@ -710,24 +721,11 @@ if ( have_posts() ) :
 						return;
 					}
 
-					// Show loading state
-					const submitBtn = loginForm.querySelector('button[type="submit"]');
-					const originalText = submitBtn.innerHTML;
-					submitBtn.disabled = true;
-					submitBtn.innerHTML = '<span>Signing In...</span><svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
+					// Show success message about portal coming soon
+					alert('Thank you for your interest in our Customer Portal! We\'re currently building this exciting new feature to help you manage your HVAC services online. We\'ll notify you as soon as it\'s ready for launch.\n\nIn the meantime, please call us at ' + <?php echo json_encode(SUNNYSIDE_PHONE_DISPLAY); ?> . ' for all your service needs.');
 
-					// Simulate login (in production, this would be an AJAX call)
-					setTimeout(() => {
-						// Reset button
-						submitBtn.disabled = false;
-						submitBtn.innerHTML = originalText;
-
-						// Show success message
-						alert('Login successful! You will be redirected to your portal dashboard.');
-
-						// In production, redirect to actual portal
-						// window.location.href = '/portal/dashboard';
-					}, 2000);
+					// Reset form
+					loginForm.reset();
 				});
 			}
 
@@ -768,27 +766,11 @@ if ( have_posts() ) :
 						return;
 					}
 
-					// Show loading state
-					const submitBtn = signupForm.querySelector('button[type="submit"]');
-					const originalText = submitBtn.innerHTML;
-					submitBtn.disabled = true;
-					submitBtn.innerHTML = '<span>Creating Account...</span><svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
+					// Show success message about portal coming soon
+					alert('Thank you for your interest in our Customer Portal, ' + firstName + '! We\'re excited to be building this new online service to help you manage your HVAC services. We\'ll notify you as soon as it\'s ready for launch.\n\nIn the meantime, please call us at ' + <?php echo json_encode(SUNNYSIDE_PHONE_DISPLAY); ?> . ' for all your service needs.');
 
-					// Simulate signup (in production, this would be an AJAX call)
-					setTimeout(() => {
-						// Reset button
-						submitBtn.disabled = false;
-						submitBtn.innerHTML = originalText;
-
-						// Show success message
-						alert('Account created successfully! Please check your email to verify your account.');
-
-						// Reset form
-						signupForm.reset();
-
-						// In production, redirect to verification page or dashboard
-						// window.location.href = '/portal/verify';
-					}, 2000);
+					// Reset form
+					signupForm.reset();
 				});
 			}
 
