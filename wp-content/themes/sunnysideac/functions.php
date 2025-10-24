@@ -758,7 +758,7 @@ function sunnysideac_handle_city_404s() {
 		$requested_url = $_SERVER['REQUEST_URI'];
 
 		// Check if this is a city request
-		if ( preg_match( '/cities/([^/]+)/?', $requested_url, $matches ) ) {
+		if ( preg_match( '/cities\/([^\/]+)\/?/', $requested_url, $matches ) ) {
 			$city_slug = $matches[1];
 
 			// Check if city post exists
@@ -769,6 +769,18 @@ function sunnysideac_handle_city_404s() {
 				wp_safe_redirect( $redirect_url, 301 );
 				exit;
 			}
+		}
+
+		// Handle bare category URL - redirect to blog
+		if ( trim( $requested_url, '/' ) === 'category' ) {
+			wp_safe_redirect( home_url( '/blog/' ), 301 );
+			exit;
+		}
+
+		// Handle bare tag URL - redirect to blog
+		if ( trim( $requested_url, '/' ) === 'tag' ) {
+			wp_safe_redirect( home_url( '/blog/' ), 301 );
+			exit;
 		}
 	}
 }

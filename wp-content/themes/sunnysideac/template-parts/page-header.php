@@ -88,9 +88,9 @@ $description_color = $bg_color === 'gradient' ? 'text-white/90' : 'text-gray-600
 			</h1>
 
 			<?php if (!empty($description)) : ?>
-				<p class="text-lg md:text-xl <?php echo esc_attr($description_color); ?> max-w-4xl mx-auto leading-relaxed">
-					<?php echo esc_html($description); ?>
-				</p>
+				<div class="text-lg md:text-xl <?php echo esc_attr($description_color); ?> max-w-4xl mx-auto leading-relaxed">
+					<?php echo wp_kses_post($description); ?>
+				</div>
 			<?php endif; ?>
 		</div>
 	<?php endif; ?>
