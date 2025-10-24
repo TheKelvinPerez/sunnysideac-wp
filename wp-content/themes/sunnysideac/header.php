@@ -416,22 +416,38 @@ let isServiceAreasDropdownOpen = false;
 		activeMenuItem = itemName;
 		document.querySelectorAll('.nav-item').forEach(item => {
 			const itemData = item.dataset.item;
-			const linkElement = item.querySelector('a');
+
+			// Handle different element types safely
+			let textElement = null;
+
+			if (item.tagName === 'A') {
+				// This is a direct link (regular navigation items)
+				textElement = item.querySelector('span');
+			} else {
+				// This is a container (mega menu items)
+				textElement = item.querySelector('a');
+			}
 
 			if (itemData === itemName) {
 				// Set active state
 				item.classList.remove('bg-[#fde0a0]');
 				item.classList.add('bg-[#ffc549]');
-				// Update text colors
-				linkElement.classList.remove('text-black');
-				linkElement.classList.add('text-[#e5462f]');
+				item.setAttribute('aria-current', 'page');
+				// Update text colors if text element exists
+				if (textElement) {
+					textElement.classList.remove('text-black');
+					textElement.classList.add('text-[#e5462f]');
+				}
 			} else {
 				// Set inactive state
 				item.classList.remove('bg-[#ffc549]');
 				item.classList.add('bg-[#fde0a0]');
-				// Update text colors
-				linkElement.classList.remove('text-[#e5462f]');
-				linkElement.classList.add('text-black');
+				item.removeAttribute('aria-current');
+				// Update text colors if text element exists
+				if (textElement) {
+					textElement.classList.remove('text-[#e5462f]');
+					textElement.classList.add('text-black');
+				}
 			}
 		});
 	}
@@ -618,7 +634,7 @@ let isServiceAreasDropdownOpen = false;
 	// Event listeners for desktop navigation
 	document.querySelectorAll('.nav-item').forEach(item => {
 		const itemName = item.dataset.item;
-		const href = item.dataset.href;
+		const href = item.dataset.href || item.querySelector('a')?.href;
 
 		if (itemName === 'Services') {
 			// Services dropdown toggle
