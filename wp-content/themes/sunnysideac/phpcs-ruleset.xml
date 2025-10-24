@@ -10,7 +10,6 @@
 		<exclude name="WordPress.NamingConventions.ValidVariableName" />
 		<exclude name="WordPress.Files.FileName" />
 		<exclude name="WordPress.WhiteSpace.ControlStructureSpacing" />
-		<exclude name="WordPress.PHP.DisallowShortTernary" />
 	</rule>
 
 	<!-- Add file extensions -->
