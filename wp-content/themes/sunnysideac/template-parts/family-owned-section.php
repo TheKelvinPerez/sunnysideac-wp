@@ -47,7 +47,7 @@ $story_paragraphs = array(
 						null,
 						array(
 							'text'  => 'Quality, Care & Comfort',
-							'class' => 'mx-auto max-w-4xl text-lg font-light text-gray-600 md:text-4xl md:leading-tight',
+							'class' => 'mx-auto max-w-4xl text-lg font-normal text-gray-600 md:text-4xl md:leading-tight',
 						)
 					);
 					?>

@@ -110,7 +110,7 @@ function sunnysideac_render_stars( $count = 5, $star_icon_url = '', $class = 'h-
 
 		<!-- Subtitle -->
 		<p
-			class="text-center text-base leading-relaxed font-light text-black italic sm:text-lg lg:text-left lg:text-[17px]">
+			class="text-center text-base leading-relaxed font-normal text-black italic sm:text-lg lg:text-left lg:text-[17px]">
 			South Florida's most responsive AC pros. <br />
 			Honest pricing. Same-day service. Zero stress.
 		</p>
@@ -201,7 +201,7 @@ function sunnysideac_render_stars( $count = 5, $star_icon_url = '', $class = 'h-
 				<div class="text-xl font-semibold text-black sm:text-2xl lg:text-3xl">
 				<?php echo esc_html( $stat['number'] ); ?>
 				</div>
-				<div class="mt-1 text-center text-[10px] font-light whitespace-pre-line text-black sm:text-xs">
+				<div class="mt-1 text-center text-[10px] font-normal whitespace-pre-line text-black sm:text-xs">
 				<?php echo esc_html( $stat['description'] ); ?>
 				</div>
 			</div>
@@ -249,7 +249,7 @@ function sunnysideac_render_stars( $count = 5, $star_icon_url = '', $class = 'h-
 		</h1>
 
 		<!-- Subtitle -->
-		<p class="mt-4 text-center text-base leading-relaxed font-light text-white italic sm:text-lg">
+		<p class="mt-4 text-center text-base leading-relaxed font-normal text-white italic sm:text-lg">
 			South Florida's most responsive AC pros. <br />
 			Honest pricing. Same-day service. Zero stress.
 		</p>
@@ -340,7 +340,7 @@ function sunnysideac_render_stars( $count = 5, $star_icon_url = '', $class = 'h-
 				<div class="text-xl font-semibold text-white sm:text-2xl">
 				<?php echo esc_html( $stat['number'] ); ?>
 				</div>
-				<div class="mt-1 text-center text-[10px] font-light whitespace-pre-line text-white sm:text-xs">
+				<div class="mt-1 text-center text-[10px] font-normal whitespace-pre-line text-white sm:text-xs">
 				<?php echo esc_html( $stat['description'] ); ?>
 				</div>
 			</div>

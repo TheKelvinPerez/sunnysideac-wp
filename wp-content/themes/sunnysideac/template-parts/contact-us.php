@@ -261,7 +261,7 @@ $images = array(
 				Contact Information
 			</h2>
 
-			<p class="mb-8 text-center text-lg font-light break-words text-black">
+			<p class="mb-8 text-center text-lg font-normal break-words text-black">
 				Having HVAC trouble or planning an upgrade? Call, email, or visit us
 				today — we'll get your home back to perfect comfort, fast.
 			</p>
@@ -281,7 +281,7 @@ $images = array(
 						<h3 class="font-semibold text-black md:text-lg">Email</h3>
 						<a
 							href="<?php echo esc_attr( 'mailto:' . $company_email ); ?>"
-							class="font-light break-all text-black hover:underline focus:underline focus:outline-none md:text-lg"
+							class="font-normal break-all text-black hover:underline focus:underline focus:outline-none md:text-lg"
 							aria-label="<?php echo esc_attr( 'Email us at ' . $company_email ); ?>"
 							itemprop="email"
 						>
@@ -304,7 +304,7 @@ $images = array(
 							Location
 						</h3>
 						<div
-							class="font-light break-words text-black md:text-lg"
+							class="font-normal break-words text-black md:text-lg"
 							itemprop="address"
 							itemscope
 							itemtype="https://schema.org/PostalAddress"
@@ -331,7 +331,7 @@ $images = array(
 						<h3 class="font-semibold text-black md:text-lg">Phone</h3>
 						<a
 							href="<?php echo esc_attr( SUNNYSIDE_TEL_HREF ); ?>"
-							class="font-light text-black hover:underline focus:underline focus:outline-none md:text-lg"
+							class="font-normal text-black hover:underline focus:underline focus:outline-none md:text-lg"
 							aria-label="<?php echo esc_attr( 'Call us at ' . SUNNYSIDE_PHONE_DISPLAY ); ?>"
 							itemprop="telephone"
 						>

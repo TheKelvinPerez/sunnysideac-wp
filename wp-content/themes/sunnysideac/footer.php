@@ -30,10 +30,10 @@
 			<!-- Bottom section with copyright and legal links -->
 			<div class="flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
 				<div class="text-center sm:text-left">
-					<p class="font-light text-gray-600">
+					<p class="font-normal text-gray-600">
 						2025 Sunny Side Air Conditioning Corp All Rights Reserved.
 					</p>
-					<p class="font-light text-gray-500 text-sm mt-1">
+					<p class="font-normal text-gray-500 text-sm mt-1">
 						Made with ❤️ by <a href="https://kelvinperez.com" target="_blank" rel="noopener noreferrer" class="hover:text-gray-700 hover:underline focus:outline-2 focus:outline-blue-500">Kelvin Perez</a>
 					</p>
 				</div>
@@ -44,7 +44,7 @@
 				>
 					<a
 						href="/privacy-policy"
-						class="font-light text-[10px] md:text-base text-gray-600 hover:text-gray-900 hover:underline focus:outline-2 focus:outline-blue-500"
+						class="font-normal text-[10px] md:text-base text-gray-600 hover:text-gray-900 hover:underline focus:outline-2 focus:outline-blue-500"
 						aria-label="Privacy Policy"
 					>
 						Privacy Policy
@@ -54,7 +54,7 @@
 
 					<a
 						href="/terms-conditions"
-						class="font-light text-[10px] md:text-base text-gray-600 hover:text-gray-900 hover:underline focus:outline-2 focus:outline-blue-500"
+						class="font-normal text-[10px] md:text-base text-gray-600 hover:text-gray-900 hover:underline focus:outline-2 focus:outline-blue-500"
 						aria-label="Terms and Conditions"
 					>
 						Terms &amp; Conditions

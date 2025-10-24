@@ -42,7 +42,7 @@ $company_info = array(
 
 	<!-- Company Description -->
 	<div class="space-y-3">
-		<p class="font-light text-gray-700 leading-relaxed">
+		<p class="font-normal text-gray-700 leading-relaxed">
 			<?php echo esc_html( $company_info['description'] ); ?>
 		</p>
 
@@ -50,15 +50,15 @@ $company_info = array(
 		<div class="space-y-2 pt-2">
 			<div class="flex items-center space-x-2">
 				<div class="h-2 w-2 bg-[#F79E37] rounded-full"></div>
-				<span class="text-sm font-light text-gray-600">Licensed & Insured</span>
+				<span class="text-sm font-normal text-gray-600">Licensed & Insured</span>
 			</div>
 			<div class="flex items-center space-x-2">
 				<div class="h-2 w-2 bg-[#F79E37] rounded-full"></div>
-				<span class="text-sm font-light text-gray-600">24/7 Emergency Service</span>
+				<span class="text-sm font-normal text-gray-600">24/7 Emergency Service</span>
 			</div>
 			<div class="flex items-center space-x-2">
 				<div class="h-2 w-2 bg-[#F79E37] rounded-full"></div>
-				<span class="text-sm font-light text-gray-600">Satisfaction Guaranteed</span>
+				<span class="text-sm font-normal text-gray-600">Satisfaction Guaranteed</span>
 			</div>
 		</div>
 	</div>

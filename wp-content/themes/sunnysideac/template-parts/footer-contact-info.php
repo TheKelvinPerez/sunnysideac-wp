@@ -72,7 +72,7 @@ $contact_info = array(
 					<?php if ( $item['href'] ) : ?>
 						<a
 							href="<?php echo esc_url( $item['href'] ); ?>"
-							class="font-light text-gray-700 hover:text-gray-900 hover:underline focus:outline-2 focus:outline-blue-500"
+							class="font-normal text-gray-700 hover:text-gray-900 hover:underline focus:outline-2 focus:outline-blue-500"
 							<?php if ( $item['id'] === 'website' || $item['id'] === 'address' ) : ?>
 								target="_blank"
 								rel="noopener noreferrer"
@@ -81,7 +81,7 @@ $contact_info = array(
 							<?php echo $item['content']; // HTML content allowed for address with <br> tag ?>
 						</a>
 					<?php else : ?>
-						<span class="font-light text-gray-700">
+						<span class="font-normal text-gray-700">
 							<?php echo $item['content']; // HTML content allowed for address with <br> tag ?>
 						</span>
 					<?php endif; ?>

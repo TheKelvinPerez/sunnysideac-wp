@@ -33,7 +33,7 @@ if ( empty( $props['title'] ) || empty( $props['links'] ) ) {
 			<li>
 				<a
 					href="<?php echo esc_url( $link['href'] ); ?>"
-					class="font-light text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500"
+					class="font-normal text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500"
 					<?php
 					if ( ! empty( $link['target'] ) ) :
 						?>

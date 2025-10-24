@@ -11,6 +11,14 @@
 	<link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/assets/icons/favicon.ico">
 
 	<?php
+	// Preload Inter font for optimal performance (production only)
+	$inter_font_url = function_exists( 'sunnysideac_get_inter_font_url' ) ? sunnysideac_get_inter_font_url() : null;
+	if ( $inter_font_url ) :
+		?>
+	<link rel="preload" href="<?php echo esc_url( $inter_font_url ); ?>" as="font" type="font/woff2" crossorigin>
+	<?php endif; ?>
+
+	<?php
 	// SEO Meta Tags
 	$page_description = get_post_meta( get_the_ID(), '_seo_description', true );
 	$page_keywords    = get_post_meta( get_the_ID(), '_seo_keywords', true );

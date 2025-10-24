@@ -115,7 +115,7 @@ $images = array(
 										<?php echo esc_html( $feature['title'] ); ?>
 									</h3>
 
-									<p class="text-sm leading-snug font-light text-gray-700 md:text-base">
+									<p class="text-sm leading-snug font-normal text-gray-700 md:text-base">
 										<?php echo esc_html( $feature['description'] ); ?>
 									</p>
 								</div>

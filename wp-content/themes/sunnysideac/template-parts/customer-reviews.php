@@ -81,7 +81,7 @@ $description_text = 'Our greatest reward is the trust and satisfaction of our cu
 					)
 				);
 				?>
-				<p class="max-w-4xl text-base leading-tight font-light text-black">
+				<p class="max-w-4xl text-base leading-tight font-normal text-black">
 					<?php echo esc_html( $description_text ); ?>
 				</p>
 			</header>
@@ -172,7 +172,7 @@ $description_text = 'Our greatest reward is the trust and satisfaction of our cu
 							<h2 class="text-sm font-semibold text-gray-900 review-name">
 								<?php echo esc_html( $reviews_data[0]['name'] ); ?>
 							</h2>
-							<p class="text-sm font-light text-black review-location">
+							<p class="text-sm font-normal text-black review-location">
 								<?php echo esc_html( $reviews_data[0]['location'] ); ?>
 							</p>
 						</div>
@@ -250,7 +250,7 @@ $description_text = 'Our greatest reward is the trust and satisfaction of our cu
 						)
 					);
 					?>
-					<p class="text-lg leading-tight font-light text-black">
+					<p class="text-lg leading-tight font-normal text-black">
 						<?php echo esc_html( $description_text ); ?>
 					</p>
 				</header>
@@ -286,7 +286,7 @@ $description_text = 'Our greatest reward is the trust and satisfaction of our cu
 								<h2 class="text-lg font-semibold text-gray-900 review-name-desktop">
 									<?php echo esc_html( $reviews_data[0]['name'] ); ?>
 								</h2>
-								<p class="text-base font-light text-black review-location-desktop">
+								<p class="text-base font-normal text-black review-location-desktop">
 									<?php echo esc_html( $reviews_data[0]['location'] ); ?>
 								</p>
 							</div>

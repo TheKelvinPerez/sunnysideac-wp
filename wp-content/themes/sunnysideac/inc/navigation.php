@@ -406,7 +406,7 @@ class Sunnyside_Footer_Nav_Walker extends Walker_Nav_Menu {
 				$output .= '<ul class="space-y-2">';
 				foreach ( $services_section['children'] as $child ) {
 					$output .= '<li>';
-					$output .= '<a href="' . esc_url( $child->url ) . '" class="font-light text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500"';
+					$output .= '<a href="' . esc_url( $child->url ) . '" class="font-normal text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500"';
 					if ( $child->target && $child->target !== '' ) {
 						$output .= ' target="' . esc_attr( $child->target ) . '"';
 					}
@@ -428,7 +428,7 @@ class Sunnyside_Footer_Nav_Walker extends Walker_Nav_Menu {
 				$output .= '<ul class="space-y-2">';
 				foreach ( $company_section['children'] as $child ) {
 					$output .= '<li>';
-					$output .= '<a href="' . esc_url( $child->url ) . '" class="font-light text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500"';
+					$output .= '<a href="' . esc_url( $child->url ) . '" class="font-normal text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500"';
 					if ( $child->target && $child->target !== '' ) {
 						$output .= ' target="' . esc_attr( $child->target ) . '"';
 					}
@@ -456,7 +456,7 @@ class Sunnyside_Footer_Nav_Walker extends Walker_Nav_Menu {
 				$output .= '<ul class="space-y-2">';
 				foreach ( $service_areas_section['children'] as $child ) {
 					$output .= '<li>';
-					$output .= '<a href="' . esc_url( $child->url ) . '" class="font-light text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500"';
+					$output .= '<a href="' . esc_url( $child->url ) . '" class="font-normal text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500"';
 					if ( $child->target && $child->target !== '' ) {
 						$output .= ' target="' . esc_attr( $child->target ) . '"';
 					}
@@ -479,7 +479,7 @@ class Sunnyside_Footer_Nav_Walker extends Walker_Nav_Menu {
 				$output .= '<ul class="space-y-2">';
 				foreach ( $brands_section['children'] as $child ) {
 					$output .= '<li>';
-					$output .= '<a href="' . esc_url( $child->url ) . '" class="font-light text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500"';
+					$output .= '<a href="' . esc_url( $child->url ) . '" class="font-normal text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500"';
 					if ( $child->target && $child->target !== '' ) {
 						$output .= ' target="' . esc_attr( $child->target ) . '"';
 					}
@@ -526,7 +526,7 @@ class Sunnyside_Footer_Nav_Walker extends Walker_Nav_Menu {
 			$output .= '<ul class="space-y-2">';
 			foreach ( $brands_links as $link ) {
 				$output .= '<li>';
-				$output .= '<a href="' . esc_url( $link['href'] ) . '" class="font-light text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500">';
+				$output .= '<a href="' . esc_url( $link['href'] ) . '" class="font-normal text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500">';
 				$output .= esc_html( $link['name'] );
 				$output .= '</a>';
 				$output .= '</li>';
@@ -657,7 +657,7 @@ function sunnysideac_footer_fallback_menu() {
 	echo '<ul class="space-y-2">';
 	foreach ( $footer_links['services']['links'] as $link ) {
 		echo '<li>';
-		echo '<a href="' . esc_url( $link['href'] ) . '" class="font-light text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500">';
+		echo '<a href="' . esc_url( $link['href'] ) . '" class="font-normal text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500">';
 		echo esc_html( $link['name'] );
 		echo '</a>';
 		echo '</li>';
@@ -670,7 +670,7 @@ function sunnysideac_footer_fallback_menu() {
 	echo '<ul class="space-y-2">';
 	foreach ( $footer_links['company']['links'] as $link ) {
 		echo '<li>';
-		echo '<a href="' . esc_url( $link['href'] ) . '" class="font-light text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500">';
+		echo '<a href="' . esc_url( $link['href'] ) . '" class="font-normal text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500">';
 		echo esc_html( $link['name'] );
 		echo '</a>';
 		echo '</li>';
@@ -686,7 +686,7 @@ function sunnysideac_footer_fallback_menu() {
 	echo '<ul class="space-y-2">';
 	foreach ( $footer_links['brands']['links'] as $link ) {
 		echo '<li>';
-		echo '<a href="' . esc_url( $link['href'] ) . '" class="font-light text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500">';
+		echo '<a href="' . esc_url( $link['href'] ) . '" class="font-normal text-gray-700 transition-colors duration-200 hover:text-[#fb9939] hover:underline focus:outline-2 focus:outline-blue-500">';
 		echo esc_html( $link['name'] );
 		echo '</a>';
 		echo '</li>';

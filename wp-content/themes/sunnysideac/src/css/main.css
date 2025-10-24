@@ -1,17 +1,28 @@
 @import "tailwindcss";
 
 /*
+ * Font Face Declarations
+ */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../assets/fonts/Inter-Variable.woff2') format('woff2');
+}
+
+/*
  * Tailwind CSS v4 Configuration
  * Configure your theme using CSS variables and the @theme directive
  */
 
 @theme {
+  /* Fonts */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
   /* Example: Add custom colors */
   /* --color-primary: #0070f3; */
   /* --color-secondary: #7928ca; */
-
-  /* Example: Add custom fonts */
-  /* --font-display: 'Your Font', serif; */
 
   /* Example: Add custom spacing */
   /* --spacing-huge: 5rem; */

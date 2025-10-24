@@ -128,10 +128,10 @@ get_template_part(
 				?>
 
 				<div class="mt-8 text-left space-y-6">
-					<p class="text-sm md:text-base font-light leading-snug text-gray-700">
+					<p class="text-sm md:text-base font-normal leading-snug text-gray-700">
 						Over the years, SunnySide 24/7 AC has completed hundreds of successful installations, repairs, and maintenance projects across residential and commercial properties. Each project showcases our commitment to quality workmanship and customer satisfaction.
 					</p>
-					<p class="text-sm md:text-base font-light leading-snug text-gray-700">
+					<p class="text-sm md:text-base font-normal leading-snug text-gray-700">
 						From simple residential repairs to complex commercial HVAC systems, we bring the same level of professionalism and attention to detail to every job. Browse our featured projects below to see the quality of work you can expect from our certified technicians.
 					</p>
 				</div>
@@ -151,7 +151,7 @@ get_template_part(
 						<h3 class="text-lg md:text-xl font-semibold text-gray-900 mb-4">
 							Residential Projects
 						</h3>
-						<p class="text-sm md:text-base font-light leading-snug text-gray-700">
+						<p class="text-sm md:text-base font-normal leading-snug text-gray-700">
 							From single-family homes to apartment complexes, we provide comprehensive HVAC solutions including installations, repairs, and maintenance services that keep families comfortable year-round.
 						</p>
 					</article>
@@ -160,7 +160,7 @@ get_template_part(
 						<h3 class="text-lg md:text-xl font-semibold text-gray-900 mb-4">
 							Commercial Projects
 						</h3>
-						<p class="text-sm md:text-base font-light leading-snug text-gray-700">
+						<p class="text-sm md:text-base font-normal leading-snug text-gray-700">
 							We handle large-scale commercial HVAC systems for offices, retail spaces, warehouses, and industrial facilities, ensuring optimal climate control for your business operations.
 						</p>
 					</article>
@@ -191,7 +191,7 @@ get_template_part(
 							</h3>
 
 							<!-- Project Description -->
-							<p class="text-sm md:text-base font-light leading-snug text-gray-700 mb-3">
+							<p class="text-sm md:text-base font-normal leading-snug text-gray-700 mb-3">
 								<?php echo esc_html( $project['description'] ); ?>
 							</p>
 

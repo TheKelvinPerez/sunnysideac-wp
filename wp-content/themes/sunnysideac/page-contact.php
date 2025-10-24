@@ -71,10 +71,10 @@ get_template_part(
 				?>
 
 				<div class="mt-8 text-left space-y-6">
-					<p class="text-sm md:text-base font-light leading-snug text-gray-700">
+					<p class="text-sm md:text-base font-normal leading-snug text-gray-700">
 						When your HVAC system breaks down, every minute matters. That's why SunnySide 24/7 AC offers round-the-clock emergency services to restore comfort to your home or business quickly and efficiently.
 					</p>
-					<p class="text-sm md:text-base font-light leading-snug text-gray-700">
+					<p class="text-sm md:text-base font-normal leading-snug text-gray-700">
 						Our certified technicians are standing by to handle everything from emergency repairs to scheduled maintenance and new installations. Contact us today for fast, reliable service you can trust.
 					</p>
 				</div>
@@ -117,7 +117,7 @@ get_template_part(
 						<h3 class="text-lg md:text-xl font-semibold text-gray-900 mb-4">
 							Emergency Services
 						</h3>
-						<p class="text-sm md:text-base font-light leading-snug text-gray-700">
+						<p class="text-sm md:text-base font-normal leading-snug text-gray-700">
 							24/7 emergency repair service for when your AC breaks down unexpectedly. We prioritize emergency calls and aim for same-day service.
 						</p>
 						<div class="mt-4 text-orange-600 font-medium text-sm">
@@ -129,7 +129,7 @@ get_template_part(
 						<h3 class="text-lg md:text-xl font-semibold text-gray-900 mb-4">
 							Scheduled Service
 						</h3>
-						<p class="text-sm md:text-base font-light leading-snug text-gray-700">
+						<p class="text-sm md:text-base font-normal leading-snug text-gray-700">
 							Regular maintenance, installations, and non-emergency repairs. Schedule online or call during business hours for convenient appointment times.
 						</p>
 						<div class="mt-4 text-orange-600 font-medium text-sm">
@@ -141,7 +141,7 @@ get_template_part(
 						<h3 class="text-lg md:text-xl font-semibold text-gray-900 mb-4">
 							Free Estimates
 						</h3>
-						<p class="text-sm md:text-base font-light leading-snug text-gray-700">
+						<p class="text-sm md:text-base font-normal leading-snug text-gray-700">
 							Get a free, no-obligation estimate for new installations, system replacements, or major repairs. We'll assess your needs and provide transparent pricing.
 						</p>
 						<div class="mt-4 text-orange-600 font-medium text-sm">

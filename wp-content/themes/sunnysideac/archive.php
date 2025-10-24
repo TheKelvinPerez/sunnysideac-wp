@@ -143,10 +143,10 @@ get_template_part(
 					?>
 
 					<div class="mt-8 text-left space-y-6">
-						<p class="text-sm md:text-base font-light leading-snug text-gray-700">
+						<p class="text-sm md:text-base font-normal leading-snug text-gray-700">
 							Welcome to the SunnySide 24/7 AC blog, your trusted resource for HVAC tips, maintenance advice, and industry insights. Whether you're looking to improve your home's energy efficiency, troubleshoot common AC problems, or learn about the latest HVAC technologies, we've got you covered.
 						</p>
-						<p class="text-sm md:text-base font-light leading-snug text-gray-700">
+						<p class="text-sm md:text-base font-normal leading-snug text-gray-700">
 							Our team of certified technicians shares their expertise to help you make informed decisions about your heating and cooling systems. Browse our articles below to stay informed and keep your home comfortable year-round.
 						</p>
 					</div>

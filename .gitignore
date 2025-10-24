@@ -61,3 +61,11 @@ Thumbs.db
 
 # Track .gitignore itself
 !.gitignore
+wp-content/plugins/advanced-custom-fields-pro
+wp-content/plugins/all-in-one-wp-migration
+wp-content/plugins/all-in-one-wp-migration-unlimited-extension
+wp-content/plugins/query-monitor
+wp-content/plugins/seo-by-rank-math
+wp-content/plugins/seo-by-rank-math-pro
+wp-content/plugins/user-switching
+wp-content/plugins/wp-rocket

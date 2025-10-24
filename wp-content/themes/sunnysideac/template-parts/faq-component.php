@@ -96,7 +96,7 @@ if ( $show_schema ) {
 			<?php endif; ?>
 
 			<?php if ( ! empty( $description ) ) : ?>
-				<p class="text-base font-light text-gray-700 md:text-lg">
+				<p class="text-base font-normal text-gray-700 md:text-lg">
 					<?php echo esc_html( $description ); ?>
 				</p>
 			<?php endif; ?>
@@ -120,7 +120,7 @@ if ( $show_schema ) {
 						</div>
 					</summary>
 
-					<div class="faq-answer px-6 pb-6 text-base leading-relaxed font-light text-gray-700 md:text-lg" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+					<div class="faq-answer px-6 pb-6 text-base leading-relaxed font-normal text-gray-700 md:text-lg" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
 						<div itemprop="text">
 							<?php echo esc_html( $faq['answer'] ); ?>
 						</div>

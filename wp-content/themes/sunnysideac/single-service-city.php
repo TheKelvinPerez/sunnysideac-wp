@@ -494,7 +494,7 @@ if ( have_posts() ) :
 								<p class="text-xl md:text-2xl font-medium text-gray-700 mb-4">
 									Got Questions? We've Got Answers!
 								</p>
-								<p class="text-base font-light text-gray-700 md:text-lg">
+								<p class="text-base font-normal text-gray-700 md:text-lg">
 									Find answers to common questions about <?php echo esc_html( $service_title ); ?> in <?php echo esc_html( $city_name ); ?>.
 								</p>
 							</header>
@@ -522,7 +522,7 @@ if ( have_posts() ) :
 												</div>
 
 												<div class="faq-content max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-													<div class="px-6 pb-6 text-base leading-relaxed font-light text-gray-700 md:text-lg" itemprop="text">
+													<div class="px-6 pb-6 text-base leading-relaxed font-normal text-gray-700 md:text-lg" itemprop="text">
 														<?php echo wp_kses_post( wpautop( $faq['answer'] ) ); ?>
 													</div>
 												</div>
