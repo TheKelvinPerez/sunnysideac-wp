@@ -1075,3 +1075,16 @@ function sunnysideac_homepage_meta_tags() {
 	<?php
 }
 add_action( 'wp_head', 'sunnysideac_homepage_meta_tags', 1 );
+
+/**
+ * Register a custom sitemap provider for service-city combinations
+ *
+ * This generates sitemap entries for all /{city}/{service} URLs (e.g., /miami/ac-repair)
+ * The provider automatically adds the sitemaps to the index via get_index_links()
+ */
+function sunnysideac_register_service_city_sitemap_provider( $providers ) {
+	require_once get_template_directory() . '/inc/class-service-city-sitemap-provider.php';
+	$providers['service-city'] = new Service_City_Sitemap_Provider();
+	return $providers;
+}
+add_filter( 'rank_math/sitemap/providers', 'sunnysideac_register_service_city_sitemap_provider' );
