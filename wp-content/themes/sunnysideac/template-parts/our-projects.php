@@ -452,13 +452,13 @@ $phone_display = SUNNYSIDE_PHONE_DISPLAY;
 					</button>
 				</div>
 
-				<!-- Mobile Navigation Dots -->
+				<!-- Mobile Navigation Dots (Visual Only - Functionality Disabled) -->
 				<div class="mt-4 flex justify-center space-x-2" id="mobile-dots">
 					<?php foreach ( $projects as $index => $project ) : ?>
-						<button class="<?php echo $index === 0 ? 'w-4 scale-120 bg-orange-500' : 'w-2 bg-gray-300 hover:bg-gray-400'; ?> h-2 rounded-full transition-colors duration-200 mobile-dot"
-								data-index="<?php echo esc_attr( $index ); ?>"
-								aria-label="<?php printf( esc_attr__( 'Go to project %d', 'sunnysideac' ), $index + 1 ); ?>">
-						</button>
+						<div class="<?php echo $index === 0 ? 'scale-120 bg-orange-500' : 'bg-gray-300'; ?> h-11 w-11 rounded-full flex items-center justify-center"
+								role="presentation">
+							<span class="<?php echo $index === 0 ? 'w-4 h-4' : 'w-2 h-2'; ?> rounded-full bg-current"></span>
+						</div>
 					<?php endforeach; ?>
 				</div>
 
@@ -612,19 +612,22 @@ document.addEventListener('DOMContentLoaded', function() {
 			mobileCurrentImage.src = project.thumbnail;
 			mobileCurrentImage.alt = project.alt;
 		}
-		updateMobileDots();
+		// updateMobileDots();
 	}
 
-	function updateMobileDots() {
-		const dots = document.querySelectorAll('.mobile-dot');
-		dots.forEach((dot, index) => {
-			if (index === currentMobileIndex) {
-				dot.className = 'h-2 rounded-full transition-colors duration-200 mobile-dot w-4 scale-120 bg-orange-500';
-			} else {
-				dot.className = 'h-2 rounded-full transition-colors duration-200 mobile-dot w-2 bg-gray-300 hover:bg-gray-400';
-			}
-		});
-	}
+	// function updateMobileDots() {
+	// 	const dots = document.querySelectorAll('.mobile-dot');
+	// 	dots.forEach((dot, index) => {
+	// 		const innerSpan = dot.querySelector('span');
+	// 		if (index === currentMobileIndex) {
+	// 			dot.className = 'scale-120 bg-orange-500 h-11 w-11 rounded-full transition-colors duration-200 mobile-dot flex items-center justify-center';
+	// 			innerSpan.className = 'w-4 h-4 rounded-full bg-current';
+	// 		} else {
+	// 			dot.className = 'bg-gray-300 hover:bg-gray-400 h-11 w-11 rounded-full transition-colors duration-200 mobile-dot flex items-center justify-center';
+	// 			innerSpan.className = 'w-2 h-2 rounded-full bg-current';
+	// 		}
+	// 	});
+	// }
 
 	function updateDesktopGrid() {
 		const currentGroup = desktopImageGroups[currentDesktopGroupIndex % desktopImageGroups.length];
@@ -714,13 +717,13 @@ document.addEventListener('DOMContentLoaded', function() {
 	document.getElementById('next-desktop-group')?.addEventListener('click', nextDesktopGroup);
 	document.getElementById('prev-desktop-group')?.addEventListener('click', prevDesktopGroup);
 
-	// Mobile dots navigation
-	document.querySelectorAll('.mobile-dot').forEach((dot, index) => {
-		dot.addEventListener('click', () => {
-			currentMobileIndex = index;
-			updateMobileImage();
-		});
-	});
+	// Mobile dots navigation - DISABLED
+	// document.querySelectorAll('.mobile-dot').forEach((dot, index) => {
+	// 	dot.addEventListener('click', () => {
+	// 		currentMobileIndex = index;
+	// 		updateMobileImage();
+	// 	});
+	// });
 
 	// Gallery toggle
 	document.getElementById('view-gallery-btn')?.addEventListener('click', () => {

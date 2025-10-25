@@ -22,7 +22,6 @@ $company_info = array(
 		<a
 			href="/"
 			class="flex flex-col items-start space-y-3 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-4 transition-opacity duration-300 hover:opacity-80 focus:outline-2 focus:outline-blue-500 focus:rounded-lg"
-			aria-label="SunnySide 24/7 AC - Go to homepage"
 		>
 			<img
 				class="h-16 w-auto sm:h-20"

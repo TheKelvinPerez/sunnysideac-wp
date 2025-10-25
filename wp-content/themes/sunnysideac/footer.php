@@ -55,7 +55,6 @@
 					<a
 						href="/terms-conditions"
 						class="font-normal text-[10px] md:text-base text-gray-600 hover:text-gray-900 hover:underline focus:outline-2 focus:outline-blue-500"
-						aria-label="Terms and Conditions"
 					>
 						Terms &amp; Conditions
 					</a>

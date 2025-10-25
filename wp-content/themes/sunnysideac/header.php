@@ -10,13 +10,23 @@
 	<link rel="icon" type="image/png" sizes="96x96" href="<?php echo get_template_directory_uri(); ?>/assets/icons/favicon-96x96.png">
 	<link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/assets/icons/favicon.ico">
 
-	<!-- Preload LCP hero image for optimal performance -->
+	<!-- Preload LCP hero images for optimal performance -->
 	<?php
+	// Desktop hero images
 	$avif_url = get_template_directory_uri() . '/assets/images/optimize/hero-right-image.avif';
 	$webp_url = get_template_directory_uri() . '/assets/images/optimize/hero-right-image.webp';
+	// Mobile hero images
+	$mobile_avif_url = get_template_directory_uri() . '/assets/images/optimize/mobile-hero-image.avif';
+	$mobile_webp_url = get_template_directory_uri() . '/assets/images/optimize/mobile-hero-image.webp';
 	?>
 	<link rel="preload" as="image" href="<?php echo esc_url($avif_url); ?>" type="image/avif">
 	<link rel="preload" as="image" href="<?php echo esc_url($webp_url); ?>" type="image/webp">
+	<link rel="preload" as="image" href="<?php echo esc_url($mobile_avif_url); ?>" type="image/avif" media="(max-width: 1023px)">
+	<link rel="preload" as="image" href="<?php echo esc_url($mobile_webp_url); ?>" type="image/webp" media="(max-width: 1023px)">
+
+	<!-- Preconnect for external resources -->
+	<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+	<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
 
 	<?php
 	// SEO Meta Tags
@@ -152,7 +162,6 @@ $phone_icon     = get_template_directory_uri() . '/assets/icons/navigation-phone
 				<a
 					href="<?php echo esc_url( home_url( '/' ) ); ?>"
 					class="flex items-center gap-2 transition-opacity hover:opacity-80"
-					aria-label="SunnySide 24/7 AC - Go to homepage"
 				>
 					<img
 						class="h-12 w-20 object-contain sm:h-16 sm:w-28"
@@ -189,7 +198,6 @@ $phone_icon     = get_template_directory_uri() . '/assets/icons/navigation-phone
 				<a
 					href="<?php echo esc_url( home_url( '/' ) ); ?>"
 					class="flex items-center gap-3 transition-opacity hover:opacity-80"
-					aria-label="SunnySide 24/7 AC - Go to homepage"
 				>
 					<img
 						class="h-12 w-20 object-contain sm:h-16 sm:w-28"
@@ -250,7 +258,6 @@ $phone_icon     = get_template_directory_uri() . '/assets/icons/navigation-phone
 								<a
 									href="<?php echo esc_url( home_url( '/' ) ); ?>"
 									class="flex items-center gap-2 transition-opacity hover:opacity-80"
-									aria-label="SunnySide 24/7 AC - Go to homepage"
 								>
 									<img
 										class="h-11 w-16 object-contain"

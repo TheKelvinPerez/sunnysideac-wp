@@ -143,7 +143,7 @@ $description_text = 'Our greatest reward is the trust and satisfaction of our cu
 
 			<!-- Review Card -->
 			<article class="flex h-[95vw] flex-col gap-4 rounded-2xl bg-gray-50 p-4">
-				<div class="flex gap-1 review-stars" aria-label="5 out of 5 stars">
+				<div class="flex gap-1 review-stars" role="img" aria-label="5 out of 5 stars">
 					<?php for ( $i = 0; $i < 5; $i++ ) : ?>
 						<img
 							src="<?php echo esc_url( $icons['star'] ); ?>"
@@ -257,7 +257,7 @@ $description_text = 'Our greatest reward is the trust and satisfaction of our cu
 
 				<!-- Review Card -->
 				<article class="flex h-72 flex-col gap-4 rounded-2xl bg-gray-50 p-6">
-					<div class="flex gap-1 review-stars-desktop">
+					<div class="flex gap-1 review-stars-desktop" role="img" aria-label="5 out of 5 stars">
 						<?php for ( $i = 0; $i < 5; $i++ ) : ?>
 							<img
 								src="<?php echo esc_url( $icons['star'] ); ?>"

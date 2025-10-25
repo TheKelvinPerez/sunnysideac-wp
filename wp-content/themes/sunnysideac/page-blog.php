@@ -119,7 +119,6 @@ get_template_part(
 							<article class="group mx-auto block max-w-[375px] overflow-hidden rounded-b-2xl bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
 								<a
 									href="<?php the_permalink(); ?>"
-									aria-label="<?php echo esc_attr( 'Read full article: ' . get_the_title() ); ?>"
 									class="block focus:ring-2 focus:ring-[#F79E37] focus:ring-offset-2 focus:outline-none"
 								>
 									<!-- Image Container with Date Badge -->

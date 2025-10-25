@@ -65,8 +65,31 @@ function sunnysideac_render_stars( $count = 5, $star_icon_url = '', $class = 'h-
 
 <section class="relative w-full overflow-hidden rounded-[20px] bg-white lg:bg-transparent">
 	<!-- Mobile Background Image - Hidden on Desktop -->
-	<div class="absolute inset-0 rounded-[20px] bg-cover bg-center bg-no-repeat lg:hidden"
-		style="background-image: url('<?php echo esc_url( sunnysideac_asset_url( 'assets/images/optimize/mobile-hero-image.webp' ) ); ?>');">
+	<div class="absolute inset-0 rounded-[20px] lg:hidden">
+		<?php
+		// Optimized mobile hero image with AVIF support and eager loading for performance
+		$mobile_webp_url = sunnysideac_asset_url( 'assets/images/optimize/mobile-hero-image.webp' );
+		$mobile_avif_url = sunnysideac_asset_url( 'assets/images/optimize/mobile-hero-image.avif' );
+		$mobile_fallback_url = sunnysideac_asset_url( 'assets/images/optimize/mobile-hero-image.png' );
+		?>
+		<picture>
+			<?php if ( file_exists( get_template_directory() . '/assets/images/optimize/mobile-hero-image.avif' ) ) : ?>
+				<source srcset="<?php echo esc_url( $mobile_avif_url ); ?>" type="image/avif">
+			<?php endif; ?>
+			<?php if ( file_exists( get_template_directory() . '/assets/images/optimize/mobile-hero-image.webp' ) ) : ?>
+				<source srcset="<?php echo esc_url( $mobile_webp_url ); ?>" type="image/webp">
+			<?php endif; ?>
+			<img
+				src="<?php echo esc_url( $mobile_webp_url ); ?>"
+				alt="Professional HVAC service background"
+				loading="eager"
+				decoding="sync"
+				fetchpriority="high"
+				class="absolute inset-0 h-full w-full object-cover rounded-[20px]"
+				width="800"
+				height="1200"
+			>
+		</picture>
 	</div>
 
 	<!-- Mobile Gradient Overlay - Hidden on Desktop -->
@@ -117,8 +140,7 @@ function sunnysideac_render_stars( $count = 5, $star_icon_url = '', $class = 'h-
 		<!-- Call to Action Buttons -->
 		<div class="flex flex-col justify-center gap-3 pt-4 sm:flex-row sm:gap-4 lg:justify-start">
 			<a href="<?php echo esc_attr( $tel_href ); ?>"
-			class="order-1 inline-flex items-center justify-center gap-2 rounded-[35px] bg-gradient-to-r from-[#fb9939] to-[#e5462f] px-5 py-3 transition-opacity hover:opacity-90 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:outline-none lg:px-6 lg:py-4"
-			aria-label="Call to schedule AC service - <?php echo esc_attr( $phone_display ); ?>">
+			class="order-1 inline-flex items-center justify-center gap-2 rounded-[35px] bg-gradient-to-r from-[#fb9939] to-[#e5462f] px-5 py-3 transition-opacity hover:opacity-90 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:outline-none lg:px-6 lg:py-4">
 			<div class="h-4 w-4 flex-shrink-0 lg:h-5 lg:w-5">
 				<img src="<?php echo esc_url( $icons['schedule_service'] ); ?>" alt="" class="h-full w-full" role="presentation" loading="lazy"
 				decoding="async" />
@@ -233,6 +255,7 @@ function sunnysideac_render_stars( $count = 5, $star_icon_url = '', $class = 'h-
 				alt="Professional AC technician working on air conditioning unit"
 				loading="eager"
 				decoding="sync"
+				fetchpriority="high"
 				class="h-64 min-h-[300px] w-full max-w-md rounded-lg object-contain sm:h-80 lg:h-full lg:min-h-[554px] lg:w-full lg:max-w-none"
 				width="554"
 				height="554"

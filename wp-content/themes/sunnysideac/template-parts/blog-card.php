@@ -68,7 +68,6 @@ $year       = $date_parts[2] ?? '';
 
 <article class="group <?php echo esc_attr( $args['card_class'] ); ?> block overflow-hidden rounded-b-2xl bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
 	<a href="<?php echo esc_url( $post_url ); ?>"
-		aria-label="<?php echo esc_attr( 'Read full article: ' . $post_title ); ?>"
 		class="block focus:ring-2 focus:ring-[#c2410c] focus:ring-offset-2 focus:outline-none">
 		<!-- Image Container with Date Badge -->
 		<div class="relative h-[292px] w-full overflow-hidden rounded-[20px]">
