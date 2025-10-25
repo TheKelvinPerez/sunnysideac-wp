@@ -147,6 +147,11 @@ require_once get_template_directory() . '/inc/constants.php';
 require_once get_template_directory() . '/inc/helpers.php';
 
 /**
+ * Include performance monitoring
+ */
+require_once get_template_directory() . '/inc/performance-monitor.php';
+
+/**
  * Include navigation functions and walker
  */
 require_once get_template_directory() . '/inc/navigation.php';
@@ -194,7 +199,33 @@ function sunnysideac_is_vite_dev_server_running() {
 }
 
 /**
- * Enqueue Vite assets
+ * Get critical CSS content for inlining
+ */
+function sunnysideac_get_critical_css() {
+	$critical_css_path = get_template_directory() . '/dist/critical.css';
+
+	if ( file_exists( $critical_css_path ) ) {
+		return file_get_contents( $critical_css_path );
+	}
+
+	return '';
+}
+
+/**
+ * Get preload HTML for non-critical CSS
+ */
+function sunnysideac_get_css_preload_html() {
+	$preload_path = get_template_directory() . '/dist/preload.html';
+
+	if ( file_exists( $preload_path ) ) {
+		return file_get_contents( $preload_path );
+	}
+
+	return '';
+}
+
+/**
+ * Enqueue Vite assets with performance optimizations
  */
 function sunnysideac_enqueue_assets() {
 	$is_dev          = sunnysideac_is_vite_dev_server_running();
@@ -220,7 +251,17 @@ function sunnysideac_enqueue_assets() {
 		);
 		wp_script_add_data( 'sunnysideac-main', 'type', 'module' );
 	} else {
-		// Production mode: Load built assets
+		// Production mode: Load built assets with optimizations
+
+		// Add critical CSS to head
+		add_action( 'wp_head', 'sunnysideac_inline_critical_css', 1 );
+
+		// Add preload for non-critical CSS
+		add_action( 'wp_head', 'sunnysideac_preload_css', 2 );
+
+		// Add preloading for critical JavaScript modules
+		add_action( 'wp_head', 'sunnysideac_preload_critical_js', 3 );
+
 		$manifest_path = get_template_directory() . '/dist/.vite/manifest.json';
 
 		if ( file_exists( $manifest_path ) ) {
@@ -229,32 +270,87 @@ function sunnysideac_enqueue_assets() {
 			if ( isset( $manifest['src/main.js'] ) ) {
 				$main = $manifest['src/main.js'];
 
-				// Enqueue CSS
-				if ( isset( $main['css'] ) ) {
-					foreach ( $main['css'] as $css_file ) {
-						wp_enqueue_style(
-							'sunnysideac-main',
-							get_template_directory_uri() . '/dist/' . $css_file,
-							array(),
-							null
-						);
-					}
-				}
+				// Don't enqueue CSS normally - it's handled by critical/preload system
 
-				// Enqueue JS
+				// Enqueue main JS with defer
 				wp_enqueue_script(
 					'sunnysideac-main',
 					get_template_directory_uri() . '/dist/' . $main['file'],
 					array(),
 					null,
-					true
+					array(
+						'strategy' => 'defer',
+						'type'      => 'module'
+					)
 				);
-				wp_script_add_data( 'sunnysideac-main', 'type', 'module' );
+
+				// Add resource hints for vendor chunks
+				if ( isset( $manifest['src/js/navigation.js'] ) ) {
+					wp_enqueue_script(
+						'sunnysideac-navigation',
+						get_template_directory_uri() . '/dist/' . $manifest['src/js/navigation.js']['file'],
+						array(),
+						null,
+						array(
+							'strategy' => 'defer',
+							'type'      => 'module'
+						)
+					);
+				}
 			}
 		}
 	}
 }
 add_action( 'wp_enqueue_scripts', 'sunnysideac_enqueue_assets' );
+
+/**
+ * Inline critical CSS
+ */
+function sunnysideac_inline_critical_css() {
+	$critical_css = sunnysideac_get_critical_css();
+
+	if ( ! empty( $critical_css ) ) {
+		echo '<style id="sunnysideac-critical-css">' . $critical_css . '</style>' . "\n";
+	}
+}
+
+/**
+ * Preload non-critical CSS
+ */
+function sunnysideac_preload_css() {
+	$preload_html = sunnysideac_get_css_preload_html();
+
+	if ( ! empty( $preload_html ) ) {
+		echo $preload_html . "\n";
+	}
+}
+
+/**
+ * Preload critical JavaScript modules
+ */
+function sunnysideac_preload_critical_js() {
+	$manifest_path = get_template_directory() . '/dist/.vite/manifest.json';
+
+	if ( file_exists( $manifest_path ) ) {
+		$manifest = json_decode( file_get_contents( $manifest_path ), true );
+
+		// Preload vendor chunk if it exists
+		if ( isset( $manifest['src/main.js']['imports'] ) ) {
+			foreach ( $manifest['src/main.js']['imports'] as $import ) {
+				if ( isset( $manifest[$import] ) ) {
+					$chunk_url = get_template_directory_uri() . '/dist/' . $manifest[$import]['file'];
+					echo '<link rel="modulepreload" href="' . esc_url( $chunk_url ) . '">' . "\n";
+				}
+			}
+		}
+
+		// Preload main script
+		if ( isset( $manifest['src/main.js'] ) ) {
+			$main_url = get_template_directory_uri() . '/dist/' . $manifest['src/main.js']['file'];
+			echo '<link rel="modulepreload" href="' . esc_url( $main_url ) . '">' . "\n";
+		}
+	}
+}
 
 /**
  * Theme setup

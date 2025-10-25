@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:prod": "npm run build && npm run critical-css",
+    "critical-css": "node scripts/extract-critical.js",
+    "optimize-images": "./optimize-images.sh",
     "preview": "vite preview",
     "composer:install": "composer install",
     "postinstall": "composer install"
