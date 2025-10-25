@@ -97,12 +97,12 @@ function sunnysideac_render_stars( $count = 5, $star_icon_url = '', $class = 'h-
 		<div class="flex flex-1 flex-col justify-center">
 		<!-- Main Headline - SEO Optimized -->
 		<h1
-			class="text-center text-xl border-red-500 leading-tight font-semibold text-black sm:text-2xl md:text-3xl lg:text-left lg:text-4xl">
+			class="text-center text-xl border-red-500 leading-tight font-semibold text-black sm:text-xl md:text-1xl lg:text-left lg:text-3xl">
 			Trusted AC Repair & HVAC Services in South Florida | 24/7 Emergency Service Available
 		</h1>
 
 		<!-- Decorative Line - Hidden on mobile for cleaner look -->
-		<div class="hidden justify-start lg:flex">
+		<div class="hidden justify-start lg:flex mt-4 mb-4">
 			<img src="<?php echo esc_url( $icons['hero_line_break'] ); ?>" alt="" class="w-full max-w-md" role="presentation" loading="lazy"
 			decoding="async" />
 		</div>
@@ -110,7 +110,7 @@ function sunnysideac_render_stars( $count = 5, $star_icon_url = '', $class = 'h-
 		<!-- Subtitle -->
 		<p
 			class="text-center text-base leading-relaxed font-normal text-black italic sm:text-lg lg:text-left lg:text-[17px]">
-			Serving Miami-Dade, Broward & Palm Beach Counties since 2014. <br />
+			Serving Miami-Dade, Broward & Palm Beach Counties since 2014.
 			Fast, professional AC repair & installation with honest pricing.
 		</p>
 

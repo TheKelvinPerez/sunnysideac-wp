@@ -90,8 +90,8 @@ $logo_png_path = get_template_directory_uri() . '/assets/images/home-page/footer
 $call_us_icon = get_template_directory_uri() . '/assets/images/images/logos/navigation-call-us-now-icon.svg';
 $mail_icon    = get_template_directory_uri() . '/assets/images/images/logos/navigation-mail-icon.svg';
 
-// Phone icon - Single 19x19 version for consistency
-$phone_icon   = get_template_directory_uri() . '/assets/optimized/navigation-phone-icon.webp';
+// Phone icon - SVG version for optimal clarity
+$phone_icon     = get_template_directory_uri() . '/assets/icons/navigation-phone-icon.svg';
 ?>
 
 <div class="my-6 flex w-full justify-center lg:mt-8" id="main-navigation" data-tel-href="<?php echo esc_attr( SUNNYSIDE_TEL_HREF ); ?>" data-cities-base-url="<?php echo esc_url( home_url( '/cities/' ) ); ?>">
@@ -155,9 +155,11 @@ $phone_icon   = get_template_directory_uri() . '/assets/optimized/navigation-pho
 					aria-label="SunnySide 24/7 AC - Go to homepage"
 				>
 					<img
-						class="logo-responsive object-contain"
+						class="h-12 w-20 object-contain sm:h-16 sm:w-28"
 						alt="SunnySide 24/7 AC company logo"
 						src="<?php echo esc_url( $logo_path ); ?>"
+						srcset="<?php echo esc_url( $logo_path ); ?> 123w, <?php echo esc_url( $logo_path ); ?> 246w"
+						sizes="(max-width: 640px) 80px, 112px"
 						decoding="sync"
 						fetchpriority="high"
 					/>
@@ -190,9 +192,11 @@ $phone_icon   = get_template_directory_uri() . '/assets/optimized/navigation-pho
 					aria-label="SunnySide 24/7 AC - Go to homepage"
 				>
 					<img
-						class="logo-responsive object-contain"
+						class="h-12 w-20 object-contain sm:h-16 sm:w-28"
 						alt="SunnySide 24/7 AC company logo"
 						src="<?php echo esc_url( $logo_path ); ?>"
+						srcset="<?php echo esc_url( $logo_path ); ?> 123w, <?php echo esc_url( $logo_path ); ?> 246w"
+						sizes="(max-width: 640px) 80px, 112px"
 						decoding="sync"
 						fetchpriority="high"
 					/>
@@ -249,9 +253,11 @@ $phone_icon   = get_template_directory_uri() . '/assets/optimized/navigation-pho
 									aria-label="SunnySide 24/7 AC - Go to homepage"
 								>
 									<img
-										class="logo-responsive object-contain"
+										class="h-11 w-16 object-contain"
 										alt="SunnySide 24/7 AC company logo"
 										src="<?php echo esc_url( $logo_path ); ?>"
+										srcset="<?php echo esc_url( $logo_path ); ?> 123w, <?php echo esc_url( $logo_path ); ?> 246w"
+										sizes="64px"
 										decoding="sync"
 										fetchpriority="high"
 									/>

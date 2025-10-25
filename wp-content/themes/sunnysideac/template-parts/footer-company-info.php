@@ -25,9 +25,11 @@ $company_info = array(
 			aria-label="SunnySide 24/7 AC - Go to homepage"
 		>
 			<img
-				class="logo-responsive object-contain"
+				class="h-16 w-auto sm:h-20"
 				alt="SunnySide 24/7 AC Logo"
 				src="<?php echo esc_url( $images['company_logo'] ); ?>"
+				srcset="<?php echo esc_url( $images['company_logo'] ); ?> 123w, <?php echo esc_url( $images['company_logo'] ); ?> 246w"
+				sizes="(max-width: 640px) 64px, 80px"
 			>
 			<div class="flex flex-col">
 				<div class="bg-gradient-to-r from-[#FFC13B] to-[#E5462F] bg-clip-text text-2xl font-extrabold text-transparent sm:text-3xl">
