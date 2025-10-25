@@ -9,7 +9,7 @@ $service_areas = SUNNYSIDE_SERVICE_AREAS;
 
 $images = array(
 	'areas_we_serve_icon'        => sunnysideac_asset_url( 'assets/images/home-page/areas-we-serve/areas-we-serve-icon.svg' ),
-	'map_background_placeholder' => sunnysideac_asset_url( 'assets/optimized/map-background-place-holder.webp' ),
+	'map_background_placeholder' => sunnysideac_asset_url( 'assets/images/optimize/map-background-place-holder.webp' ),
 );
 ?>
 

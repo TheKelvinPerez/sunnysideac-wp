@@ -12,8 +12,8 @@
 
 	<!-- Preload LCP hero image for optimal performance -->
 	<?php
-	$avif_url = get_template_directory_uri() . '/assets/optimized/hero-right-image.avif';
-	$webp_url = get_template_directory_uri() . '/assets/optimized/hero-right-image.webp';
+	$avif_url = get_template_directory_uri() . '/assets/images/optimize/hero-right-image.avif';
+	$webp_url = get_template_directory_uri() . '/assets/images/optimize/hero-right-image.webp';
 	?>
 	<link rel="preload" as="image" href="<?php echo esc_url($avif_url); ?>" type="image/avif">
 	<link rel="preload" as="image" href="<?php echo esc_url($webp_url); ?>" type="image/webp">
@@ -83,8 +83,8 @@
 
 <?php
 // Asset paths - Responsive logo system
-$logo_path    = get_template_directory_uri() . '/assets/optimized/sunny-side-logo.webp';
-$logo_2x_path = get_template_directory_uri() . '/assets/optimized/sunny-side-logo-2x.webp';
+$logo_path    = get_template_directory_uri() . '/assets/images/optimize/sunny-side-logo.webp';
+$logo_2x_path = get_template_directory_uri() . '/assets/images/optimize/sunny-side-logo-2x.webp';
 $logo_png_path = get_template_directory_uri() . '/assets/images/home-page/footer/new-sunny-side-logo.png';
 
 $call_us_icon = get_template_directory_uri() . '/assets/images/images/logos/navigation-call-us-now-icon.svg';

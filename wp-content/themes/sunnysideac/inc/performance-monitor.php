@@ -187,7 +187,7 @@ function sunnyside_add_performance_hints() {
 
     // Add resource hints for images on image-heavy pages
     if (is_front_page() || is_page('our-projects')) {
-        echo '<link rel="preload" as="image" href="' . esc_url(get_template_directory_uri() . '/assets/optimized/hero-right-image.webp') . '">' . "\n";
+        echo '<link rel="preload" as="image" href="' . esc_url(get_template_directory_uri() . '/assets/images/optimize/hero-right-image.webp') . '">' . "\n";
     }
 }
 add_action('wp_head', 'sunnyside_add_performance_hints', 1);

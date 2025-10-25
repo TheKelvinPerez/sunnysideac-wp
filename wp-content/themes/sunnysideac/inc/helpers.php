@@ -160,7 +160,7 @@ function sunnysideac_responsive_image( $path, $args = array() ) {
 	$args = wp_parse_args( $args, $defaults );
 
 	// Check if optimized version exists
-	$optimized_path = str_replace( 'assets/', 'assets/optimized/', $path );
+	$optimized_path = str_replace( 'assets/', 'assets/images/optimize/', $path );
 	$webp_path = preg_replace( '/\.(png|jpg|jpeg)$/i', '.webp', $optimized_path );
 	$avif_path = preg_replace( '/\.(png|jpg|jpeg)$/i', '.avif', $optimized_path );
 
@@ -264,7 +264,7 @@ function sunnysideac_responsive_background_image( $path, $args = array() ) {
 	$args = wp_parse_args( $args, $defaults );
 
 	// Check if optimized version exists
-	$optimized_path = str_replace( 'assets/', 'assets/optimized/', $path );
+	$optimized_path = str_replace( 'assets/', 'assets/images/optimize/', $path );
 	$webp_path = preg_replace( '/\.(png|jpg|jpeg)$/i', '.webp', $optimized_path );
 
 	$theme_dir = get_template_directory();

@@ -17,8 +17,8 @@ $icons = array(
 
 // Images data
 $images = array(
-	'hero_right'    => sunnysideac_asset_url( 'assets/optimized/hero-right-image.webp' ),
-	'mobile_hero'   => sunnysideac_asset_url( 'assets/optimized/mobile-hero-image.webp' ),
+	'hero_right'    => sunnysideac_asset_url( 'assets/images/optimize/hero-right-image.webp' ),
+	'mobile_hero'   => sunnysideac_asset_url( 'assets/images/optimize/mobile-hero-image.webp' ),
 	'review_photos' => array(
 		sunnysideac_asset_url( 'assets/images/images/hero/review_photo_1.png' ),
 		sunnysideac_asset_url( 'assets/images/images/hero/review_photo_2.png' ),
@@ -66,7 +66,7 @@ function sunnysideac_render_stars( $count = 5, $star_icon_url = '', $class = 'h-
 <section class="relative w-full overflow-hidden rounded-[20px] bg-white lg:bg-transparent">
 	<!-- Mobile Background Image - Hidden on Desktop -->
 	<div class="absolute inset-0 rounded-[20px] bg-cover bg-center bg-no-repeat lg:hidden"
-		style="background-image: url('<?php echo esc_url( sunnysideac_asset_url( 'assets/optimized/mobile-hero-image.webp' ) ); ?>');">
+		style="background-image: url('<?php echo esc_url( sunnysideac_asset_url( 'assets/images/optimize/mobile-hero-image.webp' ) ); ?>');">
 	</div>
 
 	<!-- Mobile Gradient Overlay - Hidden on Desktop -->
@@ -217,15 +217,15 @@ function sunnysideac_render_stars( $count = 5, $star_icon_url = '', $class = 'h-
 	<div class="flex items-center justify-center lg:items-start lg:justify-end">
 		<?php
 		// Custom responsive image with AVIF and WebP support for optimal performance
-		$webp_url     = sunnysideac_asset_url( 'assets/optimized/hero-right-image.webp' );
-		$avif_url     = sunnysideac_asset_url( 'assets/optimized/hero-right-image.avif' );
-		$fallback_url = sunnysideac_asset_url( 'assets/optimized/hero-right-image.png' );
+		$webp_url     = sunnysideac_asset_url( 'assets/images/optimize/hero-right-image.webp' );
+		$avif_url     = sunnysideac_asset_url( 'assets/images/optimize/hero-right-image.avif' );
+		$fallback_url = sunnysideac_asset_url( 'assets/images/optimize/hero-right-image.png' );
 		?>
 		<picture>
-			<?php if ( file_exists( get_template_directory() . '/assets/optimized/hero-right-image.avif' ) ) : ?>
+			<?php if ( file_exists( get_template_directory() . '/assets/images/optimize/hero-right-image.avif' ) ) : ?>
 				<source srcset="<?php echo esc_url( $avif_url ); ?>" type="image/avif">
 			<?php endif; ?>
-			<?php if ( file_exists( get_template_directory() . '/assets/optimized/hero-right-image.webp' ) ) : ?>
+			<?php if ( file_exists( get_template_directory() . '/assets/images/optimize/hero-right-image.webp' ) ) : ?>
 				<source srcset="<?php echo esc_url( $webp_url ); ?>" type="image/webp">
 			<?php endif; ?>
 			<img

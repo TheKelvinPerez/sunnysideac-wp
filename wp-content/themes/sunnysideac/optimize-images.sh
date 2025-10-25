@@ -5,7 +5,7 @@
 
 THEME_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/assets"
 ORIGINAL_DIR="$THEME_DIR/originals"
-OPTIMIZED_DIR="$THEME_DIR/optimized"
+OPTIMIZED_DIR="$THEME_DIR/images/optimize"
 
 echo "🚀 Starting image optimization for Sunnyside AC theme..."
 echo "Theme directory: $THEME_DIR"
@@ -111,7 +111,7 @@ echo ""
 echo "📸 Finding images to optimize..."
 while IFS= read -r -d '' file; do
     optimize_image "$file"
-done < <(find "$THEME_DIR" -type f \( -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" \) ! -path "*/optimized/*" ! -path "*/originals/*" -print0)
+done < <(find "$THEME_DIR" -type f \( -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" \) ! -path "*/images/optimize/*" ! -path "*/originals/*" -print0)
 
 echo ""
 echo "🎉 Optimization complete!"
