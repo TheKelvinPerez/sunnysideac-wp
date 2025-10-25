@@ -309,6 +309,7 @@ function handleLocationSelect(value) {
 
 function setupDesktopNavigation() {
 	document.querySelectorAll('.nav-item').forEach(item => {
+		if (!item) return;
 		const itemName = item.dataset.item;
 		const href = item.dataset.href || item.querySelector('a')?.href;
 
@@ -368,9 +369,11 @@ function setupDesktopNavigation() {
 			}
 		} else {
 			// Regular navigation items
-			item.addEventListener('click', () => {
-				handleMenuItemClick(itemName, href);
-			});
+			if (item) {
+				item.addEventListener('click', () => {
+					handleMenuItemClick(itemName, href);
+				});
+			}
 		}
 	});
 }

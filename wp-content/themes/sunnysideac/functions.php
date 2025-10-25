@@ -148,8 +148,9 @@ require_once get_template_directory() . '/inc/helpers.php';
 
 /**
  * Include performance monitoring
+ * Temporarily disabled for rollback testing
  */
-require_once get_template_directory() . '/inc/performance-monitor.php';
+// require_once get_template_directory() . '/inc/performance-monitor.php';
 
 /**
  * Include navigation functions and walker
@@ -158,14 +159,38 @@ require_once get_template_directory() . '/inc/navigation.php';
 require_once get_template_directory() . '/inc/main-navigation-helper.php';
 require_once get_template_directory() . '/inc/footer-menu-helper.php';
 
+
+/**
+ * Check if Vite dev server is running
+ */
+function sunnysideac_is_vite_dev_server_running() {
+	$vite_dev_server = sunnysideac_get_vite_dev_server_url();
+
+	// Use curl for more reliable server detection
+	$ch = curl_init();
+	curl_setopt_array( $ch, array(
+		CURLOPT_URL            => $vite_dev_server,
+		CURLOPT_TIMEOUT        => 2,
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_NOBODY         => true,
+		CURLOPT_FOLLOWLOCATION => false,
+	) );
+
+	$result = curl_exec( $ch );
+	$http_code = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
+	curl_close( $ch );
+
+	// Server is running if we got a valid response (even 404 is fine)
+	return $result !== false && $http_code >= 200 && $http_code < 500;
+}
+
 /**
  * Get Vite dev server URL from environment or use defaults
  */
 function sunnysideac_get_vite_dev_server_url() {
 	// For DDEV, use HMR host/port which is the browser-accessible URL
-	// For non-DDEV, fall back to dev server host/port
 	$protocol = $_ENV['VITE_HMR_PROTOCOL'] ?? $_ENV['VITE_DEV_SERVER_PROTOCOL'] ?? 'http';
-	$host     = $_ENV['VITE_HMR_HOST'] ?? $_ENV['VITE_DEV_SERVER_HOST'] ?? 'localhost';
+	$host     = $_ENV['VITE_HMR_HOST'] ?? $_ENV['VITE_DEV_SERVER_HOST'] ?? 'sunnyside-ac.ddev.site';
 	$port     = $_ENV['VITE_HMR_PORT'] ?? $_ENV['VITE_DEV_SERVER_PORT'] ?? '3000';
 
 	// Allow filtering via WordPress hooks for more flexibility
@@ -177,55 +202,7 @@ function sunnysideac_get_vite_dev_server_url() {
 }
 
 /**
- * Check if Vite dev server is running
- */
-function sunnysideac_is_vite_dev_server_running() {
-	$vite_dev_server = sunnysideac_get_vite_dev_server_url();
-
-	// Use file_get_contents with stream context for better compatibility
-	$context = stream_context_create(
-		array(
-			'http' => array(
-				'timeout'       => 1,
-				'ignore_errors' => true,
-			),
-		)
-	);
-
-	$result = @file_get_contents( $vite_dev_server, false, $context );
-
-	// Check if we got a response (even if it's an error page, server is running)
-	return $result !== false || ( isset( $http_response_header ) && ! empty( $http_response_header ) );
-}
-
-/**
- * Get critical CSS content for inlining
- */
-function sunnysideac_get_critical_css() {
-	$critical_css_path = get_template_directory() . '/dist/critical.css';
-
-	if ( file_exists( $critical_css_path ) ) {
-		return file_get_contents( $critical_css_path );
-	}
-
-	return '';
-}
-
-/**
- * Get preload HTML for non-critical CSS
- */
-function sunnysideac_get_css_preload_html() {
-	$preload_path = get_template_directory() . '/dist/preload.html';
-
-	if ( file_exists( $preload_path ) ) {
-		return file_get_contents( $preload_path );
-	}
-
-	return '';
-}
-
-/**
- * Enqueue Vite assets with performance optimizations
+ * Simple asset loading - replaces complex performance optimizations
  */
 function sunnysideac_enqueue_assets() {
 	$is_dev          = sunnysideac_is_vite_dev_server_running();
@@ -251,17 +228,7 @@ function sunnysideac_enqueue_assets() {
 		);
 		wp_script_add_data( 'sunnysideac-main', 'type', 'module' );
 	} else {
-		// Production mode: Load built assets with optimizations
-
-		// Add critical CSS to head
-		add_action( 'wp_head', 'sunnysideac_inline_critical_css', 1 );
-
-		// Add preload for non-critical CSS
-		add_action( 'wp_head', 'sunnysideac_preload_css', 2 );
-
-		// Add preloading for critical JavaScript modules
-		add_action( 'wp_head', 'sunnysideac_preload_critical_js', 3 );
-
+		// Production mode: Load built assets with simple manifest
 		$manifest_path = get_template_directory() . '/dist/.vite/manifest.json';
 
 		if ( file_exists( $manifest_path ) ) {
@@ -270,33 +237,27 @@ function sunnysideac_enqueue_assets() {
 			if ( isset( $manifest['src/main.js'] ) ) {
 				$main = $manifest['src/main.js'];
 
-				// Don't enqueue CSS normally - it's handled by critical/preload system
+				// Enqueue CSS (simple)
+				if ( isset( $main['css'] ) ) {
+					foreach ( $main['css'] as $css_file ) {
+						wp_enqueue_style(
+							'sunnysideac-main',
+							get_template_directory_uri() . '/dist/' . $css_file,
+							array(),
+							null
+						);
+					}
+				}
 
-				// Enqueue main JS with defer
+				// Enqueue JS
 				wp_enqueue_script(
 					'sunnysideac-main',
 					get_template_directory_uri() . '/dist/' . $main['file'],
 					array(),
 					null,
-					array(
-						'strategy' => 'defer',
-						'type'      => 'module'
-					)
+					true
 				);
-
-				// Add resource hints for vendor chunks
-				if ( isset( $manifest['src/js/navigation.js'] ) ) {
-					wp_enqueue_script(
-						'sunnysideac-navigation',
-						get_template_directory_uri() . '/dist/' . $manifest['src/js/navigation.js']['file'],
-						array(),
-						null,
-						array(
-							'strategy' => 'defer',
-							'type'      => 'module'
-						)
-					);
-				}
+				wp_script_add_data( 'sunnysideac-main', 'type', 'module' );
 			}
 		}
 	}
@@ -304,53 +265,18 @@ function sunnysideac_enqueue_assets() {
 add_action( 'wp_enqueue_scripts', 'sunnysideac_enqueue_assets' );
 
 /**
- * Inline critical CSS
+ * Remove complex performance hooks that might cause conflicts
  */
-function sunnysideac_inline_critical_css() {
-	$critical_css = sunnysideac_get_critical_css();
+function sunnysideac_remove_complex_performance_hooks() {
+	// Remove critical CSS functions
+	remove_action( 'wp_head', 'sunnysideac_inline_critical_css', 1 );
+	remove_action( 'wp_head', 'sunnysideac_preload_css', 2 );
+	remove_action( 'wp_head', 'sunnysideac_preload_critical_js', 3 );
 
-	if ( ! empty( $critical_css ) ) {
-		echo '<style id="sunnysideac-critical-css">' . $critical_css . '</style>' . "\n";
-	}
+	// Remove performance hints that might conflict
+	remove_action( 'wp_head', 'sunnysideac_add_performance_hints', 1 );
 }
-
-/**
- * Preload non-critical CSS
- */
-function sunnysideac_preload_css() {
-	$preload_html = sunnysideac_get_css_preload_html();
-
-	if ( ! empty( $preload_html ) ) {
-		echo $preload_html . "\n";
-	}
-}
-
-/**
- * Preload critical JavaScript modules
- */
-function sunnysideac_preload_critical_js() {
-	$manifest_path = get_template_directory() . '/dist/.vite/manifest.json';
-
-	if ( file_exists( $manifest_path ) ) {
-		$manifest = json_decode( file_get_contents( $manifest_path ), true );
-
-		// Preload vendor chunk if it exists
-		if ( isset( $manifest['src/main.js']['imports'] ) ) {
-			foreach ( $manifest['src/main.js']['imports'] as $import ) {
-				if ( isset( $manifest[$import] ) ) {
-					$chunk_url = get_template_directory_uri() . '/dist/' . $manifest[$import]['file'];
-					echo '<link rel="modulepreload" href="' . esc_url( $chunk_url ) . '">' . "\n";
-				}
-			}
-		}
-
-		// Preload main script
-		if ( isset( $manifest['src/main.js'] ) ) {
-			$main_url = get_template_directory_uri() . '/dist/' . $manifest['src/main.js']['file'];
-			echo '<link rel="modulepreload" href="' . esc_url( $main_url ) . '">' . "\n";
-		}
-	}
-}
+add_action( 'init', 'sunnysideac_remove_complex_performance_hooks', 5 );
 
 /**
  * Theme setup
