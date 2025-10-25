@@ -66,7 +66,7 @@ function sunnysideac_render_stars( $count = 5, $star_icon_url = '', $class = 'h-
 <section class="relative w-full overflow-hidden rounded-[20px] bg-white lg:bg-transparent">
 	<!-- Mobile Background Image - Hidden on Desktop -->
 	<div class="absolute inset-0 rounded-[20px] bg-cover bg-center bg-no-repeat lg:hidden"
-	style="background-image: url('<?php echo esc_url( $images['mobile_hero'] ); ?>');">
+		style="background-image: url('<?php echo esc_url( sunnysideac_asset_url( 'assets/optimized/mobile-hero-image.webp' ) ); ?>');">
 	</div>
 
 	<!-- Mobile Gradient Overlay - Hidden on Desktop -->
@@ -216,9 +216,17 @@ function sunnysideac_render_stars( $count = 5, $star_icon_url = '', $class = 'h-
 
 	<!-- Desktop Right Column - Hero Image -->
 	<div class="flex items-center justify-center lg:items-start lg:justify-end">
-		<img src="<?php echo esc_url( $images['hero_right'] ); ?>" alt="Professional AC technician working on air conditioning unit"
-		class="h-64 min-h-[300px] w-full max-w-md rounded-lg object-contain sm:h-80 lg:h-full lg:min-h-[554px] lg:w-full lg:max-w-none"
-		loading="eager" decoding="sync" fetchpriority="high" />
+		<?php echo sunnysideac_responsive_image(
+			'assets/images/images/hero/hero-right-image.png',
+			array(
+				'alt' => 'Professional AC technician working on air conditioning unit',
+				'class' => 'h-64 min-h-[300px] w-full max-w-md rounded-lg object-contain sm:h-80 lg:h-full lg:min-h-[554px] lg:w-full lg:max-w-none',
+				'loading' => 'eager',
+				'decoding' => 'sync',
+				'width' => 554,
+				'height' => 554
+			)
+		); ?>
 	</div>
 	</div>
 

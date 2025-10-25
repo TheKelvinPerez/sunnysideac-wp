@@ -74,11 +74,14 @@ $images = array(
 			<!-- Mobile Image - Shows under title on mobile only -->
 			<div class="mb-6 flex justify-center lg:hidden">
 				<div class="w-full max-w-sm">
-					<img
-						class="h-auto w-full rounded-2xl shadow-lg"
-						alt="Professional HVAC technician working on air conditioning unit"
-						src="<?php echo esc_url( $images['main'] ?? '' ); ?>"
-					>
+					<?php echo sunnysideac_responsive_image(
+						'assets/images/home-page/why-choose-us-main-image.png',
+						array(
+							'alt' => 'Professional HVAC technician working on air conditioning unit',
+							'class' => 'h-auto w-full rounded-2xl shadow-lg',
+							'loading' => 'lazy'
+						)
+					); ?>
 				</div>
 			</div>
 
@@ -127,11 +130,14 @@ $images = array(
 				<!-- Desktop Image - Shows on desktop only -->
 				<div class="hidden items-center justify-center lg:order-2 lg:flex">
 					<div class="w-full max-w-lg">
-						<img
-							class="h-auto w-full rounded-2xl shadow-lg"
-							alt="Professional HVAC technician working on air conditioning unit"
-							src="<?php echo esc_url( $images['main'] ?? '' ); ?>"
-						>
+						<?php echo sunnysideac_responsive_image(
+							'assets/images/home-page/why-choose-us-main-image.png',
+							array(
+								'alt' => 'Professional HVAC technician working on air conditioning unit',
+								'class' => 'h-auto w-full rounded-2xl shadow-lg',
+								'loading' => 'lazy'
+							)
+						); ?>
 					</div>
 				</div>
 			</div>

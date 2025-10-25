@@ -9,7 +9,7 @@ $service_areas = SUNNYSIDE_SERVICE_AREAS;
 
 $images = array(
 	'areas_we_serve_icon'        => sunnysideac_asset_url( 'assets/images/home-page/areas-we-serve/areas-we-serve-icon.svg' ),
-	'map_background_placeholder' => sunnysideac_asset_url( 'assets/images/home-page/areas-we-serve/map-background-place-holder.png' ),
+	'map_background_placeholder' => sunnysideac_asset_url( 'assets/optimized/map-background-place-holder.webp' ),
 );
 ?>
 
@@ -74,11 +74,14 @@ $images = array(
 			<!-- Map Background - Mobile Bottom -->
 			<div class="flex justify-end">
 				<div class="h-[500px] w-[325px] overflow-hidden rounded-lg shadow-lg">
-					<img
-						class="h-full w-auto object-cover object-right"
-						alt="Service area map covering South Florida"
-						src="<?php echo esc_url( $images['map_background_placeholder'] ); ?>"
-					/>
+					<?php echo sunnysideac_responsive_image(
+						'assets/images/home-page/areas-we-serve/map-background-place-holder.png',
+						array(
+							'alt' => 'Service area map covering South Florida',
+							'class' => 'h-full w-auto object-cover object-right',
+							'loading' => 'lazy'
+						)
+					); ?>
 				</div>
 			</div>
 		</div>
@@ -88,11 +91,14 @@ $images = array(
 			<div class="relative w-full">
 				<div class="relative mx-auto h-[500px] w-full max-w-6xl">
 					<!-- Map Background -->
-					<img
-						class="h-full w-full rounded-lg object-cover object-center shadow-lg"
-						alt="Service area map covering South Florida"
-						src="<?php echo esc_url( $images['map_background_placeholder'] ); ?>"
-					/>
+					<?php echo sunnysideac_responsive_image(
+						'assets/images/home-page/areas-we-serve/map-background-place-holder.png',
+						array(
+							'alt' => 'Service area map covering South Florida',
+							'class' => 'h-full w-full rounded-lg object-cover object-center shadow-lg',
+							'loading' => 'lazy'
+						)
+					); ?>
 
 					<!-- Service Areas Card - Floating Overlay -->
 					<div class="absolute bottom-8 -left-8">

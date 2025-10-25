@@ -75,10 +75,10 @@
 
 <?php
 // Asset paths
-$logo_path    = get_template_directory_uri() . '/assets/images/images/logos/sunny-side-logo.png';
+$logo_path    = get_template_directory_uri() . '/assets/optimized/sunny-side-logo.webp';
 $call_us_icon = get_template_directory_uri() . '/assets/images/images/logos/navigation-call-us-now-icon.svg';
 $mail_icon    = get_template_directory_uri() . '/assets/images/images/logos/navigation-mail-icon.svg';
-$phone_icon   = get_template_directory_uri() . '/assets/images/images/logos/navigation-phone-icon.png';
+$phone_icon   = get_template_directory_uri() . '/assets/optimized/navigation-phone-icon.webp';
 ?>
 
 <div class="my-6 flex w-full justify-center lg:mt-8" id="main-navigation" data-tel-href="<?php echo esc_attr( SUNNYSIDE_TEL_HREF ); ?>" data-cities-base-url="<?php echo esc_url( home_url( '/cities/' ) ); ?>">
@@ -139,8 +139,8 @@ $phone_icon   = get_template_directory_uri() . '/assets/images/images/logos/navi
 						class="h-12 w-20 object-contain"
 						alt="SunnySide 24/7 AC company logo"
 						src="<?php echo esc_url( $logo_path ); ?>"
-						loading="lazy"
-						decoding="async"
+						decoding="sync"
+						fetchpriority="high"
 					/>
 					<div class="flex flex-col text-center">
 						<div class="bg-[linear-gradient(90deg,rgba(255,193,59,1)_0%,rgba(229,70,47,1)_100%)] bg-clip-text [font-family:'Inter-Bold',Helvetica] text-lg leading-tight font-bold [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [text-fill-color:transparent]">
@@ -174,8 +174,8 @@ $phone_icon   = get_template_directory_uri() . '/assets/images/images/logos/navi
 						class="h-auto w-full"
 						alt="SunnySide 24/7 AC company logo"
 						src="<?php echo esc_url( $logo_path ); ?>"
-						loading="lazy"
-						decoding="async"
+						decoding="sync"
+						fetchpriority="high"
 					/>
 					<div class="flex flex-col">
 						<div class="bg-[linear-gradient(90deg,rgba(255,193,59,1)_0%,rgba(229,70,47,1)_100%)] bg-clip-text [font-family:'Inter-Bold',Helvetica] text-2xl leading-tight font-bold [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [text-fill-color:transparent]">
@@ -233,8 +233,8 @@ $phone_icon   = get_template_directory_uri() . '/assets/images/images/logos/navi
 										class="h-11 object-contain"
 										alt="SunnySide 24/7 AC company logo"
 										src="<?php echo esc_url( $logo_path ); ?>"
-										loading="lazy"
-										decoding="async"
+										decoding="sync"
+										fetchpriority="high"
 									/>
 									<div class="flex flex-col">
 										<div class="bg-[linear-gradient(90deg,rgba(255,193,59,1)_0%,rgba(229,70,47,1)_100%)] bg-clip-text [font-family:'Inter-Bold',Helvetica] text-sm leading-tight font-bold [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [text-fill-color:transparent]">

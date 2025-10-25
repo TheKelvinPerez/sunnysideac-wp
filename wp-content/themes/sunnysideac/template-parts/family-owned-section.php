@@ -61,20 +61,26 @@ $story_paragraphs = array(
 					<div class="relative flex items-center justify-center">
 						<!-- Mom and Dad - Left Image -->
 						<div class="relative -top-24 z-10 md:-top-40">
-							<img
-								class="h-full w-full rounded-[20px] object-cover shadow-md sm:h-72 sm:w-72 lg:h-90 lg:w-90"
-								alt="Florentino and his wife - founders of Sunny Side AC"
-								src="<?php echo esc_url( $images['mom_and_dad'] ?? '' ); ?>"
-							>
+							<?php echo sunnysideac_responsive_image(
+								'assets/images/home-page/mom-and-dad.png',
+								array(
+									'alt' => 'Florentino and his wife - founders of Sunny Side AC',
+									'class' => 'h-full w-full rounded-[20px] object-cover shadow-md sm:h-72 sm:w-72 lg:h-90 lg:w-90',
+									'loading' => 'lazy'
+								)
+							); ?>
 						</div>
 
 						<!-- Kelvin's Picture - Right Image with slight overlap -->
 						<div class="relative top-8 right-6 z-20 md:top-24 md:-left-10">
-							<img
-								class="h-full w-full rounded-[20px] object-cover shadow-lg sm:h-72 sm:w-72 lg:h-90 lg:w-90"
-								alt="Kelvin - son and technology lead at Sunny Side AC"
-								src="<?php echo esc_url( $images['kelvins_picture'] ?? '' ); ?>"
-							>
+							<?php echo sunnysideac_responsive_image(
+								'assets/images/home-page/kelvins-picture.png',
+								array(
+									'alt' => 'Kelvin - son and technology lead at Sunny Side AC',
+									'class' => 'h-full w-full rounded-[20px] object-cover shadow-lg sm:h-72 sm:w-72 lg:h-90 lg:w-90',
+									'loading' => 'lazy'
+								)
+							); ?>
 						</div>
 					</div>
 				</div>

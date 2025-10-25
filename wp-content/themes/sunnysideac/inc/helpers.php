@@ -136,3 +136,177 @@ function sunnysideac_get_service_icon( $service_name ) {
 
 	return $icons[ $service_name ] ?? 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2';
 }
+
+/**
+ * Get optimized image URL with WebP support and fallback
+ *
+ * @param string $path Path relative to theme directory
+ * @param array $args Optional arguments (sizes, webp, avif, loading, class, alt)
+ * @return string HTML img element with responsive sources
+ */
+function sunnysideac_responsive_image( $path, $args = array() ) {
+	$defaults = array(
+		'sizes'        => array( 'large', 'medium', 'thumbnail' ),
+		'webp'         => true,
+		'avif'         => true, // Enable AVIF for better compression
+		'loading'      => 'lazy',
+		'class'        => '',
+		'alt'          => '',
+		'decoding'     => 'async',
+		'width'        => null,
+		'height'       => null,
+	);
+
+	$args = wp_parse_args( $args, $defaults );
+
+	// Check if optimized version exists
+	$optimized_path = str_replace( 'assets/', 'assets/optimized/', $path );
+	$webp_path = preg_replace( '/\.(png|jpg|jpeg)$/i', '.webp', $optimized_path );
+	$avif_path = preg_replace( '/\.(png|jpg|jpeg)$/i', '.avif', $optimized_path );
+
+	$theme_dir = get_template_directory();
+	$optimized_file = $theme_dir . '/' . $optimized_path;
+	$webp_file = $theme_dir . '/' . $webp_path;
+	$avif_file = $theme_dir . '/' . $avif_path;
+
+	// Determine which image to use
+	$image_url = '';
+	$webp_url = '';
+	$avif_url = '';
+
+	if ( file_exists( $optimized_file ) ) {
+		$image_url = sunnysideac_asset_url( $optimized_path );
+	} else {
+		$image_url = sunnysideac_asset_url( $path );
+	}
+
+	if ( $args['webp'] && file_exists( $webp_file ) ) {
+		$webp_url = sunnysideac_asset_url( $webp_path );
+	}
+
+	if ( $args['avif'] && file_exists( $avif_file ) ) {
+		$avif_url = sunnysideac_asset_url( $avif_path );
+	}
+
+	// Build responsive image HTML
+	$img_tag = '';
+
+	// Add modern format support with picture element if AVIF or WebP exists
+	if ( $avif_url || $webp_url ) {
+		$img_tag .= '<picture>';
+
+		// AVIF source (best compression, supported by modern browsers)
+		if ( $avif_url ) {
+			$img_tag .= sprintf(
+				'<source srcset="%s" type="image/avif">',
+				esc_url( $avif_url )
+			);
+		}
+
+		// WebP source (good compression, widely supported)
+		if ( $webp_url ) {
+			$img_tag .= sprintf(
+				'<source srcset="%s" type="image/webp">',
+				esc_url( $webp_url )
+			);
+		}
+	}
+
+	// Build img tag attributes
+	$attributes = array(
+		'src'      => $image_url,
+		'alt'      => $args['alt'],
+		'loading'  => $args['loading'],
+		'decoding' => $args['decoding'],
+	);
+
+	if ( ! empty( $args['class'] ) ) {
+		$attributes['class'] = $args['class'];
+	}
+
+	if ( $args['width'] ) {
+		$attributes['width'] = $args['width'];
+	}
+
+	if ( $args['height'] ) {
+		$attributes['height'] = $args['height'];
+	}
+
+	// Build attribute string
+	$attr_string = '';
+	foreach ( $attributes as $attr => $value ) {
+		$attr_string .= sprintf( ' %s="%s"', $attr, esc_attr( $value ) );
+	}
+
+	$img_tag .= sprintf( '<img%s>', $attr_string );
+
+	if ( $avif_url || $webp_url ) {
+		$img_tag .= '</picture>';
+	}
+
+	return $img_tag;
+}
+
+/**
+ * Get optimized background image with WebP support
+ *
+ * @param string $path Path relative to theme directory
+ * @param array $args Optional arguments (webp, size, class)
+ * @return string CSS with background-image and WebP support
+ */
+function sunnysideac_responsive_background_image( $path, $args = array() ) {
+	$defaults = array(
+		'webp'  => true,
+		'size'  => 'cover',
+		'class' => '',
+	);
+
+	$args = wp_parse_args( $args, $defaults );
+
+	// Check if optimized version exists
+	$optimized_path = str_replace( 'assets/', 'assets/optimized/', $path );
+	$webp_path = preg_replace( '/\.(png|jpg|jpeg)$/i', '.webp', $optimized_path );
+
+	$theme_dir = get_template_directory();
+	$optimized_file = $theme_dir . '/' . $optimized_path;
+	$webp_file = $theme_dir . '/' . $webp_path;
+
+	// Determine which image to use
+	$image_url = '';
+	$webp_url = '';
+
+	if ( file_exists( $optimized_file ) ) {
+		$image_url = sunnysideac_asset_url( $optimized_path );
+	} else {
+		$image_url = sunnysideac_asset_url( $path );
+	}
+
+	if ( $args['webp'] && file_exists( $webp_file ) ) {
+		$webp_url = sunnysideac_asset_url( $webp_path );
+	}
+
+	$class_attr = ! empty( $args['class'] ) ? ' class="' . esc_attr( $args['class'] ) . '"' : '';
+
+	// Generate CSS with WebP support
+	$css = '<style' . $class_attr . '>';
+
+	if ( $webp_url ) {
+		$css .= sprintf(
+			'@supports (background-image: url("data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==")) { .bg-webp-%s { background-image: url("%s"); background-size: %s; } }',
+			md5( $path ),
+			esc_url( $webp_url ),
+			esc_attr( $args['size'] )
+		);
+	}
+
+	$css .= sprintf(
+		'.bg-fallback-%s { background-image: url("%s"); background-size: %s; }',
+		md5( $path ),
+		esc_url( $image_url ),
+		esc_attr( $args['size'] )
+	);
+
+	$css .= '</style>';
+
+	return $css;
+}

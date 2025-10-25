@@ -46,20 +46,33 @@ optimize_image() {
         "png")
             # Optimize PNG and create WebP version
             if command -v optipng >/dev/null 2>&1; then
-                optipng -o2 -quiet "$input_file"
+                optipng -o4 -quiet "$input_file"  # Increased optimization level
             fi
 
-            # Create WebP version
-            convert "$input_file" -quality 85 -define webp:method=6 "$OPTIMIZED_DIR/${filename_noext}.webp" 2>/dev/null
+            # Create WebP version with higher compression for logos, ultra-high for hero image
+            if [[ "$filename" == *"hero"* ]] || [[ "$filename" == *"hero-right"* ]]; then
+                # Ultra-high compression for hero image
+                convert "$input_file" -quality 75 -define webp:method=6 -define webp:target-size=300000 "$OPTIMIZED_DIR/${filename_noext}.webp" 2>/dev/null
+                # Also create AVIF version if supported
+                if command -v convert >/dev/null 2>&1; then
+                    convert "$input_file" -quality 65 -define heic:compression=level:5 "$OPTIMIZED_DIR/${filename_noext}.avif" 2>/dev/null
+                fi
+            elif [[ "$filename" == *"logo"* ]] || [[ "$filename" == *"Logo"* ]]; then
+                # High compression for logos
+                convert "$input_file" -quality 70 -define webp:method=6 -resize 320x113\> "$OPTIMIZED_DIR/${filename_noext}.webp" 2>/dev/null
+            else
+                # Standard compression for other images
+                convert "$input_file" -quality 80 -define webp:method=6 "$OPTIMIZED_DIR/${filename_noext}.webp" 2>/dev/null
+            fi
 
             # Compress PNG with ImageMagick if needed
-            convert "$input_file" -quality 95 -strip "$OPTIMIZED_DIR/$filename" 2>/dev/null
+            convert "$input_file" -quality 85 -strip "$OPTIMIZED_DIR/$filename" 2>/dev/null
             ;;
 
         "jpg"|"jpeg")
             # Optimize JPEG and create WebP version
-            convert "$input_file" -quality 85 -strip -interlace Plane "$OPTIMIZED_DIR/$filename" 2>/dev/null
-            convert "$input_file" -quality 85 -define webp:method=6 "$OPTIMIZED_DIR/${filename_noext}.webp" 2>/dev/null
+            convert "$input_file" -quality 80 -strip -interlace Plane "$OPTIMIZED_DIR/$filename" 2>/dev/null
+            convert "$input_file" -quality 80 -define webp:method=6 "$OPTIMIZED_DIR/${filename_noext}.webp" 2>/dev/null
             ;;
     esac
 
