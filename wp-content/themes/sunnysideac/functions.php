@@ -257,41 +257,6 @@ function sunnysideac_enqueue_assets() {
 add_action( 'wp_enqueue_scripts', 'sunnysideac_enqueue_assets' );
 
 /**
- * Get Inter font URL for preloading
- * Returns the fingerprinted font URL in production, null in development
- */
-function sunnysideac_get_inter_font_url() {
-	// Don't preload in development mode
-	if ( sunnysideac_is_vite_dev_server_running() ) {
-		return null;
-	}
-
-	// In production, look for the font in the manifest
-	$manifest_path = get_template_directory() . '/dist/.vite/manifest.json';
-
-	if ( file_exists( $manifest_path ) ) {
-		$manifest = json_decode( file_get_contents( $manifest_path ), true );
-
-		// Look for the font file in the manifest
-		// Vite may include it under its source path or as an asset
-		$font_key = 'src/assets/fonts/Inter-Variable.woff2';
-
-		if ( isset( $manifest[ $font_key ] ) ) {
-			return get_template_directory_uri() . '/dist/' . $manifest[ $font_key ]['file'];
-		}
-
-		// Alternative: scan manifest for any Inter font file
-		foreach ( $manifest as $key => $entry ) {
-			if ( isset( $entry['file'] ) && strpos( $entry['file'], 'Inter-Variable' ) !== false ) {
-				return get_template_directory_uri() . '/dist/' . $entry['file'];
-			}
-		}
-	}
-
-	return null;
-}
-
-/**
  * Theme setup
  */
 function sunnysideac_setup() {
