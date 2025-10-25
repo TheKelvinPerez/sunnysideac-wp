@@ -17,8 +17,8 @@ $icons = array(
 
 // Images data
 $images = array(
-	'hero_right'    => sunnysideac_asset_url( 'assets/images/images/hero/hero-right-image.png' ),
-	'mobile_hero'   => sunnysideac_asset_url( 'assets/images/images/hero/mobile-hero-image.png' ),
+	'hero_right'    => sunnysideac_asset_url( 'assets/optimized/hero-right-image.webp' ),
+	'mobile_hero'   => sunnysideac_asset_url( 'assets/optimized/mobile-hero-image.webp' ),
 	'review_photos' => array(
 		sunnysideac_asset_url( 'assets/images/images/hero/review_photo_1.png' ),
 		sunnysideac_asset_url( 'assets/images/images/hero/review_photo_2.png' ),
@@ -87,19 +87,18 @@ function sunnysideac_render_stars( $count = 5, $star_icon_url = '', $class = 'h-
 		</div>
 		<p class="text-center text-xs leading-normal font-normal sm:text-sm lg:text-left lg:text-lg">
 			<span class="text-[#4c4c4c]">The </span>
-			<span class="text-[#ec9408]">Best </span>
+			<span class="text-[#d87711]">Best </span>
 			<span class="text-[#4c4c4c]">At Keeping You </span>
-			<span class="text-[#e5462f]">Refreshed!</span>
+			<span class="text-[#c23616]">Refreshed!</span>
 		</p>
 		</header>
 
 		<!-- Main Content Area -->
 		<div class="flex flex-1 flex-col justify-center">
-		<!-- Main Headline -->
+		<!-- Main Headline - SEO Optimized -->
 		<h1
 			class="text-center text-xl border-red-500 leading-tight font-semibold text-black sm:text-2xl md:text-3xl lg:text-left lg:text-4xl">
-			AC Trouble? We Turn 'Hot & Miserable' Into 'Cool & Comfortable' —
-			Fast."
+			Premier AC Repair & Installation Services in South Florida | Fast, Reliable HVAC Service
 		</h1>
 
 		<!-- Decorative Line - Hidden on mobile for cleaner look -->
@@ -216,17 +215,29 @@ function sunnysideac_render_stars( $count = 5, $star_icon_url = '', $class = 'h-
 
 	<!-- Desktop Right Column - Hero Image -->
 	<div class="flex items-center justify-center lg:items-start lg:justify-end">
-		<?php echo sunnysideac_responsive_image(
-			'assets/images/images/hero/hero-right-image.png',
-			array(
-				'alt' => 'Professional AC technician working on air conditioning unit',
-				'class' => 'h-64 min-h-[300px] w-full max-w-md rounded-lg object-contain sm:h-80 lg:h-full lg:min-h-[554px] lg:w-full lg:max-w-none',
-				'loading' => 'eager',
-				'decoding' => 'sync',
-				'width' => 554,
-				'height' => 554
-			)
-		); ?>
+		<?php
+		// Custom responsive image with AVIF and WebP support for optimal performance
+		$webp_url = sunnysideac_asset_url( 'assets/optimized/hero-right-image.webp' );
+		$avif_url = sunnysideac_asset_url( 'assets/optimized/hero-right-image.avif' );
+		$fallback_url = sunnysideac_asset_url( 'assets/optimized/hero-right-image.png' );
+		?>
+		<picture>
+			<?php if (file_exists(get_template_directory() . '/assets/optimized/hero-right-image.avif')): ?>
+				<source srcset="<?php echo esc_url($avif_url); ?>" type="image/avif">
+			<?php endif; ?>
+			<?php if (file_exists(get_template_directory() . '/assets/optimized/hero-right-image.webp')): ?>
+				<source srcset="<?php echo esc_url($webp_url); ?>" type="image/webp">
+			<?php endif; ?>
+			<img
+				src="<?php echo esc_url($webp_url); ?>"
+				alt="Professional AC technician working on air conditioning unit"
+				loading="eager"
+				decoding="sync"
+				class="h-64 min-h-[300px] w-full max-w-md rounded-lg object-contain sm:h-80 lg:h-full lg:min-h-[554px] lg:w-full lg:max-w-none"
+				width="554"
+				height="554"
+			>
+		</picture>
 	</div>
 	</div>
 
@@ -250,10 +261,9 @@ function sunnysideac_render_stars( $count = 5, $star_icon_url = '', $class = 'h-
 
 		<!-- Main Content Area -->
 		<div class="flex flex-1 flex-col justify-center">
-		<!-- Main Headline -->
+		<!-- Main Headline - SEO Optimized -->
 		<h1 class="text-center text-xl leading-tight font-semibold text-white sm:text-2xl md:text-3xl">
-			AC Trouble? We Turn 'Hot & Miserable' Into 'Cool & Comfortable' —
-			Fast."
+			Premier AC Repair & Installation in South Florida | Fast HVAC Service
 		</h1>
 
 		<!-- Subtitle -->

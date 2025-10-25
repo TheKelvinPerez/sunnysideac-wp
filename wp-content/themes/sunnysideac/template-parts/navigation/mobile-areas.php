@@ -22,7 +22,7 @@ if ( empty( $priority_cities ) ) {
 
 ?>
 <div class="mb-6">
-	<h3 class="mb-3 border-b border-gray-200 pb-2 text-lg font-medium text-gray-800">Areas</h3>
+	<div class="mb-3 border-b border-gray-200 pb-2 text-lg font-medium text-gray-800" role="heading" aria-level="4">Areas</div>
 	<div class="space-y-1">
 		<?php foreach ( $priority_cities as $city ) : ?>
 			<?php

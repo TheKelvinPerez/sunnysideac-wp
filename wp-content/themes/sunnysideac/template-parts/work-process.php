@@ -46,7 +46,7 @@ $our_process_icon_url = get_template_directory_uri() . '/assets/images/home-page
 				null,
 				array(
 					'icon'  => $our_process_icon_url,
-					'title' => 'Work Process',
+					'title' => 'Our AC Service Process | Professional HVAC Installation South Florida',
 					'id'    => 'work-process-heading',
 				)
 			);
@@ -100,12 +100,14 @@ $our_process_icon_url = get_template_directory_uri() . '/assets/images/home-page
 							<p class="text-lg font-thin text-gray-600">
 								<?php echo esc_html( $step['subtitle'] ); ?>
 							</p>
-							<h3
+							<div
 								id="<?php echo esc_attr( $step_id ); ?>-title"
 								class="text-lg leading-tight font-bold text-gray-900 md:text-xl"
+								role="heading"
+								aria-level="4"
 							>
 								<?php echo esc_html( $step['title'] ); ?>
-							</h3>
+							</div>
 						</div>
 					</div>
 				</article>

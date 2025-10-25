@@ -24,8 +24,8 @@ if ( empty( $service_categories ) ) {
 <div class="fixed top-[210px] left-1/2 -translate-x-1/2 z-[9999] w-[900px] max-w-[95vw] rounded-[20px] border-2 border-[#e6d4b8] bg-white shadow-[0_8px_25px_rgba(0,0,0,0.15)] overflow-hidden hidden services-dropdown">
 	<!-- Header -->
 	<div class="bg-gradient-to-r from-[#fb9939] to-[#e5462f] px-6 py-4">
-		<h3 class="text-2xl font-bold text-white [font-family:'Inter-Bold',Helvetica]">Our Services</h3>
-		<p class="text-sm text-white/90 mt-1 font-normal [font-family:'Inter',Helvetica]">Professional HVAC Solutions for Your Comfort</p>
+		<div class="text-2xl font-bold text-white " role="heading" aria-level="4">Our Services</div>
+		<p class="text-sm text-white/90 mt-1 font-normal ">Professional HVAC Solutions for Your Comfort</p>
 	</div>
 
 	<!-- Content -->
@@ -56,7 +56,7 @@ if ( empty( $service_categories ) ) {
 						}
 
 						$icon_classes = 'h-4 w-4 transition-colors duration-200 ' . ( $is_active ? 'text-[#e5462f]' : 'text-gray-600 group-hover:text-[#e5462f]' );
-						$text_classes = '[font-family:\'Inter-Medium\',Helvetica] text-sm font-medium transition-colors duration-200 ' . ( $is_active ? 'text-[#e5462f]' : 'text-black group-hover:text-[#e5462f]' );
+						$text_classes = ' text-sm font-medium transition-colors duration-200 ' . ( $is_active ? 'text-[#e5462f]' : 'text-black group-hover:text-[#e5462f]' );
 						?>
 						<a href="<?php echo esc_url( $service_url ); ?>" class="<?php echo esc_attr( $css_classes ); ?>" aria-label="Navigate to <?php echo esc_attr( $service_name ); ?>" <?php echo $is_active ? 'aria-current="page"' : ''; ?>>
 							<div class="h-4 w-4 flex-shrink-0 mt-0.5">
@@ -75,7 +75,7 @@ if ( empty( $service_categories ) ) {
 
 		<!-- View All CTA -->
 		<div class="pt-4 border-t-2 border-[#e6d4b8]">
-			<a href="<?php echo esc_url( home_url( '/services' ) ); ?>" class="flex items-center justify-center gap-2 rounded-[20px] bg-gradient-to-r from-[#fb9939] to-[#e5462f] px-6 py-3 text-center font-bold text-white text-base transition-all duration-200 hover:scale-105 hover:shadow-lg focus:scale-105 focus:outline-none [font-family:'Inter-Bold',Helvetica]">
+			<a href="<?php echo esc_url( home_url( '/services' ) ); ?>" class="flex items-center justify-center gap-2 rounded-[20px] bg-gradient-to-r from-[#fb9939] to-[#e5462f] px-6 py-3 text-center font-bold text-white text-base transition-all duration-200 hover:scale-105 hover:shadow-lg focus:scale-105 focus:outline-none ">
 				View All HVAC Services
 				<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />

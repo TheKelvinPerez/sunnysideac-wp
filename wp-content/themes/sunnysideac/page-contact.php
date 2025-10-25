@@ -114,9 +114,9 @@ get_template_part(
 
 				<div class="lg:grid lg:grid-cols-3 lg:gap-6 mb-8">
 					<article class="rounded-[20px] bg-white p-6 md:p-8 lg:p-10 mb-6 lg:mb-0">
-						<h3 class="text-lg md:text-xl font-semibold text-gray-900 mb-4">
+						<div class="text-lg md:text-xl font-semibold text-gray-900 mb-4" role="heading" aria-level="4">
 							Emergency Services
-						</h3>
+						</div>
 						<p class="text-sm md:text-base font-normal leading-snug text-gray-700">
 							24/7 emergency repair service for when your AC breaks down unexpectedly. We prioritize emergency calls and aim for same-day service.
 						</p>
@@ -126,9 +126,9 @@ get_template_part(
 					</article>
 
 					<article class="rounded-[20px] bg-white p-6 md:p-8 lg:p-10 mb-6 lg:mb-0">
-						<h3 class="text-lg md:text-xl font-semibold text-gray-900 mb-4">
+						<div class="text-lg md:text-xl font-semibold text-gray-900 mb-4" role="heading" aria-level="4">
 							Scheduled Service
-						</h3>
+						</div>
 						<p class="text-sm md:text-base font-normal leading-snug text-gray-700">
 							Regular maintenance, installations, and non-emergency repairs. Schedule online or call during business hours for convenient appointment times.
 						</p>
@@ -138,9 +138,9 @@ get_template_part(
 					</article>
 
 					<article class="rounded-[20px] bg-white p-6 md:p-8 lg:p-10">
-						<h3 class="text-lg md:text-xl font-semibold text-gray-900 mb-4">
+						<div class="text-lg md:text-xl font-semibold text-gray-900 mb-4" role="heading" aria-level="4">
 							Free Estimates
-						</h3>
+						</div>
 						<p class="text-sm md:text-base font-normal leading-snug text-gray-700">
 							Get a free, no-obligation estimate for new installations, system replacements, or major repairs. We'll assess your needs and provide transparent pricing.
 						</p>

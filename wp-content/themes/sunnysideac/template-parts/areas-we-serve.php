@@ -48,9 +48,9 @@ $images = array(
 			<div class="mb-6">
 				<div class="rounded-xl bg-gradient-to-r from-[#FDC85F] to-[#E64B30] p-4 shadow-lg">
 					<div class="mb-4 text-center">
-						<h3 class="mb-2 text-lg font-extrabold text-white">
+						<div class="mb-2 text-lg font-extrabold text-white" role="heading" aria-level="4">
 							Proudly Serving
-						</h3>
+						</div>
 						<div class="mx-auto h-0.5 w-20 bg-white opacity-75"></div>
 					</div>
 
@@ -104,9 +104,9 @@ $images = array(
 					<div class="absolute bottom-8 -left-8">
 						<div class="w-[400px] rounded-xl bg-gradient-to-r from-[#FDC85F] to-[#E64B30] p-4 shadow-lg md:w-full">
 							<div class="mb-4 text-center">
-								<h3 class="mb-2 text-lg font-extrabold text-white">
+								<div class="mb-2 text-lg font-extrabold text-white" role="heading" aria-level="4">
 									Proudly Serving
-								</h3>
+								</div>
 								<div class="mx-auto h-0.5 w-24 bg-white opacity-75"></div>
 							</div>
 

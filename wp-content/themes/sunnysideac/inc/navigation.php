@@ -31,8 +31,8 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 				// Header
 				if ( $menu_type === 'services' ) {
 					$output .= '<div class="bg-gradient-to-r from-[#fb9939] to-[#e5462f] px-6 py-4">';
-					$output .= '<h3 class="text-2xl font-bold text-white [font-family:\'Inter-Bold\',Helvetica]">Our Services</h3>';
-					$output .= '<p class="text-sm text-white/90 mt-1 font-normal [font-family:\'Inter\',Helvetica]">Professional HVAC Solutions for Your Comfort</p>';
+					$output .= '<div class="text-2xl font-bold text-white " role="heading" aria-level="4">Our Services</div>';
+					$output .= '<p class="text-sm text-white/90 mt-1 font-normal ">Professional HVAC Solutions for Your Comfort</p>';
 					$output .= '</div>';
 					$output .= '<div class="p-6">';
 					$output .= '<div class="grid grid-cols-3 gap-6 mb-6">';
@@ -44,8 +44,8 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 					$output .= '<div class="bg-gradient-to-r from-[#fb9939] to-[#e5462f] px-6 py-4">';
 					$output .= '<div class="flex items-center justify-between">';
 					$output .= '<div>';
-					$output .= '<h3 class="text-2xl font-bold text-white [font-family:\'Inter-Bold\',Helvetica]">Cities We Serve</h3>';
-					$output .= '<p class="text-sm text-white/90 mt-1 font-normal [font-family:\'Inter\',Helvetica]">Proudly Serving South Florida</p>';
+					$output .= '<div class="text-2xl font-bold text-white " role="heading" aria-level="4">Cities We Serve</div>';
+					$output .= '<p class="text-sm text-white/90 mt-1 font-normal ">Proudly Serving South Florida</p>';
 					$output .= '</div>';
 					$output .= '<div class="text-white/80">';
 					$output .= '<svg class="h-10 w-10" fill="currentColor" viewBox="0 0 24 24">';
@@ -98,7 +98,7 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 				$output .= '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="' . esc_attr( $icon_path ) . '" />';
 				$output .= '</svg>';
 				$output .= '</div>';
-				$output .= '<span class="[font-family:\'Inter-Medium\',Helvetica] text-sm font-medium text-black group-hover:text-[#e5462f] transition-colors duration-200">' . esc_html( $service_name ) . '</span>';
+				$output .= '<span class=" text-sm font-medium text-black group-hover:text-[#e5462f] transition-colors duration-200">' . esc_html( $service_name ) . '</span>';
 				$output .= '</a>';
 			}
 
@@ -149,7 +149,7 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 			$output .= '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />';
 			$output .= '</svg>';
 			$output .= '</div>';
-			$output .= '<span class="[font-family:\'Inter-Medium\',Helvetica] text-sm font-medium transition-colors duration-200 ' . ( $is_active ? 'text-[#e5462f]' : 'text-black group-hover:text-[#e5462f]' ) . '">' . esc_html( $city ) . '</span>';
+			$output .= '<span class=" text-sm font-medium transition-colors duration-200 ' . ( $is_active ? 'text-[#e5462f]' : 'text-black group-hover:text-[#e5462f]' ) . '">' . esc_html( $city ) . '</span>';
 			$output .= '</a>';
 		}
 	}
@@ -167,7 +167,7 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 
 				// Add "View All" CTA
 				$output .= '<div class="pt-4 border-t-2 border-[#e6d4b8]">';
-				$output .= '<a href="' . esc_url( home_url( '/' . $menu_type ) ) . '" class="flex items-center justify-center gap-2 rounded-[20px] bg-gradient-to-r from-[#fb9939] to-[#e5462f] px-6 py-3 text-center font-bold text-white text-base transition-all duration-200 hover:scale-105 hover:shadow-lg focus:scale-105 focus:outline-none [font-family:\'Inter-Bold\',Helvetica]">';
+				$output .= '<a href="' . esc_url( home_url( '/' . $menu_type ) ) . '" class="flex items-center justify-center gap-2 rounded-[20px] bg-gradient-to-r from-[#fb9939] to-[#e5462f] px-6 py-3 text-center font-bold text-white text-base transition-all duration-200 hover:scale-105 hover:shadow-lg focus:scale-105 focus:outline-none ">';
 
 				if ( $menu_type === 'services' ) {
 					$output .= 'View All HVAC Services';
@@ -233,7 +233,7 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 
 				$output .= '<div class="relative" id="' . $container_id . '">';
 				$output .= '<div class="' . esc_attr( $menu_item_classes ) . '" data-item="' . esc_attr( $item->title ) . '" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-label="' . esc_attr( $item->title ) . ' menu" ' . ( $is_active ? 'aria-current="page"' : '' ) . '>';
-				$output .= '<a href="' . esc_url( $item->url ) . '" class="[font-family:\'Inter-Medium\',Helvetica] text-lg font-medium whitespace-nowrap transition-colors duration-200 ' . ( $is_active ? 'text-[#e5462f]' : 'text-black hover:text-black focus:text-black' ) . '">' . esc_html( $item->title ) . '</a>';
+				$output .= '<a href="' . esc_url( $item->url ) . '" class=" text-lg font-medium whitespace-nowrap transition-colors duration-200 ' . ( $is_active ? 'text-[#e5462f]' : 'text-black hover:text-black focus:text-black' ) . '">' . esc_html( $item->title ) . '</a>';
 				$output .= '<button class="ml-1 border-none bg-transparent p-0 focus:outline-none ' . $btn_class . '" aria-label="Toggle ' . $item_lower . ' dropdown">';
 				$output .= '<img src="' . esc_url( $chevron_icon ) . '" alt="" class="h-4 w-4 text-current transition-transform duration-200 chevron-icon" role="presentation" loading="lazy" decoding="async" />';
 				$output .= '</button>';
@@ -242,7 +242,7 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 			} else {
 				// Regular menu item
 				$output .= '<button class="cursor-pointer rounded-full px-6 py-3 transition-colors duration-200 hover:bg-[#ffc549] focus:ring-2 focus:ring-[#ffc549] focus:ring-offset-2 focus:outline-none bg-[#fde0a0] nav-item" data-item="' . esc_attr( $item->title ) . '" data-href="' . esc_url( $item->url ) . '" role="menuitem" aria-label="Navigate to ' . esc_attr( $item->title ) . '">';
-				$output .= '<span class="[font-family:\'Inter-Medium\',Helvetica] text-lg font-medium whitespace-nowrap text-black">' . esc_html( $item->title ) . '</span>';
+				$output .= '<span class=" text-lg font-medium whitespace-nowrap text-black">' . esc_html( $item->title ) . '</span>';
 				$output .= '</button>';
 			}
 		}
@@ -286,9 +286,9 @@ function sunnysideac_desktop_nav_menu() {
  */
 function sunnysideac_fallback_menu() {
 	echo '<ul role="menubar" class="flex items-center gap-2 overflow-visible">';
-	echo '<li><a href="' . home_url() . '" class="cursor-pointer rounded-full px-6 py-3 transition-colors duration-200 hover:bg-[#ffc549] bg-[#fde0a0]"><span class="[font-family:\'Inter-Medium\',Helvetica] text-lg font-medium text-black">Home</span></a></li>';
-	echo '<li><a href="' . home_url( '/services' ) . '" class="cursor-pointer rounded-full px-6 py-3 transition-colors duration-200 hover:bg-[#ffc549] bg-[#fde0a0]"><span class="[font-family:\'Inter-Medium\',Helvetica] text-lg font-medium text-black">Services</span></a></li>';
-	echo '<li><a href="' . home_url( '/contact' ) . '" class="cursor-pointer rounded-full px-6 py-3 transition-colors duration-200 hover:bg-[#ffc549] bg-[#fde0a0]"><span class="[font-family:\'Inter-Medium\',Helvetica] text-lg font-medium text-black">Contact</span></a></li>';
+	echo '<li><a href="' . home_url() . '" class="cursor-pointer rounded-full px-6 py-3 transition-colors duration-200 hover:bg-[#ffc549] bg-[#fde0a0]"><span class=" text-lg font-medium text-black">Home</span></a></li>';
+	echo '<li><a href="' . home_url( '/services' ) . '" class="cursor-pointer rounded-full px-6 py-3 transition-colors duration-200 hover:bg-[#ffc549] bg-[#fde0a0]"><span class=" text-lg font-medium text-black">Services</span></a></li>';
+	echo '<li><a href="' . home_url( '/contact' ) . '" class="cursor-pointer rounded-full px-6 py-3 transition-colors duration-200 hover:bg-[#ffc549] bg-[#fde0a0]"><span class=" text-lg font-medium text-black">Contact</span></a></li>';
 	echo '</ul>';
 }
 
@@ -401,7 +401,7 @@ class Sunnyside_Footer_Nav_Walker extends Walker_Nav_Menu {
 
 		if ( $services_section ) {
 			$output .= '<div>';
-			$output .= '<h3 class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl">' . esc_html( $services_section['title'] ) . '</h3>';
+			$output .= '<div class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl" role="heading" aria-level="4">' . esc_html( $services_section['title'] ) . '</div>';
 			if ( ! empty( $services_section['children'] ) ) {
 				$output .= '<ul class="space-y-2">';
 				foreach ( $services_section['children'] as $child ) {
@@ -423,7 +423,7 @@ class Sunnyside_Footer_Nav_Walker extends Walker_Nav_Menu {
 
 		if ( $company_section ) {
 			$output .= '<div>';
-			$output .= '<h3 class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl">' . esc_html( $company_section['title'] ) . '</h3>';
+			$output .= '<div class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl" role="heading" aria-level="4">' . esc_html( $company_section['title'] ) . '</div>';
 			if ( ! empty( $company_section['children'] ) ) {
 				$output .= '<ul class="space-y-2">';
 				foreach ( $company_section['children'] as $child ) {
@@ -451,7 +451,7 @@ class Sunnyside_Footer_Nav_Walker extends Walker_Nav_Menu {
 		// Service Areas / Cities section
 		if ( $service_areas_section ) {
 			$output .= '<div>';
-			$output .= '<h3 class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl">' . esc_html( $service_areas_section['title'] ) . '</h3>';
+			$output .= '<div class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl" role="heading" aria-level="4">' . esc_html( $service_areas_section['title'] ) . '</div>';
 			if ( ! empty( $service_areas_section['children'] ) ) {
 				$output .= '<ul class="space-y-2">';
 				foreach ( $service_areas_section['children'] as $child ) {
@@ -474,7 +474,7 @@ class Sunnyside_Footer_Nav_Walker extends Walker_Nav_Menu {
 		// Brands section
 		if ( $brands_section ) {
 			$output .= '<div>';
-			$output .= '<h3 class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl">' . esc_html( $brands_section['title'] ) . '</h3>';
+			$output .= '<div class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl" role="heading" aria-level="4">' . esc_html( $brands_section['title'] ) . '</div>';
 			if ( ! empty( $brands_section['children'] ) ) {
 				$output .= '<ul class="space-y-2">';
 				foreach ( $brands_section['children'] as $child ) {
@@ -522,7 +522,7 @@ class Sunnyside_Footer_Nav_Walker extends Walker_Nav_Menu {
 			);
 
 			$output .= '<div>';
-			$output .= '<h3 class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl">Brands</h3>';
+			$output .= '<div class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl" role="heading" aria-level="4">Brands</div>';
 			$output .= '<ul class="space-y-2">';
 			foreach ( $brands_links as $link ) {
 				$output .= '<li>';
@@ -653,7 +653,7 @@ function sunnysideac_footer_fallback_menu() {
 	// Column 2: Services at top, Company at bottom
 	echo '<div class="space-y-6">';
 	echo '<div>';
-	echo '<h3 class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl">' . esc_html( $footer_links['services']['title'] ) . '</h3>';
+	echo '<div class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl" role="heading" aria-level="4">' . esc_html( $footer_links['services']['title'] ) . '</div>';
 	echo '<ul class="space-y-2">';
 	foreach ( $footer_links['services']['links'] as $link ) {
 		echo '<li>';
@@ -666,7 +666,7 @@ function sunnysideac_footer_fallback_menu() {
 	echo '</div>';
 
 	echo '<div>';
-	echo '<h3 class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl">' . esc_html( $footer_links['company']['title'] ) . '</h3>';
+	echo '<div class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl" role="heading" aria-level="4">' . esc_html( $footer_links['company']['title'] ) . '</div>';
 	echo '<ul class="space-y-2">';
 	foreach ( $footer_links['company']['links'] as $link ) {
 		echo '<li>';
@@ -682,7 +682,7 @@ function sunnysideac_footer_fallback_menu() {
 	// Column 3: Brands
 	echo '<div class="space-y-6">';
 	echo '<div>';
-	echo '<h3 class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl">' . esc_html( $footer_links['brands']['title'] ) . '</h3>';
+	echo '<div class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl" role="heading" aria-level="4">' . esc_html( $footer_links['brands']['title'] ) . '</div>';
 	echo '<ul class="space-y-2">';
 	foreach ( $footer_links['brands']['links'] as $link ) {
 		echo '<li>';

@@ -374,9 +374,9 @@ if ( have_posts() ) :
 									</div>
 
 									<!-- Benefit Text -->
-									<h3 class="text-lg font-semibold text-gray-900 mb-2">
+									<div class="text-lg font-semibold text-gray-900 mb-2" role="heading" aria-level="4">
 										<?php echo esc_html( $benefit['benefit'] ); ?>
-									</h3>
+									</div>
 								</article>
 							<?php endforeach; ?>
 						</div>
@@ -411,9 +411,9 @@ if ( have_posts() ) :
 										</div>
 
 										<!-- Step Content -->
-										<h3 class="text-xl font-bold text-gray-900 mb-3" itemprop="name">
+										<div class="text-xl font-bold text-gray-900 mb-3" itemprop="name" role="heading" aria-level="4">
 											<?php echo esc_html( $step['title'] ); ?>
-										</h3>
+										</div>
 
 										<p class="text-base text-gray-600 leading-relaxed" itemprop="text">
 											<?php echo esc_html( $step['description'] ); ?>
@@ -445,9 +445,9 @@ if ( have_posts() ) :
 							if ( ! empty( $neighborhoods_array ) ) :
 								?>
 								<div class="mt-8">
-									<h3 class="text-xl font-semibold text-gray-900 mb-4">
+									<div class="text-xl font-semibold text-gray-900 mb-4" role="heading" aria-level="4">
 										Areas We Serve in <?php echo esc_html( $city_name ); ?>:
-									</h3>
+									</div>
 									<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
 										<?php foreach ( $neighborhoods_array as $neighborhood ) : ?>
 											<div class="bg-gray-50 rounded-lg px-4 py-2 text-center text-sm text-gray-700 hover:bg-orange-50 transition-colors">
@@ -466,9 +466,9 @@ if ( have_posts() ) :
 							if ( ! empty( $zip_codes_array ) ) :
 								?>
 								<div class="mt-8">
-									<h3 class="text-xl font-semibold text-gray-900 mb-4">
+									<div class="text-xl font-semibold text-gray-900 mb-4" role="heading" aria-level="4">
 										Zip Codes:
-									</h3>
+									</div>
 									<div class="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-3">
 										<?php foreach ( $zip_codes_array as $zip_code ) : ?>
 											<div class="bg-orange-50 rounded-lg px-4 py-2 text-center text-sm font-medium text-orange-700 hover:bg-orange-100 transition-colors">
@@ -508,9 +508,9 @@ if ( have_posts() ) :
 										<label for="faq-<?php echo esc_attr( $index + 1 ); ?>" class="block w-full cursor-pointer">
 											<div class="faq-container relative w-full rounded-[20px] border-2 border-transparent bg-[#f6f6f6] transition-all duration-300 ease-in-out hover:shadow-md" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
 												<div class="flex items-start justify-between p-6">
-													<h3 class="pr-4 text-lg leading-relaxed font-semibold text-black md:text-xl" itemprop="name">
+													<div class="pr-4 text-lg leading-relaxed font-semibold text-black md:text-xl" itemprop="name" role="heading" aria-level="4">
 														<?php echo esc_html( $faq['question'] ); ?>
-													</h3>
+													</div>
 
 													<div class="faq-chevron h-[35px] w-[35px] flex-shrink-0 rounded-full shadow-md transition-all duration-300 ease-in-out hover:scale-110">
 														<img class="chevron-icon h-full w-full transition-transform duration-300 ease-in-out"
@@ -590,9 +590,9 @@ if ( have_posts() ) :
 								<?php foreach ( array_slice( $all_services, 0, 6 ) as $related_service ) : ?>
 									<a href="<?php echo esc_url( home_url( '/' . $city_slug . '/' . $related_service->post_name . '/' ) ); ?>"
 										class="group block bg-gray-50 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-orange-50 hover:to-orange-100 hover:shadow-lg">
-										<h3 class="font-bold text-lg text-gray-900 mb-2 group-hover:text-orange-500">
+										<div class="font-bold text-lg text-gray-900 mb-2 group-hover:text-orange-500" role="heading" aria-level="4">
 											<?php echo esc_html( get_the_title( $related_service ) ); ?>
-										</h3>
+										</div>
 										<p class="text-gray-600 text-sm">
 											Professional service in <?php echo esc_html( $city_name ); ?>
 										</p>

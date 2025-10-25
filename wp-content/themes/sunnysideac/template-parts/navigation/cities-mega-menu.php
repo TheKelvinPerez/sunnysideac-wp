@@ -26,8 +26,8 @@ if ( empty( $priority_cities ) ) {
 	<div class="bg-gradient-to-r from-[#fb9939] to-[#e5462f] px-6 py-4">
 		<div class="flex items-center justify-between">
 			<div>
-				<h3 class="text-2xl font-bold text-white [font-family:'Inter-Bold',Helvetica]">Cities We Serve</h3>
-				<p class="text-sm text-white/90 mt-1 font-normal [font-family:'Inter',Helvetica]">Proudly Serving South Florida</p>
+				<div class="text-2xl font-bold text-white " role="heading" aria-level="4">Cities We Serve</div>
+				<p class="text-sm text-white/90 mt-1 font-normal ">Proudly Serving South Florida</p>
 			</div>
 			<div class="text-white/80">
 				<svg class="h-10 w-10" fill="currentColor" viewBox="0 0 24 24">
@@ -57,7 +57,7 @@ if ( empty( $priority_cities ) ) {
 				}
 
 				$icon_classes = 'h-4 w-4 transition-colors duration-200 ' . ( $is_active ? 'text-[#e5462f]' : 'text-gray-600 group-hover:text-[#e5462f]' );
-				$text_classes = '[font-family:\'Inter-Medium\',Helvetica] text-sm font-medium transition-colors duration-200 ' . ( $is_active ? 'text-[#e5462f]' : 'text-black group-hover:text-[#e5462f]' );
+				$text_classes = ' text-sm font-medium transition-colors duration-200 ' . ( $is_active ? 'text-[#e5462f]' : 'text-black group-hover:text-[#e5462f]' );
 				?>
 				<a href="<?php echo esc_url( $city_url ); ?>" class="<?php echo esc_attr( $css_classes ); ?>" aria-label="Navigate to <?php echo esc_attr( $city ); ?> service area" <?php echo $is_active ? 'aria-current="page"' : ''; ?>>
 					<div class="h-4 w-4 flex-shrink-0">
@@ -74,7 +74,7 @@ if ( empty( $priority_cities ) ) {
 
 		<!-- View All CTA -->
 		<div class="pt-4 border-t-2 border-[#e6d4b8]">
-			<a href="<?php echo esc_url( home_url( '/cities' ) ); ?>" class="flex items-center justify-center gap-2 rounded-[20px] bg-gradient-to-r from-[#fb9939] to-[#e5462f] px-6 py-3 text-center font-bold text-white text-base transition-all duration-200 hover:scale-105 hover:shadow-lg focus:scale-105 focus:outline-none [font-family:'Inter-Bold',Helvetica]">
+			<a href="<?php echo esc_url( home_url( '/cities' ) ); ?>" class="flex items-center justify-center gap-2 rounded-[20px] bg-gradient-to-r from-[#fb9939] to-[#e5462f] px-6 py-3 text-center font-bold text-white text-base transition-all duration-200 hover:scale-105 hover:shadow-lg focus:scale-105 focus:outline-none ">
 				View All Cities
 				<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />

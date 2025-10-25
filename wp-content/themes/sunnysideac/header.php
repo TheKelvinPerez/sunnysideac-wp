@@ -143,10 +143,10 @@ $phone_icon   = get_template_directory_uri() . '/assets/optimized/navigation-pho
 						fetchpriority="high"
 					/>
 					<div class="flex flex-col text-center">
-						<div class="bg-[linear-gradient(90deg,rgba(255,193,59,1)_0%,rgba(229,70,47,1)_100%)] bg-clip-text [font-family:'Inter-Bold',Helvetica] text-lg leading-tight font-bold [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [text-fill-color:transparent]">
+						<div class="bg-[linear-gradient(90deg,rgba(255,193,59,1)_0%,rgba(229,70,47,1)_100%)] bg-clip-text text-lg leading-tight font-bold [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [text-fill-color:transparent]">
 							SunnySide
 						</div>
-						<div class="bg-[linear-gradient(90deg,rgba(229,70,47,1)_0%,rgba(255,193,59,1)_100%)] bg-clip-text [font-family:'Inter-Bold',Helvetica] text-xl leading-tight font-bold [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [text-fill-color:transparent]">
+						<div class="bg-[linear-gradient(90deg,rgba(229,70,47,1)_0%,rgba(255,193,59,1)_100%)] bg-clip-text text-xl leading-tight font-bold [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [text-fill-color:transparent]">
 							24/7 AC
 						</div>
 					</div>
@@ -178,10 +178,10 @@ $phone_icon   = get_template_directory_uri() . '/assets/optimized/navigation-pho
 						fetchpriority="high"
 					/>
 					<div class="flex flex-col">
-						<div class="bg-[linear-gradient(90deg,rgba(255,193,59,1)_0%,rgba(229,70,47,1)_100%)] bg-clip-text [font-family:'Inter-Bold',Helvetica] text-2xl leading-tight font-bold [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [text-fill-color:transparent]">
+						<div class="bg-[linear-gradient(90deg,rgba(255,193,59,1)_0%,rgba(229,70,47,1)_100%)] bg-clip-text text-2xl leading-tight font-bold [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [text-fill-color:transparent]">
 							SunnySide
 						</div>
-						<div class="bg-[linear-gradient(90deg,rgba(229,70,47,1)_0%,rgba(255,193,59,1)_100%)] bg-clip-text [font-family:'Inter-Bold',Helvetica] text-3xl leading-tight font-bold [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [text-fill-color:transparent]">
+						<div class="bg-[linear-gradient(90deg,rgba(229,70,47,1)_0%,rgba(255,193,59,1)_100%)] bg-clip-text text-3xl leading-tight font-bold [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [text-fill-color:transparent]">
 							24/7 AC
 						</div>
 					</div>
@@ -204,7 +204,7 @@ $phone_icon   = get_template_directory_uri() . '/assets/optimized/navigation-pho
 						loading="lazy"
 						decoding="async"
 					/>
-					<span class="[font-family:'Inter-Medium',Helvetica] text-lg font-medium whitespace-nowrap text-white">
+					<span class="text-lg font-medium whitespace-nowrap text-white">
 						Call Us Now
 					</span>
 				</button>
@@ -237,10 +237,10 @@ $phone_icon   = get_template_directory_uri() . '/assets/optimized/navigation-pho
 										fetchpriority="high"
 									/>
 									<div class="flex flex-col">
-										<div class="bg-[linear-gradient(90deg,rgba(255,193,59,1)_0%,rgba(229,70,47,1)_100%)] bg-clip-text [font-family:'Inter-Bold',Helvetica] text-sm leading-tight font-bold [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [text-fill-color:transparent]">
+										<div class="bg-[linear-gradient(90deg,rgba(255,193,59,1)_0%,rgba(229,70,47,1)_100%)] bg-clip-text text-sm leading-tight font-bold [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [text-fill-color:transparent]">
 											SunnySide
 										</div>
-										<div class="bg-[linear-gradient(90deg,rgba(229,70,47,1)_0%,rgba(255,193,59,1)_100%)] bg-clip-text [font-family:'Inter-Bold',Helvetica] text-sm leading-tight font-bold [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [text-fill-color:transparent]">
+										<div class="bg-[linear-gradient(90deg,rgba(229,70,47,1)_0%,rgba(255,193,59,1)_100%)] bg-clip-text text-sm leading-tight font-bold [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [text-fill-color:transparent]">
 											24/7 AC
 										</div>
 									</div>

@@ -72,7 +72,7 @@ get_header(); ?>
 
 		<!-- Quick Links -->
 		<div class="bg-gray-100 rounded-2xl p-8">
-			<h3 class="text-xl font-bold text-gray-900 mb-6">Popular Pages</h3>
+			<div class="text-xl font-bold text-gray-900 mb-6" role="heading" aria-level="4">Popular Pages</div>
 			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 				<a
 					href="<?php echo esc_url( home_url( '/' ) ); ?>"
@@ -126,7 +126,7 @@ get_header(); ?>
 
 		<!-- Emergency Contact -->
 		<div class="mt-12 p-6 bg-gradient-to-r from-[#fb9939] to-[#e5462f] rounded-2xl text-white">
-			<h3 class="text-xl font-semibold mb-2">Need Emergency HVAC Service?</h3>
+			<div class="text-xl font-semibold mb-2" role="heading" aria-level="4">Need Emergency HVAC Service?</div>
 			<p class="mb-4">SunnySide 24/7 AC is available around the clock for emergency repairs!</p>
 			<a
 				href="<?php echo SUNNYSIDE_TEL_HREF; ?>"

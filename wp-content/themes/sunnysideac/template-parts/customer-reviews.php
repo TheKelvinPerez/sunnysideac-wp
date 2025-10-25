@@ -53,7 +53,7 @@ $reviews_data = array(
 $description_text = 'Our greatest reward is the trust and satisfaction of our customers. From emergency repairs to full system installations, homeowners count on us for reliable service, expert craftsmanship, and a personal touch that makes all the difference.';
 ?>
 
-<section class="w-full rounded-[20px] bg-white p-6 md:p-12" id="customer-reviews">
+<section class="w-full rounded-[20px] bg-white p-6 md:p-12" id="customer-reviews" data-reviews='<?php echo json_encode($reviews_data); ?>'>
 	<div class="mx-auto max-w-7xl">
 		<!-- Mobile Layout: Stacked vertically -->
 		<div class="block lg:hidden">
@@ -65,7 +65,7 @@ $description_text = 'Our greatest reward is the trust and satisfaction of our cu
 					null,
 					array(
 						'icon'  => $icons['testimonial_star'],
-						'title' => 'Testimonials',
+						'title' => 'Customer Reviews | Trusted HVAC Services South Florida',
 						'id'    => 'testimonials-heading',
 						'align' => 'left',
 					)
@@ -234,7 +234,7 @@ $description_text = 'Our greatest reward is the trust and satisfaction of our cu
 						null,
 						array(
 							'icon'  => $icons['testimonial_star'],
-							'title' => 'Testimonials',
+							'title' => 'Customer Reviews | Trusted HVAC Services South Florida',
 							'id'    => 'testimonials-heading-desktop',
 							'align' => 'left',
 						)
@@ -257,7 +257,7 @@ $description_text = 'Our greatest reward is the trust and satisfaction of our cu
 
 				<!-- Review Card -->
 				<article class="flex h-72 flex-col gap-4 rounded-2xl bg-gray-50 p-6">
-					<div class="flex gap-1 review-stars-desktop" aria-label="5 out of 5 stars">
+					<div class="flex gap-1 review-stars-desktop">
 						<?php for ( $i = 0; $i < 5; $i++ ) : ?>
 							<img
 								src="<?php echo esc_url( $icons['star'] ); ?>"
@@ -408,111 +408,3 @@ $description_text = 'Our greatest reward is the trust and satisfaction of our cu
 		}
 	}
 </style>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-	// Store reviews data in JavaScript
-	const reviewsData = <?php echo json_encode( $reviews_data ); ?>;
-
-	let currentReviewIndex = 0;
-
-	// Function to update review content
-	function updateReview(index) {
-		const review = reviewsData[index];
-
-		// Update mobile elements
-		const mobileContent = document.querySelector('.review-content');
-		const mobileName = document.querySelector('.review-name');
-		const mobileLocation = document.querySelector('.review-location');
-		const mobileAvatar = document.querySelector('.review-avatar');
-
-		if (mobileContent) mobileContent.textContent = `"${review.review}"`;
-		if (mobileName) mobileName.textContent = review.name;
-		if (mobileLocation) mobileLocation.textContent = review.location;
-		if (mobileAvatar) {
-			mobileAvatar.src = review.avatar;
-			mobileAvatar.alt = `${review.name} profile picture`;
-		}
-
-		// Update desktop elements
-		const desktopContent = document.querySelector('.review-content-desktop');
-		const desktopName = document.querySelector('.review-name-desktop');
-		const desktopLocation = document.querySelector('.review-location-desktop');
-		const desktopAvatar = document.querySelector('.review-avatar-desktop');
-
-		if (desktopContent) desktopContent.textContent = `"${review.review}"`;
-		if (desktopName) desktopName.textContent = review.name;
-		if (desktopLocation) desktopLocation.textContent = review.location;
-		if (desktopAvatar) {
-			desktopAvatar.src = review.avatar;
-			desktopAvatar.alt = `${review.name} profile picture`;
-		}
-	}
-
-	// Navigation functions
-	function handlePreviousReview() {
-		currentReviewIndex = currentReviewIndex === 0 ? reviewsData.length - 1 : currentReviewIndex - 1;
-		updateReview(currentReviewIndex);
-	}
-
-	function handleNextReview() {
-		currentReviewIndex = currentReviewIndex === reviewsData.length - 1 ? 0 : currentReviewIndex + 1;
-		updateReview(currentReviewIndex);
-	}
-
-	// Add event listeners for mobile buttons
-	const prevBtnMobile = document.querySelector('.prev-review-btn');
-	const nextBtnMobile = document.querySelector('.next-review-btn');
-
-	if (prevBtnMobile) {
-		prevBtnMobile.addEventListener('click', handlePreviousReview);
-	}
-	if (nextBtnMobile) {
-		nextBtnMobile.addEventListener('click', handleNextReview);
-	}
-
-	// Add event listeners for desktop buttons
-	const prevBtnDesktop = document.querySelector('.prev-review-btn-desktop');
-	const nextBtnDesktop = document.querySelector('.next-review-btn-desktop');
-
-	if (prevBtnDesktop) {
-		prevBtnDesktop.addEventListener('click', handlePreviousReview);
-	}
-	if (nextBtnDesktop) {
-		nextBtnDesktop.addEventListener('click', handleNextReview);
-	}
-
-	// Add keyboard navigation
-	document.addEventListener('keydown', function(event) {
-		if (event.key === 'ArrowLeft') {
-			handlePreviousReview();
-		} else if (event.key === 'ArrowRight') {
-			handleNextReview();
-		}
-	});
-
-	// Optional: Auto-play carousel
-	let autoPlayInterval;
-
-	function startAutoPlay() {
-		autoPlayInterval = setInterval(handleNextReview, 8000); // Change every 8 seconds
-	}
-
-	function stopAutoPlay() {
-		if (autoPlayInterval) {
-			clearInterval(autoPlayInterval);
-			autoPlayInterval = null;
-		}
-	}
-
-	// Start auto-play
-	startAutoPlay();
-
-	// Pause auto-play on hover
-	const section = document.getElementById('customer-reviews');
-	if (section) {
-		section.addEventListener('mouseenter', stopAutoPlay);
-		section.addEventListener('mouseleave', startAutoPlay);
-	}
-});
-</script>

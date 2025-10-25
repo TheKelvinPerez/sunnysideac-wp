@@ -95,7 +95,7 @@ $images = array(
 							placeholder="Full Name*"
 							required
 							minlength="2"
-							class="w-full rounded-[12px] border-0 bg-white px-5 py-4 text-base font-normal text-black outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-orange-400"
+							class="w-full rounded-[12px] border-0 bg-white px-5 py-4 text-base font-normal text-black outline-none placeholder:text-gray-600 focus:ring-2 focus:ring-orange-400"
 							aria-describedby="fullName-help"
 						/>
 						<p id="fullName-error" role="alert" class="mt-1 text-sm text-red-600 hidden">
@@ -113,7 +113,7 @@ $images = array(
 							placeholder="Phone Number*"
 							required
 							pattern="[0-9+()\-\s]{7,}"
-							class="w-full rounded-[12px] border-0 bg-white px-5 py-4 text-base font-normal text-black outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-orange-400"
+							class="w-full rounded-[12px] border-0 bg-white px-5 py-4 text-base font-normal text-black outline-none placeholder:text-gray-600 focus:ring-2 focus:ring-orange-400"
 							aria-describedby="phoneNumber-help"
 						/>
 						<p id="phoneNumber-error" role="alert" class="mt-1 text-sm text-red-600 hidden">
@@ -137,7 +137,7 @@ $images = array(
 							type="email"
 							placeholder="Email Address*"
 							required
-							class="w-full rounded-[12px] border-0 bg-white px-5 py-4 text-base font-normal text-black outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-orange-400"
+							class="w-full rounded-[12px] border-0 bg-white px-5 py-4 text-base font-normal text-black outline-none placeholder:text-gray-600 focus:ring-2 focus:ring-orange-400"
 							aria-describedby="emailAddress-help"
 						/>
 						<p id="emailAddress-error" role="alert" class="mt-1 text-sm text-red-600 hidden">
@@ -152,10 +152,10 @@ $images = array(
 							id="serviceType"
 							name="serviceType"
 							required
-							class="w-full appearance-none rounded-[12px] border-0 bg-white px-5 py-4 text-base font-normal outline-none focus:ring-2 focus:ring-orange-400 text-gray-400"
+							class="w-full appearance-none rounded-[12px] border-0 bg-white px-5 py-4 text-base font-normal outline-none focus:ring-2 focus:ring-orange-400 text-gray-600"
 							aria-describedby="serviceType-help"
 						>
-							<option value="" disabled selected class="text-gray-400">
+							<option value="" disabled selected class="text-gray-600">
 								Service Type*
 							</option>
 							<?php foreach ( $service_types as $service ) : ?>
@@ -187,10 +187,10 @@ $images = array(
 						id="selectCategory"
 						name="selectCategory"
 						required
-						class="w-full appearance-none rounded-[12px] border-0 bg-white px-5 py-4 text-base font-normal outline-none focus:ring-2 focus:ring-orange-400 text-gray-400"
+						class="w-full appearance-none rounded-[12px] border-0 bg-white px-5 py-4 text-base font-normal outline-none focus:ring-2 focus:ring-orange-400 text-gray-600"
 						aria-describedby="selectCategory-help"
 					>
-						<option value="" disabled selected class="text-gray-400">
+						<option value="" disabled selected class="text-gray-600">
 							Select Category*
 						</option>
 						<?php foreach ( $select_options as $option ) : ?>
@@ -222,7 +222,7 @@ $images = array(
 						name="message"
 						placeholder="Your Message"
 						rows="6"
-						class="w-full resize-none rounded-[12px] border-0 bg-white px-5 py-4 text-base font-normal text-black outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-orange-400"
+						class="w-full resize-none rounded-[12px] border-0 bg-white px-5 py-4 text-base font-normal text-black outline-none placeholder:text-gray-600 focus:ring-2 focus:ring-orange-400"
 						aria-describedby="message-help"
 					></textarea>
 				</fieldset>
@@ -278,7 +278,7 @@ $images = array(
 						/>
 					</div>
 					<div>
-						<h3 class="font-semibold text-black md:text-lg">Email</h3>
+						<div class="font-semibold text-black md:text-lg" role="heading" aria-level="4">Email</div>
 						<a
 							href="<?php echo esc_attr( 'mailto:' . $company_email ); ?>"
 							class="font-normal break-all text-black hover:underline focus:underline focus:outline-none md:text-lg"
@@ -300,9 +300,9 @@ $images = array(
 						/>
 					</div>
 					<div>
-						<h3 class="font-semibold text-black md:text-lg">
+						<div class="font-semibold text-black md:text-lg" role="heading" aria-level="4">
 							Location
-						</h3>
+						</div>
 						<div
 							class="font-normal break-words text-black md:text-lg"
 							itemprop="address"
@@ -328,7 +328,7 @@ $images = array(
 						/>
 					</div>
 					<div>
-						<h3 class="font-semibold text-black md:text-lg">Phone</h3>
+						<div class="font-semibold text-black md:text-lg" role="heading" aria-level="4">Phone</div>
 						<a
 							href="<?php echo esc_attr( SUNNYSIDE_TEL_HREF ); ?>"
 							class="font-normal text-black hover:underline focus:underline focus:outline-none md:text-lg"
@@ -343,9 +343,9 @@ $images = array(
 
 			<!-- Social Media -->
 			<nav class="mt-8" aria-label="Social media links">
-				<h3 class="mb-4 text-center text-xl font-bold text-black">
+				<div class="mb-4 text-center text-xl font-bold text-black" role="heading" aria-level="3">
 					Follow Us:
-				</h3>
+				</div>
 				<div class="flex justify-center">
 					<?php get_template_part( 'template-parts/social-icons', null, array( 'size' => 'md' ) ); ?>
 				</div>
@@ -445,10 +445,10 @@ document.addEventListener('DOMContentLoaded', function() {
 		// Update select styling based on value
 		function updateSelectStyling(select) {
 			if (select.value === '') {
-				select.classList.add('text-gray-400');
+				select.classList.add('text-gray-600');
 				select.classList.remove('text-black');
 			} else {
-				select.classList.remove('text-gray-400');
+				select.classList.remove('text-gray-600');
 				select.classList.add('text-black');
 			}
 		}

@@ -300,7 +300,7 @@ if ( have_posts() ) :
 										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
 									</svg>
 								</div>
-								<h3 class="text-xl font-bold text-gray-900 mb-2">Factory-Trained Technicians</h3>
+								<div class="text-xl font-bold text-gray-900 mb-2" role="heading" aria-level="4">Factory-Trained Technicians</div>
 								<p class="text-gray-600">
 									Our team is certified and trained specifically on <?php echo esc_html( $brand_title ); ?> systems
 								</p>
@@ -313,7 +313,7 @@ if ( have_posts() ) :
 										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
 									</svg>
 								</div>
-								<h3 class="text-xl font-bold text-gray-900 mb-2">Genuine OEM Parts</h3>
+								<div class="text-xl font-bold text-gray-900 mb-2" role="heading" aria-level="4">Genuine OEM Parts</div>
 								<p class="text-gray-600">
 									We use only authentic <?php echo esc_html( $brand_title ); ?> parts to maintain your warranty
 								</p>
@@ -326,7 +326,7 @@ if ( have_posts() ) :
 										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
 									</svg>
 								</div>
-								<h3 class="text-xl font-bold text-gray-900 mb-2">Full Warranty Support</h3>
+								<div class="text-xl font-bold text-gray-900 mb-2" role="heading" aria-level="4">Full Warranty Support</div>
 								<p class="text-gray-600">
 									We handle all <?php echo esc_html( $brand_title ); ?> warranty claims and manufacturer relations
 								</p>
@@ -365,9 +365,9 @@ if ( have_posts() ) :
 									</div>
 
 									<!-- Service Content -->
-									<h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-orange-500">
+									<div class="text-lg font-bold text-gray-900 mb-2 group-hover:text-orange-500" role="heading" aria-level="4">
 										<?php echo esc_html( $service_name ); ?>
-									</h3>
+									</div>
 
 									<p class="text-gray-600 text-sm mb-4">
 										Professional <?php echo strtolower( esc_html( $service_name ) ); ?> for <?php echo esc_html( $brand_title ); ?> systems
@@ -418,9 +418,9 @@ if ( have_posts() ) :
 									</div>
 
 									<!-- City Name -->
-									<h3 class="text-lg font-bold text-gray-900 group-hover:text-orange-500">
+									<div class="text-lg font-bold text-gray-900 group-hover:text-orange-500" role="heading" aria-level="4">
 										<?php echo esc_html( $city ); ?>
-									</h3>
+									</div>
 								</a>
 							<?php endforeach; ?>
 						</div>

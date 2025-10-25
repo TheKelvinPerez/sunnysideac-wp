@@ -22,7 +22,7 @@ if ( empty( $service_categories ) ) {
 
 ?>
 <div class="mb-6">
-	<h3 class="mb-3 border-b border-gray-200 pb-2 text-lg font-medium text-gray-800">Services</h3>
+	<div class="mb-3 border-b border-gray-200 pb-2 text-lg font-medium text-gray-800" role="heading" aria-level="4">Services</div>
 	<div class="space-y-3">
 		<?php foreach ( $service_categories as $category_key => $services ) : ?>
 			<?php $category_label = ucwords( str_replace( '_', ' ', $category_key ) ); ?>

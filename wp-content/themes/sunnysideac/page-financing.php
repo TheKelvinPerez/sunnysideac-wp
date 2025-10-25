@@ -321,9 +321,9 @@ $faqs = array(
 								</div>
 
 								<!-- Benefit Text -->
-								<h3 class="text-lg font-semibold text-gray-900 mb-2">
+								<div class="text-lg font-semibold text-gray-900 mb-2" role="heading" aria-level="4">
 									<?php echo esc_html( $benefit['title'] ); ?>
-								</h3>
+								</div>
 								<p class="text-gray-600">
 									<?php echo esc_html( $benefit['description'] ); ?>
 								</p>
@@ -359,9 +359,9 @@ $faqs = array(
 									</div>
 
 									<!-- Step Content -->
-									<h3 class="text-xl font-bold text-gray-900 mb-3" itemprop="name">
+									<div class="text-xl font-bold text-gray-900 mb-3" itemprop="name" role="heading" aria-level="4">
 										<?php echo esc_html( $step['title'] ); ?>
-									</h3>
+									</div>
 
 									<p class="text-base text-gray-600 leading-relaxed" itemprop="text">
 										<?php echo esc_html( $step['description'] ); ?>

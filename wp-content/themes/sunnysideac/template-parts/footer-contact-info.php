@@ -50,12 +50,14 @@ $contact_info = array(
 ?>
 
 <section class="footer-contact-info <?php echo esc_attr( $props['class'] ); ?>" aria-labelledby="contact-heading">
-	<h3
+	<div
 		id="contact-heading"
 		class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl"
+		role="heading"
+		aria-level="3"
 	>
 		<?php echo esc_html( $props['title'] ); ?>
-	</h3>
+	</div>
 
 	<div class="space-y-4">
 		<?php foreach ( $contact_info as $item ) : ?>

@@ -287,9 +287,9 @@ get_header();
 								<?php endif; ?>
 
 								<div class="text-center">
-									<h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-orange-500">
+									<div class="text-xl font-bold text-gray-900 mb-2 group-hover:text-orange-500" role="heading" aria-level="4">
 										<?php the_title(); ?>
-									</h3>
+									</div>
 
 									<?php if ( has_excerpt() ) : ?>
 										<p class="text-gray-600 text-sm mb-4">

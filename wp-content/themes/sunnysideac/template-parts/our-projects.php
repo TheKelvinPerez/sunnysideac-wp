@@ -478,9 +478,9 @@ $phone_display = SUNNYSIDE_PHONE_DISPLAY;
 			<div id="mobile-gallery" class="mt-8 transition-all duration-300 hidden">
 				<!-- Gallery Header -->
 				<div class="mb-6 flex items-center justify-between">
-					<h3 class="text-xl font-semibold text-black">
+					<div class="text-xl font-semibold text-black" role="heading" aria-level="3">
 						All Projects Gallery
-					</h3>
+					</div>
 					<button id="back-to-carousel-btn"
 							class="inline-flex items-center justify-center gap-2 rounded-full bg-gray-100 px-4 py-2 transition-all duration-200 hover:bg-gray-200 focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:outline-none"
 							aria-label="Back to carousel view">

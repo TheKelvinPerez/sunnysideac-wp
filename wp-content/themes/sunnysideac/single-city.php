@@ -92,7 +92,7 @@ if ( have_posts() ) :
 
 								<?php if ( $city_service_hours ) : ?>
 									<div class="bg-gray-50 rounded-lg p-8 mb-8">
-										<h3 class="text-xl font-bold text-gray-900 mb-4">Service Hours in <?php echo esc_html( $city_title ); ?></h3>
+										<div class="text-xl font-bold text-gray-900 mb-4" role="heading" aria-level="4">Service Hours in <?php echo esc_html( $city_title ); ?></div>
 										<div class="text-gray-700">
 											<?php echo wp_kses_post( $city_service_hours ); ?>
 										</div>
@@ -101,7 +101,7 @@ if ( have_posts() ) :
 
 								<?php if ( $city_service_area_note ) : ?>
 									<div class="bg-blue-50 rounded-lg p-8 mb-8">
-										<h3 class="text-xl font-bold text-gray-900 mb-4">About Our <?php echo esc_html( $city_title ); ?> Service</h3>
+										<div class="text-xl font-bold text-gray-900 mb-4" role="heading" aria-level="4">About Our <?php echo esc_html( $city_title ); ?> Service</div>
 										<div class="text-gray-700">
 											<?php echo wp_kses_post( $city_service_area_note ); ?>
 										</div>
@@ -159,9 +159,9 @@ if ( have_posts() ) :
 									</div>
 
 									<!-- Service Content -->
-									<h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-orange-500">
+									<div class="text-lg font-bold text-gray-900 mb-2 group-hover:text-orange-500" role="heading" aria-level="4">
 										<?php echo esc_html( $service_name ); ?>
-									</h3>
+									</div>
 
 									<p class="text-gray-600 text-sm mb-4">
 										Professional <?php echo strtolower( esc_html( $service_name ) ); ?> services for <?php echo esc_html( $city_title ); ?> residents and businesses
@@ -191,7 +191,7 @@ if ( have_posts() ) :
 										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
 									</svg>
 								</div>
-								<h3 class="text-xl font-bold text-gray-900 mb-2">24/7 Emergency Service</h3>
+								<div class="text-xl font-bold text-gray-900 mb-2" role="heading" aria-level="4">24/7 Emergency Service</div>
 								<p class="text-gray-600">
 									Fast response HVAC emergencies available around the clock in <?php echo esc_html( $city_title ); ?>
 								</p>
@@ -204,7 +204,7 @@ if ( have_posts() ) :
 										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
 									</svg>
 								</div>
-								<h3 class="text-xl font-bold text-gray-900 mb-2">Expert Technicians</h3>
+								<div class="text-xl font-bold text-gray-900 mb-2" role="heading" aria-level="4">Expert Technicians</div>
 								<p class="text-gray-600">
 									Licensed, insured professionals serving <?php echo esc_html( $city_title ); ?> with pride
 								</p>
@@ -217,7 +217,7 @@ if ( have_posts() ) :
 										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
 									</svg>
 								</div>
-								<h3 class="text-xl font-bold text-gray-900 mb-2">Local Expertise</h3>
+								<div class="text-xl font-bold text-gray-900 mb-2" role="heading" aria-level="4">Local Expertise</div>
 								<p class="text-gray-600">
 									Knowledge of <?php echo esc_html( $city_title ); ?>'s specific HVAC needs and climate challenges
 								</p>
@@ -257,9 +257,9 @@ if ( have_posts() ) :
 									</div>
 
 									<!-- City Name -->
-									<h3 class="text-lg font-bold text-gray-900 group-hover:text-orange-500">
+									<div class="text-lg font-bold text-gray-900 group-hover:text-orange-500" role="heading" aria-level="4">
 										<?php echo esc_html( $city ); ?>
-									</h3>
+									</div>
 								</a>
 									<?php
 								endif;

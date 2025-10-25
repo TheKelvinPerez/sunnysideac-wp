@@ -304,9 +304,9 @@ get_header();
 									</div>
 
 									<!-- Service Content -->
-									<h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-orange-500">
+									<div class="text-xl font-bold text-gray-900 mb-2 group-hover:text-orange-500" role="heading" aria-level="4">
 										<?php echo esc_html( $service_name ); ?>
-									</h3>
+									</div>
 
 									<p class="text-gray-600 text-sm mb-4">
 										Professional <?php echo esc_html( strtolower( $service_name ) ); ?> services across South Florida
@@ -347,9 +347,9 @@ get_header();
 								?>
 								<a href="<?php the_permalink(); ?>"
 									class="group block bg-gray-50 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-orange-50 hover:to-orange-100 hover:shadow-lg">
-									<h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-orange-500">
+									<div class="text-xl font-bold text-gray-900 mb-2 group-hover:text-orange-500" role="heading" aria-level="4">
 										<?php the_title(); ?>
-									</h3>
+									</div>
 									<?php if ( has_excerpt() ) : ?>
 										<p class="text-gray-600 text-sm mb-4">
 											<?php echo get_the_excerpt(); ?>

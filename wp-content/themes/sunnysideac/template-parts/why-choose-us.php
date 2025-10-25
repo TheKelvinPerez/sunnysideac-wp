@@ -54,7 +54,7 @@ $images = array(
 					null,
 					array(
 						'icon'  => $images['icon'] ?? '',
-						'title' => 'Why Choose Us',
+						'title' => 'Why Choose Sunnyside AC | Trusted HVAC Experts South Florida',
 						'id'    => 'why-choose-us-heading',
 					)
 				);
@@ -114,9 +114,9 @@ $images = array(
 								</div>
 
 								<div class="lg:min-w-0 lg:flex-1">
-									<h3 class="mb-2 text-lg leading-tight font-semibold text-gray-900 md:text-xl">
+									<div class="mb-2 text-lg leading-tight font-semibold text-gray-900 md:text-xl" role="heading" aria-level="4">
 										<?php echo esc_html( $feature['title'] ); ?>
-									</h3>
+									</div>
 
 									<p class="text-sm leading-snug font-normal text-gray-700 md:text-base">
 										<?php echo esc_html( $feature['description'] ); ?>

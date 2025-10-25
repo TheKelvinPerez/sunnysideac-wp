@@ -202,9 +202,9 @@ get_template_part(
 										</div>
 
 										<!-- Title -->
-										<h3 class="mb-3 text-lg leading-tight font-semibold text-gray-900 transition-colors duration-200 group-hover:text-[#F79E37]">
+										<div class="mb-3 text-lg leading-tight font-semibold text-gray-900 transition-colors duration-200 group-hover:text-[#F79E37]" role="heading" aria-level="4">
 											<?php the_title(); ?>
-										</h3>
+										</div>
 
 										<!-- Excerpt -->
 										<p class="mb-4 text-sm leading-relaxed text-gray-600">

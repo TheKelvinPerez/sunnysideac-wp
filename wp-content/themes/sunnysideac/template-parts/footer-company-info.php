@@ -65,9 +65,9 @@ $company_info = array(
 
 	<!-- Social Media -->
 	<div class="space-y-4 pt-4">
-		<h3 class="text-xl font-semibold text-gray-900 sm:text-2xl">
+		<div class="text-xl font-semibold text-gray-900 sm:text-2xl" role="heading" aria-level="4">
 			Follow Us:
-		</h3>
+		</div>
 
 		<?php
 		get_template_part(

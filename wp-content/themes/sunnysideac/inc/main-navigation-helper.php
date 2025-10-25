@@ -265,7 +265,7 @@ function sunnysideac_render_mobile_nav_from_config(): void {
 function sunnysideac_mobile_nav_menu_fallback(): void {
 	// Same as old sunnysideac_mobile_nav_menu function
 	echo '<div class="mb-6">';
-	echo '<h3 class="mb-3 border-b border-gray-200 pb-2 text-lg font-medium text-gray-800">Navigation</h3>';
+	echo '<div class="mb-3 border-b border-gray-200 pb-2 text-lg font-medium text-gray-800" role="heading" aria-level="4">Navigation</div>';
 	echo '<div class="space-y-1">';
 
 	$nav_items = array(

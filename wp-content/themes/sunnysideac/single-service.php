@@ -272,9 +272,9 @@ if ( have_posts() ) :
 										</div>
 
 										<!-- Benefit Text -->
-										<h3 class="text-lg font-semibold text-gray-900 mb-2">
+										<div class="text-lg font-semibold text-gray-900 mb-2" role="heading" aria-level="4">
 											<?php echo esc_html( $benefit['benefit'] ); ?>
-										</h3>
+										</div>
 									</article>
 								<?php endforeach; ?>
 							</div>
@@ -309,9 +309,9 @@ if ( have_posts() ) :
 											</div>
 
 											<!-- Step Content -->
-											<h3 class="text-xl font-bold text-gray-900 mb-3" itemprop="name">
+											<div class="text-xl font-bold text-gray-900 mb-3" itemprop="name" role="heading" aria-level="4">
 												<?php echo esc_html( $step['title'] ); ?>
-											</h3>
+											</div>
 
 											<p class="text-base text-gray-600 leading-relaxed" itemprop="text">
 												<?php echo esc_html( $step['description'] ); ?>
@@ -369,9 +369,9 @@ if ( have_posts() ) :
 								<?php foreach ( SUNNYSIDE_SERVICE_AREAS as $city ) : ?>
 									<a href="<?php echo esc_url( home_url( '/' . sanitize_title( $city ) . '/' . get_post_field( 'post_name', $service_id ) . '/' ) ); ?>"
 										class="group block bg-gray-50 rounded-2xl p-4 text-center transition-all duration-300 hover:scale-105 hover:bg-orange-50 hover:shadow-lg">
-										<h3 class="font-semibold text-gray-900 group-hover:text-orange-500">
+										<div class="font-semibold text-gray-900 group-hover:text-orange-500" role="heading" aria-level="4">
 											<?php echo esc_html( $city ); ?>
-										</h3>
+										</div>
 										<p class="text-sm text-gray-600 mt-1">
 											<?php echo esc_html( $service_title ); ?>
 										</p>

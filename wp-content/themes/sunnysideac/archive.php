@@ -235,9 +235,9 @@ get_template_part(
 			<!-- Related Categories/Tags Section -->
 			<section class="w-full bg-white rounded-[20px]">
 				<div class="mx-auto max-w-4xl p-6 md:p-8">
-					<h3 class="text-xl font-semibold text-gray-900 mb-4">
+					<div class="text-xl font-semibold text-gray-900 mb-4" role="heading" aria-level="4">
 						Related <?php echo esc_html( $archive_type === 'category' ? 'Categories' : 'Tags' ); ?>
-					</h3>
+					</div>
 					<div class="flex flex-wrap gap-2">
 						<?php
 						if ( $archive_type === 'category' ) {

@@ -202,20 +202,20 @@ function sunnysideac_get_vite_dev_server_url() {
 }
 
 /**
- * Optimized asset loading with critical request chain improvements
+ * Simple asset loading
  */
 function sunnysideac_enqueue_assets() {
 	$is_dev          = sunnysideac_is_vite_dev_server_running();
 	$vite_server_url = sunnysideac_get_vite_dev_server_url();
 
 	if ( $is_dev ) {
-		// Development mode: Load from Vite dev server with optimized loading
+		// Development mode: Load from Vite dev server
 		wp_enqueue_script(
 			'sunnysideac-vite-client',
 			$vite_server_url . '/@vite/client',
 			array(),
 			null,
-			array( 'strategy' => 'defer' ) // Use defer strategy
+			false
 		);
 		wp_script_add_data( 'sunnysideac-vite-client', 'type', 'module' );
 
@@ -224,11 +224,11 @@ function sunnysideac_enqueue_assets() {
 			$vite_server_url . '/src/main.js',
 			array( 'sunnysideac-vite-client' ),
 			null,
-			array( 'strategy' => 'defer' ) // Use defer strategy for non-blocking
+			false
 		);
 		wp_script_add_data( 'sunnysideac-main', 'type', 'module' );
 	} else {
-		// Production mode: Load built assets with optimizations
+		// Production mode: Load built assets with simple manifest
 		$manifest_path = get_template_directory() . '/dist/.vite/manifest.json';
 
 		if ( file_exists( $manifest_path ) ) {
@@ -237,11 +237,10 @@ function sunnysideac_enqueue_assets() {
 			if ( isset( $manifest['src/main.js'] ) ) {
 				$main = $manifest['src/main.js'];
 
-				// Defer CSS loading with preload pattern (handled in wp_head)
+				// Enqueue CSS (simple)
 				if ( isset( $main['css'] ) ) {
 					foreach ( $main['css'] as $css_file ) {
-						// Register CSS but don't enqueue immediately
-						wp_register_style(
+						wp_enqueue_style(
 							'sunnysideac-main',
 							get_template_directory_uri() . '/dist/' . $css_file,
 							array(),
@@ -250,13 +249,13 @@ function sunnysideac_enqueue_assets() {
 					}
 				}
 
-				// Enqueue JS with defer strategy (non-blocking)
+				// Enqueue JS
 				wp_enqueue_script(
 					'sunnysideac-main',
 					get_template_directory_uri() . '/dist/' . $main['file'],
 					array(),
 					null,
-					array( 'strategy' => 'defer' ) // Critical for avoiding request chains
+					true
 				);
 				wp_script_add_data( 'sunnysideac-main', 'type', 'module' );
 			}
@@ -281,45 +280,6 @@ function sunnysideac_remove_block_library_css() {
 }
 add_action( 'wp_enqueue_scripts', 'sunnysideac_remove_block_library_css', 100 );
 
-/**
- * Add preload and preconnect optimizations for critical request chains
- */
-function sunnysideac_add_performance_hints() {
-	// Only on frontend
-	if ( is_admin() ) {
-		return;
-	}
-
-	$is_dev = sunnysideac_is_vite_dev_server_running();
-
-	if ( ! $is_dev ) {
-		// Production: Preload main CSS and apply it when loaded
-		$manifest_path = get_template_directory() . '/dist/.vite/manifest.json';
-
-		if ( file_exists( $manifest_path ) ) {
-			$manifest = json_decode( file_get_contents( $manifest_path ), true );
-
-			if ( isset( $manifest['src/main.js']['css'][0] ) ) {
-				$css_file = $manifest['src/main.js']['css'][0];
-				$css_url = get_template_directory_uri() . '/dist/' . $css_file;
-				?>
-				<!-- Preload critical CSS -->
-				<link rel="preload" href="<?php echo esc_url( $css_url ); ?>" as="style" onload="this.onload=null;this.rel='stylesheet'">
-				<noscript><link rel="stylesheet" href="<?php echo esc_url( $css_url ); ?>"></noscript>
-				<?php
-			}
-		}
-	}
-
-	// Preconnect to critical external resources
-	echo '<!-- Preconnect to critical resources -->' . "\n";
-	echo '<link rel="preconnect" href="https://sunnyside-ac.ddev.site">' . "\n";
-
-	// Preload main logo image (LCP optimization)
-	echo '<!-- Preload LCP image -->' . "\n";
-	echo '<link rel="preload" href="' . esc_url( get_template_directory_uri() . '/assets/optimized/sunny-side-logo.webp' ) . '" as="image" fetchpriority="high">' . "\n";
-}
-add_action( 'wp_head', 'sunnysideac_add_performance_hints', 1 );
 
 /**
  * Ensure registered CSS is actually loaded
@@ -331,20 +291,6 @@ function sunnysideac_ensure_css_loaded() {
 }
 add_action( 'wp_enqueue_scripts', 'sunnysideac_ensure_css_loaded', 999 );
 
-/**
- * Add defer attribute to scripts for older WordPress versions (fallback)
- */
-function sunnysideac_add_defer_to_scripts( $tag, $handle ) {
-	// Add defer to our main scripts if not using WordPress 6.3+ strategy
-	if ( in_array( $handle, array( 'sunnysideac-vite-client', 'sunnysideac-main' ) ) ) {
-		// Check if defer is already present
-		if ( strpos( $tag, 'defer' ) === false ) {
-			$tag = str_replace( ' src=', ' defer src=', $tag );
-		}
-	}
-	return $tag;
-}
-add_filter( 'script_loader_tag', 'sunnysideac_add_defer_to_scripts', 10, 2 );
 
 /**
  * Remove complex performance hooks that might cause conflicts
@@ -1408,13 +1354,13 @@ function sunnysideac_handle_warranty_claim_form() {
 		<p><strong>Phone:</strong> " . esc_html( $phone ) . "</p>
 		<p><strong>Service Address:</strong> " . esc_html( $address ) . "</p>
 		<hr>
-		<h3>Equipment Information</h3>
+		<h4>Equipment Information</h4>
 		<p><strong>Equipment Type:</strong> " . esc_html( $equipment_type ) . "</p>
 		<p><strong>Equipment Brand:</strong> " . esc_html( $equipment_brand ) . "</p>
 		<p><strong>Installation Date:</strong> " . esc_html( $install_date ) . "</p>
 		<p><strong>Warranty Type:</strong> " . esc_html( $warranty_type ) . "</p>
 		<hr>
-		<h3>Issue Description</h3>
+		<h4>Issue Description</h4>
 		<p>" . nl2br( esc_html( $issue_description ) ) . "</p>";
 
 	if ( ! empty( $document_content ) ) {

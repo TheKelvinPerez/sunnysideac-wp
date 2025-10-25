@@ -88,10 +88,10 @@ get_header(); ?>
 				null,
 				array(
 					'faq_data'     => $homepage_faqs,
-					'title'        => 'Frequently Asked Questions!',
-					'mobile_title' => 'FAQ',
-					'subheading'   => 'Got Questions? We\'ve Got Answers!',
-					'description'  => 'Find answers to common questions about our AC services, installation, and maintenance.',
+					'title'        => 'HVAC FAQ | Expert Answers to AC Repair & Maintenance Questions',
+					'mobile_title' => 'AC FAQ',
+					'subheading'   => 'Get Expert Answers to Your HVAC Questions',
+					'description'  => 'Find detailed answers about AC repair, installation, maintenance, and emergency services from South Florida\'s HVAC experts.',
 					'show_schema'  => true,
 					'section_id'   => 'faq-section',
 				)

@@ -24,9 +24,9 @@ if ( empty( $props['title'] ) || empty( $props['links'] ) ) {
 ?>
 
 <section class="footer-menu-section <?php echo esc_attr( $props['class'] ); ?>" aria-labelledby="<?php echo esc_attr( sanitize_title( $props['title'] ) . '-heading' ); ?>">
-	<h3 id="<?php echo esc_attr( sanitize_title( $props['title'] ) . '-heading' ); ?>" class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl">
+	<div id="<?php echo esc_attr( sanitize_title( $props['title'] ) . '-heading' ); ?>" role="heading" aria-level="4" class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl">
 		<?php echo esc_html( $props['title'] ); ?>
-	</h3>
+	</div>
 
 	<ul class="space-y-2">
 		<?php foreach ( $props['links'] as $link ) : ?>

@@ -148,18 +148,18 @@ get_template_part(
 				<!-- Residential vs Commercial Overview -->
 				<div class="lg:grid lg:grid-cols-2 lg:gap-6 mb-8">
 					<article class="rounded-[20px] bg-white p-6 md:p-8 lg:p-10 mb-6 lg:mb-0">
-						<h3 class="text-lg md:text-xl font-semibold text-gray-900 mb-4">
+						<div class="text-lg md:text-xl font-semibold text-gray-900 mb-4" role="heading" aria-level="4">
 							Residential Projects
-						</h3>
+						</div>
 						<p class="text-sm md:text-base font-normal leading-snug text-gray-700">
 							From single-family homes to apartment complexes, we provide comprehensive HVAC solutions including installations, repairs, and maintenance services that keep families comfortable year-round.
 						</p>
 					</article>
 
 					<article class="rounded-[20px] bg-white p-6 md:p-8 lg:p-10">
-						<h3 class="text-lg md:text-xl font-semibold text-gray-900 mb-4">
+						<div class="text-lg md:text-xl font-semibold text-gray-900 mb-4" role="heading" aria-level="4">
 							Commercial Projects
-						</h3>
+						</div>
 						<p class="text-sm md:text-base font-normal leading-snug text-gray-700">
 							We handle large-scale commercial HVAC systems for offices, retail spaces, warehouses, and industrial facilities, ensuring optimal climate control for your business operations.
 						</p>
@@ -186,9 +186,9 @@ get_template_part(
 							</div>
 
 							<!-- Project Title -->
-							<h3 class="text-lg md:text-xl font-semibold text-gray-900 mb-2">
+							<div class="text-lg md:text-xl font-semibold text-gray-900 mb-2" role="heading" aria-level="4">
 								<?php echo esc_html( $project['title'] ); ?>
-							</h3>
+							</div>
 
 							<!-- Project Description -->
 							<p class="text-sm md:text-base font-normal leading-snug text-gray-700 mb-3">

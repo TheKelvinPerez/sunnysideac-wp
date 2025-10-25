@@ -11,8 +11,8 @@
 			<section id="services" class="py-16">
 				<div class="container mx-auto px-4">
 			<div class="text-center mb-12">
-				<h2 class="text-4xl font-bold text-gray-900 mb-4">Our Services</h2>
-				<p class="text-xl text-gray-600">Professional HVAC solutions for every need</p>
+				<h2 class="text-4xl font-bold text-gray-900 mb-4">Professional AC Services | Expert HVAC Solutions South Florida</h2>
+				<p class="text-xl text-gray-600">Complete air conditioning services including installation, repair, and 24/7 emergency maintenance</p>
 			</div>
 
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -23,7 +23,7 @@
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
 						</svg>
 					</div>
-					<h3 class="text-2xl font-bold text-gray-900 mb-3">AC Installation</h3>
+					<div class="text-2xl font-bold text-gray-900 mb-3" role="heading" aria-level="4">AC Installation</div>
 					<p class="text-gray-600">
 						Expert installation of residential and commercial air conditioning systems with quality equipment and professional service.
 					</p>
@@ -37,7 +37,7 @@
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
 						</svg>
 					</div>
-					<h3 class="text-2xl font-bold text-gray-900 mb-3">Maintenance Plans</h3>
+					<div class="text-2xl font-bold text-gray-900 mb-3" role="heading" aria-level="4">Maintenance Plans</div>
 					<p class="text-gray-600">
 						Regular maintenance to keep your system running efficiently and extend its lifespan. Prevent costly repairs.
 					</p>
@@ -50,7 +50,7 @@
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
 						</svg>
 					</div>
-					<h3 class="text-2xl font-bold text-gray-900 mb-3">24/7 Emergency Repairs</h3>
+					<div class="text-2xl font-bold text-gray-900 mb-3" role="heading" aria-level="4">24/7 Emergency Repairs</div>
 					<p class="text-gray-600">
 						Fast response emergency repair service available around the clock. We're here when you need us most.
 					</p>
@@ -64,8 +64,8 @@
 	<section class="py-16 bg-white">
 		<div class="container mx-auto px-4">
 			<div class="text-center mb-12">
-				<h2 class="text-4xl font-bold text-gray-900 mb-4">Latest News & Tips</h2>
-				<p class="text-xl text-gray-600">Stay informed about HVAC maintenance, energy savings, and more</p>
+				<h2 class="text-4xl font-bold text-gray-900 mb-4">HVAC Tips & Expert Advice | South Florida AC Maintenance Blog</h2>
+				<p class="text-xl text-gray-600">Expert guidance on AC maintenance, energy savings, and extending your air conditioner's lifespan</p>
 			</div>
 
 			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -87,11 +87,11 @@
 								<?php echo get_the_date(); ?>
 							</div>
 
-							<h3 class="text-xl font-bold text-gray-900 mb-3 hover:text-blue-600 transition-colors">
+							<div class="text-xl font-bold text-gray-900 mb-3 hover:text-blue-600 transition-colors" role="heading" aria-level="4">
 								<a href="<?php the_permalink(); ?>">
 									<?php the_title(); ?>
 								</a>
-							</h3>
+							</div>
 
 							<div class="text-gray-600 mb-4">
 								<?php echo wp_trim_words( get_the_excerpt(), 20 ); ?>
@@ -138,12 +138,12 @@
 	<!-- CTA Section -->
 	<section id="contact" class="py-20 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
 		<div class="container mx-auto px-4 text-center">
-			<h2 class="text-4xl font-bold mb-6">Need AC Service Today?</h2>
+			<h2 class="text-4xl font-bold mb-6">Need Emergency AC Repair in South Florida? Call Now for 24/7 Service!</h2>
 			<p class="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-				Call us now for fast, reliable HVAC service. Emergency repairs available 24/7.
+				Fast, reliable HVAC service when you need it most. Same-day repairs available for all AC brands and models.
 			</p>
-			<a href="tel:+15551234567" class="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-50 transition-all transform hover:scale-105 inline-block">
-				Call (555) 123-4567
+			<a href="<?php echo SUNNYSIDE_TEL_HREF; ?>" class="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-50 transition-all transform hover:scale-105 inline-block">
+				Call <?php echo SUNNYSIDE_PHONE_DISPLAY; ?>
 			</a>
 		</div>
 	</section>

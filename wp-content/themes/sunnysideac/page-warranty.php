@@ -353,9 +353,9 @@ if ( have_posts() ) :
 							<?php foreach ( $warranty_coverage as $index => $coverage ) : ?>
 								<article class="group bg-gray-50 rounded-2xl p-6 md:p-8 transition-all duration-300 hover:scale-[1.02] hover:bg-orange-50 hover:shadow-lg">
 									<div class="flex items-center justify-between mb-4">
-										<h3 class="text-2xl font-bold text-gray-900">
+										<div class="text-2xl font-bold text-gray-900" role="heading" aria-level="4">
 											<?php echo esc_html( $coverage['title'] ); ?>
-										</h3>
+										</div>
 										<span class="inline-flex items-center px-3 py-1 rounded-full bg-orange-100 text-orange-700 font-semibold text-lg">
 											<?php echo esc_html( $coverage['duration'] ); ?>
 										</span>
@@ -405,9 +405,9 @@ if ( have_posts() ) :
 									</div>
 
 									<!-- Benefit Text -->
-									<h3 class="text-lg font-semibold text-gray-900 mb-2">
+									<div class="text-lg font-semibold text-gray-900 mb-2" role="heading" aria-level="4">
 										<?php echo esc_html( $benefit['title'] ); ?>
-									</h3>
+									</div>
 									<p class="text-gray-600">
 										<?php echo esc_html( $benefit['description'] ); ?>
 									</p>
@@ -446,9 +446,9 @@ if ( have_posts() ) :
 										</div>
 
 										<!-- Step Content -->
-										<h3 class="text-xl font-bold text-gray-900 mb-3" itemprop="name">
+										<div class="text-xl font-bold text-gray-900 mb-3" itemprop="name" role="heading" aria-level="4">
 											<?php echo esc_html( $step['title'] ); ?>
-										</h3>
+										</div>
 
 										<p class="text-base text-gray-600 leading-relaxed" itemprop="text">
 											<?php echo esc_html( $step['description'] ); ?>
@@ -489,12 +489,12 @@ if ( have_posts() ) :
 								<form id="warranty-claim-form" class="space-y-6" method="POST" enctype="multipart/form-data">
 									<!-- Customer Information Section -->
 									<div class="bg-white rounded-xl p-6 border border-gray-200">
-										<h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+										<div class="text-lg font-semibold text-gray-900 mb-4 flex items-center" role="heading" aria-level="4">
 											<svg class="w-5 h-5 text-orange-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
 											</svg>
 											Customer Information
-										</h3>
+										</div>
 
 										<div class="grid md:grid-cols-2 gap-6">
 											<div>
@@ -536,12 +536,12 @@ if ( have_posts() ) :
 
 									<!-- Equipment Information Section -->
 									<div class="bg-white rounded-xl p-6 border border-gray-200">
-										<h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+										<div class="text-lg font-semibold text-gray-900 mb-4 flex items-center" role="heading" aria-level="4">
 											<svg class="w-5 h-5 text-orange-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
 											</svg>
 											Equipment Information
-										</h3>
+										</div>
 
 										<div class="grid md:grid-cols-2 gap-6">
 											<div>
@@ -589,12 +589,12 @@ if ( have_posts() ) :
 
 									<!-- Issue Description Section -->
 									<div class="bg-white rounded-xl p-6 border border-gray-200">
-										<h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+										<div class="text-lg font-semibold text-gray-900 mb-4 flex items-center" role="heading" aria-level="4">
 											<svg class="w-5 h-5 text-orange-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
 											</svg>
 											Issue Description
-										</h3>
+										</div>
 
 										<div class="space-y-4">
 											<div>

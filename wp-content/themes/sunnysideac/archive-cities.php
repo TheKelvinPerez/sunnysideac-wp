@@ -287,9 +287,9 @@ get_header();
 							</div>
 
 							<!-- City Content -->
-							<h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-orange-500">
+							<div class="text-xl font-bold text-gray-900 mb-2 group-hover:text-orange-500" role="heading" aria-level="4">
 								<?php echo esc_html( $city ); ?>
-							</h3>
+							</div>
 
 							<p class="text-gray-600 text-sm mb-4">
 								Expert HVAC services in <?php echo esc_html( strtolower( $city ) ); ?>
@@ -338,9 +338,9 @@ get_header();
 								</div>
 
 								<!-- City Name -->
-								<h3 class="text-lg font-bold text-gray-900 group-hover:text-orange-500">
+								<div class="text-lg font-bold text-gray-900 group-hover:text-orange-500" role="heading" aria-level="4">
 									<?php echo esc_html( get_the_title() ); ?>
-								</h3>
+								</div>
 							</a>
 						<?php endwhile; ?>
 					<?php else : ?>

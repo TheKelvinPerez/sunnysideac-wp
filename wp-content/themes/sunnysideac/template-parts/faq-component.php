@@ -107,9 +107,9 @@ if ( $show_schema ) {
 			<?php foreach ( $faq_data as $faq ) : ?>
 				<details class="faq-details group w-full rounded-[20px] border-2 border-transparent bg-[#f6f6f6] transition-all duration-300 ease-in-out hover:shadow-md open:bg-[#ffeac0] open:border-[#fed7aa]" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
 					<summary class="flex items-start justify-between p-6 cursor-pointer list-none" itemprop="name">
-						<h3 class="pr-4 text-lg leading-relaxed font-semibold text-black md:text-xl">
+						<div class="pr-4 text-lg leading-relaxed font-semibold text-black md:text-xl" role="heading" aria-level="4">
 							<?php echo esc_html( $faq['question'] ); ?>
-						</h3>
+						</div>
 
 						<div class="faq-chevron h-[35px] w-[35px] flex-shrink-0 rounded-full bg-gradient-to-l from-[#F79E37] to-[#E5462F] shadow-md transition-all duration-300 ease-in-out group-hover:scale-110 group-open:shadow-lg">
 							<img class="chevron-icon h-full w-full transition-transform duration-300 ease-in-out"

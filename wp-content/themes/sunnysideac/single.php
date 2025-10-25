@@ -175,9 +175,9 @@ get_template_part(
 						class="w-20 h-20 rounded-full object-cover">
 				</div>
 				<div class="flex-grow">
-					<h3 class="text-xl font-semibold text-gray-900 mb-2">
+					<div class="text-xl font-semibold text-gray-900 mb-2" role="heading" aria-level="4">
 						About <?php echo esc_html( $author_name ); ?>
-					</h3>
+					</div>
 					<?php if ( $author_description ) : ?>
 						<div class="text-gray-600 mb-3">
 							<?php echo wp_kses_post( $author_description ); ?>

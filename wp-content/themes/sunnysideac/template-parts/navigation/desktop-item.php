@@ -32,7 +32,7 @@ if ( $is_active ) {
 	$menu_item_classes .= ' hover:bg-[#ffc549] bg-[#fde0a0]';
 }
 
-$text_classes = '[font-family:\'Inter-Medium\',Helvetica] text-lg font-medium whitespace-nowrap transition-colors duration-200 ' . ( $is_active ? 'text-[#e5462f]' : 'text-black hover:text-black focus:text-black' );
+$text_classes = ' text-lg font-medium whitespace-nowrap transition-colors duration-200 ' . ( $is_active ? 'text-[#d3380c]' : 'text-black hover:text-black focus:text-black' );
 
 ?>
 <li role="none">
@@ -70,7 +70,7 @@ $text_classes = '[font-family:\'Inter-Medium\',Helvetica] text-lg font-medium wh
 		$button_classes .= ' hover:bg-[#ffc549] bg-[#fde0a0]';
 	}
 
-	$button_text_classes = '[font-family:\'Inter-Medium\',Helvetica] text-lg font-medium whitespace-nowrap transition-colors duration-200 ' . ( $is_active ? 'text-[#e5462f]' : 'text-black' );
+	$button_text_classes = ' text-lg font-medium whitespace-nowrap transition-colors duration-200 ' . ( $is_active ? 'text-[#d3380c]' : 'text-black' );
 	?>
 	<button class="<?php echo esc_attr( $button_classes ); ?>" data-item="<?php echo esc_attr( $item['title'] ?? '' ); ?>" data-href="<?php echo esc_url( $item['href'] ?? '#' ); ?>" role="menuitem" aria-label="Navigate to <?php echo esc_attr( $item['title'] ?? '' ); ?>" <?php echo $is_active ? 'aria-current="page"' : ''; ?>>
 		<span class="<?php echo esc_attr( $button_text_classes ); ?>">
