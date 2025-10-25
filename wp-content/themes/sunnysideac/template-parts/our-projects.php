@@ -453,14 +453,18 @@ $phone_display = SUNNYSIDE_PHONE_DISPLAY;
 				</div>
 
 				<!-- Mobile Navigation Dots (Visual Only - Functionality Disabled) -->
-				<div class="mt-4 flex justify-center space-x-2" id="mobile-dots">
-					<?php foreach ( $projects as $index => $project ) : ?>
-						<div class="<?php echo $index === 0 ? 'scale-120 bg-orange-500' : 'bg-gray-300'; ?> h-11 w-11 rounded-full flex items-center justify-center"
-								role="presentation">
-							<span class="<?php echo $index === 0 ? 'w-4 h-4' : 'w-2 h-2'; ?> rounded-full bg-current"></span>
-						</div>
-					<?php endforeach; ?>
-				</div>
+				<!-- <div class="mt-4 flex justify-center space-x-2" id="mobile-dots"> -->
+				<!-- 	
+				<?php
+				foreach ( $projects as $index => $project ) :
+					?>
+					-->
+				<!-- 		<div class="<?php echo $index === 0 ? 'scale-120 bg-orange-500' : 'bg-gray-300'; ?> h-11 w-11 rounded-full flex items-center justify-center" -->
+				<!-- 				role="presentation"> -->
+				<!-- 			<span class="<?php echo $index === 0 ? 'w-4 h-4' : 'w-2 h-2'; ?> rounded-full bg-current"></span> -->
+				<!-- 		</div> -->
+				<!-- 	<?php endforeach; ?> -->
+				<!-- </div> -->
 
 				<!-- View Full Gallery Button -->
 				<div class="mt-6 flex justify-center">
