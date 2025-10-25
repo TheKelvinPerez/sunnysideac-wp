@@ -5,13 +5,31 @@
  */
 
 /**
- * Get asset URL helper function
+ * Get asset URL helper function with CDN support
  *
  * @param string $path Path relative to theme directory
- * @return string Full URL to asset
+ * @return string Full URL to asset (with CDN if enabled)
  */
 function sunnysideac_asset_url( $path ) {
-	return get_template_directory_uri() . '/' . ltrim( $path, '/' );
+	$base_url = get_template_directory_uri();
+
+	// Check if CDN is enabled and get CDN base URL
+	$cdn_enabled = ! empty( $_ENV['CDN_ENABLED'] ) && $_ENV['CDN_ENABLED'] === 'true';
+
+	if ( $cdn_enabled && ! empty( $_ENV['CDN_BASE_URL'] ) ) {
+		$cdn_base = rtrim( $_ENV['CDN_BASE_URL'], '/' );
+		$theme_path = '/wp-content/themes/' . basename( get_template_directory() );
+		$cdn_url = $cdn_base . $theme_path . '/' . ltrim( $path, '/' );
+
+		// For development environment, fallback to local URL
+		if ( $_ENV['APP_ENV'] === 'development' ) {
+			return $base_url . '/' . ltrim( $path, '/' );
+		}
+
+		return $cdn_url;
+	}
+
+	return $base_url . '/' . ltrim( $path, '/' );
 }
 
 /**

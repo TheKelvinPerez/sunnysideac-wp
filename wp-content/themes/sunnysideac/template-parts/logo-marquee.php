@@ -9,49 +9,49 @@ $company_logos = array(
 	array(
 		'id'      => 1,
 		'name'    => 'Bryant',
-		'src'     => get_template_directory_uri() . '/assets/images/optimize/Bryant-Logo.webp',
+		'src'     => sunnysideac_asset_url( 'assets/images/optimize/Bryant-Logo.webp' ),
 		'alt'     => 'Bryant HVAC logo',
 		'website' => home_url( '/brands/bryant/' ),
 	),
 	array(
 		'id'      => 2,
 		'name'    => 'Carrier',
-		'src'     => get_template_directory_uri() . '/assets/images/optimize/Carrier-Logo.webp',
+		'src'     => sunnysideac_asset_url( 'assets/images/optimize/Carrier-Logo.webp' ),
 		'alt'     => 'Carrier air conditioning logo',
 		'website' => home_url( '/brands/carrier/' ),
 	),
 	array(
 		'id'      => 3,
 		'name'    => 'Goodman',
-		'src'     => get_template_directory_uri() . '/assets/images/optimize/Goodman-Logo.webp',
+		'src'     => sunnysideac_asset_url( 'assets/images/optimize/Goodman-Logo.webp' ),
 		'alt'     => 'Goodman HVAC logo',
 		'website' => home_url( '/brands/goodman/' ),
 	),
 	array(
 		'id'      => 4,
 		'name'    => 'Lennox',
-		'src'     => get_template_directory_uri() . '/assets/images/optimize/Lennox-Logo.webp',
+		'src'     => sunnysideac_asset_url( 'assets/images/optimize/Lennox-Logo.webp' ),
 		'alt'     => 'Lennox HVAC logo',
 		'website' => home_url( '/brands/lennox/' ),
 	),
 	array(
 		'id'      => 5,
 		'name'    => 'Rheem',
-		'src'     => get_template_directory_uri() . '/assets/images/optimize/Rheem-Logo.webp',
+		'src'     => sunnysideac_asset_url( 'assets/images/optimize/Rheem-Logo.webp' ),
 		'alt'     => 'Rheem HVAC logo',
 		'website' => home_url( '/brands/rheem/' ),
 	),
 	array(
 		'id'      => 6,
 		'name'    => 'Trane',
-		'src'     => get_template_directory_uri() . '/assets/images/optimize/Trane-Logo.webp',
+		'src'     => sunnysideac_asset_url( 'assets/images/optimize/Trane-Logo.webp' ),
 		'alt'     => 'Trane air conditioning logo',
 		'website' => home_url( '/brands/trane/' ),
 	),
 	array(
 		'id'      => 7,
 		'name'    => 'Daikin',
-		'src'     => get_template_directory_uri() . '/assets/images/optimize/daikin-logo.webp',
+		'src'     => sunnysideac_asset_url( 'assets/images/optimize/daikin-logo.webp' ),
 		'alt'     => 'Daikin HVAC logo',
 		'website' => home_url( '/brands/daikin/' ),
 	),
@@ -160,7 +160,7 @@ $icon_url = get_template_directory_uri() . '/assets/images/home-page/trusted-bra
 		div.setAttribute('data-global-index', instance.globalIndex);
 		div.setAttribute('title', 'View ' + instance.logo.name + ' HVAC services');
 
-		div.innerHTML = '<img src="' + instance.logo.src + '" alt="' + instance.logo.alt + '" class="max-h-full max-w-full object-contain" loading="lazy" decoding="async" sizes="(max-width: 768px) 96px, (max-width: 1024px) 128px, 160px" width="96" height="60" />';
+		div.innerHTML = '<img src="' + instance.logo.src + '" alt="' + instance.logo.alt + '" class="max-h-full max-w-full object-contain" loading="lazy" decoding="async" sizes="(max-width: 768px) 96px, (max-width: 1024px) 128px, 160px" width="160" height="80" />';
 
 		return div;
 	}

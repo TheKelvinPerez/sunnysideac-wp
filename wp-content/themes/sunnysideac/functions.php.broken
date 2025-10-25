@@ -47,27 +47,71 @@ if ( ! empty( $_ENV['CDN_ENABLED'] ) && $_ENV['CDN_ENABLED'] === 'true' && ! emp
 	}, 99 );
 }
 
-
 /**
- * Simple cache headers for theme assets (safe version)
+ * Set cache headers for theme assets
  */
-add_action( 'template_redirect', function() {
+add_action( 'init', function() {
 	// Only set headers for direct asset access
 	if ( is_admin() || is_login() ) {
 		return;
 	}
 
-	// Simple string check for theme assets
+	// Check if this is a theme asset request
 	$request_uri = $_SERVER['REQUEST_URI'] ?? '';
-	$theme_name = basename( get_template_directory() );
+	$theme_assets_pattern = '/wp-content/themes/' . basename( get_template_directory() ) . '\/(assets|dist)/';
 
-	if ( strpos( $request_uri, '/wp-content/themes/' . $theme_name . '/assets/' ) !== false ||
-		 strpos( $request_uri, '/wp-content/themes/' . $theme_name . '/dist/' ) !== false ) {
+	if ( preg_match( $theme_assets_pattern, $request_uri ) ) {
+		// Set cache headers for static assets
+		add_action( 'send_headers', function() {
+			if ( ! headers_sent() ) {
+				header( 'Cache-Control: public, max-age=31536000, immutable' );
+				header( 'Vary: Accept-Encoding' );
 
-		if ( ! headers_sent() ) {
-			header( 'Cache-Control: public, max-age=31536000, immutable' );
-			header( 'Vary: Accept-Encoding' );
-		}
+				// Set content type based on file extension
+				$request_uri = $_SERVER['REQUEST_URI'] ?? '';
+				$path_info = pathinfo( $request_uri );
+
+				if ( isset( $path_info['extension'] ) ) {
+					$extension = strtolower( $path_info['extension'] );
+
+					switch ( $extension ) {
+						case 'css':
+							header( 'Content-Type: text/css; charset=utf-8' );
+							break;
+						case 'js':
+							header( 'Content-Type: application/javascript; charset=utf-8' );
+							break;
+						case 'json':
+							header( 'Content-Type: application/json; charset=utf-8' );
+							break;
+						case 'xml':
+							header( 'Content-Type: application/xml; charset=utf-8' );
+							break;
+						case 'webp':
+							header( 'Content-Type: image/webp' );
+							break;
+						case 'avif':
+							header( 'Content-Type: image/avif' );
+							break;
+						case 'svg':
+							header( 'Content-Type: image/svg+xml; charset=utf-8' );
+							break;
+						case 'woff':
+							header( 'Content-Type: font/woff' );
+							break;
+						case 'woff2':
+							header( 'Content-Type: font/woff2' );
+							break;
+						case 'ttf':
+							header( 'Content-Type: font/ttf' );
+							break;
+						case 'eot':
+							header( 'Content-Type: application/vnd.ms-fontobject' );
+							break;
+					}
+				}
+			}
+		} );
 	}
 });
 
