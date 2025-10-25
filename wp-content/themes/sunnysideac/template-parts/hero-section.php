@@ -217,23 +217,22 @@ function sunnysideac_render_stars( $count = 5, $star_icon_url = '', $class = 'h-
 	<div class="flex items-center justify-center lg:items-start lg:justify-end">
 		<?php
 		// Custom responsive image with AVIF and WebP support for optimal performance
-		$webp_url = sunnysideac_asset_url( 'assets/optimized/hero-right-image.webp' );
-		$avif_url = sunnysideac_asset_url( 'assets/optimized/hero-right-image.avif' );
+		$webp_url     = sunnysideac_asset_url( 'assets/optimized/hero-right-image.webp' );
+		$avif_url     = sunnysideac_asset_url( 'assets/optimized/hero-right-image.avif' );
 		$fallback_url = sunnysideac_asset_url( 'assets/optimized/hero-right-image.png' );
 		?>
 		<picture>
-			<?php if (file_exists(get_template_directory() . '/assets/optimized/hero-right-image.avif')): ?>
-				<source srcset="<?php echo esc_url($avif_url); ?>" type="image/avif">
+			<?php if ( file_exists( get_template_directory() . '/assets/optimized/hero-right-image.avif' ) ) : ?>
+				<source srcset="<?php echo esc_url( $avif_url ); ?>" type="image/avif">
 			<?php endif; ?>
-			<?php if (file_exists(get_template_directory() . '/assets/optimized/hero-right-image.webp')): ?>
-				<source srcset="<?php echo esc_url($webp_url); ?>" type="image/webp">
+			<?php if ( file_exists( get_template_directory() . '/assets/optimized/hero-right-image.webp' ) ) : ?>
+				<source srcset="<?php echo esc_url( $webp_url ); ?>" type="image/webp">
 			<?php endif; ?>
 			<img
-				src="<?php echo esc_url($webp_url); ?>"
+				src="<?php echo esc_url( $webp_url ); ?>"
 				alt="Professional AC technician working on air conditioning unit"
 				loading="eager"
 				decoding="sync"
-				fetchpriority="high"
 				class="h-64 min-h-[300px] w-full max-w-md rounded-lg object-contain sm:h-80 lg:h-full lg:min-h-[554px] lg:w-full lg:max-w-none"
 				width="554"
 				height="554"

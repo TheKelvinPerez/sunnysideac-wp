@@ -102,7 +102,7 @@ $phone_icon   = get_template_directory_uri() . '/assets/optimized/navigation-pho
 						class="flex items-center gap-2 text-gray-700 transition-colors duration-200 hover:text-[#fb9939]"
 						aria-label="Email us for support at <?php echo esc_attr( SUNNYSIDE_EMAIL_ADDRESS ); ?>"
 					>
-						<img src="<?php echo esc_url( $mail_icon ); ?>" alt="" class="h-4 w-4" loading="lazy" decoding="async" />
+						<img src="<?php echo esc_url( $mail_icon ); ?>" alt="" class="icon-nav-mail" loading="lazy" decoding="async" />
 						<span><?php echo esc_html( SUNNYSIDE_EMAIL_ADDRESS ); ?></span>
 					</a>
 					<a
@@ -110,7 +110,7 @@ $phone_icon   = get_template_directory_uri() . '/assets/optimized/navigation-pho
 						class="flex items-center gap-2 text-gray-700 transition-colors duration-200 hover:text-[#fb9939]"
 						aria-label="Call <?php echo esc_attr( SUNNYSIDE_PHONE_DISPLAY ); ?> for AC services"
 					>
-						<img src="<?php echo esc_url( $phone_icon ); ?>" alt="" class="h-4 w-4" loading="lazy" decoding="async" />
+						<img src="<?php echo esc_url( $phone_icon ); ?>" alt="" class="icon-nav-phone" loading="lazy" decoding="async" />
 						<span><?php echo esc_html( SUNNYSIDE_PHONE_DISPLAY ); ?></span>
 					</a>
 				</div>
@@ -355,7 +355,7 @@ $phone_icon   = get_template_directory_uri() . '/assets/optimized/navigation-pho
 
 									<div class="flex items-start gap-3">
 										<div class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#ffc549]">
-											<img src="<?php echo esc_url( $phone_icon ); ?>" alt="" class="h-4 w-4" loading="lazy" decoding="async" />
+											<img src="<?php echo esc_url( $phone_icon ); ?>" alt="" class="icon-nav-phone" loading="lazy" decoding="async" />
 										</div>
 										<div>
 											<div class="text-sm font-medium text-gray-800">Phone</div>

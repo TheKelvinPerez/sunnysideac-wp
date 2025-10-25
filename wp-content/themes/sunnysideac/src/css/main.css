@@ -28,6 +28,22 @@
  * Use @layer components for reusable component classes
  */
 @layer components {
+  /* Navigation Icons - Custom aspect ratios */
+  .icon-nav-phone {
+    width: 19px;
+    height: 16px;
+  }
+
+  .icon-nav-mail {
+    width: 16px;
+    height: 16px;
+  }
+
+  .icon-nav-social {
+    width: 20px;
+    height: 20px;
+  }
+
   /* Example component */
   /* .btn-primary {
     @apply bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors;

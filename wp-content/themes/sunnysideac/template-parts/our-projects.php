@@ -478,7 +478,7 @@ $phone_display = SUNNYSIDE_PHONE_DISPLAY;
 			<div id="mobile-gallery" class="mt-8 transition-all duration-300 hidden">
 				<!-- Gallery Header -->
 				<div class="mb-6 flex items-center justify-between">
-					<div class="text-xl font-semibold text-black" role="heading" aria-level="3">
+					<div class="text-xl font-semibold text-black">
 						All Projects Gallery
 					</div>
 					<button id="back-to-carousel-btn"

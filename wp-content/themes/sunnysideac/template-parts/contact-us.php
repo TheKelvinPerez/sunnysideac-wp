@@ -343,7 +343,7 @@ $images = array(
 
 			<!-- Social Media -->
 			<nav class="mt-8" aria-label="Social media links">
-				<div class="mb-4 text-center text-xl font-bold text-black" role="heading" aria-level="3">
+				<div class="mb-4 text-center text-xl font-bold text-black">
 					Follow Us:
 				</div>
 				<div class="flex justify-center">
