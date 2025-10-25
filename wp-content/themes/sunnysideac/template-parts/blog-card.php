@@ -74,7 +74,11 @@ $year       = $date_parts[2] ?? '';
 			<?php if ( $image_url ) : ?>
 				<img src="<?php echo esc_url( $image_url ); ?>"
 					alt="<?php echo esc_attr( $post_title ); ?>"
-					class="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105">
+					class="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+					loading="lazy"
+					decoding="async"
+					width="400"
+					height="292">
 			<?php endif; ?>
 
 			<!-- Gradient Overlay -->
@@ -102,7 +106,11 @@ $year       = $date_parts[2] ?? '';
 					<div class="flex items-center gap-2">
 						<img src="<?php echo esc_url( $args['author_icon'] ); ?>"
 							alt="Author"
-							class="h-4 w-4">
+							class="h-4 w-4"
+							loading="lazy"
+							decoding="async"
+							width="16"
+							height="16">
 						<span class="text-sm font-medium text-gray-700"><?php echo esc_html( $author ); ?></span>
 					</div>
 				<?php endif; ?>
@@ -112,7 +120,11 @@ $year       = $date_parts[2] ?? '';
 					<div class="flex items-center gap-2">
 						<img src="<?php echo esc_url( $args['category_icon'] ); ?>"
 							alt="Category"
-							class="h-4 w-4">
+							class="h-4 w-4"
+							loading="lazy"
+							decoding="async"
+							width="16"
+							height="16">
 						<span class="text-sm font-medium text-[#c2410c]">
 							<?php
 							$category_name = isset( $categories[0]->name ) ? $categories[0]->name : 'Uncategorized';
@@ -142,7 +154,11 @@ $year       = $date_parts[2] ?? '';
 				</span>
 				<img src="<?php echo esc_url( $args['read_more_arrow'] ); ?>"
 					alt="Read more"
-					class="h-3 w-3 transition-transform duration-200 group-hover:translate-x-1 group-hover:translate-y-[-2px]">
+					class="h-3 w-3 transition-transform duration-200 group-hover:translate-x-1 group-hover:translate-y-[-2px]"
+					loading="lazy"
+					decoding="async"
+					width="12"
+					height="12">
 			</div>
 		</div>
 	</a>

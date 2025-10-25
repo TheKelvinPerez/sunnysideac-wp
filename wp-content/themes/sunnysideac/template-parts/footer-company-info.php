@@ -6,7 +6,7 @@
 
 // Component data (like props in React)
 $images = array(
-	'company_logo' => get_template_directory_uri() . '/assets/images/optimize/sunny-side-logo.webp',
+	'company_logo' => sunnysideac_asset_url( 'assets/images/optimize/sunny-side-logo.webp' ),
 );
 
 $company_info = array(

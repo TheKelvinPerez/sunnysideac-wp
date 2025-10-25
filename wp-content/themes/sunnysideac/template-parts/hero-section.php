@@ -127,7 +127,7 @@ function sunnysideac_render_stars( $count = 5, $star_icon_url = '', $class = 'h-
 		<!-- Decorative Line - Hidden on mobile for cleaner look -->
 		<div class="hidden justify-start lg:flex mt-4 mb-4">
 			<img src="<?php echo esc_url( $icons['hero_line_break'] ); ?>" alt="" class="w-full max-w-md" role="presentation" loading="lazy"
-			decoding="async" />
+			decoding="async" width="499" height="5" />
 		</div>
 
 		<!-- Subtitle -->

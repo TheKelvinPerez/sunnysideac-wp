@@ -49,7 +49,7 @@ if ( defined( 'SUNNYSIDE_FACEBOOK_URL' ) && SUNNYSIDE_FACEBOOK_URL ) {
 	$social_links[] = array(
 		'name'      => 'facebook',
 		'href'      => SUNNYSIDE_FACEBOOK_URL,
-		'icon_path' => get_template_directory_uri() . '/assets/images/images/logos/FacebookIcon.svg',
+		'icon_path' => sunnysideac_asset_url( 'assets/images/images/logos/FacebookIcon.svg' ),
 		'label'     => 'Visit our Facebook page',
 	);
 }
@@ -58,7 +58,7 @@ if ( defined( 'SUNNYSIDE_INSTAGRAM_URL' ) && SUNNYSIDE_INSTAGRAM_URL ) {
 	$social_links[] = array(
 		'name'      => 'instagram',
 		'href'      => SUNNYSIDE_INSTAGRAM_URL,
-		'icon_path' => get_template_directory_uri() . '/assets/images/images/logos/InstagramIcon.svg',
+		'icon_path' => sunnysideac_asset_url( 'assets/images/images/logos/InstagramIcon.svg' ),
 		'label'     => 'Visit our Instagram page',
 	);
 }
@@ -67,7 +67,7 @@ if ( defined( 'SUNNYSIDE_YOUTUBE_URL' ) && SUNNYSIDE_YOUTUBE_URL ) {
 	$social_links[] = array(
 		'name'      => 'youtube',
 		'href'      => SUNNYSIDE_YOUTUBE_URL,
-		'icon_path' => get_template_directory_uri() . '/assets/images/images/logos/YouTubeIcon.svg',
+		'icon_path' => sunnysideac_asset_url( 'assets/images/images/logos/YouTubeIcon.svg' ),
 		'label'     => 'Visit our YouTube channel',
 	);
 }
@@ -76,7 +76,7 @@ if ( defined( 'SUNNYSIDE_LINKEDIN_URL' ) && SUNNYSIDE_LINKEDIN_URL ) {
 	$social_links[] = array(
 		'name'      => 'linkedin',
 		'href'      => SUNNYSIDE_LINKEDIN_URL,
-		'icon_path' => get_template_directory_uri() . '/assets/images/images/logos/LinkedInIcon.svg',
+		'icon_path' => sunnysideac_asset_url( 'assets/images/images/logos/LinkedInIcon.svg' ),
 		'label'     => 'Visit our LinkedIn page',
 	);
 }

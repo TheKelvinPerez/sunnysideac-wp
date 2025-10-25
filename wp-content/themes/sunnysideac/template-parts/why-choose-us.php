@@ -79,7 +79,9 @@ $images = array(
 						array(
 							'alt' => 'Professional HVAC technician working on air conditioning unit',
 							'class' => 'h-auto w-full rounded-2xl shadow-lg',
-							'loading' => 'lazy'
+							'loading' => 'lazy',
+							'width' => 595,
+							'height' => 365
 						)
 					); ?>
 				</div>
@@ -139,7 +141,9 @@ $images = array(
 							array(
 								'alt' => 'Professional HVAC technician working on air conditioning unit',
 								'class' => 'h-auto w-full rounded-2xl shadow-lg',
-								'loading' => 'lazy'
+								'loading' => 'lazy',
+								'width' => 595,
+								'height' => 365
 							)
 						); ?>
 					</div>

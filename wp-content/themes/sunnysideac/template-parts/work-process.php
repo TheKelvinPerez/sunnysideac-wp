@@ -28,8 +28,8 @@ $process_steps = array(
 $common_bg_color = 'bg-gray-50';
 $common_icon_bg  = 'bg-gradient-to-br from-orange-200 to-orange-300';
 
-$cog_wheel_icon_url   = get_template_directory_uri() . '/assets/images/home-page/work-process-cog-wheel.svg';
-$our_process_icon_url = get_template_directory_uri() . '/assets/images/home-page/our-process-icon.svg';
+$cog_wheel_icon_url   = sunnysideac_asset_url( 'assets/images/home-page/work-process-cog-wheel.svg' );
+$our_process_icon_url = sunnysideac_asset_url( 'assets/images/home-page/our-process-icon.svg' );
 ?>
 
 <section
