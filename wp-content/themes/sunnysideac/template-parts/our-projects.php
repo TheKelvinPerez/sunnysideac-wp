@@ -531,8 +531,10 @@ $phone_display = SUNNYSIDE_PHONE_DISPLAY;
 				id="lightbox-image-container">
 				<img id="lightbox-image"
 					class="max-h-full max-w-full rounded-2xl object-contain shadow-2xl"
-					alt=""
-					src=""
+					alt="Project image in lightbox view"
+					src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3C/svg%3E"
+					width="400"
+					height="300"
 					loading="eager"
 					decoding="sync" />
 			</div>

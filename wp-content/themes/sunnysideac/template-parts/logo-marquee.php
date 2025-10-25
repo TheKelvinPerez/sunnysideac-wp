@@ -160,7 +160,7 @@ $icon_url = get_template_directory_uri() . '/assets/images/home-page/trusted-bra
 		div.setAttribute('data-global-index', instance.globalIndex);
 		div.setAttribute('title', 'View ' + instance.logo.name + ' HVAC services');
 
-		div.innerHTML = '<img src="' + instance.logo.src + '" alt="' + instance.logo.alt + '" class="max-h-full max-w-full object-contain" loading="lazy" decoding="async" sizes="(max-width: 768px) 96px, (max-width: 1024px) 128px, 160px" />';
+		div.innerHTML = '<img src="' + instance.logo.src + '" alt="' + instance.logo.alt + '" class="max-h-full max-w-full object-contain" loading="lazy" decoding="async" sizes="(max-width: 768px) 96px, (max-width: 1024px) 128px, 160px" width="96" height="60" />';
 
 		return div;
 	}

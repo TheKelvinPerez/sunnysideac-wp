@@ -83,6 +83,8 @@ $our_process_icon_url = get_template_directory_uri() . '/assets/images/home-page
 									src="<?php echo esc_url( $cog_wheel_icon_url ); ?>"
 									alt="Process step cog wheel"
 									class="h-auto w-full md:h-20 md:w-20"
+									width="80"
+									height="80"
 								/>
 								<div class="absolute inset-0 flex items-center justify-center">
 									<span

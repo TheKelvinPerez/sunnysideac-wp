@@ -135,7 +135,7 @@ get_template_part(
 											?>
 										<?php else : ?>
 											<img
-												src="<?php echo esc_url( sunnysideac_asset_url( 'assets/images/home-page/blog/blog-post-image-1.png' ) ); ?>"
+												src="<?php echo esc_url( sunnysideac_asset_url( 'assets/images/optimize/blog-post-image-1.webp' ) ); ?>"
 												alt="<?php echo esc_attr( get_the_title() ); ?>"
 												class="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
 											/>

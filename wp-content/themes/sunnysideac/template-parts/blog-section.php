@@ -76,7 +76,7 @@ $images = array(
 							'author_icon'     => $images['blog_auther_icon'],
 							'category_icon'   => $images['air_con_blog_icon'],
 							'read_more_arrow' => $images['read_more_arrow'],
-							'fallback_image'  => sunnysideac_asset_url( 'assets/images/home-page/blog/blog-post-image-1.png' ),
+							'fallback_image'  => sunnysideac_asset_url( 'assets/images/optimize/blog-post-image-1.webp' ),
 						)
 					);
 					?>

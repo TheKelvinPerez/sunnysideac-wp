@@ -29,7 +29,7 @@ $defaults = array(
 	'author_icon'     => sunnysideac_asset_url( 'assets/images/home-page/blog/blog-auther-icon.svg' ),
 	'category_icon'   => sunnysideac_asset_url( 'assets/images/home-page/blog/air-con-blog-icon.svg' ),
 	'read_more_arrow' => sunnysideac_asset_url( 'assets/images/home-page/blog/read-more-arrow-up-right.svg' ),
-	'fallback_image'  => sunnysideac_asset_url( 'assets/images/home-page/blog/blog-post-image-1.png' ),
+	'fallback_image'  => sunnysideac_asset_url( 'assets/images/optimize/blog-post-image-1.webp' ),
 );
 
 $args = wp_parse_args( $args, $defaults );

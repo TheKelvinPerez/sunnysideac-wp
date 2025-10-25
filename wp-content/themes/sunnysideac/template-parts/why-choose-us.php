@@ -99,6 +99,8 @@ $images = array(
 									class="relative -top-8 left-8 h-auto w-14"
 									alt="<?php echo esc_attr( $feature['icon_alt'] ); ?>"
 									src="<?php echo esc_url( $feature['icon'] ); ?>"
+									width="56"
+									height="56"
 								>
 							</div>
 
@@ -110,6 +112,8 @@ $images = array(
 										class="h-16 w-16"
 										alt="<?php echo esc_attr( $feature['icon_alt'] ); ?>"
 										src="<?php echo esc_url( $feature['icon'] ); ?>"
+										width="64"
+										height="64"
 									>
 								</div>
 

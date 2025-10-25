@@ -29,6 +29,8 @@ $company_info = array(
 				src="<?php echo esc_url( $images['company_logo'] ); ?>"
 				srcset="<?php echo esc_url( $images['company_logo'] ); ?> 123w, <?php echo esc_url( $images['company_logo'] ); ?> 246w"
 				sizes="(max-width: 640px) 64px, 80px"
+				width="95"
+				height="64"
 			>
 			<div class="flex flex-col">
 				<div class="bg-gradient-to-r from-[#FFC13B] to-[#E5462F] bg-clip-text text-2xl font-extrabold text-transparent sm:text-3xl">
