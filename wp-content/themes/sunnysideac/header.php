@@ -10,6 +10,14 @@
 	<link rel="icon" type="image/png" sizes="96x96" href="<?php echo get_template_directory_uri(); ?>/assets/icons/favicon-96x96.png">
 	<link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/assets/icons/favicon.ico">
 
+	<!-- Preload LCP hero image for optimal performance -->
+	<?php
+	$avif_url = get_template_directory_uri() . '/assets/optimized/hero-right-image.avif';
+	$webp_url = get_template_directory_uri() . '/assets/optimized/hero-right-image.webp';
+	?>
+	<link rel="preload" as="image" href="<?php echo esc_url($avif_url); ?>" type="image/avif">
+	<link rel="preload" as="image" href="<?php echo esc_url($webp_url); ?>" type="image/webp">
+
 	<?php
 	// SEO Meta Tags
 	$page_description = get_post_meta( get_the_ID(), '_seo_description', true );

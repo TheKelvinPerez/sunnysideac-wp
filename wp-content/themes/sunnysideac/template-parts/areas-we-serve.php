@@ -48,9 +48,9 @@ $images = array(
 			<div class="mb-6">
 				<div class="rounded-xl bg-gradient-to-r from-[#FDC85F] to-[#E64B30] p-4 shadow-lg">
 					<div class="mb-4 text-center">
-						<div class="mb-2 text-lg font-extrabold text-white" role="heading" aria-level="4">
+						<h3 class="mb-2 text-lg font-extrabold text-white">
 							Proudly Serving
-						</div>
+						</h3>
 						<div class="mx-auto h-0.5 w-20 bg-white opacity-75"></div>
 					</div>
 

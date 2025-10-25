@@ -282,10 +282,10 @@ $phone_display = SUNNYSIDE_PHONE_DISPLAY;
 						?>
 					</header>
 
-					<!-- Title -->
-					<h2 class="text-center text-2xl leading-tight font-semibold text-black md:text-left">
+					<!-- Subtitle -->
+					<p class="text-center text-2xl leading-tight font-semibold text-black md:text-left">
 						Our Work Speaks for Itself - HVAC Projects from Start to Finish
-					</h2>
+					</p>
 
 					<!-- CTA Button -->
 					<a href="<?php echo esc_attr( $tel_href ); ?>"
@@ -395,10 +395,10 @@ $phone_display = SUNNYSIDE_PHONE_DISPLAY;
 					?>
 				</header>
 
-				<!-- Title -->
-				<h2 class="text-center text-2xl leading-tight font-semibold text-black md:text-left">
+				<!-- Subtitle -->
+				<p class="text-center text-2xl leading-tight font-semibold text-black md:text-left">
 					Our Work Speaks for Itself - HVAC Projects from Start to Finish
-				</h2>
+				</p>
 
 				<!-- CTA Button -->
 				<a href="<?php echo esc_attr( $tel_href ); ?>"

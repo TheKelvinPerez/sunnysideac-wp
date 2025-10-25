@@ -69,7 +69,7 @@ $year       = $date_parts[2] ?? '';
 <article class="group <?php echo esc_attr( $args['card_class'] ); ?> block overflow-hidden rounded-b-2xl bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
 	<a href="<?php echo esc_url( $post_url ); ?>"
 		aria-label="<?php echo esc_attr( 'Read full article: ' . $post_title ); ?>"
-		class="block focus:ring-2 focus:ring-[#d87711] focus:ring-offset-2 focus:outline-none">
+		class="block focus:ring-2 focus:ring-[#c2410c] focus:ring-offset-2 focus:outline-none">
 		<!-- Image Container with Date Badge -->
 		<div class="relative h-[292px] w-full overflow-hidden rounded-[20px]">
 			<?php if ( $image_url ) : ?>
@@ -104,7 +104,7 @@ $year       = $date_parts[2] ?? '';
 						<img src="<?php echo esc_url( $args['author_icon'] ); ?>"
 							alt="Author"
 							class="h-4 w-4">
-						<span class="text-sm font-medium text-gray-600"><?php echo esc_html( $author ); ?></span>
+						<span class="text-sm font-medium text-gray-700"><?php echo esc_html( $author ); ?></span>
 					</div>
 				<?php endif; ?>
 
@@ -114,7 +114,7 @@ $year       = $date_parts[2] ?? '';
 						<img src="<?php echo esc_url( $args['category_icon'] ); ?>"
 							alt="Category"
 							class="h-4 w-4">
-						<span class="text-sm font-medium text-[#d87711]">
+						<span class="text-sm font-medium text-[#c2410c]">
 							<?php
 							$category_name = isset( $categories[0]->name ) ? $categories[0]->name : 'Uncategorized';
 							echo esc_html( $category_name );
@@ -125,20 +125,20 @@ $year       = $date_parts[2] ?? '';
 			</div>
 
 			<!-- Title -->
-			<div class="mb-3 text-lg leading-tight font-semibold text-gray-900 transition-colors duration-200 group-hover:text-[#d87711]" role="heading" aria-level="3">
+			<h3 class="mb-3 text-lg leading-tight font-semibold text-gray-900 transition-colors duration-200 group-hover:text-[#c2410c]">
 				<?php echo esc_html( $post_title ); ?>
-			</div>
+			</h3>
 
 			<!-- Excerpt -->
 			<?php if ( $args['show_excerpt'] ) : ?>
-				<p class="mb-4 text-sm leading-relaxed text-gray-600">
+				<p class="mb-4 text-sm leading-relaxed text-gray-700">
 					<?php echo esc_html( $excerpt ); ?>
 				</p>
 			<?php endif; ?>
 
 			<!-- Read More Link -->
 			<div class="flex cursor-pointer items-center gap-2">
-				<span class="cursor-pointer text-sm font-semibold text-gray-900 transition-colors duration-200 group-hover:text-[#d87711]">
+				<span class="cursor-pointer text-sm font-semibold text-gray-900 transition-colors duration-200 group-hover:text-[#c2410c]">
 					Read More
 				</span>
 				<img src="<?php echo esc_url( $args['read_more_arrow'] ); ?>"

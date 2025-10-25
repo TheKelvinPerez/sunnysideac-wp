@@ -25,14 +25,14 @@ if ( empty( $item ) ) {
 $is_active = sunnysideac_is_menu_item_active( $item['title'] ?? '' );
 
 // Build CSS classes for the menu item
-$menu_item_classes = 'inline-flex cursor-pointer items-center gap-1 rounded-full px-6 py-3 transition-colors duration-200 focus:ring-2 focus:ring-[#ffc549] focus:ring-offset-2 focus:outline-none nav-item';
+$menu_item_classes = 'inline-flex cursor-pointer items-center gap-1 rounded-full px-6 py-3 transition-colors duration-200 focus:ring-2 focus:ring-[#fbbf24] focus:ring-offset-2 focus:outline-none nav-item';
 if ( $is_active ) {
-	$menu_item_classes .= ' bg-[#ffc549]';
+	$menu_item_classes .= ' bg-[#fbbf24]';
 } else {
-	$menu_item_classes .= ' hover:bg-[#ffc549] bg-[#fde0a0]';
+	$menu_item_classes .= ' hover:bg-[#fbbf24] bg-[#fef3c7]';
 }
 
-$text_classes = ' text-lg font-medium whitespace-nowrap transition-colors duration-200 ' . ( $is_active ? 'text-[#d3380c]' : 'text-black hover:text-black focus:text-black' );
+$text_classes = ' text-lg font-medium whitespace-nowrap transition-colors duration-200 ' . ( $is_active ? 'text-[#9a3412]' : 'text-black hover:text-black focus:text-black' );
 
 ?>
 <li role="none">
@@ -63,16 +63,16 @@ $text_classes = ' text-lg font-medium whitespace-nowrap transition-colors durati
 <?php else : ?>
 	<?php
 	// Regular link button
-	$button_classes = 'cursor-pointer rounded-full px-6 py-3 transition-colors duration-200 focus:ring-2 focus:ring-[#ffc549] focus:ring-offset-2 focus:outline-none nav-item';
+	$button_classes = 'cursor-pointer rounded-full px-6 py-3 transition-colors duration-200 focus:ring-2 focus:ring-[#fbbf24] focus:ring-offset-2 focus:outline-none nav-item';
 	if ( $is_active ) {
-		$button_classes .= ' bg-[#ffc549]';
+		$button_classes .= ' bg-[#fbbf24]';
 	} else {
-		$button_classes .= ' hover:bg-[#ffc549] bg-[#fde0a0]';
+		$button_classes .= ' hover:bg-[#fbbf24] bg-[#fef3c7]';
 	}
 
-	$button_text_classes = ' text-lg font-medium whitespace-nowrap transition-colors duration-200 ' . ( $is_active ? 'text-[#d3380c]' : 'text-black' );
+	$button_text_classes = ' text-lg font-medium whitespace-nowrap transition-colors duration-200 ' . ( $is_active ? 'text-[#9a3412]' : 'text-black' );
 	?>
-	<button class="<?php echo esc_attr( $button_classes ); ?>" data-item="<?php echo esc_attr( $item['title'] ?? '' ); ?>" data-href="<?php echo esc_url( $item['href'] ?? '#' ); ?>" role="menuitem" aria-label="Navigate to <?php echo esc_attr( $item['title'] ?? '' ); ?>" <?php echo $is_active ? 'aria-current="page"' : ''; ?>>
+	<button class="<?php echo esc_attr( $button_classes ); ?>" data-item="<?php echo esc_attr( $item['title'] ?? '' ); ?>" data-href="<?php echo esc_url( $item['href'] ?? '#' ); ?>" role="menuitem" aria-label="Navigate to <?php echo esc_attr( $item['title'] ?? '' ); ?>" tabindex="0" <?php echo $is_active ? 'aria-current="page"' : ''; ?>>
 		<span class="<?php echo esc_attr( $button_text_classes ); ?>">
 			<?php echo esc_html( $item['title'] ?? '' ); ?>
 		</span>

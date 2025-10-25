@@ -22,8 +22,11 @@ if ( empty( $main_links ) ) {
 <div class="mb-6 space-y-1">
 	<?php foreach ( $main_links as $link ) : ?>
 		<button
-			class="w-full border-b border-gray-200 py-2 text-left text-gray-700 hover:text-[#fb9939] mobile-nav-link"
+			class="w-full border-b border-gray-200 py-2 text-left text-gray-700 hover:text-[#fb9939] mobile-nav-link focus:outline-none focus:ring-2 focus:ring-[#fb9939] focus:ring-offset-2"
 			data-href="<?php echo esc_url( $link['href'] ?? '#' ); ?>"
+			role="menuitem"
+			aria-label="Navigate to <?php echo esc_attr( $link['title'] ?? '' ); ?>"
+			tabindex="0"
 		>
 			<?php echo esc_html( $link['title'] ?? '' ); ?>
 		</button>

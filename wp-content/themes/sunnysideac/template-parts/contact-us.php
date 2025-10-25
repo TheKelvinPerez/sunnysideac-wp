@@ -278,7 +278,7 @@ $images = array(
 						/>
 					</div>
 					<div>
-						<div class="font-semibold text-black md:text-lg" role="heading" aria-level="4">Email</div>
+						<h3 class="font-semibold text-black md:text-lg">Email</h3>
 						<a
 							href="<?php echo esc_attr( 'mailto:' . $company_email ); ?>"
 							class="font-normal break-all text-black hover:underline focus:underline focus:outline-none md:text-lg"
@@ -300,9 +300,9 @@ $images = array(
 						/>
 					</div>
 					<div>
-						<div class="font-semibold text-black md:text-lg" role="heading" aria-level="4">
+						<h3 class="font-semibold text-black md:text-lg">
 							Location
-						</div>
+						</h3>
 						<div
 							class="font-normal break-words text-black md:text-lg"
 							itemprop="address"
@@ -328,7 +328,7 @@ $images = array(
 						/>
 					</div>
 					<div>
-						<div class="font-semibold text-black md:text-lg" role="heading" aria-level="4">Phone</div>
+						<h3 class="font-semibold text-black md:text-lg">Phone</h3>
 						<a
 							href="<?php echo esc_attr( SUNNYSIDE_TEL_HREF ); ?>"
 							class="font-normal text-black hover:underline focus:underline focus:outline-none md:text-lg"

@@ -114,9 +114,9 @@ $images = array(
 								</div>
 
 								<div class="lg:min-w-0 lg:flex-1">
-									<div class="mb-2 text-lg leading-tight font-semibold text-gray-900 md:text-xl" role="heading" aria-level="4">
+									<h3 class="mb-2 text-lg leading-tight font-semibold text-gray-900 md:text-xl">
 										<?php echo esc_html( $feature['title'] ); ?>
-									</div>
+									</h3>
 
 									<p class="text-sm leading-snug font-normal text-gray-700 md:text-base">
 										<?php echo esc_html( $feature['description'] ); ?>

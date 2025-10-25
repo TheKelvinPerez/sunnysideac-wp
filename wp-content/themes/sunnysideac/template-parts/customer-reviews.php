@@ -169,9 +169,9 @@ $description_text = 'Our greatest reward is the trust and satisfaction of our cu
 							decoding="async"
 						/>
 						<div>
-							<h2 class="text-sm font-semibold text-gray-900 review-name">
+							<div class="text-sm font-semibold text-gray-900 review-name">
 								<?php echo esc_html( $reviews_data[0]['name'] ); ?>
-							</h2>
+							</div>
 							<p class="text-sm font-normal text-black review-location">
 								<?php echo esc_html( $reviews_data[0]['location'] ); ?>
 							</p>
@@ -283,9 +283,9 @@ $description_text = 'Our greatest reward is the trust and satisfaction of our cu
 								decoding="async"
 							/>
 							<div>
-								<h2 class="text-lg font-semibold text-gray-900 review-name-desktop">
+								<div class="text-lg font-semibold text-gray-900 review-name-desktop">
 									<?php echo esc_html( $reviews_data[0]['name'] ); ?>
-								</h2>
+								</div>
 								<p class="text-base font-normal text-black review-location-desktop">
 									<?php echo esc_html( $reviews_data[0]['location'] ); ?>
 								</p>

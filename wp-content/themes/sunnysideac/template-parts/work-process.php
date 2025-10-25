@@ -100,14 +100,12 @@ $our_process_icon_url = get_template_directory_uri() . '/assets/images/home-page
 							<p class="text-lg font-thin text-gray-600">
 								<?php echo esc_html( $step['subtitle'] ); ?>
 							</p>
-							<div
+							<h3
 								id="<?php echo esc_attr( $step_id ); ?>-title"
 								class="text-lg leading-tight font-bold text-gray-900 md:text-xl"
-								role="heading"
-								aria-level="4"
 							>
 								<?php echo esc_html( $step['title'] ); ?>
-							</div>
+							</h3>
 						</div>
 					</div>
 				</article>

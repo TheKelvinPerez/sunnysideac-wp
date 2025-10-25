@@ -370,8 +370,17 @@ function setupDesktopNavigation() {
 		} else {
 			// Regular navigation items
 			if (item) {
+				// Mouse events
 				item.addEventListener('click', () => {
 					handleMenuItemClick(itemName, href);
+				});
+
+				// Keyboard events
+				item.addEventListener('keydown', (event) => {
+					if (event.key === 'Enter' || event.key === ' ') {
+						event.preventDefault();
+						handleMenuItemClick(itemName, href);
+					}
 				});
 			}
 		}
@@ -413,11 +422,24 @@ function setupMobileMenu() {
 
 	// Mobile navigation links
 	document.querySelectorAll('.mobile-nav-link').forEach(link => {
+		// Mouse events
 		link.addEventListener('click', () => {
 			const href = link.dataset.href;
 			closeMobileMenu();
 			if (href && href !== '#') {
 				window.location.href = href;
+			}
+		});
+
+		// Keyboard events
+		link.addEventListener('keydown', (event) => {
+			if (event.key === 'Enter' || event.key === ' ') {
+				event.preventDefault();
+				const href = link.dataset.href;
+				closeMobileMenu();
+				if (href && href !== '#') {
+					window.location.href = href;
+				}
 			}
 		});
 	});
