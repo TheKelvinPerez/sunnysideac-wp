@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /*
  * Tailwind CSS v4 Configuration
@@ -7,7 +7,9 @@
 
 @theme {
   /* Fonts - Using system font stack for optimal performance */
-  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
   /* Example: Add custom colors */
   /* --color-primary: #0070f3; */
@@ -22,13 +24,12 @@
   background-color: #ffc549 !important;
 }
 
-
 /*
  * Custom Component Styles
  * Use @layer components for reusable component classes
  */
 @layer components {
-  /* Navigation Icons - Custom aspect ratios */
+  /* Navigation Icons - Custom aspect ratios with proper display sizes */
   .icon-nav-phone {
     width: 19px;
     height: 16px;
@@ -42,6 +43,12 @@
   .icon-nav-social {
     width: 20px;
     height: 20px;
+  }
+
+  /* Logo sizing - expected 246x166 display size */
+  .logo-responsive {
+    width: 123px;
+    height: 83px;
   }
 
   /* Example component */

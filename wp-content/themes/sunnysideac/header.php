@@ -82,10 +82,15 @@
 <div class="mx-auto w-full max-w-7xl px-4 overflow-visible">
 
 <?php
-// Asset paths
+// Asset paths - Responsive logo system
 $logo_path    = get_template_directory_uri() . '/assets/optimized/sunny-side-logo.webp';
+$logo_2x_path = get_template_directory_uri() . '/assets/optimized/sunny-side-logo-2x.webp';
+$logo_png_path = get_template_directory_uri() . '/assets/images/home-page/footer/new-sunny-side-logo.png';
+
 $call_us_icon = get_template_directory_uri() . '/assets/images/images/logos/navigation-call-us-now-icon.svg';
 $mail_icon    = get_template_directory_uri() . '/assets/images/images/logos/navigation-mail-icon.svg';
+
+// Phone icon - Single 19x19 version for consistency
 $phone_icon   = get_template_directory_uri() . '/assets/optimized/navigation-phone-icon.webp';
 ?>
 
@@ -110,7 +115,13 @@ $phone_icon   = get_template_directory_uri() . '/assets/optimized/navigation-pho
 						class="flex items-center gap-2 text-gray-700 transition-colors duration-200 hover:text-[#fb9939]"
 						aria-label="Call <?php echo esc_attr( SUNNYSIDE_PHONE_DISPLAY ); ?> for AC services"
 					>
-						<img src="<?php echo esc_url( $phone_icon ); ?>" alt="" class="icon-nav-phone" loading="lazy" decoding="async" />
+						<img
+							src="<?php echo esc_url( $phone_icon ); ?>"
+							alt=""
+							class="icon-nav-phone"
+							loading="lazy"
+							decoding="async"
+						/>
 						<span><?php echo esc_html( SUNNYSIDE_PHONE_DISPLAY ); ?></span>
 					</a>
 				</div>
@@ -144,7 +155,7 @@ $phone_icon   = get_template_directory_uri() . '/assets/optimized/navigation-pho
 					aria-label="SunnySide 24/7 AC - Go to homepage"
 				>
 					<img
-						class="h-12 w-20 object-contain"
+						class="logo-responsive object-contain"
 						alt="SunnySide 24/7 AC company logo"
 						src="<?php echo esc_url( $logo_path ); ?>"
 						decoding="sync"
@@ -179,7 +190,7 @@ $phone_icon   = get_template_directory_uri() . '/assets/optimized/navigation-pho
 					aria-label="SunnySide 24/7 AC - Go to homepage"
 				>
 					<img
-						class="h-auto w-full"
+						class="logo-responsive object-contain"
 						alt="SunnySide 24/7 AC company logo"
 						src="<?php echo esc_url( $logo_path ); ?>"
 						decoding="sync"
@@ -238,7 +249,7 @@ $phone_icon   = get_template_directory_uri() . '/assets/optimized/navigation-pho
 									aria-label="SunnySide 24/7 AC - Go to homepage"
 								>
 									<img
-										class="h-11 object-contain"
+										class="logo-responsive object-contain"
 										alt="SunnySide 24/7 AC company logo"
 										src="<?php echo esc_url( $logo_path ); ?>"
 										decoding="sync"

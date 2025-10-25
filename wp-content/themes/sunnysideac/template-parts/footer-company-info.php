@@ -6,7 +6,7 @@
 
 // Component data (like props in React)
 $images = array(
-	'company_logo' => sunnysideac_asset_url( 'assets/images/home-page/footer/new-sunny-side-logo.png' ),
+	'company_logo' => get_template_directory_uri() . '/assets/optimized/sunny-side-logo.webp',
 );
 
 $company_info = array(
@@ -25,7 +25,7 @@ $company_info = array(
 			aria-label="SunnySide 24/7 AC - Go to homepage"
 		>
 			<img
-				class="h-16 w-auto sm:h-20"
+				class="logo-responsive object-contain"
 				alt="SunnySide 24/7 AC Logo"
 				src="<?php echo esc_url( $images['company_logo'] ); ?>"
 			>
