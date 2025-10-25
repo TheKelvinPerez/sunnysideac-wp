@@ -21,8 +21,8 @@
 	?>
 	<link rel="preload" as="image" href="<?php echo esc_url($avif_url); ?>" type="image/avif">
 	<link rel="preload" as="image" href="<?php echo esc_url($webp_url); ?>" type="image/webp">
-	<link rel="preload" as="image" href="<?php echo esc_url($mobile_avif_url); ?>" type="image/avif" media="(max-width: 1023px)">
-	<link rel="preload" as="image" href="<?php echo esc_url($mobile_webp_url); ?>" type="image/webp" media="(max-width: 1023px)">
+	<link rel="preload" as="image" href="<?php echo esc_url($mobile_avif_url); ?>" type="image/avif" media="(max-width: 1023px)" fetchpriority="high">
+	<link rel="preload" as="image" href="<?php echo esc_url($mobile_webp_url); ?>" type="image/webp" media="(max-width: 1023px)" fetchpriority="high">
 
 	<!-- Preconnect for external resources -->
 	<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
