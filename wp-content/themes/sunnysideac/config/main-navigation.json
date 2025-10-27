@@ -1,11 +1,6 @@
 {
   "desktop_nav": [
     {
-      "title": "Home",
-      "href": "/",
-      "type": "link"
-    },
-    {
       "title": "Services",
       "href": "/services",
       "type": "mega_menu",
@@ -16,6 +11,12 @@
       "href": "/cities",
       "type": "mega_menu",
       "mega_menu_type": "service_areas"
+    },
+    {
+      "title": "Brands",
+      "href": "/brands",
+      "type": "mega_menu",
+      "mega_menu_type": "brands"
     },
     {
       "title": "Projects",

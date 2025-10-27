@@ -38,9 +38,23 @@ $text_classes = ' text-lg font-medium whitespace-nowrap transition-colors durati
 <li role="none">
 <?php if ( ( $item['type'] ?? '' ) === 'mega_menu' ) : ?>
 	<?php
-	// Mega menu item (Services or Cities)
-	$container_id = ( $item['mega_menu_type'] ?? '' ) === 'services' ? 'services-dropdown-container' : 'service-areas-dropdown-container';
-	$btn_class    = ( $item['mega_menu_type'] ?? '' ) === 'services' ? 'services-dropdown-btn' : 'service-areas-dropdown-btn';
+	// Mega menu item (Services, Cities, or Brands)
+	$mega_menu_type = $item['mega_menu_type'] ?? '';
+
+	// Set container ID and button class based on mega menu type
+	$container_id = match ( $mega_menu_type ) {
+		'services'      => 'services-dropdown-container',
+		'service_areas' => 'service-areas-dropdown-container',
+		'brands'        => 'brands-dropdown-container',
+		default         => 'dropdown-container',
+	};
+
+	$btn_class = match ( $mega_menu_type ) {
+		'services'      => 'services-dropdown-btn',
+		'service_areas' => 'service-areas-dropdown-btn',
+		'brands'        => 'brands-dropdown-btn',
+		default         => 'dropdown-btn',
+	};
 	?>
 	<div class="relative" id="<?php echo esc_attr( $container_id ); ?>">
 		<button class="<?php echo esc_attr( $menu_item_classes ); ?> <?php echo esc_attr( $btn_class ); ?>-container" data-item="<?php echo esc_attr( $item['title'] ?? '' ); ?>" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-label="<?php echo esc_attr( $item['title'] ?? '' ); ?> menu" <?php echo $is_active ? 'aria-current="page"' : ''; ?>>
@@ -50,12 +64,13 @@ $text_classes = ' text-lg font-medium whitespace-nowrap transition-colors durati
 			<img src="<?php echo esc_url( $chevron_icon ); ?>" alt="" class="h-4 w-4 text-current transition-transform duration-200 chevron-icon ml-1" role="presentation" loading="lazy" decoding="async" />
 		</button>
 		<?php
-		// Render mega menu dropdown
-		if ( ( $item['mega_menu_type'] ?? '' ) === 'services' ) {
-			sunnysideac_render_services_mega_menu();
-		} else {
-			sunnysideac_render_service_areas_mega_menu();
-		}
+		// Render mega menu dropdown based on type
+		match ( $mega_menu_type ) {
+			'services'      => sunnysideac_render_services_mega_menu(),
+			'service_areas' => sunnysideac_render_service_areas_mega_menu(),
+			'brands'        => sunnysideac_render_brands_mega_menu(),
+			default         => null,
+		};
 		?>
 	</div>
 <?php else : ?>

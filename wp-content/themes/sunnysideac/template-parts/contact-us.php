@@ -516,6 +516,22 @@ document.addEventListener('DOMContentLoaded', function() {
 				const result = await response.json();
 
 				if (response.status === 200) {
+					// Track successful form submission in PostHog
+					if (typeof posthog !== 'undefined') {
+						posthog.capture('contact form submitted', {
+							'service_type': data.serviceType,
+							'category': data.selectCategory,
+							'form_location': 'contact_section',
+							'success': true,
+						});
+
+						// Update person properties
+						posthog.people.set({
+							'is_lead': true,
+							'last_form_submitted': 'contact',
+						});
+					}
+
 					// Show success message
 					if (formStatus) formStatus.classList.remove('hidden');
 					if (successMessage) successMessage.classList.remove('hidden');

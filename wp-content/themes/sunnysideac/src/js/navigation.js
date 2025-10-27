@@ -11,6 +11,7 @@
 let activeMenuItem = 'Home';
 let isServicesDropdownOpen = false;
 let isServiceAreasDropdownOpen = false;
+let isBrandsDropdownOpen = false;
 let isMobileMenuOpen = false;
 let selectedLocation = '';
 let hoverTimeout = null;
@@ -41,6 +42,12 @@ function cacheDOMElements() {
 		serviceAreasDropdown: document.querySelector('.service-areas-dropdown'),
 		serviceAreasDropdownBtn: document.querySelector('.service-areas-dropdown-btn'),
 		serviceAreasChevronIcon: document.getElementById('service-areas-dropdown-container')?.querySelector('.chevron-icon'),
+
+		// Brands dropdown elements
+		brandsDropdownContainer: document.getElementById('brands-dropdown-container'),
+		brandsDropdown: document.querySelector('.brands-dropdown'),
+		brandsDropdownBtn: document.querySelector('.brands-dropdown-btn'),
+		brandsChevronIcon: document.getElementById('brands-dropdown-container')?.querySelector('.chevron-icon'),
 
 		// Location selector elements
 		locationSelect: document.getElementById('location-select'),
@@ -111,9 +118,13 @@ function handleMenuItemClick(itemName, href) {
 	} else if (itemName === 'Cities') {
 		// Toggle dropdown
 		toggleServiceAreasDropdown();
+	} else if (itemName === 'Brands') {
+		// Toggle dropdown
+		toggleBrandsDropdown();
 	} else {
 		closeServicesDropdown();
 		closeServiceAreasDropdown();
+		closeBrandsDropdown();
 		// Navigate to the page
 		if (href && href !== '#') {
 			window.location.href = href;
@@ -136,9 +147,11 @@ function openServicesDropdown() {
 		clearTimeout(hoverTimeout);
 		hoverTimeout = null;
 	}
-	// Close Service Areas dropdown when opening Services
+	// Close other dropdowns when opening Services
 	isServiceAreasDropdownOpen = false;
 	updateServiceAreasDropdown();
+	isBrandsDropdownOpen = false;
+	updateBrandsDropdown();
 
 	isServicesDropdownOpen = true;
 	updateServicesDropdown();
@@ -200,9 +213,11 @@ function openServiceAreasDropdown() {
 		clearTimeout(hoverTimeout);
 		hoverTimeout = null;
 	}
-	// Close Services dropdown when opening Cities
+	// Close other dropdowns when opening Cities
 	isServicesDropdownOpen = false;
 	updateServicesDropdown();
+	isBrandsDropdownOpen = false;
+	updateBrandsDropdown();
 
 	isServiceAreasDropdownOpen = true;
 	updateServiceAreasDropdown();
@@ -244,6 +259,72 @@ function updateServiceAreasDropdown() {
 			}
 			if (serviceAreasDropdownContainer) {
 				serviceAreasDropdownContainer.setAttribute('aria-expanded', 'false');
+			}
+		}
+	}
+}
+
+// ===== BRANDS DROPDOWN FUNCTIONS =====
+
+function toggleBrandsDropdown() {
+	isBrandsDropdownOpen = !isBrandsDropdownOpen;
+	updateBrandsDropdown();
+}
+
+function openBrandsDropdown() {
+	// In debug mode, ignore hover events
+	if (debugMode) return;
+
+	if (hoverTimeout) {
+		clearTimeout(hoverTimeout);
+		hoverTimeout = null;
+	}
+	// Close other dropdowns when opening Brands
+	isServicesDropdownOpen = false;
+	updateServicesDropdown();
+	isServiceAreasDropdownOpen = false;
+	updateServiceAreasDropdown();
+
+	isBrandsDropdownOpen = true;
+	updateBrandsDropdown();
+}
+
+function closeBrandsDropdown() {
+	// In debug mode, ignore hover events
+	if (debugMode) return;
+
+	isBrandsDropdownOpen = false;
+	updateBrandsDropdown();
+}
+
+function delayedCloseBrandsDropdown() {
+	// In debug mode, ignore hover events
+	if (debugMode) return;
+
+	hoverTimeout = setTimeout(() => {
+		closeBrandsDropdown();
+	}, 150);
+}
+
+function updateBrandsDropdown() {
+	const { brandsDropdown, brandsChevronIcon, brandsDropdownContainer } = elements;
+
+	if (brandsDropdown) {
+		if (isBrandsDropdownOpen) {
+			brandsDropdown.classList.remove('hidden');
+			if (brandsChevronIcon) {
+				brandsChevronIcon.style.transform = 'rotate(180deg)';
+			}
+			if (brandsDropdownContainer) {
+				brandsDropdownContainer.setAttribute('aria-expanded', 'true');
+			}
+		} else {
+			brandsDropdown.classList.add('hidden');
+			if (brandsChevronIcon) {
+				brandsChevronIcon.style.transform = 'rotate(0deg)';
+			}
+			if (brandsDropdownContainer) {
+				brandsDropdownContainer.setAttribute('aria-expanded', 'false');
 			}
 		}
 	}
@@ -357,6 +438,32 @@ function setupDesktopNavigation() {
 				});
 				serviceAreasDropdown.addEventListener('mouseleave', delayedCloseServiceAreasDropdown);
 			}
+		} else if (itemName === 'Brands') {
+			// Brands dropdown toggle - entire button is clickable
+			const { brandsDropdownContainer, brandsDropdown } = elements;
+
+			// Add click listener to the entire button
+			item.addEventListener('click', (e) => {
+				e.preventDefault();
+				e.stopPropagation();
+				handleMenuItemClick(itemName, href);
+			});
+
+			// Hover events for brands dropdown
+			if (brandsDropdownContainer) {
+				brandsDropdownContainer.addEventListener('mouseenter', openBrandsDropdown);
+				brandsDropdownContainer.addEventListener('mouseleave', delayedCloseBrandsDropdown);
+			}
+
+			if (brandsDropdown) {
+				brandsDropdown.addEventListener('mouseenter', () => {
+					if (hoverTimeout) {
+						clearTimeout(hoverTimeout);
+						hoverTimeout = null;
+					}
+				});
+				brandsDropdown.addEventListener('mouseleave', delayedCloseBrandsDropdown);
+			}
 		} else {
 			// Regular navigation items
 			if (item) {
@@ -461,7 +568,7 @@ function setupLocationSelector() {
 }
 
 function setupGlobalEventListeners() {
-	const { servicesDropdownContainer, serviceAreasDropdownContainer } = elements;
+	const { servicesDropdownContainer, serviceAreasDropdownContainer, brandsDropdownContainer } = elements;
 
 	// Close dropdown when clicking outside
 	document.addEventListener('mousedown', (event) => {
@@ -470,6 +577,9 @@ function setupGlobalEventListeners() {
 		}
 		if (serviceAreasDropdownContainer && !serviceAreasDropdownContainer.contains(event.target)) {
 			closeServiceAreasDropdown();
+		}
+		if (brandsDropdownContainer && !brandsDropdownContainer.contains(event.target)) {
+			closeBrandsDropdown();
 		}
 	});
 
@@ -484,6 +594,9 @@ function setupGlobalEventListeners() {
 			}
 			if (isServiceAreasDropdownOpen) {
 				closeServiceAreasDropdown();
+			}
+			if (isBrandsDropdownOpen) {
+				closeBrandsDropdown();
 			}
 		}
 	});
@@ -509,6 +622,8 @@ function detectActiveMenuItem() {
 		detectedMenuItem = 'Services';
 	} else if (currentPath.includes('/cities')) {
 		detectedMenuItem = 'Cities';
+	} else if (currentPath.includes('/brands') || currentPath.includes('/daikin')) {
+		detectedMenuItem = 'Brands';
 	} else if (currentPath.includes('/projects')) {
 		detectedMenuItem = 'Projects';
 	} else if (currentPath.includes('/blog')) {

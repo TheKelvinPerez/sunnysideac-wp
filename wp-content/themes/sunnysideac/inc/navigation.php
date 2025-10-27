@@ -20,10 +20,17 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 	 */
 	public function start_lvl( &$output, $depth = 0, $args = null ) {
 		if ( $depth === 0 ) {
-			// Check if parent is Services or Areas by checking the walker's stored parent title
+			// Check if parent is Services, Cities, or Brands by checking the walker's stored parent title
 			if ( $this->is_mega_menu ) {
-				$menu_type      = $this->parent_title;
-				$dropdown_class = $menu_type === 'services' ? 'services-dropdown' : 'service-areas-dropdown';
+				$menu_type = $this->parent_title;
+
+				if ( $menu_type === 'services' ) {
+					$dropdown_class = 'services-dropdown';
+				} elseif ( $menu_type === 'cities' ) {
+					$dropdown_class = 'service-areas-dropdown';
+				} else {
+					$dropdown_class = 'brands-dropdown';
+				}
 
 				// Output mega menu container
 				$output .= '<div class="fixed top-[210px] left-1/2 -translate-x-1/2 z-[9999] w-[900px] max-w-[95vw] rounded-[20px] border-2 border-[#e6d4b8] bg-white shadow-[0_8px_25px_rgba(0,0,0,0.15)] overflow-hidden hidden ' . $dropdown_class . '">';
@@ -40,7 +47,7 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 					// Output services from constants grouped by category
 					$this->output_services_mega_menu( $output );
 
-				} else {
+				} elseif ( $menu_type === 'cities' ) {
 					$output .= '<div class="bg-gradient-to-r from-[#fb9939] to-[#e5462f] px-6 py-4">';
 					$output .= '<div class="flex items-center justify-between">';
 					$output .= '<div>';
@@ -59,6 +66,26 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 
 					// Output areas from constants
 					$this->output_areas_mega_menu( $output );
+				} else {
+					// Brands mega menu
+					$output .= '<div class="bg-gradient-to-r from-[#fb9939] to-[#e5462f] px-6 py-4">';
+					$output .= '<div class="flex items-center justify-between">';
+					$output .= '<div>';
+					$output .= '<div class="text-2xl font-bold text-white " role="heading" aria-level="4">Brands We Service</div>';
+					$output .= '<p class="text-sm text-white/90 mt-1 font-normal ">Expert Service for Top HVAC Brands</p>';
+					$output .= '</div>';
+					$output .= '<div class="text-white/80">';
+					$output .= '<svg class="h-10 w-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">';
+					$output .= '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />';
+					$output .= '</svg>';
+					$output .= '</div>';
+					$output .= '</div>';
+					$output .= '</div>';
+					$output .= '<div class="p-6">';
+					$output .= '<div class="grid grid-cols-3 gap-6 mb-6">';
+
+					// Output brands from constants
+					$this->output_brands_mega_menu( $output );
 				}
 
 				// Don't output anything else - we'll handle the closing in end_lvl
@@ -171,8 +198,10 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 
 				if ( $menu_type === 'services' ) {
 					$output .= 'View All HVAC Services';
-				} else {
+				} elseif ( $menu_type === 'cities' ) {
 					$output .= 'View All Cities';
+				} else {
+					$output .= 'View All Brands';
 				}
 
 				$output .= '<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>';
@@ -200,12 +229,14 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 			$has_dropdown = in_array( 'menu-item-has-children', $item->classes );
 			$item_lower   = strtolower( $item->title );
 
-			// Check if this is a mega menu item (Services or Cities)
-			$is_mega_menu_item = ( $item_lower === 'services' || $item_lower === 'cities' );
+			// Check if this is a mega menu item (Services, Cities, or Brands)
+			$is_mega_menu_item = ( $item_lower === 'services' || $item_lower === 'cities' || $item_lower === 'brands' );
 
 			// Check if this menu item should be active
 			$is_active = false;
 			if ( $item_lower === 'cities' && ( is_singular( 'city' ) || is_post_type_archive( 'city' ) ) ) {
+				$is_active = true;
+			} elseif ( $item_lower === 'brands' && ( is_singular( 'brand' ) || is_post_type_archive( 'brand' ) ) ) {
 				$is_active = true;
 			}
 
@@ -218,9 +249,17 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 			$output .= '<li role="none">';
 
 			if ( $is_mega_menu_item && $has_dropdown ) {
-				// Services or Cities mega menu item
-				$container_id = $item_lower === 'services' ? 'services-dropdown-container' : 'service-areas-dropdown-container';
-				$btn_class    = $item_lower === 'services' ? 'services-dropdown-btn' : 'service-areas-dropdown-btn';
+				// Services, Cities, or Brands mega menu item
+				if ( $item_lower === 'services' ) {
+					$container_id = 'services-dropdown-container';
+					$btn_class    = 'services-dropdown-btn';
+				} elseif ( $item_lower === 'cities' ) {
+					$container_id = 'service-areas-dropdown-container';
+					$btn_class    = 'service-areas-dropdown-btn';
+				} else {
+					$container_id = 'brands-dropdown-container';
+					$btn_class    = 'brands-dropdown-btn';
+				}
 				$chevron_icon = get_template_directory_uri() . '/assets/images/images/logos/navigation-chevron-down.svg';
 
 				// Build CSS classes for the menu item
@@ -256,7 +295,7 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 		if ( $depth === 0 ) {
 			$item_lower        = strtolower( $item->title );
 			$has_dropdown      = in_array( 'menu-item-has-children', $item->classes );
-			$is_mega_menu_item = ( $item_lower === 'services' || $item_lower === 'cities' );
+			$is_mega_menu_item = ( $item_lower === 'services' || $item_lower === 'cities' || $item_lower === 'brands' );
 
 			if ( $is_mega_menu_item && $has_dropdown ) {
 				$output .= '</div>'; // Close relative container
@@ -265,6 +304,70 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 			$output .= '</li>';
 		}
 		// Child items don't need closing tags (no wrapping element)
+	}
+
+	/**
+	 * Output brands mega menu content from constants
+	 */
+	private function output_brands_mega_menu( &$output ) {
+	if ( ! defined( 'SUNNYSIDE_BRANDS' ) || ! defined( 'SUNNYSIDE_DAIKIN_PRODUCTS' ) ) {
+		return;
+	}
+
+	$brands          = SUNNYSIDE_BRANDS;
+	$daikin_products = SUNNYSIDE_DAIKIN_PRODUCTS;
+
+	// Get current brand for active state
+	$current_brand_name = '';
+	if ( is_singular( 'brand' ) ) {
+		$current_brand_name = strtolower( get_the_title() );
+	}
+
+	foreach ( $brands as $brand_slug => $brand_name ) {
+		$brand_url = home_url( sprintf( '/brands/%s/', $brand_slug ) );
+		$is_active = ( strtolower( $brand_name ) === $current_brand_name );
+
+		// Start brand column
+		$output .= '<div class="space-y-1.5">';
+
+		// Brand heading (clickable)
+		$base_classes   = 'flex items-start gap-2 p-2 rounded-[20px] transition-all duration-200 focus:outline-none group';
+		$hover_classes  = 'hover:bg-[#ffc549] hover:scale-105 hover:shadow-md focus:bg-[#ffc549]';
+		$active_classes = 'bg-[#ffc549] shadow-md scale-105';
+
+		$css_classes = $base_classes . ' ' . $hover_classes;
+		if ( $is_active ) {
+			$css_classes .= ' ' . $active_classes;
+		}
+
+		$output .= '<a href="' . esc_url( $brand_url ) . '" class="' . esc_attr( $css_classes ) . '" aria-label="Navigate to ' . esc_attr( $brand_name ) . ' brand" ' . ( $is_active ? 'aria-current="page"' : '' ) . '>';
+		$output .= '<div class="h-4 w-4 flex-shrink-0 mt-0.5">';
+		$output .= '<svg class="h-4 w-4 transition-colors duration-200 ' . ( $is_active ? 'text-[#e5462f]' : 'text-gray-600 group-hover:text-[#e5462f]' ) . '" fill="none" stroke="currentColor" viewBox="0 0 24 24">';
+		$output .= '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />';
+		$output .= '</svg>';
+		$output .= '</div>';
+		$output .= '<span class="text-sm font-bold transition-colors duration-200 ' . ( $is_active ? 'text-[#e5462f]' : 'text-black group-hover:text-[#e5462f]' ) . '">' . esc_html( $brand_name ) . '</span>';
+		$output .= '</a>';
+
+		// If Daikin, show sub-products
+		if ( $brand_slug === 'daikin' ) {
+			foreach ( $daikin_products as $product ) {
+				$product_url = home_url( '/daikin/' . $product['slug'] . '/' );
+
+				$output .= '<a href="' . esc_url( $product_url ) . '" class="flex items-start gap-2 p-2 pl-6 rounded-[20px] transition-all duration-200 hover:bg-[#ffe8cc] hover:scale-105 hover:shadow-sm focus:bg-[#ffe8cc] focus:outline-none group" aria-label="Navigate to ' . esc_attr( $product['name'] ) . '">';
+				$output .= '<div class="h-3 w-3 flex-shrink-0 mt-0.5">';
+				$output .= '<svg class="h-3 w-3 text-gray-500 group-hover:text-[#fb9939] transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">';
+				$output .= '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />';
+				$output .= '</svg>';
+				$output .= '</div>';
+				$output .= '<span class="text-xs font-medium text-gray-700 group-hover:text-[#fb9939] transition-colors duration-200">' . esc_html( $product['short_name'] ) . '</span>';
+				$output .= '</a>';
+			}
+		}
+
+		// End brand column
+		$output .= '</div>';
+	}
 	}
 }
 

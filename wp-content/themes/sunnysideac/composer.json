@@ -5,12 +5,18 @@
     "require": {
         "php": ">=7.4",
         "filp/whoops": "^2.15",
+        "posthog/posthog-php": "^3.7",
         "vlucas/phpdotenv": "^5.6"
     },
     "autoload": {
         "psr-4": {
             "SunnysideAC\\": "inc/"
-        }
+        },
+        "classmap": [
+            "inc/performance-monitor.php",
+            "inc/class-service-city-sitemap-provider.php",
+            "inc/navigation.php"
+        ]
     },
     "config": {
         "optimize-autoloader": true,

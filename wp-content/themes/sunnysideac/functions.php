@@ -11,65 +11,92 @@ require_once get_template_directory() . '/vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable( get_template_directory() );
 $dotenv->load();
 
+// Initialize PostHog with environment variables
+if ( ! empty( $_ENV['POSTHOG_API_KEY'] ) ) {
+	PostHog\PostHog::init(
+		$_ENV['POSTHOG_API_KEY'],
+		array(
+			'host'                           => $_ENV['POSTHOG_HOST'] ?? 'https://us.i.posthog.com',
+			'debug'                          => $_ENV['APP_ENV'] === 'development',
+			'feature_flag_request_timeout_ms' => 3000,
+		)
+	);
+}
+
 /**
  * Setup CDN for WordPress uploads and assets
  */
 if ( ! empty( $_ENV['CDN_ENABLED'] ) && $_ENV['CDN_ENABLED'] === 'true' && ! empty( $_ENV['CDN_BASE_URL'] ) && $_ENV['APP_ENV'] !== 'development' ) {
 
 	// Replace upload URLs with CDN URLs
-	add_filter( 'wp_get_attachment_url', function( $url ) {
-		$upload_dir = wp_upload_dir();
-		$base_url = $upload_dir['baseurl'];
-		$cdn_base = rtrim( $_ENV['CDN_BASE_URL'], '/' ) . '/wp-content/uploads';
+	add_filter(
+		'wp_get_attachment_url',
+		function ( $url ) {
+			$upload_dir = wp_upload_dir();
+			$base_url   = $upload_dir['baseurl'];
+			$cdn_base   = rtrim( $_ENV['CDN_BASE_URL'], '/' ) . '/wp-content/uploads';
 
-		return str_replace( $base_url, $cdn_base, $url );
-	}, 99 );
+			return str_replace( $base_url, $cdn_base, $url );
+		},
+		99
+	);
 
 	// Replace attachment image sources with CDN URLs
-	add_filter( 'wp_get_attachment_image_src', function( $image ) {
-		if ( is_array( $image ) && ! empty( $image[0] ) ) {
-			$upload_dir = wp_upload_dir();
-			$base_url = $upload_dir['baseurl'];
-			$cdn_base = rtrim( $_ENV['CDN_BASE_URL'], '/' ) . '/wp-content/uploads';
+	add_filter(
+		'wp_get_attachment_image_src',
+		function ( $image ) {
+			if ( is_array( $image ) && ! empty( $image[0] ) ) {
+				$upload_dir = wp_upload_dir();
+				$base_url   = $upload_dir['baseurl'];
+				$cdn_base   = rtrim( $_ENV['CDN_BASE_URL'], '/' ) . '/wp-content/uploads';
 
-			$image[0] = str_replace( $base_url, $cdn_base, $image[0] );
-		}
-		return $image;
-	}, 99 );
+				$image[0] = str_replace( $base_url, $cdn_base, $image[0] );
+			}
+			return $image;
+		},
+		99
+	);
 
 	// Replace content URLs with CDN URLs
-	add_filter( 'the_content', function( $content ) {
-		$upload_dir = wp_upload_dir();
-		$base_url = $upload_dir['baseurl'];
-		$cdn_base = rtrim( $_ENV['CDN_BASE_URL'], '/' ) . '/wp-content/uploads';
+	add_filter(
+		'the_content',
+		function ( $content ) {
+			$upload_dir = wp_upload_dir();
+			$base_url   = $upload_dir['baseurl'];
+			$cdn_base   = rtrim( $_ENV['CDN_BASE_URL'], '/' ) . '/wp-content/uploads';
 
-		return str_replace( $base_url, $cdn_base, $content );
-	}, 99 );
+			return str_replace( $base_url, $cdn_base, $content );
+		},
+		99
+	);
 }
 
 
 /**
  * Simple cache headers for theme assets (safe version)
  */
-add_action( 'template_redirect', function() {
-	// Only set headers for direct asset access
-	if ( is_admin() || is_login() ) {
-		return;
-	}
+add_action(
+	'template_redirect',
+	function () {
+		// Only set headers for direct asset access
+		if ( is_admin() || is_login() ) {
+			return;
+		}
 
-	// Simple string check for theme assets
-	$request_uri = $_SERVER['REQUEST_URI'] ?? '';
-	$theme_name = basename( get_template_directory() );
+		// Simple string check for theme assets
+		$request_uri = $_SERVER['REQUEST_URI'] ?? '';
+		$theme_name  = basename( get_template_directory() );
 
-	if ( strpos( $request_uri, '/wp-content/themes/' . $theme_name . '/assets/' ) !== false ||
-		 strpos( $request_uri, '/wp-content/themes/' . $theme_name . '/dist/' ) !== false ) {
+		if ( strpos( $request_uri, '/wp-content/themes/' . $theme_name . '/assets/' ) !== false ||
+		strpos( $request_uri, '/wp-content/themes/' . $theme_name . '/dist/' ) !== false ) {
 
-		if ( ! headers_sent() ) {
-			header( 'Cache-Control: public, max-age=31536000, immutable' );
-			header( 'Vary: Accept-Encoding' );
+			if ( ! headers_sent() ) {
+				header( 'Cache-Control: public, max-age=31536000, immutable' );
+				header( 'Vary: Accept-Encoding' );
+			}
 		}
 	}
-});
+);
 
 /**
  * Initialize Whoops error handler for development
@@ -219,6 +246,16 @@ require_once get_template_directory() . '/inc/navigation.php';
 require_once get_template_directory() . '/inc/main-navigation-helper.php';
 require_once get_template_directory() . '/inc/footer-menu-helper.php';
 
+/**
+ * Include PostHog tracking
+ */
+require_once get_template_directory() . '/inc/posthog-tracking.php';
+
+/**
+ * Include Google Analytics 4
+ */
+require_once get_template_directory() . '/inc/google-analytics.php';
+
 
 /**
  * Check if Vite dev server is running
@@ -228,15 +265,18 @@ function sunnysideac_is_vite_dev_server_running() {
 
 	// Use curl for more reliable server detection
 	$ch = curl_init();
-	curl_setopt_array( $ch, array(
-		CURLOPT_URL            => $vite_dev_server,
-		CURLOPT_TIMEOUT        => 2,
-		CURLOPT_RETURNTRANSFER => true,
-		CURLOPT_NOBODY         => true,
-		CURLOPT_FOLLOWLOCATION => false,
-	) );
+	curl_setopt_array(
+		$ch,
+		array(
+			CURLOPT_URL            => $vite_dev_server,
+			CURLOPT_TIMEOUT        => 2,
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_NOBODY         => true,
+			CURLOPT_FOLLOWLOCATION => false,
+		)
+	);
 
-	$result = curl_exec( $ch );
+	$result    = curl_exec( $ch );
 	$http_code = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
 	curl_close( $ch );
 
@@ -1259,33 +1299,33 @@ function sunnysideac_handle_careers_form() {
 	}
 
 	// Create email content
-	$to_email       = SUNNYSIDE_EMAIL_ADDRESS;
-	$subject        = 'New Job Application: ' . $final_position . ' - ' . $first_name . ' ' . $last_name;
-	$headers        = array( 'Content-Type: text/html; charset=UTF-8', 'From: ' . $first_name . ' ' . $last_name . ' <' . $email . '>' );
+	$to_email = SUNNYSIDE_EMAIL_ADDRESS;
+	$subject  = 'New Job Application: ' . $final_position . ' - ' . $first_name . ' ' . $last_name;
+	$headers  = array( 'Content-Type: text/html; charset=UTF-8', 'From: ' . $first_name . ' ' . $last_name . ' <' . $email . '>' );
 
-	$email_body = "
+	$email_body = '
 		<h2>New Job Application</h2>
-		<p><strong>Position:</strong> " . esc_html( $final_position ) . "</p>
-		<p><strong>Name:</strong> " . esc_html( $first_name ) . " " . esc_html( $last_name ) . "</p>
-		<p><strong>Email:</strong> " . esc_html( $email ) . "</p>
-		<p><strong>Phone:</strong> " . esc_html( $phone ) . "</p>
-		<p><strong>Years of Experience:</strong> " . esc_html( $experience ) . "</p>
-		<p><strong>Availability:</strong> " . esc_html( $availability ) . "</p>";
+		<p><strong>Position:</strong> ' . esc_html( $final_position ) . '</p>
+		<p><strong>Name:</strong> ' . esc_html( $first_name ) . ' ' . esc_html( $last_name ) . '</p>
+		<p><strong>Email:</strong> ' . esc_html( $email ) . '</p>
+		<p><strong>Phone:</strong> ' . esc_html( $phone ) . '</p>
+		<p><strong>Years of Experience:</strong> ' . esc_html( $experience ) . '</p>
+		<p><strong>Availability:</strong> ' . esc_html( $availability ) . '</p>';
 
 	if ( ! empty( $message ) ) {
-		$email_body .= "<p><strong>Additional Information:</strong></p><p>" . nl2br( esc_html( $message ) ) . "</p>";
+		$email_body .= '<p><strong>Additional Information:</strong></p><p>' . nl2br( esc_html( $message ) ) . '</p>';
 	}
 
-	$email_body .= "
-		<p><strong>Submitted:</strong> " . date( 'F j, Y, g:i a' ) . "</p>
+	$email_body .= '
+		<p><strong>Submitted:</strong> ' . date( 'F j, Y, g:i a' ) . '</p>
 		<hr>
-		<p><em>This application was submitted via the Sunnyside AC website careers form.</em></p>";
+		<p><em>This application was submitted via the Sunnyside AC website careers form.</em></p>';
 
 	// Attach resume if uploaded
 	if ( ! empty( $resume_content ) ) {
-		$uploads      = wp_upload_dir();
-		$filename     = sanitize_file_name( 'resume_' . $first_name . '_' . $last_name . '_' . time() . '.' . pathinfo( $_FILES['resume']['name'], PATHINFO_EXTENSION ) );
-		$upload_file  = $uploads['path'] . '/' . $filename;
+		$uploads     = wp_upload_dir();
+		$filename    = sanitize_file_name( 'resume_' . $first_name . '_' . $last_name . '_' . time() . '.' . pathinfo( $_FILES['resume']['name'], PATHINFO_EXTENSION ) );
+		$upload_file = $uploads['path'] . '/' . $filename;
 
 		// Save the file
 		if ( file_put_contents( $upload_file, $resume_content ) !== false ) {
@@ -1294,7 +1334,7 @@ function sunnysideac_handle_careers_form() {
 
 			// For simplicity, we'll note the attachment in the email
 			// In a production environment, you might want to use wp_mail() with proper attachments
-			$email_body .= "<p><strong>Resume:</strong> Attached (saved as: " . esc_html( $filename ) . ")</p>";
+			$email_body .= '<p><strong>Resume:</strong> Attached (saved as: ' . esc_html( $filename ) . ')</p>';
 		}
 	}
 
@@ -1304,18 +1344,18 @@ function sunnysideac_handle_careers_form() {
 	// Send confirmation email to applicant
 	if ( $company_email_sent ) {
 		$confirmation_subject = 'We Received Your Application - Sunnyside AC';
-		$confirmation_body = "
+		$confirmation_body    = '
 			<h2>Thank You for Your Interest in Sunnyside AC!</h2>
-			<p>Dear " . esc_html( $first_name ) . " " . esc_html( $last_name ) . ",</p>
-			<p>We have successfully received your application for the <strong>" . esc_html( $final_position ) . "</strong> position.</p>
+			<p>Dear ' . esc_html( $first_name ) . ' ' . esc_html( $last_name ) . ',</p>
+			<p>We have successfully received your application for the <strong>' . esc_html( $final_position ) . "</strong> position.</p>
 			<p>Our hiring team will review your application and contact you within 2-3 business days if your qualifications match our current needs.</p>
 			<p>If you have any questions in the meantime, please don't hesitate to contact us at:</p>
 			<ul>
 				<li>Phone: <a href='tel:" . esc_attr( SUNNYSIDE_TEL_HREF ) . "'>" . esc_html( SUNNYSIDE_PHONE_DISPLAY ) . "</a></li>
-				<li>Email: <a href='mailto:" . esc_attr( SUNNYSIDE_EMAIL_ADDRESS ) . "'>" . esc_html( SUNNYSIDE_EMAIL_ADDRESS ) . "</a></li>
+				<li>Email: <a href='mailto:" . esc_attr( SUNNYSIDE_EMAIL_ADDRESS ) . "'>" . esc_html( SUNNYSIDE_EMAIL_ADDRESS ) . '</a></li>
 			</ul>
 			<p>We look forward to learning more about you!</p>
-			<p>Best regards,<br>The Sunnyside AC Team</p>";
+			<p>Best regards,<br>The Sunnyside AC Team</p>';
 
 		wp_mail( $email, $confirmation_subject, $confirmation_body, array( 'Content-Type: text/html; charset=UTF-8' ) );
 	}
@@ -1399,45 +1439,45 @@ function sunnysideac_handle_warranty_claim_form() {
 	}
 
 	// Create email content
-	$to_email       = SUNNYSIDE_EMAIL_ADDRESS;
-	$subject        = 'Warranty Claim Request - ' . $first_name . ' ' . $last_name;
-	$headers        = array( 'Content-Type: text/html; charset=UTF-8', 'From: ' . $first_name . ' ' . $last_name . ' <' . $email . '>' );
+	$to_email = SUNNYSIDE_EMAIL_ADDRESS;
+	$subject  = 'Warranty Claim Request - ' . $first_name . ' ' . $last_name;
+	$headers  = array( 'Content-Type: text/html; charset=UTF-8', 'From: ' . $first_name . ' ' . $last_name . ' <' . $email . '>' );
 
 	$priority_text = $urgent_service === 'yes' ? 'URGENT - ' : '';
-	$subject = $priority_text . $subject;
+	$subject       = $priority_text . $subject;
 
-	$email_body = "
+	$email_body = '
 		<h2>Warranty Claim Request</h2>
-		<p><strong>Priority:</strong> " . ( $urgent_service === 'yes' ? 'URGENT - Immediate attention required' : 'Normal' ) . "</p>
-		<p><strong>Name:</strong> " . esc_html( $first_name ) . " " . esc_html( $last_name ) . "</p>
-		<p><strong>Email:</strong> " . esc_html( $email ) . "</p>
-		<p><strong>Phone:</strong> " . esc_html( $phone ) . "</p>
-		<p><strong>Service Address:</strong> " . esc_html( $address ) . "</p>
+		<p><strong>Priority:</strong> ' . ( $urgent_service === 'yes' ? 'URGENT - Immediate attention required' : 'Normal' ) . '</p>
+		<p><strong>Name:</strong> ' . esc_html( $first_name ) . ' ' . esc_html( $last_name ) . '</p>
+		<p><strong>Email:</strong> ' . esc_html( $email ) . '</p>
+		<p><strong>Phone:</strong> ' . esc_html( $phone ) . '</p>
+		<p><strong>Service Address:</strong> ' . esc_html( $address ) . '</p>
 		<hr>
 		<h4>Equipment Information</h4>
-		<p><strong>Equipment Type:</strong> " . esc_html( $equipment_type ) . "</p>
-		<p><strong>Equipment Brand:</strong> " . esc_html( $equipment_brand ) . "</p>
-		<p><strong>Installation Date:</strong> " . esc_html( $install_date ) . "</p>
-		<p><strong>Warranty Type:</strong> " . esc_html( $warranty_type ) . "</p>
+		<p><strong>Equipment Type:</strong> ' . esc_html( $equipment_type ) . '</p>
+		<p><strong>Equipment Brand:</strong> ' . esc_html( $equipment_brand ) . '</p>
+		<p><strong>Installation Date:</strong> ' . esc_html( $install_date ) . '</p>
+		<p><strong>Warranty Type:</strong> ' . esc_html( $warranty_type ) . '</p>
 		<hr>
 		<h4>Issue Description</h4>
-		<p>" . nl2br( esc_html( $issue_description ) ) . "</p>";
+		<p>' . nl2br( esc_html( $issue_description ) ) . '</p>';
 
 	if ( ! empty( $document_content ) ) {
-		$uploads      = wp_upload_dir();
-		$filename     = sanitize_file_name( 'warranty_docs_' . $first_name . '_' . $last_name . '_' . time() . '.' . pathinfo( $_FILES['warranty_documents']['name'], PATHINFO_EXTENSION ) );
-		$upload_file  = $uploads['path'] . '/' . $filename;
+		$uploads     = wp_upload_dir();
+		$filename    = sanitize_file_name( 'warranty_docs_' . $first_name . '_' . $last_name . '_' . time() . '.' . pathinfo( $_FILES['warranty_documents']['name'], PATHINFO_EXTENSION ) );
+		$upload_file = $uploads['path'] . '/' . $filename;
 
 		// Save the file
 		if ( file_put_contents( $upload_file, $document_content ) !== false ) {
-			$email_body .= "<p><strong>Documents:</strong> Attached (saved as: " . esc_html( $filename ) . ")</p>";
+			$email_body .= '<p><strong>Documents:</strong> Attached (saved as: ' . esc_html( $filename ) . ')</p>';
 		}
 	}
 
-	$email_body .= "
+	$email_body .= '
 		<hr>
-		<p><strong>Submitted:</strong> " . date( 'F j, Y, g:i a' ) . "</p>
-		<p><em>This warranty claim was submitted via the Sunnyside AC website.</em></p>";
+		<p><strong>Submitted:</strong> ' . date( 'F j, Y, g:i a' ) . '</p>
+		<p><em>This warranty claim was submitted via the Sunnyside AC website.</em></p>';
 
 	// Send email to company
 	$company_email_sent = wp_mail( $to_email, $subject, $email_body, $headers );
@@ -1445,28 +1485,28 @@ function sunnysideac_handle_warranty_claim_form() {
 	// Send confirmation email to customer
 	if ( $company_email_sent ) {
 		$confirmation_subject = 'We Received Your Warranty Claim - Sunnyside AC';
-		$confirmation_body = "
+		$confirmation_body    = '
 			<h2>Warranty Claim Received</h2>
-			<p>Dear " . esc_html( $first_name ) . " " . esc_html( $last_name ) . ",</p>
-			<p>We have successfully received your warranty claim request for your " . esc_html( $equipment_type ) . ".</p>
+			<p>Dear ' . esc_html( $first_name ) . ' ' . esc_html( $last_name ) . ',</p>
+			<p>We have successfully received your warranty claim request for your ' . esc_html( $equipment_type ) . '.</p>
 			<p>Our warranty team will review your claim and contact you within 24 hours to:</p>
 			<ul>
 				<li>Schedule a diagnostic visit if needed</li>
 				<li>Review your warranty coverage</li>
 				<li>Process any necessary parts orders</li>
 				<li>Provide next steps and timeline</li>
-			</ul>";
+			</ul>';
 
 		if ( $urgent_service === 'yes' ) {
-			$confirmation_body .= "<p><strong>Since you marked this as urgent, we will prioritize your claim and contact you as soon as possible.</strong></p>";
+			$confirmation_body .= '<p><strong>Since you marked this as urgent, we will prioritize your claim and contact you as soon as possible.</strong></p>';
 		}
 
 		$confirmation_body .= "
 			<p>If you need immediate assistance, please call us at:</p>
 			<ul>
-				<li>Phone: <a href='tel:" . esc_attr( SUNNYSIDE_TEL_HREF ) . "'>" . esc_html( SUNNYSIDE_PHONE_DISPLAY ) . "</a></li>
+				<li>Phone: <a href='tel:" . esc_attr( SUNNYSIDE_TEL_HREF ) . "'>" . esc_html( SUNNYSIDE_PHONE_DISPLAY ) . '</a></li>
 			</ul>
-			<p>Best regards,<br>The Sunnyside AC Warranty Team</p>";
+			<p>Best regards,<br>The Sunnyside AC Warranty Team</p>';
 
 		wp_mail( $email, $confirmation_subject, $confirmation_body, array( 'Content-Type: text/html; charset=UTF-8' ) );
 	}

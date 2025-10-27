@@ -198,6 +198,34 @@ function sunnysideac_render_service_areas_mega_menu(): void {
 }
 
 /**
+ * Render Brands mega menu dropdown
+ * Uses template part for cleaner separation of concerns
+ *
+ * @return void
+ */
+function sunnysideac_render_brands_mega_menu(): void {
+	if ( ! defined( 'SUNNYSIDE_BRANDS' ) || ! defined( 'SUNNYSIDE_DAIKIN_PRODUCTS' ) ) {
+		return;
+	}
+
+	// Determine current brand name
+	$current_brand_name = '';
+	if ( is_singular( 'brand' ) ) {
+		$current_brand_name = strtolower( get_the_title() );
+	}
+
+	get_template_part(
+		'template-parts/navigation/brands-mega-menu',
+		null,
+		[
+			'brands'             => SUNNYSIDE_BRANDS,
+			'daikin_products'    => SUNNYSIDE_DAIKIN_PRODUCTS,
+			'current_brand_name' => $current_brand_name,
+		]
+	);
+}
+
+/**
  * Render mobile navigation from JSON configuration
  * Uses template parts for cleaner separation of concerns
  *

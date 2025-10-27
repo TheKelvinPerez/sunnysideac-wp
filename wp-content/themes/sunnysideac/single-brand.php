@@ -191,6 +191,14 @@ if ( have_posts() ) :
 					);
 					?>
 
+					<?php
+					// Show Daikin submenu if this is the Daikin brand
+					$brand_slug = get_post_field( 'post_name', $brand_id );
+					if ( $brand_slug === 'daikin' ) {
+						get_template_part( 'template-parts/daikin-submenu' );
+					}
+					?>
+
 					<!-- Featured Image / Brand Logo (if exists) -->
 					<?php if ( has_post_thumbnail() ) : ?>
 						<section class="bg-white rounded-[20px] p-6 md:p-10">
