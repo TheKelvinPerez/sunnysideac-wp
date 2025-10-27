@@ -513,7 +513,7 @@ $phone_display = SUNNYSIDE_PHONE_DISPLAY;
 	</div>
 
 	<!-- Lightbox Overlay -->
-	<div id="lightbox" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+	<div id="lightbox" class="fixed inset-0 z-50 md:flex items-center justify-center hidden">
 		<!-- Blurred Background -->
 		<div class="absolute inset-0 bg-black/80 backdrop-blur-sm" id="lightbox-backdrop"></div>
 

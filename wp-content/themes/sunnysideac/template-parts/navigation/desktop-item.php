@@ -43,14 +43,12 @@ $text_classes = ' text-lg font-medium whitespace-nowrap transition-colors durati
 	$btn_class    = ( $item['mega_menu_type'] ?? '' ) === 'services' ? 'services-dropdown-btn' : 'service-areas-dropdown-btn';
 	?>
 	<div class="relative" id="<?php echo esc_attr( $container_id ); ?>">
-		<div class="<?php echo esc_attr( $menu_item_classes ); ?>" data-item="<?php echo esc_attr( $item['title'] ?? '' ); ?>" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-label="<?php echo esc_attr( $item['title'] ?? '' ); ?> menu" <?php echo $is_active ? 'aria-current="page"' : ''; ?>>
-			<a href="<?php echo esc_url( $item['href'] ?? '#' ); ?>" class="<?php echo esc_attr( $text_classes ); ?>">
+		<button class="<?php echo esc_attr( $menu_item_classes ); ?> <?php echo esc_attr( $btn_class ); ?>-container" data-item="<?php echo esc_attr( $item['title'] ?? '' ); ?>" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-label="<?php echo esc_attr( $item['title'] ?? '' ); ?> menu" <?php echo $is_active ? 'aria-current="page"' : ''; ?>>
+			<span class="<?php echo esc_attr( $text_classes ); ?>">
 				<?php echo esc_html( $item['title'] ?? '' ); ?>
-			</a>
-			<button class="ml-1 border-none bg-transparent p-0 focus:outline-none <?php echo esc_attr( $btn_class ); ?>" aria-label="Toggle <?php echo esc_attr( strtolower( $item['title'] ?? '' ) ); ?> dropdown">
-				<img src="<?php echo esc_url( $chevron_icon ); ?>" alt="" class="h-4 w-4 text-current transition-transform duration-200 chevron-icon" role="presentation" loading="lazy" decoding="async" />
-			</button>
-		</div>
+			</span>
+			<img src="<?php echo esc_url( $chevron_icon ); ?>" alt="" class="h-4 w-4 text-current transition-transform duration-200 chevron-icon ml-1" role="presentation" loading="lazy" decoding="async" />
+		</button>
 		<?php
 		// Render mega menu dropdown
 		if ( ( $item['mega_menu_type'] ?? '' ) === 'services' ) {

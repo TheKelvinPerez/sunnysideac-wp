@@ -63,16 +63,8 @@ function updateActiveMenuItem(itemName) {
 	document.querySelectorAll('.nav-item').forEach(item => {
 		const itemData = item.dataset.item;
 
-		// Handle different element types safely
-		let textElement = null;
-
-		if (item.tagName === 'A') {
-			// This is a direct link (regular navigation items)
-			textElement = item.querySelector('span');
-		} else {
-			// This is a container (mega menu items)
-			textElement = item.querySelector('a');
-		}
+		// Find the text element (always a span now for all button types)
+		const textElement = item.querySelector('span');
 
 		if (itemData === itemName) {
 			// Set active state
@@ -314,16 +306,15 @@ function setupDesktopNavigation() {
 		const href = item.dataset.href || item.querySelector('a')?.href;
 
 		if (itemName === 'Services') {
-			// Services dropdown toggle
-			const { servicesDropdownBtn, servicesDropdownContainer, servicesDropdown } = elements;
+			// Services dropdown toggle - entire button is clickable
+			const { servicesDropdownContainer, servicesDropdown } = elements;
 
-			if (servicesDropdownBtn) {
-				servicesDropdownBtn.addEventListener('click', (e) => {
-					e.preventDefault();
-					e.stopPropagation();
-					handleMenuItemClick(itemName, href);
-				});
-			}
+			// Add click listener to the entire button
+			item.addEventListener('click', (e) => {
+				e.preventDefault();
+				e.stopPropagation();
+				handleMenuItemClick(itemName, href);
+			});
 
 			// Hover events for services dropdown
 			if (servicesDropdownContainer) {
@@ -341,16 +332,15 @@ function setupDesktopNavigation() {
 				servicesDropdown.addEventListener('mouseleave', delayedCloseServicesDropdown);
 			}
 		} else if (itemName === 'Cities') {
-			// Cities dropdown toggle
-			const { serviceAreasDropdownBtn, serviceAreasDropdownContainer, serviceAreasDropdown } = elements;
+			// Cities dropdown toggle - entire button is clickable
+			const { serviceAreasDropdownContainer, serviceAreasDropdown } = elements;
 
-			if (serviceAreasDropdownBtn) {
-				serviceAreasDropdownBtn.addEventListener('click', (e) => {
-					e.preventDefault();
-					e.stopPropagation();
-					handleMenuItemClick(itemName, href);
-				});
-			}
+			// Add click listener to the entire button
+			item.addEventListener('click', (e) => {
+				e.preventDefault();
+				e.stopPropagation();
+				handleMenuItemClick(itemName, href);
+			});
 
 			// Hover events for areas dropdown
 			if (serviceAreasDropdownContainer) {
