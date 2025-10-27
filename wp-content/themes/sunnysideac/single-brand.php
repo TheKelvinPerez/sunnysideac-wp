@@ -164,6 +164,18 @@ if ( have_posts() ) :
 				<article class="flex gap-10 flex-col" id="post-<?php the_ID(); ?>" <?php post_class( 'brand-page' ); ?>>
 
 					<?php
+					// Prepare logo data for header
+					$logo_url = '';
+					$logo_link = '';
+					$logo_alt = $brand_title . ' HVAC systems';
+
+					if ( has_post_thumbnail() ) {
+						$logo_url = get_the_post_thumbnail_url( $brand_id, 'large' );
+						if ( $brand_website ) {
+							$logo_link = $brand_website;
+						}
+					}
+
 					// Page Header with Breadcrumbs (using template part)
 					get_template_part(
 						'template-parts/page-header',
@@ -187,6 +199,9 @@ if ( have_posts() ) :
 							'description' => 'Expert service, repair, and installation for ' . $brand_title . ' HVAC systems across South Florida',
 							'show_ctas'   => true,
 							'bg_color'    => 'white',
+							'logo_url'    => $logo_url,
+							'logo_link'   => $logo_link,
+							'logo_alt'    => $logo_alt,
 						)
 					);
 					?>
@@ -199,59 +214,7 @@ if ( have_posts() ) :
 					}
 					?>
 
-					<!-- Featured Image / Brand Logo (if exists) -->
-					<?php if ( has_post_thumbnail() ) : ?>
-						<section class="bg-white rounded-[20px] p-6 md:p-10">
-							<div class="max-w-3xl mx-auto">
-								<figure class="flex items-center justify-center">
-									<?php if ( $brand_website ) : ?>
-										<a href="<?php echo esc_url( $brand_website ); ?>"
-											target="_blank"
-											rel="noopener noreferrer"
-											class="transition-transform hover:scale-105 duration-300"
-											title="Visit <?php echo esc_attr( $brand_title ); ?> official website">
-											<?php
-											the_post_thumbnail(
-												'large',
-												array(
-													'class' => 'max-h-64 w-auto object-contain',
-													'alt'   => $brand_title . ' HVAC systems',
-												)
-											);
-											?>
-										</a>
-									<?php else : ?>
-										<?php
-										the_post_thumbnail(
-											'large',
-											array(
-												'class' => 'max-h-64 w-auto object-contain',
-												'alt'   => $brand_title . ' HVAC systems',
-											)
-										);
-										?>
-									<?php endif; ?>
-								</figure>
-
-								<?php if ( $brand_website ) : ?>
-									<div class="mt-8 text-center">
-										<a href="<?php echo esc_url( $brand_website ); ?>"
-											target="_blank"
-											rel="noopener noreferrer"
-											class="inline-flex items-center justify-center gap-2 rounded-[35px] bg-gradient-to-r from-[#7fcbf2] to-[#594bf7] px-8 py-4 transition-all hover:scale-105 hover:shadow-xl focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none">
-											<span class="text-base lg:text-lg font-medium text-white whitespace-nowrap">
-												Visit Official <?php echo esc_html( $brand_title ); ?> Website
-											</span>
-											<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-											</svg>
-										</a>
-									</div>
-								<?php endif; ?>
-							</div>
-						</section>
-					<?php endif; ?>
-
+					
 					<!-- Brand Overview / Content -->
 					<?php if ( get_the_content() || $brand_description ) : ?>
 						<section class="bg-white rounded-[20px] p-6 md:p-10">

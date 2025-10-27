@@ -23,6 +23,9 @@ $title       = $args['title'] ?? '';
 $description = $args['description'] ?? '';
 $show_ctas   = $args['show_ctas'] ?? true;
 $bg_color    = $args['bg_color'] ?? 'white';
+$logo_url    = $args['logo_url'] ?? '';
+$logo_link   = $args['logo_link'] ?? '';
+$logo_alt    = $args['logo_alt'] ?? '';
 
 // Determine background class
 $bg_class = $bg_color === 'gradient'
@@ -70,6 +73,27 @@ $description_color    = $bg_color === 'gradient' ? 'text-white/90' : 'text-gray-
 				?>
 			</ol>
 		</nav>
+	<?php endif; ?>
+
+	<?php if ( ! empty( $logo_url ) ) : ?>
+		<!-- Logo Display -->
+		<div class="flex justify-center mb-8">
+			<?php if ( ! empty( $logo_link ) ) : ?>
+				<a href="<?php echo esc_url( $logo_link ); ?>"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="transition-transform hover:scale-105 duration-300"
+					title="<?php echo esc_attr( $logo_alt ); ?>">
+					<img src="<?php echo esc_url( $logo_url ); ?>"
+						alt="<?php echo esc_attr( $logo_alt ); ?>"
+						class="max-h-32 w-auto object-contain">
+				</a>
+			<?php else : ?>
+				<img src="<?php echo esc_url( $logo_url ); ?>"
+					alt="<?php echo esc_attr( $logo_alt ); ?>"
+					class="max-h-32 w-auto object-contain">
+			<?php endif; ?>
+		</div>
 	<?php endif; ?>
 
 	<?php if ( ! empty( $title ) ) : ?>
