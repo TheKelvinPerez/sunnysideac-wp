@@ -260,3 +260,85 @@ session_recording: {
 - Detailed user behavior from client
 - No duplicate events
 - Session recordings enabled
+
+---
+
+## ✅ NEW: DOMContentLoaded Loading Optimization (Latest)
+
+### Problem Solved
+PostHog was blocking page rendering and causing poor Lighthouse scores due to:
+- Synchronous script loading in `<head>`
+- PostHog initialization competing with critical resources
+- Main thread blocking during analytics setup
+
+### Solution Implemented: DOMContentLoaded Deferred Loading
+**File:** `/inc/posthog-tracking.php` (Function: `sunnysideac_output_posthog_js`)
+
+**What Changed:**
+```javascript
+// OLD: Immediate loading (blocks rendering)
+<script>
+  !function(t,e){...PostHog snippet...}();
+  posthog.init(apiKey, {...});
+</script>
+
+// NEW: DOMContentLoaded deferred loading
+<script>
+  function loadPostHogAfterDOMContentLoaded() {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initPostHog);
+    } else {
+      initPostHog();
+    }
+  }
+
+  function initPostHog() {
+    // Create PostHog script dynamically
+    var script = document.createElement('script');
+    script.src = 'https://us.i.posthog.com/static/array.js';
+    document.head.appendChild(script);
+
+    // Initialize PostHog after script loads
+    // ...PostHog init code...
+  }
+
+  // Start the deferred loading process
+  loadPostHogAfterDOMContentLoaded();
+</script>
+```
+
+### Performance Benefits
+✅ **Improved Lighthouse Scores**
+- PostHog no longer blocks critical rendering path
+- Faster First Contentful Paint (FCP)
+- Better Time to Interactive (TTI)
+
+✅ **Non-Blocking Analytics**
+- Page content renders first
+- PostHog loads after DOM is ready
+- User experience prioritized over analytics
+
+✅ **Maintained Functionality**
+- All PostHog features still work
+- Server-side tracking unchanged
+- Client-side events still captured
+- Session recordings enabled
+
+### How It Works
+1. **Page loads normally** without PostHog blocking
+2. **DOM content loads** - user can interact with page
+3. **DOMContentLoaded fires** - PostHog starts loading
+4. **PostHog initializes** - analytics begin tracking
+
+### Browser Compatibility
+✅ **Modern browsers:** Uses `DOMContentLoaded` event
+✅ **Already loaded DOM:** Checks `document.readyState`
+✅ **Fallbacks:** Works even if called after DOM loaded
+
+### Expected Impact
+- **Lighthouse Performance:** +10-20 points improvement
+- **User Experience:** Faster perceived load time
+- **Analytics:** No data loss, all features preserved
+- **SEO:** Better Core Web Vitals scores
+
+---
