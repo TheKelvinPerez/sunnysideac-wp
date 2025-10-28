@@ -77,10 +77,10 @@ function waf_rate_limit_login() {
 add_action('login_init', 'waf_rate_limit_login');
 
 /**
- * Block suspicious HTTP methods
+ * Block suspicious HTTP methods (but allow REST API methods)
  */
 function waf_block_suspicious_methods() {
-    $allowed_methods = ['GET', 'POST', 'HEAD', 'OPTIONS'];
+    $allowed_methods = ['GET', 'POST', 'HEAD', 'OPTIONS', 'PUT', 'PATCH', 'DELETE'];
     $method = $_SERVER['REQUEST_METHOD'] ?? '';
 
     if (!in_array($method, $allowed_methods)) {
