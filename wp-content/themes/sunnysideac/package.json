@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && ./scripts/update-static-assets.sh",
     "build:prod": "npm run build && npm run critical-css",
     "critical-css": "node scripts/extract-critical.js",
     "optimize-images": "./optimize-images.sh",
@@ -24,5 +24,8 @@
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.14",
     "vite": "^6.3.6"
+  },
+  "dependencies": {
+    "@tailwindcss/typography": "^0.5.19"
   }
 }

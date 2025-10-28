@@ -135,7 +135,7 @@ get_template_part(
 		</header>
 
 		<!-- Post Content -->
-		<div class="prose prose-lg prose-gray max-w-none mb-12">
+		<div class="prose prose-lg prose-slate max-w-none mb-12 prose-headings:text-gray-900 prose-lead:text-gray-600 prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900 prose-code:text-pink-600 prose-pre:bg-gray-100 prose-blockquote:border-l-blue-500 prose-blockquote:text-gray-700 prose-img:rounded-lg prose-img:shadow-md">
 			<?php
 			the_content();
 
