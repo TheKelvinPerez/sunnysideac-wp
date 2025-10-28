@@ -12,7 +12,9 @@
 ##############################################################################
 
 # Configuration
-DEPLOY_SCRIPT="/var/www/sunnyside247ac_com/.deployment/deploy.sh"
+GIT_DIR="/var/www/sunnyside247ac_com.git"
+WORK_TREE="/var/www/sunnyside247ac_com"
+DEPLOY_SCRIPT="${WORK_TREE}/.deployment/deploy.sh"
 TARGET_BRANCH="prod"
 
 # Read pushed branch
@@ -25,6 +27,13 @@ while read oldrev newrev refname; do
     # Only deploy if prod branch was pushed
     if [ "$branch" = "$TARGET_BRANCH" ]; then
         echo "==> Triggering deployment for $TARGET_BRANCH branch..."
+
+        # First, check out the code to the working tree
+        echo "==> Checking out code to working tree..."
+        git --git-dir="$GIT_DIR" --work-tree="$WORK_TREE" checkout -f "$TARGET_BRANCH" || {
+            echo "ERROR: Failed to checkout code"
+            exit 1
+        }
 
         # Execute deployment script
         if [ -f "$DEPLOY_SCRIPT" ]; then

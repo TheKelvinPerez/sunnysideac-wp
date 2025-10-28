@@ -110,8 +110,8 @@ show_stats() {
     echo "Latest deployment: $latest_date"
     echo ""
 
-    # Count successful vs failed deployments
-    local successful=$(grep -l "deployment completed successfully" "$LOG_DIR"/deploy-*.log 2>/dev/null | wc -l | tr -d ' ')
+    # Count successful vs failed deployments (case-insensitive)
+    local successful=$(grep -li "deployment completed successfully" "$LOG_DIR"/deploy-*.log 2>/dev/null | wc -l | tr -d ' ')
     local failed=$((total_logs - successful))
 
     echo "Successful deployments: $successful"
