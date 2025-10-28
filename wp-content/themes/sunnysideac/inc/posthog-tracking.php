@@ -209,99 +209,117 @@ function sunnysideac_output_posthog_js() {
 	$host        = esc_js( $_ENV['POSTHOG_HOST'] ?? 'https://us.i.posthog.com' );
 	$distinct_id = esc_js( sunnysideac_get_posthog_distinct_id() );
 	?>
-	<!-- PostHog Analytics (Performance Optimized) -->
+	<!-- PostHog Analytics (DOMContentLoaded Deferred) -->
 	<script>
-		// PostHog Loader - Using official PostHog CDN
-		!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=(s.asset_host || 'https://us.i.posthog.com')+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
-
-		// Initialize PostHog with performance settings
-		posthog.init('<?php echo $api_key; ?>', {
-			api_host: '<?php echo $host; ?>',
-			person_profiles: 'identified_only', // Only create profiles for identified users
-
-			// PAGEVIEWS: Disable auto pageview (tracked server-side with WordPress context)
-			capture_pageview: false,
-			capture_pageleave: true,
-
-			// AUTOCAPTURE: Enable for clicks, interactions, and heatmaps
-			autocapture: {
-				// Track these events automatically
-				dom_event_allowlist: ['click', 'change', 'submit'],
-
-				// Only track these interactive elements
-				element_allowlist: ['a', 'button', 'form', 'input', 'select', 'textarea'],
-
-				// Priority tracking for conversion elements
-				css_selector_allowlist: [
-					'.cta-button',
-					'.phone-link',
-					'.email-link',
-					'[data-ph-capture]',  // Add data-ph-capture to important elements
-				],
-
-				// Ignore admin/utility areas
-				css_selector_ignorelist: [
-					'.admin-bar',
-					'#wpadminbar',
-					'.ph-no-capture',
-				],
-			},
-
-			// Session recording with privacy (for screen captures)
-			session_recording: {
-				maskAllInputs: true,
-				maskTextSelector: '*',
-				recordCrossOriginIframes: false,
-			},
-
-			// PERFORMANCE: Enable performance tracking (Web Vitals)
-			capture_performance: true,
-
-			// Use official PostHog CDN for reliability
-			api_host: '<?php echo $host; ?>',
-			ui_host: '<?php echo $host; ?>',
-			asset_host: 'https://us.i.posthog.com',
-
-			// Loaded callback - runs after library loads
-			loaded: function(posthog) {
-				// Use requestIdleCallback to defer non-critical initialization
-				// This ensures PostHog doesn't block main thread
-				if ('requestIdleCallback' in window) {
-					requestIdleCallback(function() {
-						initPostHogTracking(posthog);
-					}, { timeout: 2000 });
-				} else {
-					// Fallback for browsers without requestIdleCallback
-					setTimeout(function() {
-						initPostHogTracking(posthog);
-					}, 1);
-				}
-			}
-		});
-
 		/**
-		 * Initialize PostHog tracking (runs in idle time)
-		 * This function sets up all event listeners without blocking
-		 *
-		 * Note: Pageviews are tracked server-side with rich WordPress context
-		 * Client-side handles clicks, interactions, and session recordings
+		 * Load PostHog after DOM content is fully loaded
+		 * This approach prevents PostHog from blocking page rendering
+		 * and significantly improves Lighthouse performance scores
 		 */
-		function initPostHogTracking(posthog) {
-			// Identify user with server-provided ID
-			posthog.identify('<?php echo $distinct_id; ?>');
-
-			// Pageview already tracked server-side with WordPress context
-			// (page_type, service_name, city_name, etc.)
-			// No need to duplicate here
-
-			// Store globally for other analytics scripts
-			window._posthog_loaded = true;
-
-			// Trigger custom event for other scripts
-			if ('CustomEvent' in window) {
-				window.dispatchEvent(new CustomEvent('posthog_loaded'));
+		function loadPostHogAfterDOMContentLoaded() {
+			// Only proceed if DOM is ready
+			if (document.readyState === 'loading') {
+				// DOM still loading, wait for DOMContentLoaded event
+				document.addEventListener('DOMContentLoaded', initPostHog);
+			} else {
+				// DOM already loaded, initialize immediately
+				initPostHog();
 			}
 		}
+
+		function initPostHog() {
+			// Create and inject PostHog script dynamically
+			var script = document.createElement('script');
+			script.type = 'text/javascript';
+			script.crossOrigin = 'anonymous';
+			script.async = true;
+			script.src = '<?php echo esc_js( $_ENV['POSTHOG_HOST'] ?? 'https://us.i.posthog.com' ); ?>/static/array.js';
+
+			// PostHog initialization script
+			var initScript = document.createElement('script');
+			initScript.innerHTML = `
+				!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=(s.asset_host || 'https://us.i.posthog.com')+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+
+				// Initialize PostHog with performance settings
+				posthog.init('<?php echo $api_key; ?>', {
+					api_host: '<?php echo $host; ?>',
+					person_profiles: 'identified_only',
+
+					// PAGEVIEWS: Disable auto pageview (tracked server-side)
+					capture_pageview: false,
+					capture_pageleave: true,
+
+					// AUTOCAPTURE: Enable for clicks, interactions, and heatmaps
+					autocapture: {
+						dom_event_allowlist: ['click', 'change', 'submit'],
+						element_allowlist: ['a', 'button', 'form', 'input', 'select', 'textarea'],
+						css_selector_allowlist: [
+							'.cta-button',
+							'.phone-link',
+							'.email-link',
+							'[data-ph-capture]',
+						],
+						css_selector_ignorelist: [
+							'.admin-bar',
+							'#wpadminbar',
+							'.ph-no-capture',
+						],
+					},
+
+					// Session recording with privacy
+					session_recording: {
+						maskAllInputs: true,
+						maskTextSelector: '*',
+						recordCrossOriginIframes: false,
+					},
+
+					// Performance tracking
+					capture_performance: true,
+
+					// CDN settings
+					api_host: '<?php echo $host; ?>',
+					ui_host: '<?php echo $host; ?>',
+					asset_host: 'https://us.i.posthog.com',
+
+					// Initialize after library loads
+					loaded: function(posthog) {
+						// Use requestIdleCallback to defer non-critical initialization
+						if ('requestIdleCallback' in window) {
+							requestIdleCallback(function() {
+								initPostHogTracking(posthog);
+							}, { timeout: 2000 });
+						} else {
+							setTimeout(function() {
+								initPostHogTracking(posthog);
+							}, 1);
+						}
+					}
+				});
+
+				/**
+				 * Initialize PostHog tracking (runs in idle time)
+				 */
+				function initPostHogTracking(posthog) {
+					// Identify user with server-provided ID
+					posthog.identify('<?php echo $distinct_id; ?>');
+
+					// Store globally for other analytics scripts
+					window._posthog_loaded = true;
+
+					// Trigger custom event for other scripts
+					if ('CustomEvent' in window) {
+						window.dispatchEvent(new CustomEvent('posthog_loaded'));
+					}
+				}
+			`;
+
+			// Add scripts to document head
+			document.head.appendChild(script);
+			document.head.appendChild(initScript);
+		}
+
+		// Start the loading process
+		loadPostHogAfterDOMContentLoaded();
 	</script>
 	<?php
 }

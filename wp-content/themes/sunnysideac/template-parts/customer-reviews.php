@@ -53,7 +53,7 @@ $reviews_data = array(
 $description_text = 'Our greatest reward is the trust and satisfaction of our customers. From emergency repairs to full system installations, homeowners count on us for reliable service, expert craftsmanship, and a personal touch that makes all the difference.';
 ?>
 
-<section class="w-full rounded-[20px] bg-white p-6 md:p-12" id="customer-reviews" data-reviews='<?php echo json_encode($reviews_data); ?>'>
+<section class="w-full rounded-[20px] bg-white p-6 md:p-12" id="customer-reviews" data-reviews='<?php echo json_encode( $reviews_data ); ?>'>
 	<div class="mx-auto max-w-7xl">
 		<!-- Mobile Layout: Stacked vertically -->
 		<div class="block lg:hidden">
@@ -358,7 +358,7 @@ $description_text = 'Our greatest reward is the trust and satisfaction of our cu
 
 					<!-- Circular Badge -->
 					<div class="absolute top-4 -right-6">
-						<div class="relative h-32 w-32">
+						<div class="relative h-32 w-32 bg-white rounded-full">
 							<div class="absolute inset-0 rounded-full bg-white shadow-lg"></div>
 							<div class="absolute inset-0 z-10 flex items-center justify-center">
 								<div class="flex h-16 w-16 items-center justify-center rounded-full bg-white">

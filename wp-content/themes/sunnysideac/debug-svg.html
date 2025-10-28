@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SVG Debug</title>
+    <style>
+        body { font-family: monospace; padding: 20px; }
+        .log { background: #f0f0f0; padding: 10px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>SVG Path Mutation Observer Test</h1>
+
+    <div class="test-svg">
+        <svg class="h-8 w-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+        </svg>
+    </div>
+
+    <div id="log"></div>
+
+    <script>
+        const log = document.getElementById('log');
+
+        function addLog(message) {
+            const entry = document.createElement('div');
+            entry.className = 'log';
+            entry.textContent = new Date().toISOString() + ': ' + message;
+            log.appendChild(entry);
+            console.log(message);
+        }
+
+        // Monitor ALL DOM mutations
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'childList') {
+                    mutation.removedNodes.forEach((node) => {
+                        if (node.nodeName === 'PATH' || node.closest?.('svg')) {
+                            addLog('❌ REMOVED: ' + node.nodeName + ' from ' + mutation.target.nodeName);
+                            console.trace('Stack trace for removal');
+                        }
+                    });
+                } else if (mutation.type === 'attributes') {
+                    if (mutation.target.nodeName === 'PATH' || mutation.target.nodeName === 'SVG') {
+                        addLog('⚠️  ATTRIBUTE CHANGED: ' + mutation.attributeName + ' on ' + mutation.target.nodeName);
+                    }
+                }
+            });
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            attributeOldValue: true
+        });
+
+        addLog('✅ Observer started');
+
+        // Check SVG paths every 100ms
+        setInterval(() => {
+            const paths = document.querySelectorAll('svg path');
+            const pathsWithD = document.querySelectorAll('svg path[d]');
+            addLog(`📊 Found ${paths.length} paths, ${pathsWithD.length} with 'd' attribute`);
+        }, 100);
+    </script>
+</body>
+</html>
