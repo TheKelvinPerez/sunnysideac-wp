@@ -62,16 +62,19 @@ push_db() {
     log "=== Pushing local database to production ==="
 
     # Create backup directory
-    mkdir -p "$BACKUP_DIR"
+    mkdir -p "$BACKUP_DIR" || error "Failed to create backup directory: $BACKUP_DIR"
+
+    # Change to project root for ddev commands
+    cd "$PROJECT_ROOT" || error "Failed to change to project root"
 
     # Step 1: Create backup of production database
     warn "Creating backup of production database..."
     ssh "$PROD_SERVER" "cd $PROD_WP_PATH && wp db export - --allow-root" > "${BACKUP_DIR}/prod_backup_${TIMESTAMP}.sql" || error "Failed to backup production database"
     log "✓ Production backup saved to: ${BACKUP_DIR}/prod_backup_${TIMESTAMP}.sql"
 
-    # Step 2: Export local database
+    # Step 2: Export local database (use relative path for ddev)
     log "Exporting local database..."
-    ddev wp db export "${BACKUP_DIR}/local_export_${TIMESTAMP}.sql" || error "Failed to export local database"
+    ddev wp db export ".deployment/db-backups/local_export_${TIMESTAMP}.sql" || error "Failed to export local database"
     log "✓ Local database exported"
 
     # Step 3: Confirm before proceeding
@@ -120,11 +123,14 @@ pull_db() {
     log "=== Pulling production database to local ==="
 
     # Create backup directory
-    mkdir -p "$BACKUP_DIR"
+    mkdir -p "$BACKUP_DIR" || error "Failed to create backup directory: $BACKUP_DIR"
+
+    # Change to project root for ddev commands
+    cd "$PROJECT_ROOT" || error "Failed to change to project root"
 
     # Step 1: Create backup of local database
     warn "Creating backup of local database..."
-    ddev wp db export "${BACKUP_DIR}/local_backup_${TIMESTAMP}.sql" || error "Failed to backup local database"
+    ddev wp db export ".deployment/db-backups/local_backup_${TIMESTAMP}.sql" || error "Failed to backup local database"
     log "✓ Local backup saved to: ${BACKUP_DIR}/local_backup_${TIMESTAMP}.sql"
 
     # Step 2: Export production database
@@ -141,7 +147,7 @@ pull_db() {
 
     # Step 4: Import database to local
     log "Importing database to local..."
-    ddev wp db import "${BACKUP_DIR}/prod_export_${TIMESTAMP}.sql" || error "Failed to import database"
+    ddev wp db import ".deployment/db-backups/prod_export_${TIMESTAMP}.sql" || error "Failed to import database"
     log "✓ Database imported"
 
     # Step 5: Search and replace URLs
