@@ -8,20 +8,24 @@ set -e
 # It handles export, upload, import, and URL search/replace.
 #
 # Usage:
-#   Run from local development environment:
-#   ./deployment/db-sync.sh push    # Push local DB to production
-#   ./deployment/db-sync.sh pull    # Pull production DB to local
+#   Can be run from anywhere in the project:
+#   ./.deployment/db-sync.sh push    # Push local DB to production
+#   ./.deployment/db-sync.sh pull    # Pull production DB to local
 ##############################################################################
+
+# Get script directory and project root
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 # Configuration
 PROD_SERVER="root@sunnysideac"  # Your Tailscale SSH connection
 PROD_WP_PATH="/var/www/sunnyside247ac_com"
 PROD_URL="https://sunnyside247ac.com"
 
-LOCAL_WP_PATH="app/public"
+LOCAL_WP_PATH="$PROJECT_ROOT"
 LOCAL_URL="https://sunnyside-ac.ddev.site"
 
-BACKUP_DIR=".deployment/db-backups"
+BACKUP_DIR="$SCRIPT_DIR/db-backups"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 
 # Colors
