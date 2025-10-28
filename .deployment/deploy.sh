@@ -10,6 +10,7 @@ set -e
 
 # Configuration
 PROJECT_ROOT="/var/www/sunnyside247ac_com"
+GIT_DIR="/var/www/sunnyside247ac_com.git"
 THEME_PATH="${PROJECT_ROOT}/wp-content/themes/sunnysideac"
 WP_PATH="${PROJECT_ROOT}"
 LOG_DIR="${PROJECT_ROOT}/logs/deployments"
@@ -70,7 +71,8 @@ cd "$PROJECT_ROOT" || error "Cannot change to project root"
 ##############################################################################
 
 log "Pulling latest code from prod branch..."
-git --work-tree="$PROJECT_ROOT" --git-dir="${PROJECT_ROOT}/.git" checkout -f prod || error "Git checkout failed"
+git --work-tree="$PROJECT_ROOT" --git-dir="$GIT_DIR" checkout -f prod || error "Git checkout failed"
+log "✓ Code updated successfully"
 
 ##############################################################################
 # Install PHP dependencies (Composer)
