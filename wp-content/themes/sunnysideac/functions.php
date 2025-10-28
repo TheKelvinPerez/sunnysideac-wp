@@ -1380,6 +1380,44 @@ function sunnysideac_add_careers_form_nonce() {
 }
 
 /**
+ * Unregister Service Worker and clear all caches
+ * This script will run on page load to clean up the old service worker
+ * TODO: Remove this function after 1-2 weeks once all users' service workers are cleared
+ */
+function sunnysideac_unregister_service_worker() {
+	?>
+	<script>
+		if ('serviceWorker' in navigator) {
+			navigator.serviceWorker.getRegistrations().then(function(registrations) {
+				for(let registration of registrations) {
+					registration.unregister().then(function(success) {
+						if (success) {
+							console.log('✅ ServiceWorker unregistered successfully');
+						}
+					});
+				}
+			});
+
+			// Clear all caches
+			if ('caches' in window) {
+				caches.keys().then(function(cacheNames) {
+					return Promise.all(
+						cacheNames.map(function(cacheName) {
+							console.log('🗑️ Deleting cache:', cacheName);
+							return caches.delete(cacheName);
+						})
+					);
+				}).then(function() {
+					console.log('✅ All caches cleared');
+				});
+			}
+		}
+	</script>
+	<?php
+}
+add_action('wp_footer', 'sunnysideac_unregister_service_worker', 1);
+
+/**
  * DOM size optimization for mobile performance
  */
 function sunnysideac_optimize_dom_size() {
