@@ -365,20 +365,136 @@ function sunnysideac_enqueue_assets() {
 add_action( 'wp_enqueue_scripts', 'sunnysideac_enqueue_assets' );
 
 /**
- * Remove Gutenberg block library CSS if not needed
- * This removes one node from the critical request chain
+ * Smart Gutenberg CSS loading - only load on blog posts
+ * Removes Gutenberg CSS from all pages except blog posts for better performance
  */
-function sunnysideac_remove_block_library_css() {
-	// Only remove on frontend (not admin)
-	if ( ! is_admin() ) {
+function sunnysideac_conditional_gutenberg_css() {
+	// Only load Gutenberg CSS on blog posts and single posts
+	if ( ! is_admin() && ! is_single() && ! is_home() && ! is_archive() ) {
 		wp_dequeue_style( 'wp-block-library' );
 		wp_deregister_style( 'wp-block-library' );
-		// Also remove theme.json block styles if not needed
 		wp_dequeue_style( 'wp-block-library-theme' );
 		wp_deregister_style( 'wp-block-library-theme' );
+	} else {
+		// For blog posts, dequeue the default and let our lazy loader handle it
+		wp_dequeue_style( 'wp-block-library' );
+		wp_dequeue_style( 'wp-block-library-theme' );
 	}
 }
-add_action( 'wp_enqueue_scripts', 'sunnysideac_remove_block_library_css', 100 );
+add_action( 'wp_enqueue_scripts', 'sunnysideac_conditional_gutenberg_css', 999 );
+
+/**
+ * Lazy load Gutenberg CSS only when needed on blog posts
+ */
+function sunnysideac_lazy_load_gutenberg_css() {
+	// Only run on blog posts and single posts
+	if ( ! is_single() && ! is_home() && ! is_archive() ) {
+		return;
+	}
+	?>
+	<!-- Fallback styling to prevent layout shift while Gutenberg CSS loads -->
+	<style>
+		/* Basic Gutenberg block styling to prevent layout shift */
+		.wp-block {
+			margin-bottom: 1.5em;
+		}
+		.wp-block-paragraph {
+			margin-bottom: 1.2em;
+			line-height: 1.7;
+		}
+		.wp-block-heading {
+			margin-top: 2em;
+			margin-bottom: 1em;
+			font-weight: 600;
+		}
+		.wp-block-heading h1 {
+			font-size: 2.5em;
+		}
+		.wp-block-heading h2 {
+			font-size: 2em;
+		}
+		.wp-block-heading h3 {
+			font-size: 1.5em;
+		}
+		.wp-block-image {
+			margin: 2em 0;
+			text-align: center;
+		}
+		.wp-block-image img {
+			max-width: 100%;
+			height: auto;
+		}
+		.wp-block-list {
+			margin-bottom: 1.5em;
+			padding-left: 2em;
+		}
+		.wp-block-quote {
+			border-left: 4px solid #e5e5e5;
+			padding-left: 1.5em;
+			margin: 1.5em 0;
+			font-style: italic;
+		}
+		.wp-block-separator {
+			border: none;
+			border-bottom: 2px solid #e5e5e5;
+			margin: 2em 0;
+		}
+		.wp-block-code {
+			background: #f5f5f5;
+			padding: 1em;
+			border-radius: 4px;
+			font-family: monospace;
+		}
+	</style>
+
+	<script>
+	// Lazy load Gutenberg CSS for better performance
+	(function() {
+		// Check if Gutenberg styles are already loaded
+		if (document.querySelector('link[href*="wp-block-library"]')) {
+			return;
+		}
+
+		// Create link elements for Gutenberg styles
+		var blockLibraryCSS = document.createElement('link');
+		blockLibraryCSS.rel = 'stylesheet';
+		blockLibraryCSS.href = '<?php echo includes_url('css/dist/block-library/style.min.css'); ?>';
+		blockLibraryCSS.media = 'all';
+
+		var blockThemeCSS = document.createElement('link');
+		blockThemeCSS.rel = 'stylesheet';
+		blockThemeCSS.href = '<?php echo includes_url('css/dist/block-library/theme.min.css'); ?>';
+		blockThemeCSS.media = 'all';
+
+		// Load CSS when DOM is ready to avoid blocking
+		function loadGutenbergCSS() {
+			document.head.appendChild(blockLibraryCSS);
+			document.head.appendChild(blockThemeCSS);
+
+			// Optionally add a class to the body for styling hooks
+			document.body.classList.add('gutenberg-styles-loaded');
+
+			// Remove fallback styles after Gutenberg CSS loads (optional)
+			setTimeout(function() {
+				var fallbackStyle = document.querySelector('style[data-gutenberg-fallback]');
+				if (fallbackStyle) {
+					fallbackStyle.remove();
+				}
+			}, 1000);
+		}
+
+		// Load CSS immediately if DOM is ready, otherwise wait
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', loadGutenbergCSS);
+		} else {
+			// Use setTimeout to ensure non-blocking
+			setTimeout(loadGutenbergCSS, 0);
+		}
+	})();
+	</script>
+	<?php
+}
+add_action( 'wp_head', 'sunnysideac_lazy_load_gutenberg_css', 1 );
 
 
 /**
