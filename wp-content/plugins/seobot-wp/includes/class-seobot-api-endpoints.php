@@ -838,6 +838,9 @@ class SEObot_API_Endpoints
             if (!empty($seobot_files['file'])) {
                 $_FILES['file'] = $seobot_files['file'];
                 $files = $seobot_files;
+                error_log('SEObot: Successfully processed raw upload - ' . $seobot_files['file']['name']);
+            } else {
+                error_log('SEObot: Failed to process raw upload');
             }
         }
 
@@ -1030,9 +1033,7 @@ class SEObot_API_Endpoints
     private function handle_seobot_raw_upload($request) {
         // Check if SEObot sent image/jpeg content type
         if (isset($_SERVER['HTTP_CONTENT_TYPE']) &&
-            strpos($_SERVER['HTTP_CONTENT_TYPE'], 'image/jpeg') !== false &&
-            isset($_SERVER['CONTENT_LENGTH']) &&
-            $_SERVER['CONTENT_LENGTH'] > 0) {
+            strpos($_SERVER['HTTP_CONTENT_TYPE'], 'image/jpeg') !== false) {
 
             // Get raw request body
             $raw_data = file_get_contents('php://input');
@@ -1046,19 +1047,23 @@ class SEObot_API_Endpoints
                     }
                 }
 
-                // Create temporary file
-                $tmp_name = tempnam(sys_get_temp_dir(), 'seobot_upload_');
-                if (file_put_contents($tmp_name, $raw_data) !== false) {
-                    // Return properly formatted $_FILES array
-                    return array(
-                        'file' => array(
-                            'name' => $filename,
-                            'type' => 'image/jpeg',
-                            'tmp_name' => $tmp_name,
-                            'error' => UPLOAD_ERR_OK,
-                            'size' => strlen($raw_data)
-                        )
-                    );
+                // Validate that this is actually an image
+                $image_info = getimagesizefromstring($raw_data);
+                if ($image_info !== false) {
+                    // Create temporary file
+                    $tmp_name = tempnam(sys_get_temp_dir(), 'seobot_upload_');
+                    if (file_put_contents($tmp_name, $raw_data) !== false) {
+                        // Return properly formatted $_FILES array
+                        return array(
+                            'file' => array(
+                                'name' => $filename,
+                                'type' => $image_info['mime'],
+                                'tmp_name' => $tmp_name,
+                                'error' => UPLOAD_ERR_OK,
+                                'size' => strlen($raw_data)
+                            )
+                        );
+                    }
                 }
             }
         }
