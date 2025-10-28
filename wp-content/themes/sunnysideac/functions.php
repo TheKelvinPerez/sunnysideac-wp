@@ -1544,7 +1544,19 @@ function sunnysideac_mobile_optimizations() {
 				// Preload mobile-specific critical resources
 				const mobileCSS = document.createElement('link');
 				mobileCSS.rel = 'preload';
-				mobileCSS.href = '<?php echo get_template_directory_uri(); ?>/dist/css/main.css';
+				mobileCSS.href = '<?php
+				$manifest_path = get_template_directory() . \'/dist/.vite/manifest.json\';
+				if (file_exists($manifest_path)) {
+					$manifest = json_decode(file_get_contents($manifest_path), true);
+					if (isset($manifest[\'src/main.js\'][\'css\'][0])) {
+						echo get_template_directory_uri() . \'/dist/\' . $manifest[\'src/main.js\'][\'css\'][0];
+					} else {
+						echo get_template_directory_uri() . \'/dist/assets/main.css\'; // fallback
+					}
+				} else {
+					echo get_template_directory_uri() . \'/dist/assets/main.css\'; // fallback
+				}
+			?>';
 				mobileCSS.as = 'style';
 				document.head.appendChild(mobileCSS);
 
