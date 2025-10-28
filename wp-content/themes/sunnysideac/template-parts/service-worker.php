@@ -22,12 +22,6 @@ const POSTHOG_ASSETS = [
     'https://us.i.posthog.com/static/surveys.js'
 ];
 
-// Google Analytics assets
-const GA_ASSETS = [
-    'https://www.google-analytics.com/analytics.js',
-    'https://www.googletagmanager.com/gtag/js'
-];
-
 // Install event - cache critical assets
 self.addEventListener('install', function(event) {
     event.waitUntil(
@@ -91,8 +85,8 @@ self.addEventListener('fetch', function(event) {
                     // Clone response for caching
                     const responseToCache = response.clone();
 
-                    // Cache PostHog and GA assets
-                    if (POSTHOG_ASSETS.includes(url.href) || GA_ASSETS.includes(url.href)) {
+                    // Cache PostHog assets
+                    if (POSTHOG_ASSETS.includes(url.href)) {
                         caches.open(STATIC_CACHE).then(function(cache) {
                             cache.put(event.request, responseToCache);
                         }).catch(function(err) {

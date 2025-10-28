@@ -252,9 +252,9 @@ require_once get_template_directory() . '/inc/footer-menu-helper.php';
 require_once get_template_directory() . '/inc/posthog-tracking.php';
 
 /**
- * Include Google Analytics 4
+ * Google Analytics removed - using PostHog exclusively for analytics
+ * PostHog provides comprehensive analytics without requiring 'unsafe-eval' in CSP
  */
-require_once get_template_directory() . '/inc/google-analytics.php';
 
 
 /**

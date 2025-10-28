@@ -10,9 +10,9 @@
 
 ---
 
-## 2. CSP `'unsafe-eval'` Issue
+## 2. ✅ Remove `'unsafe-eval'` from CSP
 
-**Status:** DECISION REQUIRED
+**Status:** CODE CHANGES DEPLOYED - AWAITING CADDYFILE UPDATE
 
 **Issue:** Content Security Policy contains `'unsafe-eval'` which Chrome flags as security risk
 
@@ -20,47 +20,54 @@
 - ❌ NOT used by wp-cache.php (removed)
 - ✅ NOT used by PostHog (verified - official SDK is eval-free)
 - ✅ NOT used by your theme code
-- ⚠️ **REQUIRED by Google Analytics** (gtag.js uses eval internally - 27 instances)
+- ❌ WAS REQUIRED by Google Analytics (gtag.js uses eval internally)
 
-### Options:
+**Decision:** Google Analytics has been removed. Using PostHog exclusively for all analytics.
 
-#### Option A: Keep `'unsafe-eval'` (RECOMMENDED)
-**Pros:**
-- Simplest solution - no code changes needed
-- Google Analytics continues working
-- CSP still provides good protection overall
-- gtag.js is from Google's trusted CDN
-- Many enterprise sites use this approach
+### ✅ Code Changes Completed:
 
-**Cons:**
-- Chrome will still flag it in Lighthouse Issues tab
-- Slight security trade-off for analytics
+1. **Removed Google Analytics integration:**
+   - Deleted `/inc/google-analytics.php`
+   - Removed require statement from `functions.php`
+   - Removed GA asset caching from `service-worker.php`
 
-#### Option B: Remove Google Analytics
-**Pros:**
-- Can remove `'unsafe-eval'` from CSP
-- Already have PostHog for detailed analytics
-- Better privacy for users
-- Better Lighthouse score
+2. **PostHog remains active:**
+   - Comprehensive event tracking
+   - Session recording
+   - User analytics
+   - Feature flags support
+   - No eval() usage - CSP friendly
 
-**Cons:**
-- Lose Google Analytics integration
-- Lose GA4 audience targeting features
-- Need to reconfigure any GA-dependent tools
+### 🔧 Required Caddyfile Update:
 
-**To remove GA:**
-1. Delete or comment out in `functions.php`:
-   ```php
-   // require_once get_template_directory() . '/inc/google-analytics.php';
-   ```
-2. Remove `'unsafe-eval'` from Caddyfile CSP
-3. Reload Caddy
+**Location:** `/etc/caddy/Caddyfile` on production server
 
-#### Option C: Server-Side Analytics (ADVANCED)
-- Use Google Analytics 4 Measurement Protocol
-- Track server-side via PHP/cron
-- Requires significant refactoring
-- Not recommended unless you have specific needs
+**Find this line in BOTH sunnyside247ac.com blocks:**
+```
+Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: https://...
+```
+
+**Change to (remove 'unsafe-eval'):**
+```
+Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' blob: https://...
+```
+
+**Apply changes:**
+```bash
+# Test configuration
+sudo caddy validate --config /etc/caddy/Caddyfile
+
+# If valid, reload Caddy
+sudo caddy reload --config /etc/caddy/Caddyfile
+
+# Verify it's working
+curl -I https://sunnyside247ac.com | grep -i content-security
+```
+
+**After updating:**
+- Clear browser cache (Cmd+Shift+R / Ctrl+Shift+R)
+- Run Lighthouse again
+- CSP warning should be gone! ✅
 
 ---
 
