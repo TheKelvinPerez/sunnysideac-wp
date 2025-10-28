@@ -12,17 +12,22 @@
 
 	<!-- Preload LCP hero images for optimal performance -->
 	<?php
-	// Desktop hero images
-	$avif_url = sunnysideac_asset_url( 'assets/images/optimize/hero-right-image.avif' );
-	$webp_url = sunnysideac_asset_url( 'assets/images/optimize/hero-right-image.webp' );
-	// Mobile hero images
-	$mobile_avif_url = sunnysideac_asset_url( 'assets/images/optimize/mobile-hero-image.avif' );
-	$mobile_webp_url = sunnysideac_asset_url( 'assets/images/optimize/mobile-hero-image.webp' );
-	?>
-	<link rel="preload" as="image" href="<?php echo esc_url( $avif_url ); ?>" type="image/avif">
-	<link rel="preload" as="image" href="<?php echo esc_url( $webp_url ); ?>" type="image/webp">
-	<link rel="preload" as="image" href="<?php echo esc_url( $mobile_avif_url ); ?>" type="image/avif" media="(max-width: 1023px)" fetchpriority="high">
-	<link rel="preload" as="image" href="<?php echo esc_url( $mobile_webp_url ); ?>" type="image/webp" media="(max-width: 1023px)" fetchpriority="high">
+	// Only preload hero images on pages that actually use them
+	$should_preload_hero = is_front_page() || is_page('our-projects') || is_page('about') || is_page('contact');
+
+	if ($should_preload_hero) {
+		// Desktop hero images
+		$avif_url = sunnysideac_asset_url( 'assets/images/optimize/hero-right-image.avif' );
+		$webp_url = sunnysideac_asset_url( 'assets/images/optimize/hero-right-image.webp' );
+		// Mobile hero images
+		$mobile_avif_url = sunnysideac_asset_url( 'assets/images/optimize/mobile-hero-image.avif' );
+		$mobile_webp_url = sunnysideac_asset_url( 'assets/images/optimize/mobile-hero-image.webp' );
+		?>
+		<link rel="preload" as="image" href="<?php echo esc_url( $avif_url ); ?>" type="image/avif">
+		<link rel="preload" as="image" href="<?php echo esc_url( $webp_url ); ?>" type="image/webp">
+		<link rel="preload" as="image" href="<?php echo esc_url( $mobile_avif_url ); ?>" type="image/avif" media="(max-width: 1023px)" fetchpriority="high">
+		<link rel="preload" as="image" href="<?php echo esc_url( $mobile_webp_url ); ?>" type="image/webp" media="(max-width: 1023px)" fetchpriority="high">
+	<?php } ?>
 
 	<!-- Preconnect for external resources -->
 	<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>

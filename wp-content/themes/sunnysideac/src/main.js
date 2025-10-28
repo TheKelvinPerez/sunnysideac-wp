@@ -13,10 +13,16 @@ import { lazyLoadModule, lazyLoadConditional } from './js/utils/lazy-load.js';
 // This improves initial page load performance by deferring non-critical JavaScript
 
 // Contact Form - Load when form is visible (120ms savings on initial load)
-lazyLoadModule('#contact-form', () => import('./js/forms/contact-form.js'));
+// Only try to lazy load if element exists to avoid console warnings
+if (document.querySelector('#contact-form')) {
+	lazyLoadModule('#contact-form', () => import('./js/forms/contact-form.js'));
+}
 
 // Reviews Carousel - Load when reviews section is visible (60ms savings)
-lazyLoadModule('#customer-reviews', () => import('./js/components/reviews-carousel.js'));
+// Only try to lazy load if element exists to avoid console warnings
+if (document.querySelector('#customer-reviews')) {
+	lazyLoadModule('#customer-reviews', () => import('./js/components/reviews-carousel.js'));
+}
 
 // Careers Form - Load only on /careers page (75ms savings on other pages)
 lazyLoadConditional(

@@ -185,10 +185,7 @@ function sunnyside_add_performance_hints() {
     echo '<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>' . "\n";
     echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
 
-    // Add resource hints for images on image-heavy pages
-    if (is_front_page() || is_page('our-projects')) {
-        echo '<link rel="preload" as="image" href="' . esc_url(get_template_directory_uri() . '/assets/images/optimize/hero-right-image.webp') . '">' . "\n";
-    }
+    // Note: Hero image preloads moved to header.php with better conditional logic
 }
 add_action('wp_head', 'sunnyside_add_performance_hints', 1);
 
