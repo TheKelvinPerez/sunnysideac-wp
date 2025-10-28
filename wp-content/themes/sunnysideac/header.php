@@ -1,4 +1,3 @@
-<!-- Deployment Test: <?php echo date( 'Y-m-d H:i:s' ); ?> -->
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
