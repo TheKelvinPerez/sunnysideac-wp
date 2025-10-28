@@ -64,12 +64,39 @@ function sunnysideac_render_stars( $count = 5, $star_icon_url = '', $class = 'h-
 ?>
 
 <section class="relative w-full overflow-hidden rounded-[20px] bg-white lg:bg-transparent">
-	<!-- Mobile Orange Background - Hidden on Desktop -->
-	<div
-		class="absolute inset-0 rounded-[20px] bg-gradient-to-b from-orange-500 via-orange-600 to-orange-700 lg:hidden">
+	<!-- Mobile Background Image - Hidden on Desktop -->
+	<div class="absolute inset-0 rounded-[20px] lg:hidden">
+		<?php
+		// Optimized mobile hero image with AVIF support and eager loading for performance
+		$mobile_webp_url = sunnysideac_asset_url( 'assets/images/optimize/mobile-hero-image.webp' );
+		$mobile_avif_url = sunnysideac_asset_url( 'assets/images/optimize/mobile-hero-image.avif' );
+		$mobile_fallback_url = sunnysideac_asset_url( 'assets/images/optimize/mobile-hero-image.png' );
+		?>
+		<picture>
+			<?php if ( file_exists( get_template_directory() . '/assets/images/optimize/mobile-hero-image.avif' ) ) : ?>
+				<source srcset="<?php echo esc_url( $mobile_avif_url ); ?>" type="image/avif">
+			<?php endif; ?>
+			<?php if ( file_exists( get_template_directory() . '/assets/images/optimize/mobile-hero-image.webp' ) ) : ?>
+				<source srcset="<?php echo esc_url( $mobile_webp_url ); ?>" type="image/webp">
+			<?php endif; ?>
+			<img
+				src="<?php echo esc_url( $mobile_webp_url ); ?>"
+				alt="Professional HVAC service background"
+				loading="eager"
+				decoding="sync"
+				fetchpriority="high"
+				class="absolute inset-0 h-full w-full object-cover rounded-[20px]"
+				width="800"
+				height="1200"
+			>
+		</picture>
 	</div>
 
-	
+	<!-- Mobile Gradient Overlay - Hidden on Desktop -->
+	<div
+	class="absolute inset-0 rounded-[20px] bg-gradient-to-b from-orange-500 via-orange-600 to-black opacity-80 lg:hidden">
+	</div>
+
 	<!-- Desktop Grid Layout -->
 	<div
 	class="hidden min-h-[600px] gap-6 rounded-lg bg-white p-4 sm:p-6 lg:grid lg:min-h-[650px] lg:grid-cols-2 lg:gap-8 lg:rounded-[20px] lg:p-8">
