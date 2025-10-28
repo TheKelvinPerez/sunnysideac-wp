@@ -7,13 +7,24 @@
 /**
  * Get asset URL helper function with CDN support
  *
+ * Multi-environment support:
+ * - local: Always uses local assets (DDEV/local development)
+ * - development/dev/staging: Uses CDN if CDN_ENABLED=true, otherwise local
+ * - production: Uses CDN if CDN_ENABLED=true, otherwise local
+ *
  * @param string $path Path relative to theme directory
  * @return string Full URL to asset (with CDN if enabled)
  */
 function sunnysideac_asset_url( $path ) {
 	$base_url = get_template_directory_uri();
+	$app_env = $_ENV['APP_ENV'] ?? 'production';
 
-	// Check if CDN is enabled and get CDN base URL
+	// Local environment ALWAYS uses local assets (no CDN)
+	if ( $app_env === 'local' ) {
+		return $base_url . '/' . ltrim( $path, '/' );
+	}
+
+	// Check if CDN is enabled and configured
 	$cdn_enabled = ! empty( $_ENV['CDN_ENABLED'] ) && $_ENV['CDN_ENABLED'] === 'true';
 
 	if ( $cdn_enabled && ! empty( $_ENV['CDN_BASE_URL'] ) ) {
@@ -21,14 +32,10 @@ function sunnysideac_asset_url( $path ) {
 		$theme_path = '/wp-content/themes/' . basename( get_template_directory() );
 		$cdn_url = $cdn_base . $theme_path . '/' . ltrim( $path, '/' );
 
-		// For development environment, fallback to local URL
-		if ( $_ENV['APP_ENV'] === 'development' ) {
-			return $base_url . '/' . ltrim( $path, '/' );
-		}
-
 		return $cdn_url;
 	}
 
+	// Fallback to local URL if CDN is not enabled or not configured
 	return $base_url . '/' . ltrim( $path, '/' );
 }
 
