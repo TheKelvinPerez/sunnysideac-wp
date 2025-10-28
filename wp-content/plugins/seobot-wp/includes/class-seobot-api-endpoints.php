@@ -832,6 +832,15 @@ class SEObot_API_Endpoints
         // Get uploaded file
         $files = $request->get_file_params();
 
+        // Handle SEObot's incorrect Content-Type uploads
+        if (empty($files['file']) && $this->is_seobot_request()) {
+            $seobot_files = $this->handle_seobot_raw_upload($request);
+            if (!empty($seobot_files['file'])) {
+                $_FILES['file'] = $seobot_files['file'];
+                $files = $seobot_files;
+            }
+        }
+
         if (empty($files['file'])) {
             return new WP_Error(
                 'rest_upload_no_file',
@@ -852,10 +861,19 @@ class SEObot_API_Endpoints
         $attachment_id = media_handle_upload('file', 0);
 
         if (is_wp_error($attachment_id)) {
+            // Include debug info for SEObot uploads
+            $error_data = array('status' => 500);
+            if ($this->is_seobot_request()) {
+                $error_data['debug'] = array(
+                    'file_info' => isset($files['file']) ? $files['file'] : 'no file',
+                    'error_code' => $attachment_id->get_error_code(),
+                    'error_message' => $attachment_id->get_error_message()
+                );
+            }
             return new WP_Error(
                 'rest_upload_error',
                 $attachment_id->get_error_message(),
-                array('status' => 500)
+                $error_data
             );
         }
 
@@ -996,5 +1014,55 @@ class SEObot_API_Endpoints
         }
 
         return rest_ensure_response($media_items);
+    }
+
+    /**
+     * Check if this is a SEObot request
+     */
+    private function is_seobot_request() {
+        return isset($_SERVER['HTTP_USER_AGENT']) &&
+               strpos($_SERVER['HTTP_USER_AGENT'], 'SEObot') !== false;
+    }
+
+    /**
+     * Handle SEObot's raw uploads with wrong Content-Type
+     */
+    private function handle_seobot_raw_upload($request) {
+        // Check if SEObot sent image/jpeg content type
+        if (isset($_SERVER['HTTP_CONTENT_TYPE']) &&
+            strpos($_SERVER['HTTP_CONTENT_TYPE'], 'image/jpeg') !== false &&
+            isset($_SERVER['CONTENT_LENGTH']) &&
+            $_SERVER['CONTENT_LENGTH'] > 0) {
+
+            // Get raw request body
+            $raw_data = file_get_contents('php://input');
+
+            if (!empty($raw_data)) {
+                // Extract filename from Content-Disposition header
+                $filename = 'seobot-image.jpg';
+                if (isset($_SERVER['HTTP_CONTENT_DISPOSITION'])) {
+                    if (preg_match('/filename="?([^"]+)"?/', $_SERVER['HTTP_CONTENT_DISPOSITION'], $matches)) {
+                        $filename = $matches[1];
+                    }
+                }
+
+                // Create temporary file
+                $tmp_name = tempnam(sys_get_temp_dir(), 'seobot_upload_');
+                if (file_put_contents($tmp_name, $raw_data) !== false) {
+                    // Return properly formatted $_FILES array
+                    return array(
+                        'file' => array(
+                            'name' => $filename,
+                            'type' => 'image/jpeg',
+                            'tmp_name' => $tmp_name,
+                            'error' => UPLOAD_ERR_OK,
+                            'size' => strlen($raw_data)
+                        )
+                    );
+                }
+            }
+        }
+
+        return array();
     }
 }
