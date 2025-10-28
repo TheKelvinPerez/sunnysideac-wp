@@ -10,10 +10,9 @@ const CACHE_NAME = 'sunnysideac-v<?php echo wp_get_theme()->get( 'Version' ); ?>
 const STATIC_CACHE = 'sunnysideac-static-v1';
 
 // Critical assets to cache immediately
+// Note: Vite assets are hashed, so we'll cache them on first request instead of during install
 const CRITICAL_ASSETS = [
-    '/',
-    '<?php echo get_template_directory_uri(); ?>/dist/assets/main.css',
-    '<?php echo get_template_directory_uri(); ?>/dist/assets/main.js'
+    '/'
 ];
 
 // PostHog assets to cache with longer TTL (using official CDN)
@@ -34,7 +33,14 @@ self.addEventListener('install', function(event) {
     event.waitUntil(
         caches.open(STATIC_CACHE)
             .then(function(cache) {
-                return cache.addAll(CRITICAL_ASSETS);
+                // Cache critical assets individually to avoid blocking on failures
+                return Promise.all(
+                    CRITICAL_ASSETS.map(function(url) {
+                        return cache.add(url).catch(function(err) {
+                            console.warn('Failed to cache:', url, err);
+                        });
+                    })
+                );
             })
             .then(function() {
                 // Skip waiting to activate immediately
@@ -52,8 +58,8 @@ self.addEventListener('fetch', function(event) {
         return;
     }
 
-    // Skip Chrome extension requests
-    if (url.protocol === 'chrome-extension:') {
+    // Skip Chrome extension and non-http(s) requests
+    if (!url.protocol.startsWith('http')) {
         return;
     }
 
@@ -73,21 +79,40 @@ self.addEventListener('fetch', function(event) {
                 // Network request for non-cached content
                 return fetch(event.request).then(function(response) {
                     // Don't cache non-successful responses
-                    if (!response || response.status !== 200 || response.type !== 'basic') {
+                    if (!response || response.status !== 200) {
+                        return response;
+                    }
+
+                    // Don't cache opaque responses (CORS)
+                    if (response.type === 'opaque') {
                         return response;
                     }
 
                     // Clone response for caching
                     const responseToCache = response.clone();
 
-                    // Cache PostHog assets with long TTL
+                    // Cache PostHog and GA assets
                     if (POSTHOG_ASSETS.includes(url.href) || GA_ASSETS.includes(url.href)) {
                         caches.open(STATIC_CACHE).then(function(cache) {
                             cache.put(event.request, responseToCache);
+                        }).catch(function(err) {
+                            console.warn('Failed to cache asset:', url.href);
+                        });
+                    }
+                    // Cache theme assets (CSS, JS, fonts, images from theme directory)
+                    else if (url.pathname.includes('/wp-content/themes/sunnysideac/dist/')) {
+                        caches.open(STATIC_CACHE).then(function(cache) {
+                            cache.put(event.request, responseToCache);
+                        }).catch(function(err) {
+                            console.warn('Failed to cache theme asset:', url.href);
                         });
                     }
 
                     return response;
+                }).catch(function(error) {
+                    console.warn('Fetch failed:', error);
+                    // Return cached response if available
+                    return caches.match(event.request);
                 });
             })
     );
