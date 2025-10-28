@@ -105,9 +105,13 @@ push_db() {
         wp option update siteurl '$PROD_URL' --allow-root" || warn "Search-replace had issues"
     log "✓ URLs updated"
 
-    # Step 7: Flush cache
-    log "Flushing WordPress cache..."
-    ssh "$PROD_SERVER" "cd $PROD_WP_PATH && wp cache flush --allow-root && wp rewrite flush --allow-root" 2>/dev/null || warn "Could not flush cache"
+    # Step 7: Flush cache (WordPress + Redis)
+    log "Flushing WordPress and Redis cache..."
+    ssh "$PROD_SERVER" "cd $PROD_WP_PATH && \
+        wp cache flush --allow-root && \
+        wp rewrite flush --allow-root && \
+        redis-cli FLUSHALL" 2>/dev/null || warn "Could not flush cache"
+    log "✓ All caches flushed"
 
     # Step 8: Cleanup
     ssh "$PROD_SERVER" "rm /tmp/db_import.sql" 2>/dev/null || true
