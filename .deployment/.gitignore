@@ -1,0 +1,7 @@
+# Database backups - never commit these to git
+db-backups/
+*.sql
+*.sql.gz
+
+# Logs
+*.log

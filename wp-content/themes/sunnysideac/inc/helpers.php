@@ -328,3 +328,112 @@ function sunnysideac_responsive_background_image( $path, $args = array() ) {
 
 	return $css;
 }
+
+/**
+ * Enhanced WordPress attachment image helper with automatic dimensions for better CLS
+ *
+ * @param int    $image_id WordPress attachment ID
+ * @param string $size     Image size (thumbnail, medium, large, full)
+ * @param array  $args     Additional arguments (class, loading, etc.)
+ * @return string HTML img element with proper dimensions and optimization
+ */
+function sunnysideac_get_optimized_image( $image_id, $size = 'large', $args = array() ) {
+	if ( ! $image_id ) {
+		return '';
+	}
+
+	$defaults = array(
+		'class'   => '',
+		'loading' => 'lazy',
+		'decoding' => 'async',
+		'webp'    => true,
+		'avif'    => true,
+	);
+
+	$args = wp_parse_args( $args, $defaults );
+
+	$image = wp_get_attachment_image_src( $image_id, $size );
+	if ( ! $image ) {
+		return '';
+	}
+
+	$image_meta = wp_get_attachment_metadata( $image_id );
+	$alt_text   = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+
+	// Get dimensions from size or calculate aspect ratio
+	$width  = $image[1];
+	$height = $image[2];
+
+	// For responsive images, ensure we have dimensions
+	if ( empty( $width ) || empty( $height ) ) {
+		if ( ! empty( $image_meta['width'] ) && ! empty( $image_meta['height'] ) ) {
+			// Calculate dimensions based on original aspect ratio
+			$aspect_ratio = $image_meta['height'] / $image_meta['width'];
+			$width        = $image_meta['width'];
+			$height       = $image_meta['height'];
+		} else {
+			// Fallback dimensions
+			$width  = 800;
+			$height = 600;
+		}
+	}
+
+	// Build srcset for responsive images
+	$srcset = wp_get_attachment_image_srcset( $image_id, $size );
+	$sizes  = wp_get_attachment_image_sizes( $image_id, $size );
+
+	// Check for WebP versions
+	$webp_srcset = '';
+	$webp_sizes  = '';
+
+	if ( $args['webp'] ) {
+		// Generate WebP srcset by replacing extensions
+		$webp_srcset = preg_replace( '/\.(jpg|jpeg|png)(\s+\d+w)/i', '.webp$2', $srcset );
+	}
+
+	// Build attributes array
+	$attributes = array(
+		'src'      => esc_url( $image[0] ),
+		'alt'      => esc_attr( $alt_text ),
+		'width'    => intval( $width ),
+		'height'   => intval( $height ),
+		'loading'  => esc_attr( $args['loading'] ),
+		'decoding' => esc_attr( $args['decoding'] ),
+		'style'    => sprintf( 'aspect-ratio: %d/%d;', intval( $width ), intval( $height ) ),
+	);
+
+	if ( ! empty( $args['class'] ) ) {
+		$attributes['class'] = esc_attr( $args['class'] );
+	}
+
+	if ( $srcset ) {
+		$attributes['srcset'] = esc_attr( $srcset );
+	}
+
+	if ( $sizes ) {
+		$attributes['sizes'] = esc_attr( $sizes );
+	}
+
+	// Build HTML string
+	$html = '<img';
+	foreach ( $attributes as $name => $value ) {
+		$html .= ' ' . $name . '="' . $value . '"';
+	}
+	$html .= '>';
+
+	// Wrap with picture element for WebP support
+	if ( $webp_srcset && $args['webp'] ) {
+		$picture_html = '<picture>';
+		$picture_html .= '<source type="image/webp" srcset="' . esc_attr( $webp_srcset ) . '"';
+		if ( $sizes ) {
+			$picture_html .= ' sizes="' . esc_attr( $sizes ) . '"';
+		}
+		$picture_html .= '>';
+		$picture_html .= $html;
+		$picture_html .= '</picture>';
+
+		return $picture_html;
+	}
+
+	return $html;
+}
