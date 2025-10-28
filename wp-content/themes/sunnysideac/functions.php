@@ -1422,6 +1422,9 @@ function sunnysideac_register_service_worker() {
 					.then(function(registration) {
 						console.log('✅ ServiceWorker registration successful with scope:', registration.scope);
 
+						// Force immediate update to ensure latest version
+						registration.update();
+
 						// Check for updates periodically
 						setInterval(function() {
 							registration.update();

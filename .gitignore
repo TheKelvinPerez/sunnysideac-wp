@@ -36,6 +36,10 @@ wp-content/upgrade/
 wp-content/ai1wm-backups/
 logs/
 
+# Ignore backup files
+*.backup
+*.bak
+
 # Ignore config and environment files (but track templates)
 wp-config.php
 !wp-config-template.php
