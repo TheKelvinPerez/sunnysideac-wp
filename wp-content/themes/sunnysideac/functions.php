@@ -1378,67 +1378,6 @@ function sunnysideac_add_careers_form_nonce() {
 	<input type="hidden" name="nonce" value="<?php echo wp_create_nonce( 'careers_form_nonce' ); ?>">
 	<?php
 }
-/**
- * Add rewrite rule for service worker endpoint
- */
-function sunnysideac_add_service_worker_rewrite() {
-	add_rewrite_rule( '^service-worker\.js$', 'index.php?sunnysideac_sw=1', 'top' );
-}
-add_action( 'init', 'sunnysideac_add_service_worker_rewrite' );
-
-/**
- * Add query var for service worker
- */
-function sunnysideac_service_worker_query_vars( $vars ) {
-	$vars[] = 'sunnysideac_sw';
-	return $vars;
-}
-add_filter( 'query_vars', 'sunnysideac_service_worker_query_vars' );
-
-/**
- * Serve service worker from template
- */
-function sunnysideac_serve_service_worker() {
-	global $wp_query;
-
-	if ( isset( $wp_query->query_vars['sunnysideac_sw'] ) && $wp_query->query_vars['sunnysideac_sw'] == '1' ) {
-		header( 'Content-Type: application/javascript; charset=UTF-8' );
-		header( 'Service-Worker-Allowed: /' );
-		include get_template_directory() . '/template-parts/service-worker.php';
-		exit;
-	}
-}
-add_action( 'template_redirect', 'sunnysideac_serve_service_worker' );
-
-/**
- * Register Service Worker for mobile performance optimization
- */
-function sunnysideac_register_service_worker() {
-	?>
-	<script>
-		if ('serviceWorker' in navigator) {
-			window.addEventListener('load', function() {
-				navigator.serviceWorker.register('/?sunnysideac_sw=1', { scope: '/' })
-					.then(function(registration) {
-						console.log('✅ ServiceWorker registration successful with scope:', registration.scope);
-
-						// Force immediate update to ensure latest version
-						registration.update();
-
-						// Check for updates periodically
-						setInterval(function() {
-							registration.update();
-						}, 60 * 60 * 1000); // Check every hour
-					})
-					.catch(function(err) {
-						console.error('❌ ServiceWorker registration failed:', err);
-					});
-			});
-		}
-	</script>
-	<?php
-}
-add_action('wp_footer', 'sunnysideac_register_service_worker', 1);
 
 /**
  * DOM size optimization for mobile performance
