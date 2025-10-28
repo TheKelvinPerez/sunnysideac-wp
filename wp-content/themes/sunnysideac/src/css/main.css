@@ -62,10 +62,21 @@
  * Use @layer utilities for custom utility classes
  */
 @layer utilities {
-  /* Example utility */
-  /* .text-balance {
-    text-wrap: balance;
-  } */
+  /* SVG rendering fixes */
+  svg {
+    display: inline-block !important;
+    vertical-align: middle;
+  }
+
+  svg path {
+    vector-effect: non-scaling-stroke;
+  }
+
+  svg path[d] {
+    display: inline !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
 }
 
 /*
