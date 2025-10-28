@@ -281,6 +281,9 @@ class SEObot_API
             }
         };
 
+        // Debug logging
+        error_log("SEObot: Processing endpoint: $main_endpoint, method: $method, parts: " . json_encode($endpoint_parts));
+
         // Process standard endpoints
         switch ($main_endpoint) {
             case 'categories':
@@ -300,6 +303,7 @@ class SEObot_API
                     $process_response($result);
                 } elseif ($method === 'PUT' && !empty($endpoint_parts[0])) {
                     // Update post
+                    error_log("SEObot: Processing PUT request for post ID: " . $endpoint_parts[0]);
                     $result = $this->endpoints->update_post($request);
                     $process_response($result);
                 } elseif ($method === 'DELETE' && !empty($endpoint_parts[0])) {
