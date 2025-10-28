@@ -94,9 +94,15 @@ push_db() {
     ssh "$PROD_SERVER" "cd $PROD_WP_PATH && wp db import /tmp/db_import.sql --allow-root" || error "Failed to import database"
     log "✓ Database imported"
 
-    # Step 6: Search and replace URLs
+    # Step 6: Search and replace URLs (handle multiple possible local URLs)
     log "Updating URLs in production database..."
-    ssh "$PROD_SERVER" "cd $PROD_WP_PATH && wp search-replace '$LOCAL_URL' '$PROD_URL' --all-tables --allow-root" || warn "Search-replace had issues"
+    ssh "$PROD_SERVER" "cd $PROD_WP_PATH && \
+        wp search-replace 'https://sunnyside-ac.ddev.site' '$PROD_URL' --all-tables --allow-root && \
+        wp search-replace 'http://sunnyside-ac.ddev.site' '$PROD_URL' --all-tables --allow-root && \
+        wp search-replace 'https://sunnyside-ac.local' '$PROD_URL' --all-tables --allow-root && \
+        wp search-replace 'http://sunnyside-ac.local' '$PROD_URL' --all-tables --allow-root && \
+        wp option update home '$PROD_URL' --allow-root && \
+        wp option update siteurl '$PROD_URL' --allow-root" || warn "Search-replace had issues"
     log "✓ URLs updated"
 
     # Step 7: Flush cache
@@ -153,6 +159,10 @@ pull_db() {
     # Step 5: Search and replace URLs
     log "Updating URLs in local database..."
     ddev wp search-replace "$PROD_URL" "$LOCAL_URL" --all-tables || warn "Search-replace had issues"
+
+    # Explicitly set home and siteurl options to ensure correct local URL
+    ddev wp option update home "$LOCAL_URL" || warn "Could not update home option"
+    ddev wp option update siteurl "$LOCAL_URL" || warn "Could not update siteurl option"
     log "✓ URLs updated"
 
     # Step 6: Flush cache
