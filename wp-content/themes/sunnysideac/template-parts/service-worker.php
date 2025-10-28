@@ -4,29 +4,23 @@
  * Solves PostHog caching and other mobile performance issues
  */
 
-// Set content type
-header('Content-Type: application/javascript');
+// Headers are set by template_redirect hook in functions.php
 ?>
-const CACHE_NAME = 'sunnysideac-v<?php echo time(); ?>';
+const CACHE_NAME = 'sunnysideac-v<?php echo wp_get_theme()->get( 'Version' ); ?>';
 const STATIC_CACHE = 'sunnysideac-static-v1';
 
 // Critical assets to cache immediately
 const CRITICAL_ASSETS = [
     '/',
-    '/dist/css/main.css',
-    '/dist/js/main.js',
-    '<?php echo get_template_directory_uri(); ?>/dist/css/main.css',
-    '<?php echo get_template_directory_uri(); ?>/dist/js/main.js'
+    '<?php echo get_template_directory_uri(); ?>/dist/assets/main.css',
+    '<?php echo get_template_directory_uri(); ?>/dist/assets/main.js'
 ];
 
-// PostHog assets to cache with longer TTL
+// PostHog assets to cache with longer TTL (using official CDN)
 const POSTHOG_ASSETS = [
-    'https://us-assets.i.posthog.com/static/array.js',
-    'https://us-assets.i.posthog.com/static/web-vitals.js',
-    'https://us-assets.i.posthog.com/static/surveys.js',
-    'https://eu-assets.i.posthog.com/static/array.js',
-    'https://eu-assets.i.posthog.com/static/web-vitals.js',
-    'https://eu-assets.i.posthog.com/static/surveys.js'
+    'https://us.i.posthog.com/static/array.js',
+    'https://us.i.posthog.com/static/web-vitals.js',
+    'https://us.i.posthog.com/static/surveys.js'
 ];
 
 // Google Analytics assets
