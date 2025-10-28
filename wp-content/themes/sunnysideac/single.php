@@ -13,7 +13,7 @@ $post_date          = get_the_date();
 $author_id          = get_the_author_meta('ID');
 $author_name        = 'SunnySide247AC';
 $author_description = 'Professional HVAC company serving South Florida with 24/7 emergency AC repair, installation, and maintenance services. Family-owned and operated since 2014.';
-$author_avatar      = get_template_directory_uri() . '/assets/images/images/logos/sunny-side-logo.png';
+$author_avatar      = get_template_directory_uri() . '/assets/images/logos/sunny-side-logo.png';
 
 // Get icons from theme assets
 $blog_icon     = sunnysideac_asset_url( 'assets/images/home-page/blog/blog-title-icon.svg' );

@@ -20,10 +20,10 @@ $images = array(
 	'hero_right'    => sunnysideac_asset_url( 'assets/images/optimize/hero-right-image.webp' ),
 	'mobile_hero'   => sunnysideac_asset_url( 'assets/images/optimize/mobile-hero-image.webp' ),
 	'review_photos' => array(
-		sunnysideac_asset_url( 'assets/images/images/hero/review_photo_1.png' ),
-		sunnysideac_asset_url( 'assets/images/images/hero/review_photo_2.png' ),
-		sunnysideac_asset_url( 'assets/images/images/hero/review_photo_3.png' ),
-		sunnysideac_asset_url( 'assets/images/images/hero/review_photo_4.png' ),
+		sunnysideac_asset_url( 'assets/images/home-page/review_photo_1.png' ),
+		sunnysideac_asset_url( 'assets/images/home-page/review_photo_2.png' ),
+		sunnysideac_asset_url( 'assets/images/home-page/review_photo_3.png' ),
+		sunnysideac_asset_url( 'assets/images/home-page/review_photo_4.png' ),
 	),
 );
 

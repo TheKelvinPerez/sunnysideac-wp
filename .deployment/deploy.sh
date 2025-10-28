@@ -119,6 +119,11 @@ wp rewrite flush --allow-root 2>/dev/null || warn "Could not flush rewrite rules
 # Clear object cache if available
 wp cache flush --allow-root 2>/dev/null || warn "Could not flush cache (wp-cli may not be available)"
 
+# Flush Redis cache (persistent object cache)
+log "Flushing Redis cache..."
+redis-cli FLUSHALL 2>/dev/null || warn "Could not flush Redis cache"
+log "✓ All caches cleared"
+
 ##############################################################################
 # File permissions (adjust based on your server setup)
 ##############################################################################

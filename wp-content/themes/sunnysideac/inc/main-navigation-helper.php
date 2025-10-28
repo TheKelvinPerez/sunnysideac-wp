@@ -131,7 +131,7 @@ function sunnysideac_render_desktop_nav_from_config(): void {
 	}
 
 	$nav_items    = sunnysideac_process_nav_links( $config['desktop_nav'] );
-	$chevron_icon = get_template_directory_uri() . '/assets/images/images/logos/navigation-chevron-down.svg';
+	$chevron_icon = get_template_directory_uri() . '/assets/images/logos/navigation-chevron-down.svg';
 
 	echo '<ul role="menubar" class="flex items-center gap-2 overflow-visible">';
 

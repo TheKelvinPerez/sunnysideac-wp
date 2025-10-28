@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//var/www/sunnyside247ac_com/wp-content/themes/sunnysideac/assets/images/**)",
+      "Read(//var/www/sunnyside247ac_com/wp-content/themes/sunnysideac/**)",
+      "Bash(curl:*)",
+      "Read(//etc/caddy/**)",
+      "Bash(sudo systemctl:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

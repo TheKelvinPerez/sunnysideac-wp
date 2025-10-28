@@ -260,7 +260,7 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 					$container_id = 'brands-dropdown-container';
 					$btn_class    = 'brands-dropdown-btn';
 				}
-				$chevron_icon = get_template_directory_uri() . '/assets/images/images/logos/navigation-chevron-down.svg';
+				$chevron_icon = get_template_directory_uri() . '/assets/images/logos/navigation-chevron-down.svg';
 
 				// Build CSS classes for the menu item
 				$menu_item_classes = 'inline-flex cursor-pointer items-center gap-1 rounded-full px-6 py-3 transition-colors duration-200 focus:ring-2 focus:ring-[#ffc549] focus:ring-offset-2 focus:outline-none nav-item';
