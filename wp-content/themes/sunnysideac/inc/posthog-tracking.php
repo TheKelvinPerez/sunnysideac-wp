@@ -219,21 +219,42 @@ function sunnysideac_output_posthog_js() {
 			api_host: '<?php echo $host; ?>',
 			person_profiles: 'identified_only', // Only create profiles for identified users
 
-			// PERFORMANCE: Disable auto pageview (we track manually)
+			// PAGEVIEWS: Disable auto pageview (tracked server-side with WordPress context)
 			capture_pageview: false,
 			capture_pageleave: true,
 
-			// PERFORMANCE: Disable autocapture (manual tracking is faster)
-			autocapture: false,
+			// AUTOCAPTURE: Enable for clicks, interactions, and heatmaps
+			autocapture: {
+				// Track these events automatically
+				dom_event_allowlist: ['click', 'change', 'submit'],
 
-			// Session recording with privacy
+				// Only track these interactive elements
+				element_allowlist: ['a', 'button', 'form', 'input', 'select', 'textarea'],
+
+				// Priority tracking for conversion elements
+				css_selector_allowlist: [
+					'.cta-button',
+					'.phone-link',
+					'.email-link',
+					'[data-ph-capture]',  // Add data-ph-capture to important elements
+				],
+
+				// Ignore admin/utility areas
+				css_selector_ignorelist: [
+					'.admin-bar',
+					'#wpadminbar',
+					'.ph-no-capture',
+				],
+			},
+
+			// Session recording with privacy (for screen captures)
 			session_recording: {
 				maskAllInputs: true,
 				maskTextSelector: '*',
 				recordCrossOriginIframes: false,
 			},
 
-			// PERFORMANCE: Enable performance tracking
+			// PERFORMANCE: Enable performance tracking (Web Vitals)
 			capture_performance: true,
 
 			// Use official PostHog CDN for reliability
@@ -261,22 +282,17 @@ function sunnysideac_output_posthog_js() {
 		/**
 		 * Initialize PostHog tracking (runs in idle time)
 		 * This function sets up all event listeners without blocking
+		 *
+		 * Note: Pageviews are tracked server-side with rich WordPress context
+		 * Client-side handles clicks, interactions, and session recordings
 		 */
 		function initPostHogTracking(posthog) {
 			// Identify user with server-provided ID
 			posthog.identify('<?php echo $distinct_id; ?>');
 
-			// Capture initial pageview
-			posthog.capture('$pageview', {
-				'$current_url': window.location.href,
-				'$pathname': window.location.pathname,
-				'$referrer': document.referrer,
-				'page_title': document.title,
-				'screen_width': window.screen.width,
-				'screen_height': window.screen.height,
-				'viewport_width': window.innerWidth,
-				'viewport_height': window.innerHeight,
-			});
+			// Pageview already tracked server-side with WordPress context
+			// (page_type, service_name, city_name, etc.)
+			// No need to duplicate here
 
 			// Store globally for other analytics scripts
 			window._posthog_loaded = true;
