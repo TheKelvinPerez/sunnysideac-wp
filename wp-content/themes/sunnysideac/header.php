@@ -1,3 +1,4 @@
+<!-- Deployment Test: <?php echo date( 'Y-m-d H:i:s' ); ?> -->
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -19,10 +20,10 @@
 	$mobile_avif_url = sunnysideac_asset_url( 'assets/images/optimize/mobile-hero-image.avif' );
 	$mobile_webp_url = sunnysideac_asset_url( 'assets/images/optimize/mobile-hero-image.webp' );
 	?>
-	<link rel="preload" as="image" href="<?php echo esc_url($avif_url); ?>" type="image/avif">
-	<link rel="preload" as="image" href="<?php echo esc_url($webp_url); ?>" type="image/webp">
-	<link rel="preload" as="image" href="<?php echo esc_url($mobile_avif_url); ?>" type="image/avif" media="(max-width: 1023px)" fetchpriority="high">
-	<link rel="preload" as="image" href="<?php echo esc_url($mobile_webp_url); ?>" type="image/webp" media="(max-width: 1023px)" fetchpriority="high">
+	<link rel="preload" as="image" href="<?php echo esc_url( $avif_url ); ?>" type="image/avif">
+	<link rel="preload" as="image" href="<?php echo esc_url( $webp_url ); ?>" type="image/webp">
+	<link rel="preload" as="image" href="<?php echo esc_url( $mobile_avif_url ); ?>" type="image/avif" media="(max-width: 1023px)" fetchpriority="high">
+	<link rel="preload" as="image" href="<?php echo esc_url( $mobile_webp_url ); ?>" type="image/webp" media="(max-width: 1023px)" fetchpriority="high">
 
 	<!-- Preconnect for external resources -->
 	<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -93,15 +94,15 @@
 
 <?php
 // Asset paths - Responsive logo system
-$logo_path    = sunnysideac_asset_url( 'assets/images/optimize/sunny-side-logo.webp' );
-$logo_2x_path = sunnysideac_asset_url( 'assets/images/optimize/sunny-side-logo-2x.webp' );
+$logo_path     = sunnysideac_asset_url( 'assets/images/optimize/sunny-side-logo.webp' );
+$logo_2x_path  = sunnysideac_asset_url( 'assets/images/optimize/sunny-side-logo-2x.webp' );
 $logo_png_path = sunnysideac_asset_url( 'assets/images/home-page/footer/new-sunny-side-logo.png' );
 
 $call_us_icon = sunnysideac_asset_url( 'assets/images/images/logos/navigation-call-us-now-icon.svg' );
 $mail_icon    = sunnysideac_asset_url( 'assets/images/images/logos/navigation-mail-icon.svg' );
 
 // Phone icon - SVG version for optimal clarity
-$phone_icon     = sunnysideac_asset_url( 'assets/icons/navigation-phone-icon.svg' );
+$phone_icon = sunnysideac_asset_url( 'assets/icons/navigation-phone-icon.svg' );
 ?>
 
 <div class="my-6 flex w-full justify-center lg:mt-8" id="main-navigation" data-tel-href="<?php echo esc_attr( SUNNYSIDE_TEL_HREF ); ?>" data-cities-base-url="<?php echo esc_url( home_url( '/cities/' ) ); ?>">
