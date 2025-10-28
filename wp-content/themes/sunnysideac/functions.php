@@ -1699,7 +1699,14 @@ function sunnysideac_optimize_dom_size() {
 			const emptyElements = document.querySelectorAll('*:empty:not(script):not(style):not(link):not(meta):not(br):not(input):not(img):not(hr):not(svg):not(path)');
 			emptyElements.forEach(el => {
 				if (el.children.length === 0 && el.textContent.trim() === '') {
-					el.remove();
+					// Don't remove elements that have styling or specific attributes
+					const hasStyling = el.className ||
+										el.getAttribute('role') ||
+										el.getAttribute('style') ||
+										['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'DIV', 'SPAN'].includes(el.tagName);
+					if (!hasStyling) {
+						el.remove();
+					}
 				}
 			});
 
