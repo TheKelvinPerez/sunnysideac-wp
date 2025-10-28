@@ -34,6 +34,7 @@ wp-content/cache/
 wp-content/backup*/
 wp-content/upgrade/
 wp-content/ai1wm-backups/
+logs/
 
 # Ignore config and environment files (but track templates)
 wp-config.php

@@ -72,12 +72,26 @@ Use this to work with real production data locally.
 
 ## Common Tasks
 
-### View Deployment Status
+### View Deployment Logs
 
 ```bash
-# Watch deployment in real-time
-ssh root@sunnysideac "tail -f /var/www/sunnysideac/deploy.log"
+# View latest deployment log
+ssh root@sunnysideac "bash /var/www/sunnyside247ac_com/.deployment/view-logs.sh latest"
+
+# List all deployment logs (last 7 days)
+ssh root@sunnysideac "bash /var/www/sunnyside247ac_com/.deployment/view-logs.sh list"
+
+# Follow deployment in real-time
+ssh root@sunnysideac "bash /var/www/sunnyside247ac_com/.deployment/view-logs.sh tail"
+
+# Show deployment statistics
+ssh root@sunnysideac "bash /var/www/sunnyside247ac_com/.deployment/view-logs.sh stats"
 ```
+
+Logs are automatically:
+- Timestamped (e.g., `deploy-20251028-023456.log`)
+- Stored in `/var/www/sunnyside247ac_com/logs/deployments/`
+- Cleaned up after 7 days
 
 ### Manual Deployment
 

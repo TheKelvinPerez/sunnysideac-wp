@@ -12,13 +12,19 @@ set -e
 PROJECT_ROOT="/var/www/sunnyside247ac_com"
 THEME_PATH="${PROJECT_ROOT}/wp-content/themes/sunnysideac"
 WP_PATH="${PROJECT_ROOT}"
-LOG_FILE="${PROJECT_ROOT}/deploy.log"
+LOG_DIR="${PROJECT_ROOT}/logs/deployments"
+TIMESTAMP=$(date +'%Y%m%d-%H%M%S')
+LOG_FILE="${LOG_DIR}/deploy-${TIMESTAMP}.log"
+LOG_RETENTION_DAYS=7
 
 # Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
+
+# Create log directory if it doesn't exist
+mkdir -p "$LOG_DIR"
 
 # Logging function
 log() {
@@ -34,11 +40,23 @@ warn() {
     echo -e "${YELLOW}[WARNING]${NC} $1" | tee -a "$LOG_FILE"
 }
 
+# Clean up old deployment logs (keep last 7 days)
+cleanup_old_logs() {
+    log "Cleaning up deployment logs older than ${LOG_RETENTION_DAYS} days..."
+    find "$LOG_DIR" -name "deploy-*.log" -type f -mtime +${LOG_RETENTION_DAYS} -delete 2>/dev/null || true
+    local log_count=$(find "$LOG_DIR" -name "deploy-*.log" -type f | wc -l | tr -d ' ')
+    log "Current deployment logs retained: ${log_count}"
+}
+
 ##############################################################################
 # Pre-deployment checks
 ##############################################################################
 
 log "=== Starting deployment ==="
+log "Log file: $LOG_FILE"
+
+# Clean up old logs
+cleanup_old_logs
 
 # Check if we're in the right directory
 if [ ! -d "$PROJECT_ROOT" ]; then
