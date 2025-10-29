@@ -81,7 +81,7 @@ if ( empty( $brands ) ) {
 							<!-- Daikin Main Item -->
 							<a href="<?php echo esc_url( $brand_url ); ?>" class="<?php echo esc_attr( $css_classes ); ?> !rounded-none border-b-2 border-[#e6d4b8]" aria-label="Navigate to <?php echo esc_attr( $brand_name ); ?>" <?php echo $is_active ? 'aria-current="page"' : ''; ?>>
 								<?php if ( $brand_logo ) : ?>
-									<div class="h-8 w-auto flex-shrink-0">
+									<div class="h-8 w-12 flex-shrink-0 flex items-center justify-center">
 										<img src="<?php echo esc_url( $brand_logo ); ?>" alt="<?php echo esc_attr( $brand_name ); ?> logo" class="h-full w-auto object-contain" loading="lazy" decoding="async" />
 									</div>
 								<?php endif; ?>
@@ -104,9 +104,9 @@ if ( empty( $brands ) ) {
 										$product_classes = 'flex items-center gap-2 p-2 rounded-[20px] transition-all duration-200 hover:bg-white hover:shadow-sm focus:outline-none group';
 										?>
 										<a href="<?php echo esc_url( $product_url ); ?>" class="<?php echo esc_attr( $product_classes ); ?>" aria-label="Navigate to <?php echo esc_attr( $product_name ); ?>">
-											<div class="h-4 w-4 flex-shrink-0">
-												<svg class="h-4 w-4 text-gray-500 group-hover:text-[#e5462f] transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="<?php echo esc_attr( $product['icon'] ?? 'M9 5l7 7-7 7' ); ?>" />
+											<div class="h-4 w-4 flex-shrink-0 flex items-center justify-center">
+												<svg class="h-3 w-3 text-gray-500 group-hover:text-[#e5462f] transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="<?php echo esc_attr( $product['icon'] ?? 'M9 5l7 7-7 7' ); ?>" />
 												</svg>
 											</div>
 											<span class="text-sm font-medium text-gray-700 group-hover:text-[#e5462f] transition-colors duration-200">
@@ -123,7 +123,7 @@ if ( empty( $brands ) ) {
 					<!-- Regular Brand Item -->
 					<a href="<?php echo esc_url( $brand_url ); ?>" class="<?php echo esc_attr( $css_classes ); ?>" aria-label="Navigate to <?php echo esc_attr( $brand_name ); ?>" <?php echo $is_active ? 'aria-current="page"' : ''; ?>>
 						<?php if ( $brand_logo ) : ?>
-							<div class="h-8 w-auto flex-shrink-0">
+							<div class="h-8 w-12 flex-shrink-0 flex items-center justify-center">
 								<img src="<?php echo esc_url( $brand_logo ); ?>" alt="<?php echo esc_attr( $brand_name ); ?> logo" class="h-full w-auto object-contain" loading="lazy" decoding="async" />
 							</div>
 						<?php endif; ?>
