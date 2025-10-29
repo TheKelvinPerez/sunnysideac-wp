@@ -14,7 +14,6 @@
         },
         "classmap": [
             "inc/performance-monitor.php",
-            "inc/class-service-city-sitemap-provider.php",
             "inc/navigation.php"
         ]
     },
