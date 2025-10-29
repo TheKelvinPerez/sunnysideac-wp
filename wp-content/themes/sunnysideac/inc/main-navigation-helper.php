@@ -267,6 +267,19 @@ function sunnysideac_render_mobile_nav_from_config(): void {
 		);
 	}
 
+	// Brands Section
+	if ( defined( 'SUNNYSIDE_BRANDS' ) ) {
+		get_template_part(
+			'template-parts/navigation/mobile-brands',
+			null,
+			[
+				'brands'             => SUNNYSIDE_BRANDS,
+				'daikin_products'    => defined( 'SUNNYSIDE_DAIKIN_PRODUCTS' ) ? SUNNYSIDE_DAIKIN_PRODUCTS : [],
+				'current_brand_name' => is_singular( 'brand' ) ? get_the_title() : '',
+			]
+		);
+	}
+
 	// Other Navigation Links from JSON
 	if ( isset( $config['mobile_nav']['main_links'] ) ) {
 		$main_links = array_map(
