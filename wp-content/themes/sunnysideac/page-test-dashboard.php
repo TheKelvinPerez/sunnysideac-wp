@@ -80,7 +80,7 @@ get_header();
         ['name' => 'Heating Replacement', 'slug' => 'heating-replacement', 'status' => 'pending'],
         ['name' => 'Furnaces', 'slug' => 'furnances', 'status' => 'pending', 'note' => 'slug typo'],
         ['name' => 'Indoor Air Quality', 'slug' => 'indoor-air-quality', 'status' => 'pending'],
-        ['name' => 'Ductless Mini-Splits', 'slug' => 'ductless-mini-splits', 'status' => 'pending'],
+        ['name' => 'Ductless Mini-Splits', 'slug' => 'ductless-mini-split', 'status' => 'pending'],
         ['name' => 'UV Lights', 'slug' => 'uv-lights', 'status' => 'pending'],
         ['name' => 'Filters', 'slug' => 'filteres', 'status' => 'pending', 'note' => 'slug typo']
     ];
