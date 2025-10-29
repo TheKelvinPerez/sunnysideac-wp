@@ -1131,6 +1131,38 @@ function sunnysideac_add_city_service_root_rewrite() {
 }
 add_action( 'init', 'sunnysideac_add_city_service_root_rewrite', 16 );
 
+/**
+ * Add rewrite rules for custom sitemaps
+ */
+function sunnysideac_add_custom_sitemap_rewrites() {
+	// Main sitemap index
+	add_rewrite_rule(
+		'^sitemap\.xml$',
+		'index.php?custom_sitemap=index',
+		'top'
+	);
+
+	// Individual sitemap handlers
+	add_rewrite_rule(
+		'^areas-sitemap\.xml$',
+		'index.php?custom_sitemap=areas',
+		'top'
+	);
+
+	add_rewrite_rule(
+		'^brands-sitemap\.xml$',
+		'index.php?custom_sitemap=brands',
+		'top'
+	);
+
+	add_rewrite_rule(
+		'^service-city-sitemap\.xml$',
+		'index.php?custom_sitemap=service-city',
+		'top'
+	);
+}
+add_action( 'init', 'sunnysideac_add_custom_sitemap_rewrites', 17 );
+
 
 /**
  * Add custom query vars for city routing
@@ -1140,6 +1172,15 @@ function sunnysideac_add_city_query_vars( $query_vars ) {
 	return $query_vars;
 }
 add_filter( 'query_vars', 'sunnysideac_add_city_query_vars' );
+
+/**
+ * Add custom sitemap query vars
+ */
+function sunnysideac_add_custom_sitemap_query_vars( $query_vars ) {
+	$query_vars[] = 'custom_sitemap';
+	return $query_vars;
+}
+add_filter( 'query_vars', 'sunnysideac_add_custom_sitemap_query_vars' );
 
 /**
  * Handle city query var requests
@@ -1191,6 +1232,37 @@ function sunnysideac_handle_bare_urls_404s() {
 	}
 }
 add_action( 'template_redirect', 'sunnysideac_handle_bare_urls_404s' );
+
+/**
+ * Handle custom sitemap requests - Improved pattern matching
+ */
+function sunnysideac_handle_custom_sitemaps() {
+	$request_uri = $_SERVER['REQUEST_URI'] ?? '';
+
+	// Determine sitemap type with more specific patterns
+	$sitemap_type = null;
+
+	if ( $request_uri === '/sitemap.xml' || $request_uri === '/sitemap.xml/' ) {
+		$sitemap_type = 'index';
+	} elseif ( $request_uri === '/areas-sitemap.xml' || $request_uri === '/areas-sitemap.xml/' ) {
+		$sitemap_type = 'areas';
+	} elseif ( $request_uri === '/brands-sitemap.xml' || $request_uri === '/brands-sitemap.xml/' ) {
+		$sitemap_type = 'brands';
+	} elseif ( $request_uri === '/service-city-sitemap.xml' || $request_uri === '/service-city-sitemap.xml/' ) {
+		$sitemap_type = 'service-city';
+	}
+
+	if ( $sitemap_type ) {
+		// Load the generator
+		require_once get_template_directory() . '/inc/custom-sitemap-generator.php';
+		$generator = new Sunnyside_Custom_Sitemap_Generator();
+
+		// Set query var and handle
+		set_query_var( 'custom_sitemap', $sitemap_type );
+		$generator->handle_sitemap_requests();
+	}
+}
+// Temporarily disabled - add_action( 'template_redirect', 'sunnysideac_handle_custom_sitemaps', 1 );
 
 /**
  * Force city templates for proper routing
@@ -1495,18 +1567,7 @@ function sunnysideac_homepage_meta_tags() {
 }
 add_action( 'wp_head', 'sunnysideac_homepage_meta_tags', 1 );
 
-/**
- * Register a custom sitemap provider for service-city combinations
- *
- * This generates sitemap entries for all /{city}/{service} URLs (e.g., /miami/ac-repair)
- * The provider automatically adds the sitemaps to the index via get_index_links()
- */
-function sunnysideac_register_service_city_sitemap_provider( $providers ) {
-	require_once get_template_directory() . '/inc/class-service-city-sitemap-provider.php';
-	$providers['service-city'] = new Service_City_Sitemap_Provider();
-	return $providers;
-}
-add_filter( 'rank_math/sitemap/providers', 'sunnysideac_register_service_city_sitemap_provider' );
+// Note: RankMath sitemap providers removed - using custom sitemap system instead
 
 /**
  * Handle careers form submission via AJAX

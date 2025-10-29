@@ -137,6 +137,69 @@ log "✓ Set correct permissions for static HTML"
 FILE_SIZE=$(stat -c%s "$STATIC_HTML" 2>/dev/null || echo "unknown")
 log "✓ Static HTML file size: $FILE_SIZE bytes"
 
+# Fix logo marquee JavaScript initialization in static HTML
+log "Fixing logo marquee JavaScript initialization..."
+# Fix the broken JavaScript condition first
+sed -i 's|if (container // Start when DOM is ready// Start when DOM is ready container.children.length === 0) {|if (container \&\& container.children.length === 0) {|g' "$STATIC_HTML"
+
+# Clean up excessive debugging in logo marquee JavaScript
+log "Cleaning up debugging in logo marquee JavaScript..."
+
+# Remove duplicate animate function debugging lines
+sed -i '/console\.log("🎬 Logo marquee animate\(\) called/d' "$STATIC_HTML"
+
+# Add back essential debugging only
+sed -i '/function animate() {/a\
+\t\t// Minimal debugging for mobile issues\
+\t\tif (Math.abs(translateX) % 50 < 0.8) console.log("🎬 Marquee running - translateX:", translateX, "logos:", logoInstances.length);' "$STATIC_HTML"
+
+# Add debugging to the logo cycling logic for mobile width detection
+sed -i '/if (translateX < -actualLogoWidth) {/a\
+\t\t\t// Mobile debugging for logo width issues\
+\t\t\tconsole.log("🔄 Recycling logo - width:", actualLogoWidth, "screen:", window.innerWidth, "translateX:", translateX);' "$STATIC_HTML"
+
+# Fix JavaScript syntax error and improve getActualLogoWidth function
+log "Fixing JavaScript syntax error in logo marquee..."
+# Fix the specific double closing brace issue
+sed -i '/return fallbackWidth; \/\/ Mobile: 120px, Tablet: 140px, Desktop: 160px/,/^[[:space:]]*}[[:space:]]*$/ {
+    /return fallbackWidth; \/\/ Mobile: 120px, Tablet: 140px, Desktop: 160px/!d
+    /^[[:space:]]*}[[:space:]]*$/!d
+    /return fallbackWidth; \/\/ Mobile: 120px, Tablet: 140px, Desktop: 160px/a\
+	}
+}' "$STATIC_HTML"
+
+# Update the getActualLogoWidth function for better mobile responsiveness
+sed -i '/function getActualLogoWidth() {/,/return fallbackWidth; \/\/ Mobile: 120px, Tablet: 140px, Desktop: 160px/c\
+\t// Measure actual logo width with better mobile handling\
+\tfunction getActualLogoWidth() {\
+\t\tif (container.children.length > 0) {\
+\t\t\tconst firstLogo = container.children[0];\
+\t\t\tconst computedStyle = window.getComputedStyle(firstLogo);\
+\t\t\tconst width = firstLogo.offsetWidth;\
+\t\t\tconst marginLeft = parseInt(computedStyle.marginLeft) || 0;\
+\t\t\tconst marginRight = parseInt(computedStyle.marginRight) || 0;\
+\t\t\tconst actualWidth = width + marginLeft + marginRight;\
+\t\t\tconsole.log("📏 Measured logo width:", actualWidth, "window.innerWidth:", window.innerWidth);\
+\t\t\treturn actualWidth;\
+\t\t}\
+\t\t// Better fallback based on screen size\
+\t\tconst fallbackWidth = window.innerWidth < 768 ? 120 : (window.innerWidth < 1024 ? 140 : 160);\
+\t\tconsole.log("📏 Using fallback logo width:", fallbackWidth, "window.innerWidth:", window.innerWidth);\
+\t\treturn fallbackWidth; // Mobile: 120px, Tablet: 140px, Desktop: 160px\
+\t}' "$STATIC_HTML"
+
+# Add immediate initialization for static HTML
+sed -i '/\/\/ Start when DOM is ready/i\
+\t\t// Start immediately for static HTML\
+\t\tsetTimeout(function() {\
+\t\t\tconsole.log("⏰ Static HTML timeout - container exists:", !!container, "children:", container ? container.children.length : "N/A");\
+\t\t\tif (container \&\& container.children.length === 0) {\
+\t\t\t\tconsole.log("📝 Calling initializeLogos() from timeout");\
+\t\t\t\tinitializeLogos();\
+\t\t\t}\
+\t\t}, 100);\
+' "$STATIC_HTML"
+
 # Now update the asset hashes if the update script exists
 ASSET_UPDATE_SCRIPT="${PROJECT_ROOT}/wp-content/themes/sunnysideac/scripts/update-static-assets.sh"
 if [ -f "$ASSET_UPDATE_SCRIPT" ]; then
