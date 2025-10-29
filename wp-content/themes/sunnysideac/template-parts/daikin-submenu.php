@@ -49,7 +49,7 @@ if ( empty( $daikin_products ) ) {
 	<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 		<?php foreach ( $daikin_products as $product ) : ?>
 			<?php
-			$product_url = home_url( '/daikin/' . $product['slug'] . '/' );
+			$product_url = home_url( '/brands/daikin/' . $product['slug'] );
 			$is_active   = ( $current_slug === $product['slug'] );
 
 			// Build CSS classes for square cards

@@ -61,8 +61,8 @@ if ( empty( $brands ) ) {
 				};
 				$brand_logo = $logo_filename ? get_template_directory_uri() . '/assets/images/company-logos/' . $logo_filename : '';
 
-				// Build CSS classes for brand item - removed scale-105 to prevent clipping
-				$base_classes   = 'flex items-center gap-3 p-3 rounded-[20px] transition-all duration-200 focus:outline-none group';
+				// Build CSS classes for brand item - centered logo without text
+				$base_classes   = 'flex items-center justify-center p-4 rounded-[20px] transition-all duration-200 focus:outline-none group';
 				$hover_classes  = 'hover:bg-[#ffc549] hover:shadow-md focus:bg-[#ffc549]';
 				$active_classes = 'bg-[#ffc549] shadow-md';
 
@@ -70,8 +70,6 @@ if ( empty( $brands ) ) {
 				if ( $is_active ) {
 					$css_classes .= ' ' . $active_classes;
 				}
-
-				$text_classes = ' text-base font-medium transition-colors duration-200 ' . ( $is_active ? 'text-[#e5462f]' : 'text-black group-hover:text-[#e5462f]' );
 				?>
 
 				<?php if ( $brand_key === 'daikin' && ! empty( $daikin_products ) ) : ?>
@@ -81,16 +79,10 @@ if ( empty( $brands ) ) {
 							<!-- Daikin Main Item -->
 							<a href="<?php echo esc_url( $brand_url ); ?>" class="<?php echo esc_attr( $css_classes ); ?> !rounded-none border-b-2 border-[#e6d4b8]" aria-label="Navigate to <?php echo esc_attr( $brand_name ); ?>" <?php echo $is_active ? 'aria-current="page"' : ''; ?>>
 								<?php if ( $brand_logo ) : ?>
-									<div class="h-8 w-12 flex-shrink-0 flex items-center justify-center">
+									<div class="h-12 w-20 flex-shrink-0 flex items-center justify-center">
 										<img src="<?php echo esc_url( $brand_logo ); ?>" alt="<?php echo esc_attr( $brand_name ); ?> logo" class="h-full w-auto object-contain" loading="lazy" decoding="async" />
 									</div>
 								<?php endif; ?>
-								<span class="<?php echo esc_attr( $text_classes ); ?> flex-1">
-									<?php echo esc_html( $brand_name ); ?>
-								</span>
-								<span class="text-xs text-gray-500 group-hover:text-[#e5462f] transition-colors duration-200">
-									(<?php echo count( $daikin_products ); ?> products)
-								</span>
 							</a>
 
 							<!-- Daikin Products Sub-items -->
@@ -104,9 +96,9 @@ if ( empty( $brands ) ) {
 										$product_classes = 'flex items-center gap-2 p-2 rounded-[20px] transition-all duration-200 hover:bg-white hover:shadow-sm focus:outline-none group';
 										?>
 										<a href="<?php echo esc_url( $product_url ); ?>" class="<?php echo esc_attr( $product_classes ); ?>" aria-label="Navigate to <?php echo esc_attr( $product_name ); ?>">
-											<div class="h-4 w-4 flex-shrink-0 flex items-center justify-center">
-												<svg class="h-3 w-3 text-gray-500 group-hover:text-[#e5462f] transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="<?php echo esc_attr( $product['icon'] ?? 'M9 5l7 7-7 7' ); ?>" />
+											<div class="h-6 w-6 flex-shrink-0 flex items-center justify-center">
+												<svg class="h-5 w-5 text-gray-500 group-hover:text-[#e5462f] transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="<?php echo esc_attr( $product['icon'] ?? 'M9 5l7 7-7 7' ); ?>" />
 												</svg>
 											</div>
 											<span class="text-sm font-medium text-gray-700 group-hover:text-[#e5462f] transition-colors duration-200">
@@ -123,13 +115,10 @@ if ( empty( $brands ) ) {
 					<!-- Regular Brand Item -->
 					<a href="<?php echo esc_url( $brand_url ); ?>" class="<?php echo esc_attr( $css_classes ); ?>" aria-label="Navigate to <?php echo esc_attr( $brand_name ); ?>" <?php echo $is_active ? 'aria-current="page"' : ''; ?>>
 						<?php if ( $brand_logo ) : ?>
-							<div class="h-8 w-12 flex-shrink-0 flex items-center justify-center">
+							<div class="h-12 w-20 flex-shrink-0 flex items-center justify-center">
 								<img src="<?php echo esc_url( $brand_logo ); ?>" alt="<?php echo esc_attr( $brand_name ); ?> logo" class="h-full w-auto object-contain" loading="lazy" decoding="async" />
 							</div>
 						<?php endif; ?>
-						<span class="<?php echo esc_attr( $text_classes ); ?>">
-							<?php echo esc_html( $brand_name ); ?>
-						</span>
 					</a>
 				<?php endif; ?>
 

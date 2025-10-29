@@ -1119,6 +1119,18 @@ function sunnysideac_add_daikin_product_rewrite() {
 add_action( 'init', 'sunnysideac_add_daikin_product_rewrite', 15 );
 
 /**
+ * Add rewrite for /brands/daikin/{product}/ → Daikin product page
+ */
+function sunnysideac_add_brands_daikin_product_rewrite() {
+	add_rewrite_rule(
+		'^brands/daikin/([^/]+)/?$',
+		'index.php?pagename=$matches[1]',
+		'top'
+	);
+}
+add_action( 'init', 'sunnysideac_add_brands_daikin_product_rewrite', 15 );
+
+/**
  * Add root-level rewrite for /{city}/{service}/ → single service
  * Excludes known base URLs like 'services', 'category', 'tag', 'page', 'cities', 'brands', 'daikin'
  */
@@ -2147,4 +2159,72 @@ function sunnysideac_add_warranty_claim_form_nonce() {
 	<?php
 }
 add_action( 'wp_footer', 'sunnysideac_add_warranty_claim_form_nonce' );
+
+/**
+ * Clean SEO bot hashes from post content
+ * Removes unwanted SEO bot generated hashes like sbb-itb-dd99a15 from blog posts
+ */
+function sunnysideac_clean_seo_bot_hashes( $content ) {
+	if ( ! $content ) {
+		return $content;
+	}
+
+	// Remove SEO bot hash patterns
+	$patterns = array(
+		'/<h6[^>]*>sbb-itb-[a-z0-9]*<\/h6>/i',  // Remove sbb-itb-xxxxx hash elements
+		'/<h6[^>]*>sbb-[a-z0-9-]*<\/h6>/i',      // Remove other sbb- hash elements
+		'/<!-- sbb-[a-z0-9-]* -->/i',            // Remove sbb HTML comments
+		'/\[sbb-[a-z0-9-]*\]/i',                 // Remove sbb shortcodes
+	);
+
+	$content = preg_replace( $patterns, '', $content );
+
+	return $content;
+}
+
+// Apply the hash cleanup to post content when displaying
+add_filter( 'the_content', 'sunnysideac_clean_seo_bot_hashes', 10 );
+
+// Apply the hash cleanup to post excerpts as well
+add_filter( 'the_excerpt', 'sunnysideac_clean_seo_bot_hashes', 10 );
+
+/**
+ * Bulk clean existing posts from SEO bot hashes
+ * Run this function once to clean all existing blog posts
+ */
+function sunnysideac_bulk_clean_seo_hashes() {
+	$args = array(
+		'post_type'      => 'post',
+		'post_status'    => 'publish',
+		'posts_per_page' => -1, // Get all posts
+	);
+
+	$posts_query = new WP_Query( $args );
+	$cleaned_count = 0;
+
+	if ( $posts_query->have_posts() ) {
+		while ( $posts_query->have_posts() ) {
+			$posts_query->the_post();
+			$post_id    = get_the_ID();
+			$post_content = get_the_content();
+
+			// Apply the same cleanup function
+			$cleaned_content = sunnysideac_clean_seo_bot_hashes( $post_content );
+
+			// Only update if content was actually changed
+			if ( $cleaned_content !== $post_content ) {
+				wp_update_post(
+					array(
+						'ID'           => $post_id,
+						'post_content' => $cleaned_content,
+					)
+				);
+				$cleaned_count++;
+			}
+		}
+		wp_reset_postdata();
+	}
+
+	return $cleaned_count;
+}
 
