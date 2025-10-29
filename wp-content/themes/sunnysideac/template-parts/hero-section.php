@@ -82,10 +82,10 @@ function sunnysideac_render_stars( $count = 5, $star_icon_url = '', $class = 'h-
 			decoding="async" />
 		</div>
 		<p class="text-center text-xs leading-normal font-normal sm:text-sm lg:text-left lg:text-lg">
-			<span class="text-[#374151]">Your Local </span>
-			<span class="text-[#c2410c]">South Florida </span>
-			<span class="text-[#374151]">HVAC Experts Since </span>
-			<span class="text-[#dc2626]">2014</span>
+			<span class="text-[#374151]">The </span>
+			<span class="text-[#c2410c]">Best</span>
+			<span class="text-[#374151]"> At Keeping You </span>
+			<span class="text-[#dc2626]">Refreshed!</span>
 		</p>
 		</header>
 
@@ -248,10 +248,10 @@ function sunnysideac_render_stars( $count = 5, $star_icon_url = '', $class = 'h-
 			decoding="async" />
 		</div>
 		<p class="text-center text-xs leading-normal font-normal sm:text-sm">
-			<span class="text-white">Your Local </span>
-			<span class="text-yellow-300">South Florida</span>
-			<span class="text-white"> HVAC Experts Since </span>
-			<span class="text-yellow-300">2014</span>
+			<span class="text-white">The </span>
+			<span class="text-yellow-300">Best</span>
+			<span class="text-white"> At Keeping You </span>
+			<span class="text-yellow-300">Refreshed!</span>
 		</p>
 		</header>
 
