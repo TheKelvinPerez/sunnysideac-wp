@@ -125,6 +125,20 @@ redis-cli FLUSHALL 2>/dev/null || warn "Could not flush Redis cache"
 log "✓ All caches cleared"
 
 ##############################################################################
+# Generate static homepage
+##############################################################################
+
+log "Generating static homepage..."
+STATIC_GENERATOR_SCRIPT="${PROJECT_ROOT}/.deployment/generate-static-homepage.sh"
+
+if [ -f "$STATIC_GENERATOR_SCRIPT" ]; then
+    bash "$STATIC_GENERATOR_SCRIPT" || warn "Static homepage generation failed, but deployment continues"
+    log "✓ Static homepage generation completed"
+else
+    warn "Static homepage generator script not found at $STATIC_GENERATOR_SCRIPT"
+fi
+
+##############################################################################
 # File permissions (adjust based on your server setup)
 ##############################################################################
 
