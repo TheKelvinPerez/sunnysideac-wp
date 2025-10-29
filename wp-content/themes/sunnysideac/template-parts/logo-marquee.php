@@ -158,7 +158,7 @@ $icon_url = get_template_directory_uri() . '/assets/images/home-page/trusted-bra
 		div.setAttribute('data-name', instance.logo.name);
 		div.setAttribute('data-set-id', instance.setId);
 		div.setAttribute('data-global-index', instance.globalIndex);
-		div.setAttribute('title', 'View ' + instance.logo.name + ' HVAC services');
+		div.setAttribute('title', 'Visit ' + instance.logo.name + ' website');
 
 		div.innerHTML = '<img src="' + instance.logo.src + '" alt="' + instance.logo.alt + '" class="max-h-full max-w-full object-contain" loading="lazy" decoding="async" sizes="(max-width: 768px) 96px, (max-width: 1024px) 128px, 160px" width="160" height="80" />';
 
