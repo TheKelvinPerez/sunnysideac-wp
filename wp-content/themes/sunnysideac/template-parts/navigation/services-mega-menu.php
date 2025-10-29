@@ -46,7 +46,7 @@ if ( empty( $service_categories ) ) {
 						$is_active    = ( $current_service_name === $service_name );
 
 						// Build CSS classes
-						$base_classes   = 'flex items-start gap-2 p-2 rounded-[20px] transition-all duration-200 focus:outline-none group';
+						$base_classes   = 'flex items-center gap-2 p-2 rounded-[20px] transition-all duration-200 focus:outline-none group';
 						$hover_classes  = 'hover:bg-[#ffc549] hover:scale-105 hover:shadow-md focus:bg-[#ffc549]';
 						$active_classes = 'bg-[#ffc549] shadow-md scale-105';
 
@@ -59,7 +59,7 @@ if ( empty( $service_categories ) ) {
 						$text_classes = ' text-sm font-medium transition-colors duration-200 ' . ( $is_active ? 'text-[#e5462f]' : 'text-black group-hover:text-[#e5462f]' );
 						?>
 						<a href="<?php echo esc_url( $service_url ); ?>" class="<?php echo esc_attr( $css_classes ); ?>" aria-label="Navigate to <?php echo esc_attr( $service_name ); ?>" <?php echo $is_active ? 'aria-current="page"' : ''; ?>>
-							<div class="h-4 w-4 flex-shrink-0 mt-0.5">
+							<div class="h-4 w-4 flex">
 								<svg class="<?php echo esc_attr( $icon_classes ); ?>" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="<?php echo esc_attr( $icon_path ); ?>" />
 								</svg>

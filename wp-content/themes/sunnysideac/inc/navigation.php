@@ -120,7 +120,7 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 				$icon_path    = sunnysideac_get_service_icon( $service_name );
 
 				$output .= '<a href="' . esc_url( $service_url ) . '" class="flex items-start gap-2 p-2 rounded-[20px] transition-all duration-200 hover:bg-[#ffc549] hover:scale-105 hover:shadow-md focus:bg-[#ffc549] focus:outline-none group" aria-label="Navigate to ' . esc_attr( $service_name ) . '">';
-				$output .= '<div class="h-4 w-4 flex-shrink-0 mt-0.5">';
+				$output .= '<div class="h-4 w-4 flex">';
 				$output .= '<svg class="h-4 w-4 text-gray-600 group-hover:text-[#e5462f] transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">';
 				$output .= '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="' . esc_attr( $icon_path ) . '" />';
 				$output .= '</svg>';
@@ -161,8 +161,8 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 			$is_active = ( $current_city_name === $city );
 
 			// Build CSS classes
-			$base_classes = 'flex items-center gap-2 p-2 rounded-[20px] transition-all duration-200 focus:outline-none group';
-			$hover_classes = 'hover:bg-[#ffc549] hover:scale-105 hover:shadow-md focus:bg-[#ffc549]';
+			$base_classes   = 'flex items-center gap-2 p-2 rounded-[20px] transition-all duration-200 focus:outline-none group';
+			$hover_classes  = 'hover:bg-[#ffc549] hover:scale-105 hover:shadow-md focus:bg-[#ffc549]';
 			$active_classes = 'bg-[#ffc549] shadow-md scale-105';
 
 			$css_classes = $base_classes . ' ' . $hover_classes;
@@ -310,64 +310,64 @@ class Sunnyside_Nav_Walker extends Walker_Nav_Menu {
 	 * Output brands mega menu content from constants
 	 */
 	private function output_brands_mega_menu( &$output ) {
-	if ( ! defined( 'SUNNYSIDE_BRANDS' ) || ! defined( 'SUNNYSIDE_DAIKIN_PRODUCTS' ) ) {
-		return;
-	}
-
-	$brands          = SUNNYSIDE_BRANDS;
-	$daikin_products = SUNNYSIDE_DAIKIN_PRODUCTS;
-
-	// Get current brand for active state
-	$current_brand_name = '';
-	if ( is_singular( 'brand' ) ) {
-		$current_brand_name = strtolower( get_the_title() );
-	}
-
-	foreach ( $brands as $brand_slug => $brand_name ) {
-		$brand_url = home_url( sprintf( '/brands/%s/', $brand_slug ) );
-		$is_active = ( strtolower( $brand_name ) === $current_brand_name );
-
-		// Start brand column
-		$output .= '<div class="space-y-1.5">';
-
-		// Brand heading (clickable)
-		$base_classes   = 'flex items-start gap-2 p-2 rounded-[20px] transition-all duration-200 focus:outline-none group';
-		$hover_classes  = 'hover:bg-[#ffc549] hover:scale-105 hover:shadow-md focus:bg-[#ffc549]';
-		$active_classes = 'bg-[#ffc549] shadow-md scale-105';
-
-		$css_classes = $base_classes . ' ' . $hover_classes;
-		if ( $is_active ) {
-			$css_classes .= ' ' . $active_classes;
+		if ( ! defined( 'SUNNYSIDE_BRANDS' ) || ! defined( 'SUNNYSIDE_DAIKIN_PRODUCTS' ) ) {
+			return;
 		}
 
-		$output .= '<a href="' . esc_url( $brand_url ) . '" class="' . esc_attr( $css_classes ) . '" aria-label="Navigate to ' . esc_attr( $brand_name ) . ' brand" ' . ( $is_active ? 'aria-current="page"' : '' ) . '>';
-		$output .= '<div class="h-4 w-4 flex-shrink-0 mt-0.5">';
-		$output .= '<svg class="h-4 w-4 transition-colors duration-200 ' . ( $is_active ? 'text-[#e5462f]' : 'text-gray-600 group-hover:text-[#e5462f]' ) . '" fill="none" stroke="currentColor" viewBox="0 0 24 24">';
-		$output .= '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />';
-		$output .= '</svg>';
-		$output .= '</div>';
-		$output .= '<span class="text-sm font-bold transition-colors duration-200 ' . ( $is_active ? 'text-[#e5462f]' : 'text-black group-hover:text-[#e5462f]' ) . '">' . esc_html( $brand_name ) . '</span>';
-		$output .= '</a>';
+		$brands          = SUNNYSIDE_BRANDS;
+		$daikin_products = SUNNYSIDE_DAIKIN_PRODUCTS;
 
-		// If Daikin, show sub-products
-		if ( $brand_slug === 'daikin' ) {
-			foreach ( $daikin_products as $product ) {
-				$product_url = home_url( '/daikin/' . $product['slug'] . '/' );
+		// Get current brand for active state
+		$current_brand_name = '';
+		if ( is_singular( 'brand' ) ) {
+			$current_brand_name = strtolower( get_the_title() );
+		}
 
-				$output .= '<a href="' . esc_url( $product_url ) . '" class="flex items-start gap-2 p-2 pl-6 rounded-[20px] transition-all duration-200 hover:bg-[#ffe8cc] hover:scale-105 hover:shadow-sm focus:bg-[#ffe8cc] focus:outline-none group" aria-label="Navigate to ' . esc_attr( $product['name'] ) . '">';
-				$output .= '<div class="h-3 w-3 flex-shrink-0 mt-0.5">';
-				$output .= '<svg class="h-3 w-3 text-gray-500 group-hover:text-[#fb9939] transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">';
-				$output .= '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />';
-				$output .= '</svg>';
-				$output .= '</div>';
-				$output .= '<span class="text-xs font-medium text-gray-700 group-hover:text-[#fb9939] transition-colors duration-200">' . esc_html( $product['short_name'] ) . '</span>';
-				$output .= '</a>';
+		foreach ( $brands as $brand_slug => $brand_name ) {
+			$brand_url = home_url( sprintf( '/brands/%s/', $brand_slug ) );
+			$is_active = ( strtolower( $brand_name ) === $current_brand_name );
+
+			// Start brand column
+			$output .= '<div class="space-y-1.5">';
+
+			// Brand heading (clickable)
+			$base_classes   = 'flex items-start gap-2 p-2 rounded-[20px] transition-all duration-200 focus:outline-none group';
+			$hover_classes  = 'hover:bg-[#ffc549] hover:scale-105 hover:shadow-md focus:bg-[#ffc549]';
+			$active_classes = 'bg-[#ffc549] shadow-md scale-105';
+
+			$css_classes = $base_classes . ' ' . $hover_classes;
+			if ( $is_active ) {
+				$css_classes .= ' ' . $active_classes;
 			}
-		}
 
-		// End brand column
-		$output .= '</div>';
-	}
+			$output .= '<a href="' . esc_url( $brand_url ) . '" class="' . esc_attr( $css_classes ) . '" aria-label="Navigate to ' . esc_attr( $brand_name ) . ' brand" ' . ( $is_active ? 'aria-current="page"' : '' ) . '>';
+			$output .= '<div class="h-4 w-4 flex-shrink-0 mt-0.5">';
+			$output .= '<svg class="h-4 w-4 transition-colors duration-200 ' . ( $is_active ? 'text-[#e5462f]' : 'text-gray-600 group-hover:text-[#e5462f]' ) . '" fill="none" stroke="currentColor" viewBox="0 0 24 24">';
+			$output .= '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />';
+			$output .= '</svg>';
+			$output .= '</div>';
+			$output .= '<span class="text-sm font-bold transition-colors duration-200 ' . ( $is_active ? 'text-[#e5462f]' : 'text-black group-hover:text-[#e5462f]' ) . '">' . esc_html( $brand_name ) . '</span>';
+			$output .= '</a>';
+
+			// If Daikin, show sub-products
+			if ( $brand_slug === 'daikin' ) {
+				foreach ( $daikin_products as $product ) {
+					$product_url = home_url( '/daikin/' . $product['slug'] . '/' );
+
+					$output .= '<a href="' . esc_url( $product_url ) . '" class="flex items-start gap-2 p-2 pl-6 rounded-[20px] transition-all duration-200 hover:bg-[#ffe8cc] hover:scale-105 hover:shadow-sm focus:bg-[#ffe8cc] focus:outline-none group" aria-label="Navigate to ' . esc_attr( $product['name'] ) . '">';
+					$output .= '<div class="h-3 w-3 flex-shrink-0 mt-0.5">';
+					$output .= '<svg class="h-3 w-3 text-gray-500 group-hover:text-[#fb9939] transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">';
+					$output .= '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />';
+					$output .= '</svg>';
+					$output .= '</div>';
+					$output .= '<span class="text-xs font-medium text-gray-700 group-hover:text-[#fb9939] transition-colors duration-200">' . esc_html( $product['short_name'] ) . '</span>';
+					$output .= '</a>';
+				}
+			}
+
+			// End brand column
+			$output .= '</div>';
+		}
 	}
 }
 

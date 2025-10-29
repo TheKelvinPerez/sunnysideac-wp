@@ -60,7 +60,7 @@ if ( empty( $priority_cities ) ) {
 				$text_classes = ' text-sm font-medium transition-colors duration-200 ' . ( $is_active ? 'text-[#e5462f]' : 'text-black group-hover:text-[#e5462f]' );
 				?>
 				<a href="<?php echo esc_url( $city_url ); ?>" class="<?php echo esc_attr( $css_classes ); ?>" aria-label="Navigate to <?php echo esc_attr( $city ); ?> service area" <?php echo $is_active ? 'aria-current="page"' : ''; ?>>
-					<div class="h-4 w-4 flex-shrink-0">
+					<div class="h-4 w-4 flex">
 						<svg class="<?php echo esc_attr( $icon_classes ); ?>" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
 						</svg>
