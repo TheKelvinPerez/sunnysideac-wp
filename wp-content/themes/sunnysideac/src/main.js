@@ -24,6 +24,13 @@ if (document.querySelector('#customer-reviews')) {
 	lazyLoadModule('#customer-reviews', () => import('./js/components/reviews-carousel.js'));
 }
 
+// Logo Marquee - Load when logo marquee is visible
+// Only try to lazy load if element exists to avoid console warnings
+if (document.querySelector('#logo-marquee-container')) {
+	lazyLoadModule('#logo-marquee-container', () => import('./js/components/logo-marquee.js')
+		.then(module => module.initLogoMarquee()));
+}
+
 // Careers Form - Load only on /careers page (75ms savings on other pages)
 lazyLoadConditional(
   () => window.location.pathname.includes('/careers'),
