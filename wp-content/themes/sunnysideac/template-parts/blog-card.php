@@ -118,13 +118,7 @@ $year       = $date_parts[2] ?? '';
 				<!-- Category -->
 				<?php if ( $args['show_category'] && ! empty( $categories ) ) : ?>
 					<div class="flex items-center gap-2">
-						<img src="<?php echo esc_url( $args['category_icon'] ); ?>"
-							alt="Category"
-							class="h-4 w-4"
-							loading="lazy"
-							decoding="async"
-							width="16"
-							height="16">
+						<?php echo sunnysideac_get_category_icon( $categories[0]->name ); ?>
 						<span class="text-sm font-medium text-[#c2410c]">
 							<?php
 							$category_name = isset( $categories[0]->name ) ? $categories[0]->name : 'Uncategorized';

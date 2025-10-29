@@ -185,11 +185,7 @@ get_template_part(
 											if ( ! empty( $categories ) ) :
 												?>
 												<div class="flex items-center gap-2">
-													<img
-														src="<?php echo esc_url( $images['air_con_blog_icon'] ); ?>"
-														alt="Category"
-														class="h-4 w-4"
-													/>
+													<?php echo sunnysideac_get_category_icon( $categories[0]->name ); ?>
 													<span class="text-sm font-medium text-[#F79E37]">
 														<?php
 														$category_name = isset( $categories[0]->name ) ? $categories[0]->name : 'Uncategorized';

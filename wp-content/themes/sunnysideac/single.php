@@ -10,7 +10,7 @@ get_header();
 $post_id            = get_the_ID();
 $post_title         = get_the_title();
 $post_date          = get_the_date();
-$author_id          = get_the_author_meta('ID');
+$author_id          = get_the_author_meta( 'ID' );
 $author_name        = 'SunnySide247AC';
 $author_description = 'Professional HVAC company serving South Florida with 24/7 emergency AC repair, installation, and maintenance services. Family-owned and operated since 2014.';
 $author_avatar      = get_template_directory_uri() . '/assets/images/logos/sunny-side-logo.png';
@@ -241,6 +241,31 @@ get_template_part(
 			</div>
 		</nav>
 
+		<!-- Dynamic FAQ Section -->
+		<?php
+		// Extract FAQs from the current blog post content
+		$current_post_content = get_the_content();
+		$faq_data             = sunnysideac_extract_faqs_from_post( $current_post_content );
+
+		if ( ! empty( $faq_data ) ) :
+			?>
+			<?php
+			get_template_part(
+				'template-parts/faq-component',
+				null,
+				array(
+					'faq_data'     => $faq_data,
+					'title'        => 'Frequently Asked Questions',
+					'mobile_title' => 'FAQ',
+					'subheading'   => 'Got Questions? We\'ve Got Answers!',
+					'description'  => 'Find answers to common questions about AC repair, maintenance, and energy efficiency from this article.',
+					'show_schema'  => true,
+					'section_id'   => 'blog-faq-section',
+				)
+			);
+			?>
+		<?php endif; ?>
+
 		<!-- Related Posts -->
 		<?php if ( $related_posts->have_posts() ) : ?>
 			<section class="mb-12">
@@ -279,7 +304,7 @@ get_template_part(
 </main>
 
 <!-- Back to Blog CTA -->
-<section class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
+<section class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16 rounded-xl">
 	<div class="px-5 lg:px-0 max-w-4xl mx-auto text-center">
 		<h2 class="text-3xl font-bold mb-4">Enjoyed this article?</h2>
 		<p class="text-xl text-blue-100 mb-8">

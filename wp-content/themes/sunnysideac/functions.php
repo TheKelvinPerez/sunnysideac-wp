@@ -1119,18 +1119,6 @@ function sunnysideac_add_daikin_product_rewrite() {
 add_action( 'init', 'sunnysideac_add_daikin_product_rewrite', 15 );
 
 /**
- * Add rewrite for /brands/daikin/{product}/ → Daikin product page
- */
-function sunnysideac_add_brands_daikin_product_rewrite() {
-	add_rewrite_rule(
-		'^brands/daikin/([^/]+)/?$',
-		'index.php?pagename=$matches[1]',
-		'top'
-	);
-}
-add_action( 'init', 'sunnysideac_add_brands_daikin_product_rewrite', 15 );
-
-/**
  * Add root-level rewrite for /{city}/{service}/ → single service
  * Excludes known base URLs like 'services', 'category', 'tag', 'page', 'cities', 'brands', 'daikin'
  */
@@ -2161,8 +2149,194 @@ function sunnysideac_add_warranty_claim_form_nonce() {
 add_action( 'wp_footer', 'sunnysideac_add_warranty_claim_form_nonce' );
 
 /**
+ * Auto-categorize blog posts based on their content
+ * Assigns appropriate categories to uncategorized posts
+ */
+function sunnysideac_auto_categorize_posts() {
+	// Define category mapping based on keywords
+	$category_keywords = array(
+		'HVAC Maintenance' => array(
+			'maintenance', 'clean', 'filter', 'check', 'inspection', 'annual', 'service', 'upkeep', 'tune-up'
+		),
+		'Emergency Repairs' => array(
+			'emergency', 'repair', 'break', 'fail', 'broken', '24/7', 'urgent', 'immediate', 'fix', 'problem'
+		),
+		'Energy Efficiency' => array(
+			'energy', 'efficiency', 'save', 'cost', 'bill', 'efficient', 'lower', 'reduce', 'consumption', 'money'
+		),
+		'AC Installation' => array(
+			'installation', 'install', 'cost', 'price', 'guide', 'complete', 'replace'
+		),
+		'Troubleshooting' => array(
+			'why', 'how', 'common', 'causes', 'explained', 'signs', 'symptoms'
+		),
+		'Technical Updates' => array(
+			'rules', 'regulations', '2025', 'refrigerant', 'florida', 'compliance'
+		)
+	);
+
+	// Get uncategorized posts
+	$uncategorized_posts = get_posts(array(
+		'post_type' => 'post',
+		'post_status' => 'publish',
+		'numberposts' => -1,
+		'category' => get_category_by_slug('uncategorized')->term_id
+	));
+
+	$categorized_count = 0;
+
+	foreach ($uncategorized_posts as $post) {
+		$post_title = strtolower($post->post_title);
+		$post_content = strtolower(get_post_field('post_content', $post->ID));
+		$full_text = $post_title . ' ' . $post_content;
+
+		// Find matching categories
+		$matched_categories = array();
+		foreach ($category_keywords as $category => $keywords) {
+			foreach ($keywords as $keyword) {
+				if (strpos($full_text, $keyword) !== false) {
+					$matched_categories[] = $category;
+					break;
+				}
+			}
+		}
+
+		// Remove uncategorized and add matched categories
+		if (!empty($matched_categories)) {
+			wp_set_post_categories($post->ID, array(), false); // Clear existing categories
+
+			$category_ids = array();
+			foreach ($matched_categories as $category_name) {
+				$cat = get_term_by('name', $category_name, 'category');
+				if ($cat) {
+					$category_ids[] = $cat->term_id;
+				}
+			}
+
+			if (!empty($category_ids)) {
+				wp_set_post_categories($post->ID, $category_ids, false);
+				$categorized_count++;
+			}
+		}
+	}
+
+	return $categorized_count;
+}
+
+/**
+ * Get category icon for blog posts
+ * Returns inline SVG based on category
+ */
+function sunnysideac_get_category_icon($category_name) {
+	$icons = array(
+		'HVAC Maintenance' => '<svg class="h-4 w-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>',
+		'Emergency Repairs' => '<svg class="h-4 w-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path></svg>',
+		'Energy Efficiency' => '<svg class="h-4 w-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>',
+		'AC Installation' => '<svg class="h-4 w-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>',
+		'Troubleshooting' => '<svg class="h-4 w-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>',
+		'Technical Updates' => '<svg class="h-4 w-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>',
+	);
+
+	// Return the matching icon or default
+	if (isset($icons[$category_name])) {
+		return $icons[$category_name];
+	}
+
+	// Default icon (air conditioner)
+	return '<svg class="h-4 w-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>';
+}
+
+/**
+ * Extract FAQs from blog post content
+ * Extracts FAQ data structured for the faq-component.php
+ */
+function sunnysideac_extract_faqs_from_post($post_content) {
+	$faqs = array();
+
+	// Look for FAQ section with data-faq-q pattern
+	if (preg_match_all('/<h3[^>]*data-faq-q[^>]*>(.*?)<\/h3>(.*?)(?=<h3|<h2|<h4|$)/s', $post_content, $matches)) {
+		foreach ($matches[1] as $i => $question) {
+			$answer_text = $matches[2][$i];
+
+			// Clean up the question - remove all HTML tags
+			$question = trim(strip_tags($question));
+
+			// Clean up the answer - remove ALL HTML tags including <strong>, <em>, <p>, etc.
+			$answer = trim(strip_tags($answer_text));
+
+			// Replace multiple spaces, newlines, and HTML entities with single spaces
+			$answer = preg_replace('/\s+/', ' ', $answer);
+
+			// Convert HTML entities to characters if needed
+			$answer = html_entity_decode($answer, ENT_QUOTES, 'UTF-8');
+
+			// Remove leading/trailing whitespace
+			$answer = trim($answer);
+
+			// Remove any remaining HTML-like patterns
+			$answer = preg_replace('/&[a-zA-Z0-9#]+;/', '', $answer);
+
+			if (!empty($question) && !empty($answer)) {
+				$faqs[] = array(
+					'question' => $question,
+					'answer' => $answer,
+					'id' => 'faq-' . ($i + 1)
+				);
+			}
+		}
+	}
+
+	return $faqs;
+}
+
+/**
+ * Get FAQs from multiple posts
+ * Returns structured FAQ data from recent blog posts
+ */
+function sunnysideac_get_recent_faqs($limit = 6) {
+	$all_faqs = array();
+
+	$recent_posts = get_posts(array(
+		'post_type' => 'post',
+		'post_status' => 'publish',
+		'numberposts' => 10, // Check more posts to find FAQs
+		'orderby' => 'date',
+		'order' => 'DESC'
+	));
+
+	foreach ($recent_posts as $post) {
+		$post_faqs = sunnysideac_extract_faqs_from_post($post->post_content);
+		foreach ($post_faqs as $faq) {
+			$all_faqs[] = array(
+				'id' => $faq['id'] . '-post-' . $post->ID,
+				'question' => $faq['question'],
+				'answer' => $faq['answer'],
+				'isOpen' => false,
+				'category' => 'General HVAC',
+				'postTitle' => $post->post_title,
+				'postUrl' => get_permalink($post->ID),
+				'postDate' => get_the_date('', $post),
+				'postCategory' => ''
+			);
+
+			// Get the first category for context
+			$categories = get_the_category($post->ID);
+			if (!empty($categories)) {
+				$all_faqs[count($all_faqs) - 1]['postCategory'] = $categories[0]->name;
+			}
+		}
+
+		if (count($all_faqs) >= $limit) {
+			break;
+		}
+	}
+
+	return array_slice($all_faqs, 0, $limit);
+}
+
+/**
  * Clean SEO bot hashes from post content
- * Removes unwanted SEO bot generated hashes like sbb-itb-dd99a15 from blog posts
+ * Removes unwanted SEO bot generated hashes like sbb-itb-dd99a15, sbb-cls from blog posts
  */
 function sunnysideac_clean_seo_bot_hashes( $content ) {
 	if ( ! $content ) {
@@ -2172,9 +2346,14 @@ function sunnysideac_clean_seo_bot_hashes( $content ) {
 	// Remove SEO bot hash patterns
 	$patterns = array(
 		'/<h6[^>]*>sbb-itb-[a-z0-9]*<\/h6>/i',  // Remove sbb-itb-xxxxx hash elements
+		'/<h6[^>]*>sbb-cls<\/h6>/i',            // Remove sbb-cls hash elements
 		'/<h6[^>]*>sbb-[a-z0-9-]*<\/h6>/i',      // Remove other sbb- hash elements
 		'/<!-- sbb-[a-z0-9-]* -->/i',            // Remove sbb HTML comments
 		'/\[sbb-[a-z0-9-]*\]/i',                 // Remove sbb shortcodes
+		'/\bsbb-itb-[a-z0-9]*\b/',               // Remove standalone sbb-itb-xxxxx hashes
+		'/\bsbb-cls\b/',                         // Remove standalone sbb-cls hashes
+		'/class="[^"]*\bsbb-cls[^"]*"/i',        // Remove sbb-cls from class attributes
+		'/class="[^"]*\bsb[^"]*"/i',             // Remove other sb class attributes
 	);
 
 	$content = preg_replace( $patterns, '', $content );
@@ -2189,42 +2368,76 @@ add_filter( 'the_content', 'sunnysideac_clean_seo_bot_hashes', 10 );
 add_filter( 'the_excerpt', 'sunnysideac_clean_seo_bot_hashes', 10 );
 
 /**
- * Bulk clean existing posts from SEO bot hashes
- * Run this function once to clean all existing blog posts
+ * Remove competitor links and mentions from post content
+ * Helps prevent traffic leakage to competitors and maintains brand focus
  */
-function sunnysideac_bulk_clean_seo_hashes() {
-	$args = array(
-		'post_type'      => 'post',
-		'post_status'    => 'publish',
-		'posts_per_page' => -1, // Get all posts
-	);
-
-	$posts_query = new WP_Query( $args );
-	$cleaned_count = 0;
-
-	if ( $posts_query->have_posts() ) {
-		while ( $posts_query->have_posts() ) {
-			$posts_query->the_post();
-			$post_id    = get_the_ID();
-			$post_content = get_the_content();
-
-			// Apply the same cleanup function
-			$cleaned_content = sunnysideac_clean_seo_bot_hashes( $post_content );
-
-			// Only update if content was actually changed
-			if ( $cleaned_content !== $post_content ) {
-				wp_update_post(
-					array(
-						'ID'           => $post_id,
-						'post_content' => $cleaned_content,
-					)
-				);
-				$cleaned_count++;
-			}
-		}
-		wp_reset_postdata();
+function sunnysideac_remove_competitor_content($content) {
+	if (empty($content)) {
+		return $content;
 	}
 
-	return $cleaned_count;
+	// List of competitor domains to remove links from
+	$competitor_domains = array(
+		'mountainbreezehvac.com',
+		'veteransac.com',
+		'aircomfortky.com',
+		'mccarthyair.com',
+		'brodypennell.com',
+		'advancedairsystems.com'
+	);
+
+	// Remove links to competitor websites
+	foreach ($competitor_domains as $domain) {
+		// Pattern to match links with competitor domains
+		$pattern = '/<a[^>]*href=["\'][^"\']*' . preg_quote($domain) . '[^"\']*["\'][^>]*>.*?<\/a>/i';
+		$content = preg_replace($pattern, '', $content);
+	}
+
+	// Remove competitor brand mentions from headings and content
+	$competitor_brands = array(
+		'Mountain Breeze HVAC',
+		'Veterans AC & Heat',
+		'Air Comfort of Kentucky',
+		'McCarthy Air Conditioning',
+		'Brody Pennell',
+		'Advanced Air Systems'
+	);
+
+	foreach ($competitor_brands as $brand) {
+		// Remove brand mentions from headings and titles
+		$content = preg_replace('/\|?\s*' . preg_quote($brand) . '\s*\|?/i', '', $content);
+		// Only replace standalone brand mentions that are not in quotes
+		$content = preg_replace('/\b' . preg_quote($brand) . '\b(?!.*?["\'])/i', 'SunnySide AC', $content);
+	}
+
+	return $content;
 }
+
+// Apply competitor content removal to post content and excerpts
+add_filter('the_content', 'sunnysideac_remove_competitor_content', 15);
+add_filter('the_excerpt', 'sunnysideac_remove_competitor_content', 15);
+
+/**
+ * Clean up post titles with competitor mentions
+ */
+function sunnysideac_clean_competitor_titles($title) {
+	// Remove competitor brand mentions from post titles
+	$competitor_brands = array(
+		'Mountain Breeze HVAC',
+		'Veterans AC & Heat',
+		'Air Comfort of Kentucky',
+		'McCarthy Air Conditioning',
+		'Brody Pennell',
+		'Advanced Air Systems'
+	);
+
+	foreach ($competitor_brands as $brand) {
+		$title = preg_replace('/\|?\s*' . preg_quote($brand) . '\s*\|?/i', '', $title);
+		$title = preg_replace('/\b' . preg_quote($brand) . '\b/i', 'SunnySide AC', $title);
+	}
+
+	return trim($title);
+}
+
+add_filter('the_title', 'sunnysideac_clean_competitor_titles', 15);
 
