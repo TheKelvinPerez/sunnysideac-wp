@@ -6,7 +6,6 @@
 !wp-config-template.php
 !robots-template.txt
 !SECURITY-SETUP.md
-!.deployment/
 !.gitignore
 
 # Within wp-content, ignore everything
