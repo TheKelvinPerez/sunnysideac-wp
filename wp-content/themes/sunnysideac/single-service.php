@@ -81,7 +81,7 @@ if ( have_posts() ) :
 						{
 							"@type": "ListItem",
 							"position": 3,
-							"name": "<?php echo esc_js( $service_title ); ?>",
+							"name": <?php echo wp_json_encode( $service_title, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
 							"item": "<?php echo esc_url( $canonical_url ); ?>"
 						}
 					]
@@ -89,7 +89,8 @@ if ( have_posts() ) :
 				{
 					"@type": "LocalBusiness",
 					"name": "Sunnyside AC",
-					"telephone": "<?php echo esc_js( SUNNYSIDE_PHONE_DISPLAY ); ?>",
+					"image": "<?php echo esc_url( get_template_directory_uri() . '/assets/images/social/social-preview-hero.jpg' ); ?>",
+					"telephone": "<?php echo esc_js( SUNNYSIDE_PHONE_SCHEMA ); ?>",
 					"address": {
 						"@type": "PostalAddress",
 						"streetAddress": "6609 Emerald Lake Dr",
@@ -105,50 +106,53 @@ if ( have_posts() ) :
 				},
 				{
 					"@type": "Service",
-					"serviceType": "<?php echo esc_js( $service_title ); ?>",
+					"serviceType": <?php echo wp_json_encode( $service_title, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
 					"provider": {
 						"@type": "LocalBusiness",
 						"name": "Sunnyside AC",
+						"image": "<?php echo esc_url( get_template_directory_uri() . '/assets/images/social/social-preview-hero.jpg' ); ?>",
+						"telephone": "<?php echo esc_js( SUNNYSIDE_PHONE_SCHEMA ); ?>",
+						"priceRange": "$$",
 						"address": {
 							"@type": "PostalAddress",
-							"streetAddress": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STREET ); ?>",
-							"addressLocality": "<?php echo esc_js( SUNNYSIDE_ADDRESS_CITY ); ?>",
-							"addressRegion": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STATE ); ?>",
-							"postalCode": "<?php echo esc_js( SUNNYSIDE_ADDRESS_ZIP ); ?>",
+							"streetAddress": <?php echo wp_json_encode( SUNNYSIDE_ADDRESS_STREET, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
+							"addressLocality": <?php echo wp_json_encode( SUNNYSIDE_ADDRESS_CITY, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
+							"addressRegion": <?php echo wp_json_encode( SUNNYSIDE_ADDRESS_STATE, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
+							"postalCode": <?php echo wp_json_encode( SUNNYSIDE_ADDRESS_ZIP, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
 							"addressCountry": "US"
 						}
 					}
-					<?php if ( $service_faqs ) : ?>
-					,
-					{
-						"@type": "FAQPage",
-						"mainEntity": [
-							<?php foreach ( $service_faqs as $index => $faq ) : ?>
-							{
-								"@type": "Question",
-								"name": "<?php echo esc_js( $faq['question'] ); ?>",
-								"acceptedAnswer": {
-									"@type": "Answer",
-									"text": "<?php echo esc_js( wp_strip_all_tags( $faq['answer'] ) ); ?>"
-								}
-							}<?php echo $index < count( $service_faqs ) - 1 ? ',' : ''; ?>
-							<?php endforeach; ?>
-						]
-					}
-					<?php endif; ?>
 				}
+				<?php if ( $service_faqs ) : ?>
+				,
+				{
+					"@type": "FAQPage",
+					"mainEntity": [
+						<?php foreach ( $service_faqs as $index => $faq ) : ?>
+						{
+							"@type": "Question",
+							"name": <?php echo wp_json_encode( $faq['question'], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
+							"acceptedAnswer": {
+								"@type": "Answer",
+								"text": <?php echo wp_json_encode( wp_strip_all_tags( $faq['answer'] ), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>
+							}
+						}<?php echo $index < count( $service_faqs ) - 1 ? ',' : ''; ?>
+						<?php endforeach; ?>
+					]
+				}
+				<?php endif; ?>
 				<?php if ( $service_process ) : ?>
 				,
 				{
 					"@type": "HowTo",
-					"name": "Our <?php echo esc_js( $service_title ); ?> Process",
+					"name": <?php echo wp_json_encode( 'Our ' . $service_title . ' Process', JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
 					"step": [
 						<?php foreach ( $service_process as $index => $step ) : ?>
 						{
 							"@type": "HowToStep",
 							"position": <?php echo $index + 1; ?>,
-							"name": "<?php echo esc_js( $step['title'] ); ?>",
-							"text": "<?php echo esc_js( $step['description'] ); ?>"
+							"name": <?php echo wp_json_encode( $step['title'], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
+							"text": <?php echo wp_json_encode( $step['description'], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>
 						}<?php echo $index < count( $service_process ) - 1 ? ',' : ''; ?>
 						<?php endforeach; ?>
 					]
