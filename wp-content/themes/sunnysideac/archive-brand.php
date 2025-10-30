@@ -312,23 +312,23 @@ get_header();
 			$archive_brands_faqs = array(
 				array(
 					'question' => 'What HVAC brands does Sunnyside AC service?',
-					'answer'   => 'Sunnyside AC services all major HVAC brands including Daikin, Trane, Lennox, Carrier, Mitsubishi, Goodman, Rheem, York, Bryant, Ruud, Amana, American Standard, and many more. Our certified technicians have extensive experience with both residential and commercial HVAC systems across all manufacturers.',
+					"answer"   => "Sunnyside AC services all major HVAC brands including Daikin, Trane, Lennox, Carrier, Mitsubishi, Goodman, Rheem, York, Bryant, Ruud, Amana, American Standard, and many more. Our certified technicians have extensive experience with both residential and commercial HVAC systems across all manufacturers.",
 				),
 				array(
 					'question' => 'Do you have certified technicians for specific brands?',
-					'answer'   => 'Yes! Our team includes factory-trained and certified technicians for major brands like Daikin, Trane, Carrier, and Lennox. This specialized training ensures we can properly diagnose, repair, and maintain your specific HVAC system according to manufacturer specifications.',
+					"answer"   => "Yes! Our team includes factory-trained and certified technicians for major brands like Daikin, Trane, Carrier, and Lennox. This specialized training ensures we can properly diagnose, repair, and maintain your specific HVAC system according to manufacturer specifications.",
 				),
 				array(
 					'question' => 'Can you service older or discontinued HVAC brands?',
-					'answer'   => 'Absolutely. Our experienced technicians can service older and discontinued HVAC brands. While parts may be harder to source for some older models, we have access to extensive parts networks and can often find alternatives or recommend cost-effective replacement options when needed.',
+					"answer"   => "Absolutely. Our experienced technicians can service older and discontinued HVAC brands. While parts may be harder to source for some older models, we have access to extensive parts networks and can often find alternatives or recommend cost-effective replacement options when needed.",
 				),
 				array(
 					'question' => 'What brands do you recommend for new AC installations?',
-					'answer'   => 'We recommend several top-tier brands based on your specific needs and budget. Daikin, Trane, Lennox, and Carrier are excellent choices for reliability and efficiency. During your consultation, we\'ll discuss your requirements, budget, and preferences to help you select the best system for your home or business.',
+					"answer"   => "We recommend several top-tier brands based on your specific needs and budget. Daikin, Trane, Lennox, and Carrier are excellent choices for reliability and efficiency. During your consultation, we'll discuss your requirements, budget, and preferences to help you select the best system for your home or business.",
 				),
 				array(
 					'question' => 'Do you offer warranty service for different brands?',
-					'answer'   => 'Yes, we handle warranty service for all major HVAC brands. If your system is still under manufacturer warranty, we\'ll work directly with the manufacturer to ensure your repairs are covered. We also offer our own comprehensive service warranties on all installations and repairs we perform.',
+					"answer"   => "Yes, we handle warranty service for all major HVAC brands. If your system is still under manufacturer warranty, we'll work directly with the manufacturer to ensure your repairs are covered. We also offer our own comprehensive service warranties on all installations and repairs we perform.",
 				),
 			);
 
