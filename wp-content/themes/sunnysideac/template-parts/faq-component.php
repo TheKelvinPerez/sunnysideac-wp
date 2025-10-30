@@ -47,8 +47,10 @@ $icons = array(
 	'faq_chevron' => sunnysideac_asset_url( 'assets/images/home-page/faq-chevron-down-circle.svg' ),
 );
 
-// Generate JSON-LD FAQ Schema
-if ( $show_schema ) {
+// Generate JSON-LD FAQ Schema (prevent duplicates)
+if ( $show_schema && ! defined( 'SUNNYSIDE_FAQ_SCHEMA_GENERATED' ) ) {
+	define( 'SUNNYSIDE_FAQ_SCHEMA_GENERATED', true );
+
 	$faq_schema_items = array();
 	foreach ( $faq_data as $faq ) {
 		$faq_schema_items[] = array(
