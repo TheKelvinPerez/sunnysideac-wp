@@ -150,6 +150,9 @@ if ( have_posts() ) :
 								"provider": {
 									"@type": "LocalBusiness",
 									"name": "Sunnyside AC",
+									"image": "' . esc_url( has_post_thumbnail( $city_id ) ? get_the_post_thumbnail_url( $city_id, 'large' ) : sunnysideac_asset_url( 'assets/images/social/social-preview-hero.jpg' ) ) . '",
+									"telephone": "' . esc_js( SUNNYSIDE_PHONE_SCHEMA ) . '",
+									"priceRange": "$$",
 									"address": {
 										"@type": "PostalAddress",
 										"streetAddress": "' . esc_js( SUNNYSIDE_ADDRESS_STREET ) . '",

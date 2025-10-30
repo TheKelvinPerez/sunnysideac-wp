@@ -1362,8 +1362,9 @@ function sunnysideac_get_localbusiness_schema() {
 		'alternateName'             => 'Sunnyside AC',
 		'description'               => 'Professional HVAC services including AC repair, installation, and maintenance. Family-owned and operated since 2014, serving South Florida with 24/7 emergency service.',
 		'url'                       => home_url( '/' ),
-		'telephone'                 => SUNNYSIDE_PHONE_DISPLAY,
+		'telephone'                 => SUNNYSIDE_PHONE_SCHEMA,
 		'email'                     => SUNNYSIDE_EMAIL_ADDRESS,
+		'image'                     => get_template_directory_uri() . '/assets/images/social/social-preview-hero.jpg',
 		'address'                   => array(
 			'@type'           => 'PostalAddress',
 			'streetAddress'   => SUNNYSIDE_ADDRESS_STREET,
@@ -1455,7 +1456,7 @@ function sunnysideac_get_organization_schema() {
 		'description'   => 'Family-owned and operated HVAC company serving South Florida since 2014. Specializing in AC repair, installation, and maintenance with 24/7 emergency service.',
 		'contactPoint'  => array(
 			'@type'             => 'ContactPoint',
-			'telephone'         => SUNNYSIDE_PHONE_DISPLAY,
+			'telephone'         => SUNNYSIDE_PHONE_SCHEMA,
 			'contactType'       => 'customer service',
 			'areaServed'        => 'South Florida',
 			'availableLanguage' => array( 'English', 'Spanish' ),
