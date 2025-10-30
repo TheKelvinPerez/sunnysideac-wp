@@ -67,7 +67,7 @@ if ( $show_schema && ! defined( 'SUNNYSIDE_FAQ_SCHEMA_GENERATED' ) ) {
 		'@type' => 'FAQPage',
 		'mainEntity' => $faq_schema_items
 	);
-	echo '<script type="application/ld+json">' . wp_json_encode( $faq_schema_data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . '</script>' . "\n";
+	echo '<script type="application/ld+json">' . wp_json_encode( $faq_schema_data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_APOS ) . '</script>' . "\n";
 }
 ?>
 
