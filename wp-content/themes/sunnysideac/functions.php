@@ -337,15 +337,24 @@ function sunnysideac_enqueue_assets() {
 			if ( isset( $manifest['src/main.js'] ) ) {
 				$main = $manifest['src/main.js'];
 
-				// Enqueue CSS (simple)
+				// Enqueue CSS with preload for non-blocking
 				if ( isset( $main['css'] ) ) {
 					foreach ( $main['css'] as $css_file ) {
-						wp_enqueue_style(
+						$css_url = get_template_directory_uri() . '/dist/' . $css_file;
+
+						// Register the style
+						wp_register_style(
 							'sunnysideac-main',
-							get_template_directory_uri() . '/dist/' . $css_file,
+							$css_url,
 							array(),
 							null
 						);
+
+						// Add preload link for non-blocking CSS loading
+						add_action( 'wp_head', function() use ( $css_url ) {
+							echo '<link rel="preload" href="' . esc_url( $css_url ) . '" as="style" fetchpriority="high" onload="this.onload=null;this.rel=\'stylesheet\'">' . "\n";
+							echo '<noscript><link rel="stylesheet" href="' . esc_url( $css_url ) . '"></noscript>' . "\n";
+						}, 5 );
 					}
 				}
 
