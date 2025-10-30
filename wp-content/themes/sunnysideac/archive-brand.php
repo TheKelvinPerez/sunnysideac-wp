@@ -324,11 +324,11 @@ get_header();
 				),
 				array(
 					'question' => 'What brands do you recommend for new AC installations?',
-					'answer'   => 'We recommend several top-tier brands based on your specific needs and budget. Daikin, Trane, Lennox, and Carrier are excellent choices for reliability and efficiency. During your consultation, we'll discuss your requirements, budget, and preferences to help you select the best system for your home or business.',
+					'answer'   => 'We recommend several top-tier brands based on your specific needs and budget. Daikin, Trane, Lennox, and Carrier are excellent choices for reliability and efficiency. During your consultation, we\'ll discuss your requirements, budget, and preferences to help you select the best system for your home or business.',
 				),
 				array(
 					'question' => 'Do you offer warranty service for different brands?',
-					'answer'   => 'Yes, we handle warranty service for all major HVAC brands. If your system is still under manufacturer warranty, we'll work directly with the manufacturer to ensure your repairs are covered. We also offer our own comprehensive service warranties on all installations and repairs we perform.',
+					'answer'   => 'Yes, we handle warranty service for all major HVAC brands. If your system is still under manufacturer warranty, we\'ll work directly with the manufacturer to ensure your repairs are covered. We also offer our own comprehensive service warranties on all installations and repairs we perform.',
 				),
 			);
 

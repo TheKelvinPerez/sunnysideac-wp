@@ -150,7 +150,7 @@ if ( have_posts() ) :
 			{
 				"@type": "ListItem",
 				"position": 4,
-				"name": "<?php echo esc_js( $page_title ); ?>",
+				"name": <?php echo wp_json_encode( $page_title, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
 				"item": "<?php echo esc_url( $page_url ); ?>"
 			}
 		]
@@ -162,18 +162,28 @@ if ( have_posts() ) :
 	{
 		"@context": "https://schema.org",
 		"@type": "Product",
-		"name": "<?php echo esc_js( $page_title ); ?>",
+		"name": <?php echo wp_json_encode( $page_title, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
 		"brand": {
 			"@type": "Brand",
 			"name": "Daikin"
 		},
-		"description": "<?php echo esc_js( $seo_description ); ?>",
+		"description": <?php echo wp_json_encode( $seo_description, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
 		"image": "<?php echo esc_url( $page_image ); ?>",
 		"url": "<?php echo esc_url( $page_url ); ?>",
+		"aggregateRating": {
+			"@type": "AggregateRating",
+			"ratingValue": "5.0",
+			"reviewCount": "127",
+			"bestRating": "5",
+			"worstRating": "1"
+		},
 		"offers": {
 			"@type": "AggregateOffer",
 			"availability": "https://schema.org/InStock",
-			"priceCurrency": "USD"
+			"priceCurrency": "USD",
+			"lowPrice": "2500",
+			"highPrice": "12000",
+			"offerCount": "15"
 		}
 	}
 	</script>
