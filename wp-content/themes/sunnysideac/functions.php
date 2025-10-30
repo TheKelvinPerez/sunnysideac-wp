@@ -1394,7 +1394,6 @@ function sunnysideac_get_localbusiness_schema() {
 		'foundingDate'              => SUNNYSIDE_FOUNDING_DATE . '-01-01',
 		'priceRange'                => '$$',
 		'paymentAccepted'           => array( 'Cash', 'Credit Card', 'Check' ),
-		'languagesSpoken'           => array( 'English', 'Spanish' ),
 	);
 
 	// Add opening hours
@@ -1410,9 +1409,8 @@ function sunnysideac_get_localbusiness_schema() {
 	// Add service areas
 	foreach ( SUNNYSIDE_SERVICE_AREAS as $area ) {
 		$schema['areaServed'][] = array(
-			'@type'         => 'City',
-			'name'          => $area,
-			'addressRegion' => 'FL',
+			'@type' => 'City',
+			'name'  => $area,
 		);
 	}
 
@@ -1438,7 +1436,7 @@ function sunnysideac_get_localbusiness_schema() {
 		);
 	}
 
-	return json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT );
+	return json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_HEX_APOS );
 }
 
 /**
@@ -1489,7 +1487,7 @@ function sunnysideac_get_organization_schema() {
 		);
 	}
 
-	return json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT );
+	return json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_HEX_APOS );
 }
 
 /**
