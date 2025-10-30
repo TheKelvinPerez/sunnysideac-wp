@@ -158,56 +158,6 @@ get_header();
 }
 </script>
 
-<!-- JSON-LD Structured Data: FAQPage -->
-<script type="application/ld+json">
-{
-	"@context": "https://schema.org",
-	"@type": "FAQPage",
-	"mainEntity": [
-		{
-			"@type": "Question",
-			"name": "What HVAC brands does Sunnyside AC service?",
-			"acceptedAnswer": {
-				"@type": "Answer",
-				"text": "Sunnyside AC services all major HVAC brands including Daikin, Trane, Lennox, Carrier, Mitsubishi, Goodman, Rheem, York, Bryant, Ruud, Amana, American Standard, and many more. Our certified technicians have extensive experience with both residential and commercial HVAC systems across all manufacturers."
-			}
-		},
-		{
-			"@type": "Question",
-			"name": "Do you have certified technicians for specific brands?",
-			"acceptedAnswer": {
-				"@type": "Answer",
-				"text": "Yes! Our team includes factory-trained and certified technicians for major brands like Daikin, Trane, Carrier, and Lennox. This specialized training ensures we can properly diagnose, repair, and maintain your specific HVAC system according to manufacturer specifications."
-			}
-		},
-		{
-			"@type": "Question",
-			"name": "Can you service older or discontinued HVAC brands?",
-			"acceptedAnswer": {
-				"@type": "Answer",
-				"text": "Absolutely. Our experienced technicians can service older and discontinued HVAC brands. While parts may be harder to source for some older models, we have access to extensive parts networks and can often find alternatives or recommend cost-effective replacement options when needed."
-			}
-		},
-		{
-			"@type": "Question",
-			"name": "What brands do you recommend for new AC installations?",
-			"acceptedAnswer": {
-				"@type": "Answer",
-				"text": "We recommend several top-tier brands based on your specific needs and budget. Daikin, Trane, Lennox, and Carrier are excellent choices for reliability and efficiency. During your consultation, we'll discuss your requirements, budget, and preferences to help you select the best system for your home or business."
-			}
-		},
-		{
-			"@type": "Question",
-			"name": "Do you offer warranty service for different brands?",
-			"acceptedAnswer": {
-				"@type": "Answer",
-				"text": "Yes, we handle warranty service for all major HVAC brands. If your system is still under manufacturer warranty, we'll work directly with the manufacturer to ensure your repairs are covered. We also offer our own comprehensive service warranties on all installations and repairs we perform."
-			}
-		}
-	]
-}
-</script>
-
 <main class="min-h-screen bg-gray-50" role="main">
 	<!-- Container matching front-page style -->
 	<div class="lg:px-0 max-w-7xl mx-auto">
@@ -374,11 +324,11 @@ get_header();
 				),
 				array(
 					'question' => 'What brands do you recommend for new AC installations?',
-					'answer'   => 'We recommend several top-tier brands based on your specific needs and budget. Daikin, Trane, Lennox, and Carrier are excellent choices for reliability and efficiency. During your consultation, we\'ll discuss your requirements, budget, and preferences to help you select the best system for your home or business.',
+					'answer'   => 'We recommend several top-tier brands based on your specific needs and budget. Daikin, Trane, Lennox, and Carrier are excellent choices for reliability and efficiency. During your consultation, we'll discuss your requirements, budget, and preferences to help you select the best system for your home or business.',
 				),
 				array(
 					'question' => 'Do you offer warranty service for different brands?',
-					'answer'   => 'Yes, we handle warranty service for all major HVAC brands. If your system is still under manufacturer warranty, we\'ll work directly with the manufacturer to ensure your repairs are covered. We also offer our own comprehensive service warranties on all installations and repairs we perform.',
+					'answer'   => 'Yes, we handle warranty service for all major HVAC brands. If your system is still under manufacturer warranty, we'll work directly with the manufacturer to ensure your repairs are covered. We also offer our own comprehensive service warranties on all installations and repairs we perform.',
 				),
 			);
 
@@ -391,7 +341,7 @@ get_header();
 					'mobile_title' => 'FAQ',
 					'subheading'   => 'Common Questions About HVAC Brands We Service',
 					'description'  => 'Get answers to frequently asked questions about the HVAC brands we service and repair.',
-					'show_schema'  => false, // Schema already added in page head
+					'show_schema'  => true,
 					'section_id'   => 'brands-archive-faq-section',
 				)
 			);
