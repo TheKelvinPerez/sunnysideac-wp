@@ -115,14 +115,14 @@ if ( have_posts() ) :
 					{
 						"@type": "ListItem",
 						"position": 2,
-						"name": "<?php echo esc_js( $city_name ); ?>",
+						"name": <?php echo wp_json_encode( $city_name, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
 						"item": "<?php echo esc_url( home_url( '/' . $city_slug . '/' ) ); ?>"
 					}
 					<?php endif; ?>,
 					{
 						"@type": "ListItem",
 						"position": <?php echo $city_post ? '3' : '2'; ?>,
-						"name": "<?php echo esc_js( $service_title ); ?>",
+						"name": <?php echo wp_json_encode( $service_title, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
 						"item": "<?php echo esc_url( $canonical_url ); ?>"
 					}
 				]
@@ -146,16 +146,16 @@ if ( have_posts() ) :
 			},
 			{
 				"@type": "Service",
-				"serviceType": "<?php echo esc_js( $service_title ); ?>",
+				"serviceType": <?php echo wp_json_encode( $service_title, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
 				"provider": {
 					"@type": "LocalBusiness",
 					"name": "Sunnyside AC",
 					"address": {
 						"@type": "PostalAddress",
-						"streetAddress": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STREET ); ?>",
-						"addressLocality": "<?php echo esc_js( SUNNYSIDE_ADDRESS_CITY ); ?>",
-						"addressRegion": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STATE ); ?>",
-						"postalCode": "<?php echo esc_js( SUNNYSIDE_ADDRESS_ZIP ); ?>",
+						"streetAddress": <?php echo wp_json_encode( SUNNYSIDE_ADDRESS_STREET, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
+						"addressLocality": <?php echo wp_json_encode( SUNNYSIDE_ADDRESS_CITY, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
+						"addressRegion": <?php echo wp_json_encode( SUNNYSIDE_ADDRESS_STATE, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
+						"postalCode": <?php echo wp_json_encode( SUNNYSIDE_ADDRESS_ZIP, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
 						"addressCountry": "US"
 					}
 				}
@@ -165,7 +165,7 @@ if ( have_posts() ) :
 					,
 				"areaServed": {
 					"@type": "City",
-					"name": "<?php echo esc_js( $city_name ); ?>"
+					"name": <?php echo wp_json_encode( $city_name, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>
 				}
 				<?php endif; ?>
 			}
@@ -179,10 +179,10 @@ if ( have_posts() ) :
 					<?php foreach ( $all_faqs as $index => $faq ) : ?>
 					{
 						"@type": "Question",
-						"name": "<?php echo esc_js( $faq['question'] ); ?>",
+						"name": <?php echo wp_json_encode( $faq['question'], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
 						"acceptedAnswer": {
 							"@type": "Answer",
-							"text": "<?php echo esc_js( wp_strip_all_tags( $faq['answer'] ) ); ?>"
+							"text": <?php echo wp_json_encode( wp_strip_all_tags( $faq['answer'] ), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>
 						}
 					}<?php echo $index < count( $all_faqs ) - 1 ? ',' : ''; ?>
 					<?php endforeach; ?>
@@ -195,14 +195,14 @@ if ( have_posts() ) :
 				,
 			{
 				"@type": "HowTo",
-				"name": "Our <?php echo esc_js( $service_title ); ?> Process",
+				"name": <?php echo wp_json_encode( 'Our ' . $service_title . ' Process', JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
 				"step": [
 					<?php foreach ( $service_process as $index => $step ) : ?>
 					{
 						"@type": "HowToStep",
 						"position": <?php echo $index + 1; ?>,
-						"name": "<?php echo esc_js( $step['title'] ); ?>",
-						"text": "<?php echo esc_js( $step['description'] ); ?>"
+						"name": <?php echo wp_json_encode( $step['title'], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
+						"text": <?php echo wp_json_encode( $step['description'], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>
 					}<?php echo $index < count( $service_process ) - 1 ? ',' : ''; ?>
 					<?php endforeach; ?>
 				]
@@ -215,14 +215,14 @@ if ( have_posts() ) :
 					?>
 			,{
 				"@type": "VideoObject",
-				"name": "<?php echo ! empty( $city_video_title ) ? esc_js( $city_video_title ) : esc_js( $service_title . ' in ' . $city_name . ', Florida' ); ?>",
-				"description": "<?php echo ! empty( $city_video_description ) ? esc_js( $city_video_description ) : esc_js( 'Video about ' . $service_title . ' services in ' . $city_name ); ?>",
+				"name": <?php echo wp_json_encode( ! empty( $city_video_title ) ? $city_video_title : $service_title . ' in ' . $city_name . ', Florida', JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
+				"description": <?php echo wp_json_encode( ! empty( $city_video_description ) ? $city_video_description : 'Video about ' . $service_title . ' services in ' . $city_name, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
 				"thumbnailUrl": "<?php echo ! empty( $city_video_thumbnail ) ? esc_url( $city_video_thumbnail ) : esc_url( $video_data['thumbnail_url'] ); ?>",
 				"uploadDate": "<?php echo esc_attr( get_the_date( 'c', $city_post ) ); ?>",
 				"contentUrl": "<?php echo esc_url( $video_data['watch_url'] ); ?>",
 				"embedUrl": "<?php echo esc_url( $video_data['embed_url'] ); ?>"
 					<?php if ( ! empty( $city_video_duration ) ) : ?>
-				,"duration": "<?php echo esc_js( $city_video_duration ); ?>"
+				,"duration": <?php echo wp_json_encode( $city_video_duration ); ?>
 				<?php endif; ?>
 			}
 				<?php endif; ?>
