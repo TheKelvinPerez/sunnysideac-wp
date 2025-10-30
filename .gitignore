@@ -8,6 +8,12 @@
 !SECURITY-SETUP.md
 !.gitignore
 
+# Critical build and deployment files (never ignore)
+!build.sh
+!.gitattributes
+!.deployment/
+!scripts/
+
 # Within wp-content, ignore everything
 wp-content/*
 
