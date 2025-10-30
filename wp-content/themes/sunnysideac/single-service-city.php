@@ -130,7 +130,8 @@ if ( have_posts() ) :
 			{
 				"@type": "LocalBusiness",
 				"name": "Sunnyside AC",
-				"telephone": "<?php echo esc_js( SUNNYSIDE_PHONE_DISPLAY ); ?>",
+				"image": "<?php echo esc_url( get_template_directory_uri() . '/assets/images/social/social-preview-hero.jpg' ); ?>",
+				"telephone": "<?php echo esc_js( SUNNYSIDE_PHONE_SCHEMA ); ?>",
 				"address": {
 					"@type": "PostalAddress",
 					"streetAddress": "6609 Emerald Lake Dr",
@@ -150,6 +151,9 @@ if ( have_posts() ) :
 				"provider": {
 					"@type": "LocalBusiness",
 					"name": "Sunnyside AC",
+					"image": "<?php echo esc_url( get_template_directory_uri() . '/assets/images/social/social-preview-hero.jpg' ); ?>",
+					"telephone": "<?php echo esc_js( SUNNYSIDE_PHONE_SCHEMA ); ?>",
+					"priceRange": "$$",
 					"address": {
 						"@type": "PostalAddress",
 						"streetAddress": <?php echo wp_json_encode( SUNNYSIDE_ADDRESS_STREET, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
