@@ -436,7 +436,7 @@ if ( have_posts() ) :
 						),
 						array(
 							'question' => 'How often should ' . $city_title . ' residents service their AC units?',
-							'answer'   => 'Due to South Florida's hot and humid climate, we recommend ' . $city_title . ' residents service their AC units at least twice per year - once before cooling season in spring and once in fall. Regular maintenance helps prevent breakdowns during peak summer heat and extends your system's lifespan.',
+							"answer"   => "Due to South Florida's hot and humid climate, we recommend " . $city_title . " residents service their AC units at least twice per year - once before cooling season in spring and once in fall. Regular maintenance helps prevent breakdowns during peak summer heat and extends your system's lifespan.",
 						),
 						array(
 							'question' => 'What HVAC services do you offer in ' . $city_title . '?',
