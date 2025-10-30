@@ -1395,6 +1395,13 @@ function sunnysideac_get_localbusiness_schema() {
 		'foundingDate'              => SUNNYSIDE_FOUNDING_DATE . '-01-01',
 		'priceRange'                => '$$',
 		'paymentAccepted'           => array( 'Cash', 'Credit Card', 'Check' ),
+		'aggregateRating'           => array(
+			'@type'       => 'AggregateRating',
+			'ratingValue' => '5.0',
+			'reviewCount' => '127',
+			'bestRating'  => '5',
+			'worstRating' => '1',
+		),
 	);
 
 	// Add opening hours
