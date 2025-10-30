@@ -172,7 +172,15 @@ if ( have_posts() ) :
 				"serviceType": "HVAC Maintenance Plan",
 				"provider": {
 					"@type": "LocalBusiness",
-					"name": "Sunnyside AC"
+					"name": "Sunnyside AC",
+					"address": {
+						"@type": "PostalAddress",
+						"streetAddress": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STREET ); ?>",
+						"addressLocality": "<?php echo esc_js( SUNNYSIDE_ADDRESS_CITY ); ?>",
+						"addressRegion": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STATE ); ?>",
+						"postalCode": "<?php echo esc_js( SUNNYSIDE_ADDRESS_ZIP ); ?>",
+						"addressCountry": "US"
+					}
 				},
 				"description": "Comprehensive HVAC maintenance plans including regular inspections, priority service, and extended equipment protection."
 			}

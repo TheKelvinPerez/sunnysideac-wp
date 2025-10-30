@@ -253,7 +253,15 @@ if ( have_posts() ) :
 					"serviceType": "Customer Portal Access",
 					"provider": {
 						"@type": "LocalBusiness",
-						"name": "Sunnyside AC"
+						"name": "Sunnyside AC",
+						"address": {
+							"@type": "PostalAddress",
+							"streetAddress": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STREET ); ?>",
+							"addressLocality": "<?php echo esc_js( SUNNYSIDE_ADDRESS_CITY ); ?>",
+							"addressRegion": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STATE ); ?>",
+							"postalCode": "<?php echo esc_js( SUNNYSIDE_ADDRESS_ZIP ); ?>",
+							"addressCountry": "US"
+						}
 					},
 					"description": "Online customer portal for HVAC service management, scheduling, payments, and account access."
 				}

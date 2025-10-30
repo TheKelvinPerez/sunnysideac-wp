@@ -247,7 +247,18 @@
 			},
 			"mainEntity": {
 				"@type": "Organization",
-				"@id": "<?php echo esc_js( home_url('/') ); ?>#business"
+				"@id": "<?php echo esc_js( home_url('/') ); ?>#business",
+				"name": "<?php echo esc_js( get_bloginfo('name') ); ?>",
+				"url": "<?php echo esc_js( home_url('/') ); ?>",
+				"telephone": "<?php echo esc_js( SUNNYSIDE_PHONE_DISPLAY ); ?>",
+				"address": {
+					"@type": "PostalAddress",
+					"streetAddress": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STREET ); ?>",
+					"addressLocality": "<?php echo esc_js( SUNNYSIDE_ADDRESS_CITY ); ?>",
+					"addressRegion": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STATE ); ?>",
+					"postalCode": "<?php echo esc_js( SUNNYSIDE_ADDRESS_ZIP ); ?>",
+					"addressCountry": "US"
+				}
 			}
 		}
 		</script>
