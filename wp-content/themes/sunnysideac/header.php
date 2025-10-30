@@ -111,6 +111,7 @@
 			"@context": "https://schema.org",
 			"@type": "AggregateRating",
 			"itemReviewed": {
+				"@type": "LocalBusiness",
 				"@id": "<?php echo esc_js( home_url('/') ); ?>#business"
 			},
 			"ratingValue": "5.0",
@@ -126,6 +127,7 @@
 			"@context": "https://schema.org",
 			"@type": "Review",
 			"itemReviewed": {
+				"@type": "LocalBusiness",
 				"@id": "<?php echo esc_js( home_url('/') ); ?>#business"
 			},
 			"reviewRating": {
