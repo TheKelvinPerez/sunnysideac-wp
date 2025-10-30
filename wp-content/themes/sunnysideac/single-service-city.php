@@ -149,7 +149,15 @@ if ( have_posts() ) :
 				"serviceType": "<?php echo esc_js( $service_title ); ?>",
 				"provider": {
 					"@type": "LocalBusiness",
-					"name": "Sunnyside AC"
+					"name": "Sunnyside AC",
+					"address": {
+						"@type": "PostalAddress",
+						"streetAddress": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STREET ); ?>",
+						"addressLocality": "<?php echo esc_js( SUNNYSIDE_ADDRESS_CITY ); ?>",
+						"addressRegion": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STATE ); ?>",
+						"postalCode": "<?php echo esc_js( SUNNYSIDE_ADDRESS_ZIP ); ?>",
+						"addressCountry": "US"
+					}
 				}
 				<?php
 				if ( $city_post ) :

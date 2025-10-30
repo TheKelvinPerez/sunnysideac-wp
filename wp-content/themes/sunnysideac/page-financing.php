@@ -170,7 +170,15 @@ $faqs = array(
 				"description": "Flexible financing options for HVAC installations, replacements, and repairs with quick approval and competitive rates",
 				"provider": {
 					"@type": "LocalBusiness",
-					"name": "Sunnyside AC"
+					"name": "Sunnyside AC",
+					"address": {
+						"@type": "PostalAddress",
+						"streetAddress": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STREET ); ?>",
+						"addressLocality": "<?php echo esc_js( SUNNYSIDE_ADDRESS_CITY ); ?>",
+						"addressRegion": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STATE ); ?>",
+						"postalCode": "<?php echo esc_js( SUNNYSIDE_ADDRESS_ZIP ); ?>",
+						"addressCountry": "US"
+					}
 				},
 				"featureList": [
 					"Flexible Payment Plans",

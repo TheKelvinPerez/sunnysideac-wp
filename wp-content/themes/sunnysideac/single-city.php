@@ -113,7 +113,6 @@ if ( have_posts() ) :
 			"@type": "PostalAddress",
 			"streetAddress": "<?php echo esc_js( SUNNYSIDE_ADDRESS_FULL ); ?>",
 			"addressLocality": "South Florida",
-			"addressRegion": "FL",
 			"postalCode": "",
 			"addressCountry": "US"
 		},
@@ -148,7 +147,14 @@ if ( have_posts() ) :
 								},
 								"provider": {
 									"@type": "LocalBusiness",
-									"name": "Sunnyside AC"
+									"name": "Sunnyside AC",
+									"address": {
+										"@type": "PostalAddress",
+										"streetAddress": "' . esc_js( SUNNYSIDE_ADDRESS_FULL ) . '",
+										"addressLocality": "South Florida",
+										"postalCode": "",
+										"addressCountry": "US"
+									}
 								}
 							}
 						}';

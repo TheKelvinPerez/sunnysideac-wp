@@ -272,27 +272,6 @@ if ( have_posts() ) :
 					"url": "<?php echo esc_url( home_url( '/' ) ); ?>",
 					"description": "HVAC company serving South Florida with career opportunities in installation, maintenance, and customer service"
 				}
-				<?php if ( $careers_faqs ) : ?>
-				,
-				{
-					"@type": "FAQPage",
-					"mainEntity": [
-						<?php
-						$faq_count = count( $careers_faqs );
-						foreach ( $careers_faqs as $index => $faq ) :
-							?>
-							{
-								"@type": "Question",
-								"name": "<?php echo esc_js( $faq['question'] ); ?>",
-								"acceptedAnswer": {
-									"@type": "Answer",
-									"text": "<?php echo esc_js( wp_strip_all_tags( $faq['answer'] ) ); ?>"
-								}
-							}<?php echo $index < $faq_count - 1 ? ',' : ''; ?>
-						<?php endforeach; ?>
-					]
-				}
-				<?php endif; ?>
 			]
 		}
 		</script>
@@ -706,7 +685,7 @@ if ( have_posts() ) :
 							'mobile_title' => 'FAQ',
 							'subheading'   => 'Got Questions About Working With Us?',
 							'description'  => 'Find answers to common questions about careers and working at Sunnyside AC.',
-							'show_schema'  => false, // Schema already added in <head>
+							'show_schema'  => true,
 							'section_id'   => 'careers-faq-section',
 						)
 					);
