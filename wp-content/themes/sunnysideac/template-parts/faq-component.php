@@ -51,17 +51,21 @@ $icons = array(
 if ( $show_schema ) {
 	$faq_schema_items = array();
 	foreach ( $faq_data as $faq ) {
-		$faq_schema_items[] = sprintf(
-			'{"@type":"Question","name":"%s","acceptedAnswer":{"@type":"Answer","text":"%s"}}',
-			esc_js( $faq['question'] ),
-			esc_js( $faq['answer'] )
+		$faq_schema_items[] = array(
+			'@type' => 'Question',
+			'name' => $faq['question'],
+			'acceptedAnswer' => array(
+				'@type' => 'Answer',
+				'text' => $faq['answer']
+			)
 		);
 	}
-	$faq_schema = sprintf(
-		'<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[%s]}</script>',
-		implode( ',', $faq_schema_items )
+	$faq_schema_data = array(
+		'@context' => 'https://schema.org',
+		'@type' => 'FAQPage',
+		'mainEntity' => $faq_schema_items
 	);
-	echo $faq_schema . "\n";
+	echo '<script type="application/ld+json">' . wp_json_encode( $faq_schema_data, JSON_UNESCAPED_SLASHES ) . '</script>' . "\n";
 }
 ?>
 
