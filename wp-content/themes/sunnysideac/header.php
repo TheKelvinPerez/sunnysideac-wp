@@ -99,83 +99,11 @@
 
 	<?php
 	// Structured Data (JSON-LD) for Business Information
+	// NOTE: LocalBusiness and Organization schemas are output via sunnysideac_homepage_schemas() in functions.php
 	if ( is_front_page() || is_page('contact') ) {
 		// Include business constants
 		require_once get_template_directory() . '/inc/constants.php';
 		?>
-
-		<!-- Organization/Local Business Schema -->
-		<script type="application/ld+json">
-		{
-			"@context": "https://schema.org",
-			"@type": "LocalBusiness",
-			"@id": "<?php echo esc_js( home_url('/') ); ?>#business",
-			"name": "<?php echo esc_js( get_bloginfo('name') ); ?>",
-			"description": "<?php echo esc_js( get_bloginfo('description') ); ?>",
-			"image": "<?php echo esc_js( sunnysideac_asset_url('assets/images/social/social-preview-hero.jpg') ); ?>",
-			"telephone": "<?php echo esc_js( SUNNYSIDE_PHONE_DISPLAY ); ?>",
-			"email": "<?php echo esc_js( SUNNYSIDE_EMAIL_ADDRESS ); ?>",
-			"address": {
-				"@type": "PostalAddress",
-				"streetAddress": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STREET ); ?>",
-				"addressLocality": "<?php echo esc_js( SUNNYSIDE_ADDRESS_CITY ); ?>",
-				"addressRegion": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STATE ); ?>",
-				"postalCode": "<?php echo esc_js( SUNNYSIDE_ADDRESS_ZIP ); ?>",
-				"addressCountry": "US"
-			},
-			"geo": {
-				"@type": "GeoCoordinates",
-				"latitude": "26.1224",
-				"longitude": "-80.1431"
-			},
-			"openingHours": "Mo-Su 00:00-23:59",
-			"priceRange": "$$",
-			"url": "<?php echo esc_js( home_url('/') ); ?>",
-			"sameAs": [
-				"<?php echo esc_js( SUNNYSIDE_FACEBOOK_URL ); ?>",
-				"<?php echo esc_js( SUNNYSIDE_INSTAGRAM_URL ); ?>"
-			],
-			"hasOfferCatalog": {
-				"@type": "OfferCatalog",
-				"name": "HVAC Services",
-				"itemListElement": [
-					{
-						"@type": "Offer",
-						"itemOffered": {
-							"@type": "Service",
-							"name": "Air Conditioning Repair",
-							"description": "Professional AC repair services for all makes and models"
-						}
-					},
-					{
-						"@type": "Offer",
-						"itemOffered": {
-							"@type": "Service",
-							"name": "HVAC Installation",
-							"description": "Complete HVAC system installation and replacement"
-						}
-					},
-					{
-						"@type": "Offer",
-						"itemOffered": {
-							"@type": "Service",
-							"name": "Air Duct Cleaning",
-							"description": "Professional air duct cleaning services"
-						}
-					}
-				]
-			},
-			"areaServed": [
-				<?php
-				$service_areas_json = array();
-				foreach ( SUNNYSIDE_SERVICE_AREAS as $area ) {
-					$service_areas_json[] = '"' . esc_js( $area ) . '"';
-				}
-				echo implode( ', ', $service_areas_json );
-				?>
-			]
-		}
-		</script>
 
 		<!-- Enhanced Review Schema Markup -->
 		<script type="application/ld+json">
@@ -186,13 +114,14 @@
 				"@type": "LocalBusiness",
 				"@id": "<?php echo esc_js( home_url('/') ); ?>#business",
 				"name": "<?php echo esc_js( get_bloginfo('name') ); ?>",
-				"telephone": "<?php echo esc_js( SUNNYSIDE_PHONE_DISPLAY ); ?>",
+				"telephone": "<?php echo esc_js( SUNNYSIDE_PHONE_SCHEMA ); ?>",
 				"address": {
 					"@type": "PostalAddress",
 					"streetAddress": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STREET ); ?>",
 					"addressLocality": "<?php echo esc_js( SUNNYSIDE_ADDRESS_CITY ); ?>",
 					"addressRegion": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STATE ); ?>",
-					"postalCode": "<?php echo esc_js( SUNNYSIDE_ADDRESS_ZIP ); ?>"
+					"postalCode": "<?php echo esc_js( SUNNYSIDE_ADDRESS_ZIP ); ?>",
+					"addressCountry": "US"
 				}
 			},
 			"ratingValue": "5.0",
@@ -244,21 +173,6 @@
 					"urlTemplate": "<?php echo esc_js( home_url('/') ); ?>?s={search_term_string}"
 				},
 				"query-input": "required name=search_term_string"
-			},
-			"mainEntity": {
-				"@type": "Organization",
-				"@id": "<?php echo esc_js( home_url('/') ); ?>#business",
-				"name": "<?php echo esc_js( get_bloginfo('name') ); ?>",
-				"url": "<?php echo esc_js( home_url('/') ); ?>",
-				"telephone": "<?php echo esc_js( SUNNYSIDE_PHONE_DISPLAY ); ?>",
-				"address": {
-					"@type": "PostalAddress",
-					"streetAddress": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STREET ); ?>",
-					"addressLocality": "<?php echo esc_js( SUNNYSIDE_ADDRESS_CITY ); ?>",
-					"addressRegion": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STATE ); ?>",
-					"postalCode": "<?php echo esc_js( SUNNYSIDE_ADDRESS_ZIP ); ?>",
-					"addressCountry": "US"
-				}
 			}
 		}
 		</script>
