@@ -7,6 +7,7 @@
 // Phone number constants
 define( 'SUNNYSIDE_TEL_HREF', 'tel:+13059789382' );
 define( 'SUNNYSIDE_PHONE_DISPLAY', '(305) 978-9382' );
+define( 'SUNNYSIDE_PHONE_SCHEMA', '+13059789382' ); // Clean format for schema.org (no "tel:" prefix)
 
 // Email constants
 define( 'SUNNYSIDE_EMAIL_ADDRESS', 'support@sunnyside247ac.com' );

@@ -105,15 +105,17 @@ if ( have_posts() ) :
 		"@type": "LocalBusiness",
 		"@id": "<?php echo esc_url( home_url( '/' ) ); ?>#organization",
 		"name": "Sunnyside AC",
-		"image": "<?php echo esc_url( $page_image ); ?>",
+		"image": "<?php echo esc_url( has_post_thumbnail() ? get_the_post_thumbnail_url( $city_id, 'large' ) : sunnysideac_asset_url( 'assets/images/social/social-preview-hero.jpg' ) ); ?>",
 		"url": "<?php echo esc_url( $page_url ); ?>",
-		"telephone": "<?php echo esc_js( SUNNYSIDE_TEL_HREF ); ?>",
+		"telephone": "<?php echo esc_js( SUNNYSIDE_PHONE_SCHEMA ); ?>",
 		"email": "<?php echo esc_js( SUNNYSIDE_EMAIL_ADDRESS ); ?>",
+		"priceRange": "$$",
 		"address": {
 			"@type": "PostalAddress",
-			"streetAddress": "<?php echo esc_js( SUNNYSIDE_ADDRESS_FULL ); ?>",
-			"addressLocality": "South Florida",
-			"postalCode": "",
+			"streetAddress": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STREET ); ?>",
+			"addressLocality": "<?php echo esc_js( SUNNYSIDE_ADDRESS_CITY ); ?>",
+			"addressRegion": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STATE ); ?>",
+			"postalCode": "<?php echo esc_js( SUNNYSIDE_ADDRESS_ZIP ); ?>",
 			"addressCountry": "US"
 		},
 		"geo": {
@@ -150,9 +152,10 @@ if ( have_posts() ) :
 									"name": "Sunnyside AC",
 									"address": {
 										"@type": "PostalAddress",
-										"streetAddress": "' . esc_js( SUNNYSIDE_ADDRESS_FULL ) . '",
-										"addressLocality": "South Florida",
-										"postalCode": "",
+										"streetAddress": "' . esc_js( SUNNYSIDE_ADDRESS_STREET ) . '",
+										"addressLocality": "' . esc_js( SUNNYSIDE_ADDRESS_CITY ) . '",
+										"addressRegion": "' . esc_js( SUNNYSIDE_ADDRESS_STATE ) . '",
+										"postalCode": "' . esc_js( SUNNYSIDE_ADDRESS_ZIP ) . '",
 										"addressCountry": "US"
 									}
 								}
@@ -164,7 +167,6 @@ if ( have_posts() ) :
 				?>
 			]
 		},
-		"priceRange": "$$",
 		"openingHoursSpecification": {
 			"@type": "OpeningHoursSpecification",
 			"dayOfWeek": [
