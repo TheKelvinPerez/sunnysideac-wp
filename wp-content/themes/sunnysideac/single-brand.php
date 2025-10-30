@@ -425,7 +425,7 @@ if ( have_posts() ) :
 						),
 						array(
 							'question' => 'Can you handle warranty service for my ' . $brand_title . ' system?',
-							'answer'   => 'Yes, we handle all ' . $brand_title . ' warranty claims and work directly with the manufacturer on your behalf. If your system is still under manufacturer warranty, we\'ll ensure your repairs are properly documented and covered according to the warranty terms.',
+							'answer'   => 'Yes, we handle all ' . $brand_title . ' warranty claims and work directly with the manufacturer on your behalf. If your system is still under manufacturer warranty, we'll ensure your repairs are properly documented and covered according to the warranty terms.',
 						),
 						array(
 							'question' => 'How often should I service my ' . $brand_title . ' HVAC system?',

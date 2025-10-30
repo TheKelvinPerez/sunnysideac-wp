@@ -21,6 +21,163 @@ if ( have_posts() ) :
 	$city_video_title       = get_field( 'city_video_title', $city_id );
 	$city_video_description = get_field( 'city_video_description', $city_id );
 
+	// SEO Variables
+	$seo_title       = 'HVAC Services in ' . $city_title . ' | AC Repair & Installation | Sunnyside AC';
+	$seo_description = 'Professional HVAC services in ' . $city_title . ', FL. Expert AC repair, installation, heating, and air quality solutions. 24/7 emergency service. Licensed & insured technicians serving ' . $city_title . ' and surrounding areas.';
+	$page_url        = get_permalink();
+	$page_image      = has_post_thumbnail() ? get_the_post_thumbnail_url( $city_id, 'large' ) : sunnysideac_asset_url( 'assets/images/home-page/hero/hero-image.png' );
+
+	// Page breadcrumbs
+	$breadcrumbs = array(
+		array(
+			'name' => 'Home',
+			'url'  => home_url( '/' ),
+		),
+		array(
+			'name' => 'Service Areas',
+			'url'  => home_url( '/cities/' ),
+		),
+		array(
+			'name' => $city_title,
+			'url'  => '',
+		),
+	);
+
+	?>
+
+	<!-- SEO Meta Tags -->
+	<meta name="description" content="<?php echo esc_attr( $seo_description ); ?>">
+	<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+	<link rel="canonical" href="<?php echo esc_url( $page_url ); ?>">
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="<?php echo esc_url( $page_url ); ?>">
+	<meta property="og:title" content="<?php echo esc_attr( $seo_title ); ?>">
+	<meta property="og:description" content="<?php echo esc_attr( $seo_description ); ?>">
+	<meta property="og:image" content="<?php echo esc_url( $page_image ); ?>">
+	<meta property="og:locale" content="en_US">
+	<meta property="og:site_name" content="Sunnyside AC">
+
+	<!-- Twitter -->
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:url" content="<?php echo esc_url( $page_url ); ?>">
+	<meta name="twitter:title" content="<?php echo esc_attr( $seo_title ); ?>">
+	<meta name="twitter:description" content="<?php echo esc_attr( $seo_description ); ?>">
+	<meta name="twitter:image" content="<?php echo esc_url( $page_image ); ?>">
+
+	<!-- Geographic Meta Tags -->
+	<meta name="geo.region" content="US-FL">
+	<meta name="geo.placename" content="<?php echo esc_attr( $city_title ); ?>, Florida">
+
+	<!-- JSON-LD Structured Data: BreadcrumbList -->
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "BreadcrumbList",
+		"itemListElement": [
+			{
+				"@type": "ListItem",
+				"position": 1,
+				"name": "Home",
+				"item": "<?php echo esc_url( home_url( '/' ) ); ?>"
+			},
+			{
+				"@type": "ListItem",
+				"position": 2,
+				"name": "Service Areas",
+				"item": "<?php echo esc_url( home_url( '/cities/' ) ); ?>"
+			},
+			{
+				"@type": "ListItem",
+				"position": 3,
+				"name": "<?php echo esc_js( $city_title ); ?>",
+				"item": "<?php echo esc_url( $page_url ); ?>"
+			}
+		]
+	}
+	</script>
+
+	<!-- JSON-LD Structured Data: LocalBusiness with Service -->
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "LocalBusiness",
+		"@id": "<?php echo esc_url( home_url( '/' ) ); ?>#organization",
+		"name": "Sunnyside AC",
+		"image": "<?php echo esc_url( $page_image ); ?>",
+		"url": "<?php echo esc_url( $page_url ); ?>",
+		"telephone": "<?php echo esc_js( SUNNYSIDE_TEL_HREF ); ?>",
+		"email": "<?php echo esc_js( SUNNYSIDE_EMAIL_ADDRESS ); ?>",
+		"address": {
+			"@type": "PostalAddress",
+			"streetAddress": "<?php echo esc_js( SUNNYSIDE_ADDRESS_FULL ); ?>",
+			"addressLocality": "South Florida",
+			"addressRegion": "FL",
+			"postalCode": "",
+			"addressCountry": "US"
+		},
+		"geo": {
+			"@type": "GeoCoordinates",
+			"latitude": "",
+			"longitude": ""
+		},
+		"areaServed": {
+			"@type": "City",
+			"name": "<?php echo esc_js( $city_title ); ?>",
+			"@id": "<?php echo esc_url( $page_url ); ?>"
+		},
+		"hasOfferCatalog": {
+			"@type": "OfferCatalog",
+			"name": "HVAC Services",
+			"itemListElement": [
+				<?php
+				$services = SUNNYSIDE_SERVICES_BY_CATEGORY;
+				$service_schemas = array();
+				foreach ( $services as $category => $service_list ) {
+					foreach ( $service_list as $service_name ) {
+						$service_schemas[] = '{
+							"@type": "Offer",
+							"itemOffered": {
+								"@type": "Service",
+								"name": "' . esc_js( $service_name ) . '",
+								"description": "Professional ' . strtolower( esc_js( $service_name ) ) . ' services for ' . esc_js( $city_title ) . ' residents and businesses",
+								"areaServed": {
+									"@type": "City",
+									"name": "' . esc_js( $city_title ) . '"
+								},
+								"provider": {
+									"@type": "LocalBusiness",
+									"name": "Sunnyside AC"
+								}
+							}
+						}';
+					}
+				}
+				echo implode( ",\n\t\t\t\t", $service_schemas );
+				?>
+			]
+		},
+		"priceRange": "$$",
+		"openingHoursSpecification": {
+			"@type": "OpeningHoursSpecification",
+			"dayOfWeek": [
+				"Monday",
+				"Tuesday",
+				"Wednesday",
+				"Thursday",
+				"Friday",
+				"Saturday",
+				"Sunday"
+			],
+			"opens": "00:00",
+			"closes": "23:59"
+		}
+	}
+	</script>
+
+	<?php
+
 	?>
 
 	<main class="min-h-screen bg-gray-50" role="main" itemscope itemtype="https://schema.org/Service">
@@ -38,20 +195,7 @@ if ( have_posts() ) :
 						'template-parts/page-header',
 						null,
 						array(
-							'breadcrumbs' => array(
-								array(
-									'name' => 'Home',
-									'url'  => home_url( '/' ),
-								),
-								array(
-									'name' => 'Service Areas',
-									'url'  => home_url( '/cities/' ),
-								),
-								array(
-									'name' => $city_title,
-									'url'  => '',
-								),
-							),
+							'breadcrumbs' => $breadcrumbs,
 							'title'       => 'HVAC Services in ' . $city_title,
 							'description' => 'Professional heating, cooling, and air quality services for the ' . $city_title . ' community',
 							'show_ctas'   => true,
@@ -292,7 +436,7 @@ if ( have_posts() ) :
 						),
 						array(
 							'question' => 'How often should ' . $city_title . ' residents service their AC units?',
-							'answer'   => 'Due to South Florida\'s hot and humid climate, we recommend ' . $city_title . ' residents service their AC units at least twice per year - once before cooling season in spring and once in fall. Regular maintenance helps prevent breakdowns during peak summer heat and extends your system\'s lifespan.',
+							'answer'   => 'Due to South Florida's hot and humid climate, we recommend ' . $city_title . ' residents service their AC units at least twice per year - once before cooling season in spring and once in fall. Regular maintenance helps prevent breakdowns during peak summer heat and extends your system's lifespan.',
 						),
 						array(
 							'question' => 'What HVAC services do you offer in ' . $city_title . '?',

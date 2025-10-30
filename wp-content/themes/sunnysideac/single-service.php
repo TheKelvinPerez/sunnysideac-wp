@@ -344,7 +344,7 @@ if ( have_posts() ) :
 								'faq_data'     => $formatted_faqs,
 								'title'        => 'Frequently Asked Questions',
 								'mobile_title' => 'FAQ',
-								'subheading'   => 'Got Questions About ' . $service_title . '? We\'ve Got Answers!',
+								'subheading'   => 'Got Questions About ' . $service_title . '? We've Got Answers!',
 								'description'  => 'Find answers to common questions about our ' . strtolower( $service_title ) . ' services.',
 								'show_schema'  => false, // Schema already added in <head>
 								'section_id'   => 'service-faq-section',
