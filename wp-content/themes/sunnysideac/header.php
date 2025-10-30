@@ -111,18 +111,7 @@
 			"@context": "https://schema.org",
 			"@type": "AggregateRating",
 			"itemReviewed": {
-				"@type": "LocalBusiness",
-				"@id": "<?php echo esc_js( home_url('/') ); ?>#business",
-				"name": "<?php echo esc_js( get_bloginfo('name') ); ?>",
-				"telephone": "<?php echo esc_js( SUNNYSIDE_PHONE_SCHEMA ); ?>",
-				"address": {
-					"@type": "PostalAddress",
-					"streetAddress": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STREET ); ?>",
-					"addressLocality": "<?php echo esc_js( SUNNYSIDE_ADDRESS_CITY ); ?>",
-					"addressRegion": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STATE ); ?>",
-					"postalCode": "<?php echo esc_js( SUNNYSIDE_ADDRESS_ZIP ); ?>",
-					"addressCountry": "US"
-				}
+				"@id": "<?php echo esc_js( home_url('/') ); ?>#business"
 			},
 			"ratingValue": "5.0",
 			"reviewCount": "127",
@@ -137,9 +126,7 @@
 			"@context": "https://schema.org",
 			"@type": "Review",
 			"itemReviewed": {
-				"@type": "LocalBusiness",
-				"@id": "<?php echo esc_js( home_url('/') ); ?>#business",
-				"name": "<?php echo esc_js( get_bloginfo('name') ); ?>"
+				"@id": "<?php echo esc_js( home_url('/') ); ?>#business"
 			},
 			"reviewRating": {
 				"@type": "Rating",
