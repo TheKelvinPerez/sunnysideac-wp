@@ -99,49 +99,11 @@
 
 	<?php
 	// Structured Data (JSON-LD) for Business Information
-	// NOTE: LocalBusiness and Organization schemas are output via sunnysideac_homepage_schemas() in functions.php
+	// NOTE: LocalBusiness and Organization schemas (with embedded ratings) are output via sunnysideac_homepage_schemas() in functions.php
 	if ( is_front_page() || is_page('contact') ) {
 		// Include business constants
 		require_once get_template_directory() . '/inc/constants.php';
 		?>
-
-		<!-- Enhanced Review Schema Markup -->
-		<script type="application/ld+json">
-		{
-			"@context": "https://schema.org",
-			"@type": "AggregateRating",
-			"itemReviewed": {
-				"@type": "LocalBusiness",
-				"@id": "<?php echo esc_js( home_url('/') ); ?>#business"
-			},
-			"ratingValue": "5.0",
-			"reviewCount": "127",
-			"bestRating": "5",
-			"worstRating": "1"
-		}
-		</script>
-
-		<!-- Individual Review Examples Schema -->
-		<script type="application/ld+json">
-		{
-			"@context": "https://schema.org",
-			"@type": "Review",
-			"itemReviewed": {
-				"@type": "LocalBusiness",
-				"@id": "<?php echo esc_js( home_url('/') ); ?>#business"
-			},
-			"reviewRating": {
-				"@type": "Rating",
-				"ratingValue": "5"
-			},
-			"author": {
-				"@type": "Person",
-				"name": "Maria Rodriguez"
-			},
-			"reviewBody": "Excellent service! They came within 2 hours of my call and had my AC running perfectly. Very professional and fair pricing.",
-			"datePublished": "2024-10-15"
-		}
-		</script>
 
 		<!-- Website Schema with Sitelinks Search Box -->
 		<script type="application/ld+json">
