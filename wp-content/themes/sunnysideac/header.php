@@ -6,9 +6,9 @@
 	<meta name="generator" content="WordPress <?php echo get_bloginfo( 'version' ); ?>">
 
 	<!-- Favicons -->
-	<link rel="icon" type="image/svg+xml" href="<?php echo get_template_directory_uri(); ?>/assets/icons/favicon.svg">
-	<link rel="icon" type="image/png" sizes="96x96" href="<?php echo get_template_directory_uri(); ?>/assets/icons/favicon-96x96.png">
-	<link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/assets/icons/favicon.ico">
+	<link rel="icon" type="image/svg+xml" href="<?php echo home_url(); ?>/favicon.svg">
+	<link rel="icon" type="image/png" sizes="96x96" href="<?php echo home_url(); ?>/favicon-96x96.png">
+	<link rel="shortcut icon" href="<?php echo home_url(); ?>/favicon.ico">
 
 	<!-- Preload LCP hero images for optimal performance -->
 	<?php
