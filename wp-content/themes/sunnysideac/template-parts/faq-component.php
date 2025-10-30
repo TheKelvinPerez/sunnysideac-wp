@@ -71,7 +71,7 @@ if ( $show_schema && ! defined( 'SUNNYSIDE_FAQ_SCHEMA_GENERATED' ) ) {
 }
 ?>
 
-<section class="w-full rounded-2xl bg-white px-4 py-12 md:px-10 md:py-16 lg:py-20" id="<?php echo esc_attr( $section_id ); ?>" itemscope itemtype="https://schema.org/FAQPage" aria-labelledby="<?php echo esc_attr( $section_id ); ?>-heading">
+<section class="w-full rounded-2xl bg-white px-4 py-12 md:px-10 md:py-16 lg:py-20" id="<?php echo esc_attr( $section_id ); ?>" aria-labelledby="<?php echo esc_attr( $section_id ); ?>-heading">
 	<div class="mx-auto max-w-7xl">
 		<!-- Header -->
 		<header class="mb-12 text-center md:mb-16">
@@ -111,8 +111,8 @@ if ( $show_schema && ! defined( 'SUNNYSIDE_FAQ_SCHEMA_GENERATED' ) ) {
 		<!-- FAQ Grid with Native Details Elements -->
 		<div class="grid gap-4 md:gap-6 max-w-4xl mx-auto">
 			<?php foreach ( $faq_data as $faq ) : ?>
-				<details class="faq-details group w-full rounded-[20px] border-2 border-transparent bg-[#f6f6f6] transition-all duration-300 ease-in-out hover:shadow-md open:bg-[#ffeac0] open:border-[#fed7aa]" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-					<summary class="flex items-start justify-between p-6 cursor-pointer list-none" itemprop="name">
+				<details class="faq-details group w-full rounded-[20px] border-2 border-transparent bg-[#f6f6f6] transition-all duration-300 ease-in-out hover:shadow-md open:bg-[#ffeac0] open:border-[#fed7aa]">
+					<summary class="flex items-start justify-between p-6 cursor-pointer list-none">
 						<h3 class="pr-4 text-lg leading-relaxed font-semibold text-black md:text-xl">
 							<?php echo esc_html( $faq['question'] ); ?>
 						</h3>
@@ -126,8 +126,8 @@ if ( $show_schema && ! defined( 'SUNNYSIDE_FAQ_SCHEMA_GENERATED' ) ) {
 						</div>
 					</summary>
 
-					<div class="faq-answer px-6 pb-6 text-base leading-relaxed font-normal text-gray-700 md:text-lg" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-						<div itemprop="text">
+					<div class="faq-answer px-6 pb-6 text-base leading-relaxed font-normal text-gray-700 md:text-lg">
+						<div>
 							<?php echo esc_html( $faq['answer'] ); ?>
 						</div>
 					</div>
