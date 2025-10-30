@@ -208,7 +208,8 @@ if ( have_posts() ) :
 				{
 					"@type": "LocalBusiness",
 					"name": "Sunnyside AC",
-					"telephone": "<?php echo esc_js( SUNNYSIDE_PHONE_DISPLAY ); ?>",
+					"image": "<?php echo esc_url( get_template_directory_uri() . '/assets/images/social/social-preview-hero.jpg' ); ?>",
+					"telephone": "<?php echo esc_js( SUNNYSIDE_PHONE_SCHEMA ); ?>",
 					"address": {
 						"@type": "PostalAddress",
 						"streetAddress": "6609 Emerald Lake Dr",
@@ -218,7 +219,7 @@ if ( have_posts() ) :
 						"addressCountry": "US"
 					},
 					"url": "<?php echo esc_url( home_url( '/' ) ); ?>",
-					"priceRange": "$$",
+					"priceRange": "$",
 					"openingHours": "Mo-Su 00:00-23:59",
 					"areaServed": "Florida"
 				},
@@ -228,12 +229,15 @@ if ( have_posts() ) :
 					"provider": {
 						"@type": "LocalBusiness",
 						"name": "Sunnyside AC",
+						"image": "<?php echo esc_url( get_template_directory_uri() . '/assets/images/social/social-preview-hero.jpg' ); ?>",
+						"telephone": "<?php echo esc_js( SUNNYSIDE_PHONE_SCHEMA ); ?>",
+						"priceRange": "$",
 						"address": {
 							"@type": "PostalAddress",
-							"streetAddress": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STREET ); ?>",
-							"addressLocality": "<?php echo esc_js( SUNNYSIDE_ADDRESS_CITY ); ?>",
-							"addressRegion": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STATE ); ?>",
-							"postalCode": "<?php echo esc_js( SUNNYSIDE_ADDRESS_ZIP ); ?>",
+							"streetAddress": <?php echo wp_json_encode( SUNNYSIDE_ADDRESS_STREET, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
+							"addressLocality": <?php echo wp_json_encode( SUNNYSIDE_ADDRESS_CITY, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
+							"addressRegion": <?php echo wp_json_encode( SUNNYSIDE_ADDRESS_STATE, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
+							"postalCode": <?php echo wp_json_encode( SUNNYSIDE_ADDRESS_ZIP, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
 							"addressCountry": "US"
 						}
 					},
@@ -250,10 +254,10 @@ if ( have_posts() ) :
 							?>
 							{
 								"@type": "Question",
-								"name": "<?php echo esc_js( $faq['question'] ); ?>",
+								"name": <?php echo wp_json_encode( $faq['question'], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>,
 								"acceptedAnswer": {
 									"@type": "Answer",
-									"text": "<?php echo esc_js( wp_strip_all_tags( $faq['answer'] ) ); ?>"
+									"text": <?php echo wp_json_encode( wp_strip_all_tags( $faq['answer'] ), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>
 								}
 							}<?php echo $index < $faq_count - 1 ? ',' : ''; ?>
 						<?php endforeach; ?>
