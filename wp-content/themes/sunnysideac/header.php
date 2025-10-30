@@ -113,7 +113,7 @@
 			"name": "<?php echo esc_js( get_bloginfo('name') ); ?>",
 			"description": "<?php echo esc_js( get_bloginfo('description') ); ?>",
 			"image": "<?php echo esc_js( sunnysideac_asset_url('assets/images/social/social-preview-hero.jpg') ); ?>",
-			"telephone": "<?php echo esc_js( SUNNYSIDE_PHONE_DISPLAY ); ?>",
+			"telephone": "<?php echo esc_js( SUNNYSIDE_PHONE_SCHEMA ); ?>",
 			"email": "<?php echo esc_js( SUNNYSIDE_EMAIL_ADDRESS ); ?>",
 			"address": {
 				"@type": "PostalAddress",
@@ -186,13 +186,14 @@
 				"@type": "LocalBusiness",
 				"@id": "<?php echo esc_js( home_url('/') ); ?>#business",
 				"name": "<?php echo esc_js( get_bloginfo('name') ); ?>",
-				"telephone": "<?php echo esc_js( SUNNYSIDE_PHONE_DISPLAY ); ?>",
+				"telephone": "<?php echo esc_js( SUNNYSIDE_PHONE_SCHEMA ); ?>",
 				"address": {
 					"@type": "PostalAddress",
 					"streetAddress": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STREET ); ?>",
 					"addressLocality": "<?php echo esc_js( SUNNYSIDE_ADDRESS_CITY ); ?>",
 					"addressRegion": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STATE ); ?>",
-					"postalCode": "<?php echo esc_js( SUNNYSIDE_ADDRESS_ZIP ); ?>"
+					"postalCode": "<?php echo esc_js( SUNNYSIDE_ADDRESS_ZIP ); ?>",
+					"addressCountry": "US"
 				}
 			},
 			"ratingValue": "5.0",
@@ -250,7 +251,7 @@
 				"@id": "<?php echo esc_js( home_url('/') ); ?>#business",
 				"name": "<?php echo esc_js( get_bloginfo('name') ); ?>",
 				"url": "<?php echo esc_js( home_url('/') ); ?>",
-				"telephone": "<?php echo esc_js( SUNNYSIDE_PHONE_DISPLAY ); ?>",
+				"telephone": "<?php echo esc_js( SUNNYSIDE_PHONE_SCHEMA ); ?>",
 				"address": {
 					"@type": "PostalAddress",
 					"streetAddress": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STREET ); ?>",
