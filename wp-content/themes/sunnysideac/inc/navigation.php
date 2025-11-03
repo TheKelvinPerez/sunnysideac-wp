@@ -681,19 +681,19 @@ function sunnysideac_footer_fallback_menu() {
 			'links' => array(
 				array(
 					'name' => 'AC Repair',
-					'href' => home_url( '/service/ac-repair' ),
+					'href' => home_url( '/services/ac-repair' ),
 				),
 				array(
 					'name' => 'AC Installation',
-					'href' => home_url( '/service/ac-installation' ),
+					'href' => home_url( '/services/ac-installation' ),
 				),
 				array(
 					'name' => 'AC Maintenance',
-					'href' => home_url( '/service/ac-maintenance' ),
+					'href' => home_url( '/services/ac-maintenance' ),
 				),
 				array(
 					'name' => 'Heating Services',
-					'href' => home_url( '/service/heating-repair' ),
+					'href' => home_url( '/services/heating-repair' ),
 				),
 				array(
 					'name' => 'All HVAC Services',
