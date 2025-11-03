@@ -165,7 +165,7 @@
 				{
 					"@type": "SiteNavigationElement",
 					"name": "Emergency AC Repair",
-					"url": "<?php echo esc_js( home_url('/service/ac-repair/') ); ?>"
+					"url": "<?php echo esc_js( home_url('/services/ac-repair/') ); ?>"
 				}
 			]
 		}
@@ -502,7 +502,7 @@
 				{
 					"@type": "SiteNavigationElement",
 					"name": "Emergency AC Repair",
-					"url": "<?php echo esc_js( home_url('/service/ac-repair/') ); ?>"
+					"url": "<?php echo esc_js( home_url('/services/ac-repair/') ); ?>"
 				}
 			]
 		}

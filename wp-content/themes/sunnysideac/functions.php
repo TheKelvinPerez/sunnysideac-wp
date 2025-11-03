@@ -1116,6 +1116,18 @@ function sunnysideac_add_cities_city_rewrite() {
 add_action( 'init', 'sunnysideac_add_cities_city_rewrite', 15 );
 
 /**
+ * Add rewrite for /areas/{city}/ → city page (legacy support)
+ */
+function sunnysideac_add_areas_city_rewrite() {
+	add_rewrite_rule(
+		'^areas/([^/]+)/?$',
+		'index.php?city=$matches[1]',
+		'top'
+	);
+}
+add_action( 'init', 'sunnysideac_add_areas_city_rewrite', 15 );
+
+/**
  * Add rewrite for /daikin/{product}/ → Daikin product page
  */
 function sunnysideac_add_daikin_product_rewrite() {
@@ -1254,6 +1266,40 @@ function sunnysideac_handle_emergency_redirects() {
 	     strpos( $request_uri, '/services/24-hour-emergency' ) !== false ||
 	     strpos( $request_uri, '/services/emergency-service' ) !== false ) {
 		wp_redirect( home_url( '/services/ac-repair/' ), 301 );
+		exit;
+	}
+
+	// Check for plural ductless mini splits URL and redirect to singular
+	if ( strpos( $request_uri, '/services/ductless-mini-splits' ) !== false ) {
+		wp_redirect( home_url( '/services/ductless-mini-split/' ), 301 );
+		exit;
+	}
+
+	// Check for /areas/ URLs and redirect to /cities/ for SEO consistency
+	if ( preg_match( '/^\/areas\/([^\/]+)\/?$/', $request_uri, $matches ) ) {
+		$city_slug = $matches[1];
+		wp_redirect( home_url( "/cities/{$city_slug}/" ), 301 );
+		exit;
+	}
+
+	// Check for city-service plural ductless mini splits URLs and redirect to singular
+	if ( preg_match( '/^\/([^\/]+)\/ductless-mini-splits\/?$/', $request_uri, $matches ) ) {
+		$city_slug = $matches[1];
+		wp_redirect( home_url( "/{$city_slug}/ductless-mini-split/" ), 301 );
+		exit;
+	}
+
+	// Check for misspelled furnace URLs and redirect to correct spelling
+	if ( preg_match( '/^\/services\/furnances\/?$/', $request_uri ) ||
+	     preg_match( '/^\/([^\/]+)\/furnances\/?$/', $request_uri, $matches ) ) {
+		if ( isset( $matches[1] ) ) {
+			// City-service combination
+			$city_slug = $matches[1];
+			wp_redirect( home_url( "/{$city_slug}/furnaces/" ), 301 );
+		} else {
+			// Main service page
+			wp_redirect( home_url( '/services/furnaces/' ), 301 );
+		}
 		exit;
 	}
 }

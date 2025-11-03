@@ -171,7 +171,7 @@ class Sunnyside_Custom_Sitemap_Generator {
         $service_areas = defined('SUNNYSIDE_SERVICE_AREAS') ? SUNNYSIDE_SERVICE_AREAS : array();
 
         foreach ($service_areas as $area) {
-            $url = $base_url . 'areas/' . sanitize_title($area) . '/';
+            $url = $base_url . 'cities/' . sanitize_title($area) . '/';
             $this->add_url_to_sitemap($url, $current_time);
         }
 
