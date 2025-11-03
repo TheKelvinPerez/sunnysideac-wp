@@ -19,16 +19,10 @@
 		// Desktop hero images - high priority for desktop LCP
 		$avif_url = sunnysideac_asset_url( 'assets/images/optimize/hero-right-image.avif' );
 		$webp_url = sunnysideac_asset_url( 'assets/images/optimize/hero-right-image.webp' );
-		// Mobile hero images - high priority for mobile LCP
-		$mobile_avif_url = sunnysideac_asset_url( 'assets/images/optimize/mobile-hero-image.avif' );
-		$mobile_webp_url = sunnysideac_asset_url( 'assets/images/optimize/mobile-hero-image.webp' );
 		?>
 		<!-- Desktop LCP preloads - fetchpriority=high for optimal LCP -->
 		<link rel="preload" as="image" href="<?php echo esc_url( $avif_url ); ?>" type="image/avif" fetchpriority="high">
 		<link rel="preload" as="image" href="<?php echo esc_url( $webp_url ); ?>" type="image/webp" fetchpriority="high">
-		<!-- Mobile LCP preloads - conditional for mobile devices -->
-		<link rel="preload" as="image" href="<?php echo esc_url( $mobile_avif_url ); ?>" type="image/avif" media="(max-width: 1023px)" fetchpriority="high">
-		<link rel="preload" as="image" href="<?php echo esc_url( $mobile_webp_url ); ?>" type="image/webp" media="(max-width: 1023px)" fetchpriority="high">
 	<?php } ?>
 
 	<!-- Preconnect for external resources -->
