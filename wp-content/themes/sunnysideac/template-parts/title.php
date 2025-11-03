@@ -24,7 +24,7 @@ if ( $align === 'left' ) {
 }
 ?>
 
-<div class="mb-4 flex items-center gap-3 <?php echo esc_attr( $justify_class ); ?>">
+<div class="mb-4 flex flex-col items-center gap-3 md:flex-row md:items-center md:gap-3 <?php echo esc_attr( $justify_class ); ?>">
 	<?php if ( $icon ) : ?>
 		<img
 			class="h-8 w-8 md:h-10 md:w-10"
@@ -38,7 +38,7 @@ if ( $align === 'left' ) {
 		<?php if ( $id ) : ?>
 			id="<?php echo esc_attr( $id ); ?>"
 		<?php endif; ?>
-		class="bg-gradient-to-r from-[#F79E37] to-[#915D20] bg-clip-text text-2xl font-semibold text-transparent md:text-3xl"
+		class="bg-gradient-to-r from-[#F79E37] to-[#915D20] bg-clip-text text-center text-2xl font-semibold text-transparent md:text-left md:text-3xl"
 	>
 		<?php if ( $mobile_title ) : ?>
 			<span class="md:hidden"><?php echo esc_html( $mobile_title ); ?></span>
