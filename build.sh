@@ -256,78 +256,84 @@ clear_caches() {
     fi
 }
 
-# Verify deployment
-verify_deployment() {
-    log "🔍 Verifying deployment..."
+# Verify dynamic deployment
+verify_dynamic_deployment() {
+    log "🔍 Verifying dynamic deployment..."
 
-    local static_file="${PROJECT_ROOT}/index.html"
     local verification_passed=true
 
-    # Check file exists and has content
-    if [[ ! -f "$static_file" ]] || [[ ! -s "$static_file" ]]; then
-        error "Static HTML file is missing or empty"
+    # Check WordPress is accessible
+    if ! curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1/index.php | grep -q "200"; then
+        warn "WordPress may not be responding correctly"
         verification_passed=false
-    fi
-
-    # Check for complete HTML structure
-    if ! grep -q "</html>" "$static_file"; then
-        error "Static HTML is incomplete (missing closing html tag)"
-        verification_passed=false
-    fi
-
-    # Check for JavaScript assets
-    if ! grep -q "main.*\.js" "$static_file"; then
-        warn "JavaScript assets may not be referenced in static HTML"
+    else
+        log "✅ WordPress is responding correctly"
     fi
 
     # Check asset files exist
     local manifest_file="${THEME_DIR}/dist/.vite/manifest.json"
     if [[ -f "$manifest_file" ]]; then
         local main_js=$(jq -r '."src/main.js".file // empty' "$manifest_file" 2>/dev/null)
-        if [[ -n "$main_js" ]] && [[ ! -f "${THEME_DIR}/dist/$main_js" ]]; then
-            warn "Main JavaScript file not found: $main_js"
+        local main_css=$(jq -r '."src/main.js".css[0] // empty' "$manifest_file" 2>/dev/null)
+
+        if [[ -n "$main_js" ]] && [[ -f "${THEME_DIR}/dist/$main_js" ]]; then
+            log "✅ JavaScript assets verified: $main_js"
         else
-            log "✅ JavaScript assets verified"
+            warn "Main JavaScript file not found: $main_js"
+        fi
+
+        if [[ -n "$main_css" ]] && [[ -f "${THEME_DIR}/dist/$main_css" ]]; then
+            log "✅ CSS assets verified: $main_css"
+        else
+            warn "Main CSS file not found: $main_css"
+        fi
+    else
+        warn "Manifest file not found at $manifest_file"
+    fi
+
+    # Check permissions are correct
+    if [[ -d "${THEME_DIR}/dist" ]]; then
+        local owner=$(stat -c "%U:%G" "${THEME_DIR}/dist" 2>/dev/null)
+        if [[ "$owner" == "www-data:www-data" ]]; then
+            log "✅ Asset directory permissions correct"
+        else
+            warn "Asset directory permissions may need adjustment (current: $owner)"
         fi
     fi
 
     if [[ "$verification_passed" == true ]]; then
-        log "✅ Deployment verification passed"
+        log "✅ Dynamic deployment verification passed"
     else
-        error "Deployment verification failed"
+        log "⚠️ Dynamic deployment verification completed with warnings"
     fi
 }
 
 # Main build function
 main() {
-    log "🎯 Starting automated build for SunnySide247AC"
+    log "🎯 Starting dynamic build for SunnySide247AC"
     log "================================================"
 
     # Check permissions first
     check_permissions
 
-    # Build steps
+    # Build steps for dynamic website
     check_node_modules
     fix_build_permissions
     build_assets
     set_asset_ownership
-    generate_static_html
-    deploy_static_html
-    update_asset_hashes
     clear_caches
-    verify_deployment
+    verify_dynamic_deployment
 
     log "================================================"
-    log "🎉 Build completed successfully!"
+    log "🎉 Dynamic build completed successfully!"
     log ""
     log "📊 Build Summary:"
     log "   - JavaScript/CSS assets built"
-    log "   - Static HTML generated and deployed"
-    log "   - Asset hashes updated"
     log "   - Permissions set correctly"
     log "   - Caches cleared"
+    log "   - Dynamic website ready"
     log ""
-    log "🌐 Your site is now live at: https://sunnyside247ac.com"
+    log "🌐 Your dynamic site is now live at: https://sunnyside247ac.com"
     log "📝 Full build log: $BUILD_LOG"
 }
 

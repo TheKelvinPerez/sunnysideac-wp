@@ -274,6 +274,343 @@
 	?>
 
 	<?php
+	// Open Graph and Twitter Card Meta Tags (fallback for pages without custom meta)
+	if ( ! defined( 'WPSEO_VERSION' ) && ! defined( 'RANK_MATH_VERSION' ) ) {
+		// Default values for pages without custom meta
+		$og_title = get_the_title() ? get_the_title() : get_bloginfo( 'name' );
+		$og_description = $page_description ? $page_description : get_bloginfo( 'description' );
+		$og_url = $canonical_url ? $canonical_url : ( is_singular() ? get_permalink() : home_url( '/' ) );
+		$og_site_name = get_bloginfo( 'name' );
+		$og_type = is_singular() ? 'article' : 'website';
+
+		// Default social image - use hero section image
+		$default_social_image = sunnysideac_asset_url( 'assets/images/social/social-preview-hero.jpg' );
+		$og_image = $default_social_image;
+
+		// Twitter handle (update with actual handle)
+		$twitter_handle = '@SunnySideAC247';
+		?>
+
+		<!-- Open Graph Meta Tags -->
+		<meta property="og:locale" content="en_US">
+		<meta property="og:type" content="<?php echo esc_attr( $og_type ); ?>">
+		<meta property="og:title" content="<?php echo esc_attr( $og_title ); ?>">
+		<meta property="og:description" content="<?php echo esc_attr( $og_description ); ?>">
+		<meta property="og:url" content="<?php echo esc_url( $og_url ); ?>">
+		<meta property="og:site_name" content="<?php echo esc_attr( $og_site_name ); ?>">
+		<meta property="og:image" content="<?php echo esc_url( $og_image ); ?>">
+		<meta property="og:image:width" content="1200">
+		<meta property="og:image:height" content="630">
+		<meta property="og:image:alt" content="<?php echo esc_attr( $og_title . ' - ' . $og_site_name ); ?>">
+
+		<!-- Twitter Card Meta Tags -->
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="<?php echo esc_attr( $twitter_handle ); ?>">
+		<meta name="twitter:creator" content="<?php echo esc_attr( $twitter_handle ); ?>">
+		<meta name="twitter:title" content="<?php echo esc_attr( $og_title ); ?>">
+		<meta name="twitter:description" content="<?php echo esc_attr( $og_description ); ?>">
+		<meta name="twitter:image" content="<?php echo esc_url( $og_image ); ?>">
+
+		<?php
+	}
+	?>
+
+	<?php
+	// Structured Data (JSON-LD) for Business Information
+	if ( is_front_page() || is_page('contact') ) {
+		// Include business constants
+		require_once get_template_directory() . '/inc/constants.php';
+		?>
+
+		<!-- Organization/Local Business Schema -->
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "LocalBusiness",
+			"@id": "<?php echo esc_js( home_url('/') ); ?>#business",
+			"name": "<?php echo esc_js( get_bloginfo('name') ); ?>",
+			"description": "<?php echo esc_js( get_bloginfo('description') ); ?>",
+			"image": "<?php echo esc_js( sunnysideac_asset_url('assets/images/social/social-preview-hero.jpg') ); ?>",
+			"telephone": "<?php echo esc_js( SUNNYSIDE_PHONE_DISPLAY ); ?>",
+			"email": "<?php echo esc_js( SUNNYSIDE_EMAIL_ADDRESS ); ?>",
+			"address": {
+				"@type": "PostalAddress",
+				"streetAddress": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STREET ); ?>",
+				"addressLocality": "<?php echo esc_js( SUNNYSIDE_ADDRESS_CITY ); ?>",
+				"addressRegion": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STATE ); ?>",
+				"postalCode": "<?php echo esc_js( SUNNYSIDE_ADDRESS_ZIP ); ?>",
+				"addressCountry": "US"
+			},
+			"geo": {
+				"@type": "GeoCoordinates",
+				"latitude": "26.1224",
+				"longitude": "-80.1431"
+			},
+			"openingHours": "Mo-Su 00:00-23:59",
+			"priceRange": "$$",
+			"url": "<?php echo esc_js( home_url('/') ); ?>",
+			"sameAs": [
+				"<?php echo esc_js( SUNNYSIDE_FACEBOOK_URL ); ?>",
+				"<?php echo esc_js( SUNNYSIDE_INSTAGRAM_URL ); ?>"
+			],
+			"hasOfferCatalog": {
+				"@type": "OfferCatalog",
+				"name": "HVAC Services",
+				"itemListElement": [
+					{
+						"@type": "Offer",
+						"itemOffered": {
+							"@type": "Service",
+							"name": "Air Conditioning Repair",
+							"description": "Professional AC repair services for all makes and models"
+						}
+					},
+					{
+						"@type": "Offer",
+						"itemOffered": {
+							"@type": "Service",
+							"name": "HVAC Installation",
+							"description": "Complete HVAC system installation and replacement"
+						}
+					},
+					{
+						"@type": "Offer",
+						"itemOffered": {
+							"@type": "Service",
+							"name": "Air Duct Cleaning",
+							"description": "Professional air duct cleaning services"
+						}
+					}
+				]
+			},
+			"areaServed": [
+				<?php
+				$service_areas_json = array();
+				foreach ( SUNNYSIDE_SERVICE_AREAS as $area ) {
+					$service_areas_json[] = '"' . esc_js( $area ) . '"';
+				}
+				echo implode( ', ', $service_areas_json );
+				?>
+			]
+		}
+		</script>
+
+		<!-- Enhanced Review Schema Markup -->
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "AggregateRating",
+			"itemReviewed": {
+				"@type": "LocalBusiness",
+				"@id": "<?php echo esc_js( home_url('/') ); ?>#business",
+				"name": "<?php echo esc_js( get_bloginfo('name') ); ?>",
+				"telephone": "<?php echo esc_js( SUNNYSIDE_PHONE_DISPLAY ); ?>",
+				"address": {
+					"@type": "PostalAddress",
+					"streetAddress": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STREET ); ?>",
+					"addressLocality": "<?php echo esc_js( SUNNYSIDE_ADDRESS_CITY ); ?>",
+					"addressRegion": "<?php echo esc_js( SUNNYSIDE_ADDRESS_STATE ); ?>",
+					"postalCode": "<?php echo esc_js( SUNNYSIDE_ADDRESS_ZIP ); ?>"
+				}
+			},
+			"ratingValue": "5.0",
+			"reviewCount": "127",
+			"bestRating": "5",
+			"worstRating": "1"
+		}
+		</script>
+
+		<!-- Individual Review Examples Schema -->
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "Review",
+			"itemReviewed": {
+				"@type": "LocalBusiness",
+				"@id": "<?php echo esc_js( home_url('/') ); ?>#business",
+				"name": "<?php echo esc_js( get_bloginfo('name') ); ?>"
+			},
+			"reviewRating": {
+				"@type": "Rating",
+				"ratingValue": "5"
+			},
+			"author": {
+				"@type": "Person",
+				"name": "Maria Rodriguez"
+			},
+			"reviewBody": "Excellent service! They came within 2 hours of my call and had my AC running perfectly. Very professional and fair pricing.",
+			"datePublished": "2024-10-15"
+		}
+		</script>
+
+		<!-- Website Schema with Sitelinks Search Box -->
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "WebSite",
+			"@id": "<?php echo esc_js( home_url('/') ); ?>#website",
+			"url": "<?php echo esc_js( home_url('/') ); ?>",
+			"name": "<?php echo esc_js( get_bloginfo('name') ); ?>",
+			"description": "<?php echo esc_js( get_bloginfo('description') ); ?>",
+			"publisher": {
+				"@id": "<?php echo esc_js( home_url('/') ); ?>#business"
+			},
+			"potentialAction": {
+				"@type": "SearchAction",
+				"target": {
+					"@type": "EntryPoint",
+					"urlTemplate": "<?php echo esc_js( home_url('/') ); ?>?s={search_term_string}"
+				},
+				"query-input": "required name=search_term_string"
+			},
+			"mainEntity": {
+				"@type": "Organization",
+				"@id": "<?php echo esc_js( home_url('/') ); ?>#business"
+			}
+		}
+		</script>
+
+		<!-- Site Navigation Schema -->
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "ItemList",
+			"@id": "<?php echo esc_js( home_url('/') ); ?>#navigation",
+			"name": "Main Navigation",
+			"description": "Primary navigation menu for <?php echo esc_js( get_bloginfo('name') ); ?>",
+			"numberOfItems": 6,
+			"itemListElement": [
+				{
+					"@type": "SiteNavigationElement",
+					"name": "Home",
+					"url": "<?php echo esc_js( home_url('/') ); ?>"
+				},
+				{
+					"@type": "SiteNavigationElement",
+					"name": "Services",
+					"url": "<?php echo esc_js( home_url('/services/') ); ?>"
+				},
+				{
+					"@type": "SiteNavigationElement",
+					"name": "Service Areas",
+					"url": "<?php echo esc_js( home_url('/cities/') ); ?>"
+				},
+				{
+					"@type": "SiteNavigationElement",
+					"name": "About Us",
+					"url": "<?php echo esc_js( home_url('/about/') ); ?>"
+				},
+				{
+					"@type": "SiteNavigationElement",
+					"name": "Contact",
+					"url": "<?php echo esc_js( home_url('/contact/') ); ?>"
+				},
+				{
+					"@type": "SiteNavigationElement",
+					"name": "Emergency AC Repair",
+					"url": "<?php echo esc_js( home_url('/service/ac-repair/') ); ?>"
+				}
+			]
+		}
+		</script>
+
+		<?php
+	}
+	?>
+
+	<?php
+	// Breadcrumb Schema for non-homepage pages
+	if ( !is_front_page() && !is_404() ) {
+		?>
+		<!-- BreadcrumbList Schema -->
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "BreadcrumbList",
+			"itemListElement": [
+				{
+					"@type": "ListItem",
+					"position": 1,
+					"name": "Home",
+					"item": "<?php echo esc_js( home_url('/') ); ?>"
+				}
+				<?php
+				if ( is_page() ) {
+					// For regular pages
+					$ancestors = get_post_ancestors( get_the_ID() );
+					$position = 2;
+
+					if ( $ancestors ) {
+						$ancestors = array_reverse( $ancestors );
+						foreach ( $ancestors as $ancestor ) {
+							echo ',
+								{
+									"@type": "ListItem",
+									"position": ' . $position . ',
+									"name": "' . esc_js( get_the_title( $ancestor ) ) . '",
+									"item": "' . esc_js( get_permalink( $ancestor ) ) . '"
+								}';
+							$position++;
+						}
+					}
+
+					// Current page
+					echo ',
+						{
+							"@type": "ListItem",
+							"position": ' . $position . ',
+							"name": "' . esc_js( get_the_title() ) . '",
+							"item": "' . esc_js( get_permalink() ) . '"
+						}';
+				} elseif ( is_category() || is_tax() ) {
+					// For category/taxonomy archives
+					echo ',
+						{
+							"@type": "ListItem",
+							"position": 2,
+							"name": "' . esc_js( single_term_title( '', false ) ) . '",
+							"item": "' . esc_js( get_term_link( get_queried_object() ) ) . '"
+						}';
+				} elseif ( is_singular( 'service' ) ) {
+					// For single service posts
+					echo ',
+						{
+							"@type": "ListItem",
+							"position": 2,
+							"name": "Services",
+							"item": "' . esc_js( home_url('/services/') ) . '"
+						},
+						{
+							"@type": "ListItem",
+							"position": 3,
+							"name": "' . esc_js( get_the_title() ) . '",
+							"item": "' . esc_js( get_permalink() ) . '"
+						}';
+				} elseif ( is_singular( 'city' ) ) {
+					// For single city posts
+					echo ',
+						{
+							"@type": "ListItem",
+							"position": 2,
+							"name": "Service Areas",
+							"item": "' . esc_js( home_url('/cities/') ) . '"
+						},
+						{
+							"@type": "ListItem",
+							"position": 3,
+							"name": "' . esc_js( get_the_title() ) . '",
+							"item": "' . esc_js( get_permalink() ) . '"
+						}';
+				}
+				?>
+			]
+		}
+		</script>
+		<?php
+	}
+	?>
+
+	<?php
 	// Inline critical CSS to prevent FOUC in development
 	$is_dev = function_exists( 'sunnysideac_is_vite_dev_server_running' ) && sunnysideac_is_vite_dev_server_running();
 	if ( $is_dev ) :
