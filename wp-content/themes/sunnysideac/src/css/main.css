@@ -100,13 +100,14 @@ body {
   }
 }
 
+/* Base mobile animation - 28s for smaller circle */
 .rotating-text {
-  animation: rotate 28s linear infinite;
+  animation: rotate 28s linear infinite !important;
 }
 
 /* Faster rotation on desktop to compensate for larger circle */
 @media (min-width: 1024px) {
   .rotating-text {
-    animation: rotate 20s linear infinite;
+    animation: rotate 20s linear infinite !important;
   }
 }
