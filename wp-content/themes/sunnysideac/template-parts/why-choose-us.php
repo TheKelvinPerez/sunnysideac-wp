@@ -32,9 +32,13 @@ $features = array(
 	),
 );
 
-// Images data
+// Images data - optimized with WebP/AVIF support
 $images = array(
-	'main' => sunnysideac_asset_url( 'assets/images/home-page/why-choose-us-main-image.png' ),
+	'main' => array(
+		'avif' => sunnysideac_asset_url( 'assets/images/optimize/why-choose-us-main-image.avif' ),
+		'webp' => sunnysideac_asset_url( 'assets/images/optimize/why-choose-us-main-image.webp' ),
+		'png'  => sunnysideac_asset_url( 'assets/images/optimize/why-choose-us-main-image.png' ),
+	),
 	'icon' => sunnysideac_asset_url( 'assets/images/home-page/why-choose-us-icon.png' ),
 );
 ?>
@@ -75,7 +79,11 @@ $images = array(
 			<div class="mb-6 flex justify-center lg:hidden">
 				<div class="w-full max-w-sm">
 					<?php echo sunnysideac_responsive_image(
-						'assets/images/home-page/why-choose-us-main-image.png',
+						array(
+							'avif' => 'assets/images/optimize/why-choose-us-main-image.avif',
+							'webp' => 'assets/images/optimize/why-choose-us-main-image.webp',
+							'png'  => 'assets/images/optimize/why-choose-us-main-image.png',
+						),
 						array(
 							'alt' => 'Professional HVAC technician working on air conditioning unit',
 							'class' => 'h-auto w-full rounded-2xl shadow-lg',
@@ -137,7 +145,11 @@ $images = array(
 				<div class="hidden items-center justify-center lg:order-2 lg:flex">
 					<div class="w-full max-w-lg">
 						<?php echo sunnysideac_responsive_image(
-							'assets/images/home-page/why-choose-us-main-image.png',
+							array(
+								'avif' => 'assets/images/optimize/why-choose-us-main-image.avif',
+								'webp' => 'assets/images/optimize/why-choose-us-main-image.webp',
+								'png'  => 'assets/images/optimize/why-choose-us-main-image.png',
+							),
 							array(
 								'alt' => 'Professional HVAC technician working on air conditioning unit',
 								'class' => 'h-auto w-full rounded-2xl shadow-lg',

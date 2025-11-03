@@ -4,11 +4,19 @@
  * Displays the family-owned legacy section with images and story content
  */
 
-// Images data
+// Images data - optimized with WebP/AVIF support
 $images = array(
 	'family_owned_icon' => sunnysideac_asset_url( 'assets/images/home-page/family-owned-icon.svg' ),
-	'mom_and_dad'       => sunnysideac_asset_url( 'assets/images/home-page/mom-and-dad.png' ),
-	'kelvins_picture'   => sunnysideac_asset_url( 'assets/images/home-page/kelvins-picture.png' ),
+	'mom_and_dad'       => array(
+		'avif' => sunnysideac_asset_url( 'assets/images/optimize/mom-and-dad.avif' ),
+		'webp' => sunnysideac_asset_url( 'assets/images/optimize/mom-and-dad.webp' ),
+		'png'  => sunnysideac_asset_url( 'assets/images/optimize/mom-and-dad.png' ),
+	),
+	'kelvins_picture'   => array(
+		'avif' => sunnysideac_asset_url( 'assets/images/optimize/kelvins-picture.avif' ),
+		'webp' => sunnysideac_asset_url( 'assets/images/optimize/kelvins-picture.webp' ),
+		'png'  => sunnysideac_asset_url( 'assets/images/optimize/kelvins-picture.png' ),
+	),
 );
 
 // Story content paragraphs
@@ -62,7 +70,11 @@ $story_paragraphs = array(
 						<!-- Mom and Dad - Left Image -->
 						<div class="relative -top-24 z-10 md:-top-40">
 							<?php echo sunnysideac_responsive_image(
-								'assets/images/home-page/mom-and-dad.png',
+								array(
+									'avif' => 'assets/images/optimize/mom-and-dad.avif',
+									'webp' => 'assets/images/optimize/mom-and-dad.webp',
+									'png'  => 'assets/images/optimize/mom-and-dad.png',
+								),
 								array(
 									'alt' => 'Florentino and his wife - founders of Sunny Side AC',
 									'class' => 'h-full w-full rounded-[20px] object-cover shadow-md sm:h-72 sm:w-72 lg:h-90 lg:w-90',
@@ -74,7 +86,11 @@ $story_paragraphs = array(
 						<!-- Kelvin's Picture - Right Image with slight overlap -->
 						<div class="relative top-8 right-6 z-20 md:top-24 md:-left-10">
 							<?php echo sunnysideac_responsive_image(
-								'assets/images/home-page/kelvins-picture.png',
+								array(
+									'avif' => 'assets/images/optimize/kelvins-picture.avif',
+									'webp' => 'assets/images/optimize/kelvins-picture.webp',
+									'png'  => 'assets/images/optimize/kelvins-picture.png',
+								),
 								array(
 									'alt' => 'Kelvin - son and technology lead at Sunny Side AC',
 									'class' => 'h-full w-full rounded-[20px] object-cover shadow-lg sm:h-72 sm:w-72 lg:h-90 lg:w-90',

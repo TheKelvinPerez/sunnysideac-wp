@@ -57,6 +57,9 @@
 	}
 	?>
 
+	<!-- Hreflang and Domain Preference -->
+	<link rel="alternate" hreflang="en" href="https://sunnyside247ac.com<?php echo $_SERVER['REQUEST_URI']; ?>" />
+
 	<?php
 	// Open Graph and Twitter Card Meta Tags (fallback for pages without custom meta)
 	if ( ! defined( 'WPSEO_VERSION' ) && ! defined( 'RANK_MATH_VERSION' ) ) {

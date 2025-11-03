@@ -11,9 +11,13 @@ $icons = array(
 	'arrow_right'      => sunnysideac_asset_url( 'assets/images/home-page/customer-review-arrow.svg' ),
 );
 
-// Images data
+// Images data - optimized with WebP/AVIF support
 $images = array(
-	'customer_review_card' => sunnysideac_asset_url( 'assets/images/home-page/Customer-Review-Card-Image.png' ),
+	'customer_review_card' => array(
+		'avif'  => sunnysideac_asset_url( 'assets/images/optimize/Customer-Review-Card-Image.avif' ),
+		'webp'  => sunnysideac_asset_url( 'assets/images/optimize/Customer-Review-Card-Image.webp' ),
+		'png'   => sunnysideac_asset_url( 'assets/images/optimize/Customer-Review-Card-Image.png' ),
+	),
 	'review_photos'        => array(
 		sunnysideac_asset_url( 'assets/images/home-page/review_photo_1.png' ),
 		sunnysideac_asset_url( 'assets/images/home-page/review_photo_2.png' ),
@@ -89,14 +93,22 @@ $description_text = 'Our greatest reward is the trust and satisfaction of our cu
 			<!-- Image Section -->
 			<div class="mb-8">
 				<div class="relative">
-					<!-- Main Image -->
-					<img
-						src="<?php echo esc_url( $images['customer_review_card'] ); ?>"
-						alt="Customer service representative helping a client"
-						class="mx-auto h-auto w-full max-w-sm rounded-2xl object-cover"
-						loading="lazy"
-						decoding="async"
-					/>
+					<!-- Main Image - Optimized with AVIF/WebP -->
+					<picture>
+						<?php if ( file_exists( get_template_directory() . '/assets/images/optimize/Customer-Review-Card-Image.avif' ) ) : ?>
+							<source srcset="<?php echo esc_url( $images['customer_review_card']['avif'] ); ?>" type="image/avif">
+						<?php endif; ?>
+						<?php if ( file_exists( get_template_directory() . '/assets/images/optimize/Customer-Review-Card-Image.webp' ) ) : ?>
+							<source srcset="<?php echo esc_url( $images['customer_review_card']['webp'] ); ?>" type="image/webp">
+						<?php endif; ?>
+						<img
+							src="<?php echo esc_url( $images['customer_review_card']['png'] ); ?>"
+							alt="Customer service representative helping a client"
+							class="mx-auto h-auto w-full max-w-sm rounded-2xl object-cover"
+							loading="lazy"
+							decoding="async"
+						/>
+					</picture>
 
 					<!-- Stats Card -->
 					<div class="absolute -right-4 bottom-3 md:-right-2">
@@ -339,14 +351,22 @@ $description_text = 'Our greatest reward is the trust and satisfaction of our cu
 			<!-- Right Column: Full-width Image -->
 			<div class="relative">
 				<div class="relative">
-					<!-- Main Image - Full width -->
-					<img
-						src="<?php echo esc_url( $images['customer_review_card'] ); ?>"
-						alt="Customer service representative helping a client"
-						class="h-auto w-full rounded-2xl object-cover"
-						loading="lazy"
-						decoding="async"
-					/>
+					<!-- Main Image - Full width - Optimized with AVIF/WebP -->
+					<picture>
+						<?php if ( file_exists( get_template_directory() . '/assets/images/optimize/Customer-Review-Card-Image.avif' ) ) : ?>
+							<source srcset="<?php echo esc_url( $images['customer_review_card']['avif'] ); ?>" type="image/avif">
+						<?php endif; ?>
+						<?php if ( file_exists( get_template_directory() . '/assets/images/optimize/Customer-Review-Card-Image.webp' ) ) : ?>
+							<source srcset="<?php echo esc_url( $images['customer_review_card']['webp'] ); ?>" type="image/webp">
+						<?php endif; ?>
+						<img
+							src="<?php echo esc_url( $images['customer_review_card']['png'] ); ?>"
+							alt="Customer service representative helping a client"
+							class="h-auto w-full rounded-2xl object-cover"
+							loading="lazy"
+							decoding="async"
+						/>
+					</picture>
 
 					<!-- Stats Card -->
 					<div class="absolute -right-6 bottom-8">

@@ -184,6 +184,12 @@ function sunnysideac_responsive_image( $path, $args = array() ) {
 
 	$args = wp_parse_args( $args, $defaults );
 
+	// Handle new array-based path format
+	if ( is_array( $path ) ) {
+		$image_paths = $path;
+		$path = $image_paths['png'] ?? ''; // Default to PNG as fallback
+	}
+
 	// Check if optimized version exists
 	$optimized_path = str_replace( 'assets/', 'assets/images/optimize/', $path );
 	$webp_path = preg_replace( '/\.(png|jpg|jpeg)$/i', '.webp', $optimized_path );
@@ -199,18 +205,32 @@ function sunnysideac_responsive_image( $path, $args = array() ) {
 	$webp_url = '';
 	$avif_url = '';
 
-	if ( file_exists( $optimized_file ) ) {
-		$image_url = sunnysideac_asset_url( $optimized_path );
+	// Use array format if available, otherwise fall back to generated paths
+	if ( isset( $image_paths ) && is_array( $image_paths ) ) {
+		if ( ! empty( $image_paths['png'] ) ) {
+			$image_url = sunnysideac_asset_url( $image_paths['png'] );
+		}
+		if ( $args['webp'] && ! empty( $image_paths['webp'] ) ) {
+			$webp_url = sunnysideac_asset_url( $image_paths['webp'] );
+		}
+		if ( $args['avif'] && ! empty( $image_paths['avif'] ) ) {
+			$avif_url = sunnysideac_asset_url( $image_paths['avif'] );
+		}
 	} else {
-		$image_url = sunnysideac_asset_url( $path );
-	}
+		// Fallback to original logic for string paths
+		if ( file_exists( $optimized_file ) ) {
+			$image_url = sunnysideac_asset_url( $optimized_path );
+		} else {
+			$image_url = sunnysideac_asset_url( $path );
+		}
 
-	if ( $args['webp'] && file_exists( $webp_file ) ) {
-		$webp_url = sunnysideac_asset_url( $webp_path );
-	}
+		if ( $args['webp'] && file_exists( $webp_file ) ) {
+			$webp_url = sunnysideac_asset_url( $webp_path );
+		}
 
-	if ( $args['avif'] && file_exists( $avif_file ) ) {
-		$avif_url = sunnysideac_asset_url( $avif_path );
+		if ( $args['avif'] && file_exists( $avif_file ) ) {
+			$avif_url = sunnysideac_asset_url( $avif_path );
+		}
 	}
 
 	// Build responsive image HTML
