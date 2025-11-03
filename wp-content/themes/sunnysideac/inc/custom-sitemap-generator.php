@@ -4,8 +4,9 @@
  *
  * This class generates a comprehensive sitemap index that includes:
  * - Standard WordPress sitemaps (pages, posts, categories)
- * - Dynamic sitemaps (areas, brands, service-city combinations)
- * - Bypasses RankMath limitations for custom sitemap inclusion
+ * - Dynamic sitemaps (cities, brands, services, service-city combinations)
+ * - Respects all custom redirects and URL rewrites
+ * - Cache-busting version parameters for dynamic content
  *
  * @package SunnysideAC
  */
@@ -13,11 +14,23 @@
 class Sunnyside_Custom_Sitemap_Generator {
 
     /**
+     * Excluded service slugs that redirect elsewhere
+     */
+    private $excluded_service_slugs = array(
+        'emergency-hvac',
+        'emergency-ac',
+        '24-hour-emergency',
+        'emergency-service',
+        'ductless-mini-splits', // Redirects to singular form
+    );
+
+    /**
      * Initialize the custom sitemap system
      */
     public function __construct() {
         add_action('init', [$this, 'add_sitemap_rewrite_rules']);
         add_action('template_redirect', [$this, 'handle_sitemap_requests']);
+        add_filter('query_vars', [$this, 'add_query_vars']);
     }
 
     /**
@@ -33,14 +46,20 @@ class Sunnyside_Custom_Sitemap_Generator {
 
         // Individual sitemap handlers
         add_rewrite_rule(
-            '^areas-sitemap\.xml$',
-            'index.php?custom_sitemap=areas',
+            '^cities-sitemap\.xml$',
+            'index.php?custom_sitemap=cities',
             'top'
         );
 
         add_rewrite_rule(
             '^brands-sitemap\.xml$',
             'index.php?custom_sitemap=brands',
+            'top'
+        );
+
+        add_rewrite_rule(
+            '^services-sitemap\.xml$',
+            'index.php?custom_sitemap=services',
             'top'
         );
 
@@ -80,11 +99,14 @@ class Sunnyside_Custom_Sitemap_Generator {
                 case 'index':
                     $this->generate_sitemap_index();
                     break;
-                case 'areas':
-                    $this->generate_areas_sitemap();
+                case 'cities':
+                    $this->generate_cities_sitemap();
                     break;
                 case 'brands':
                     $this->generate_brands_sitemap();
+                    break;
+                case 'services':
+                    $this->generate_services_sitemap();
                     break;
                 case 'service-city':
                     $this->generate_service_city_sitemap();
@@ -115,11 +137,10 @@ class Sunnyside_Custom_Sitemap_Generator {
      * Generate the main sitemap index
      */
     private function generate_sitemap_index() {
-        $base_url = home_url('/');
+        $base_url = trailingslashit(home_url());
         $current_time = mysql2date('c', current_time('mysql'), false);
 
         echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-        echo '<?xml-stylesheet type="text/xsl" href="' . $base_url . 'main-sitemap.xsl"?>' . "\n";
         echo '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
 
         // Standard WordPress sitemaps
@@ -130,20 +151,10 @@ class Sunnyside_Custom_Sitemap_Generator {
 
         // Our custom dynamic sitemaps (add version to break cache)
         $version = date('YmdHis'); // Current timestamp as version
-        $this->add_sitemap_to_index($base_url . 'areas-sitemap.xml?v=' . $version, $current_time);
+        $this->add_sitemap_to_index($base_url . 'cities-sitemap.xml?v=' . $version, $current_time);
         $this->add_sitemap_to_index($base_url . 'brands-sitemap.xml?v=' . $version, $current_time);
-
-        // Service-city sitemap (may have multiple pages)
-        $service_areas_count = defined('SUNNYSIDE_SERVICE_AREAS') ? count(SUNNYSIDE_SERVICE_AREAS) : 0;
-        $services_count = wp_count_posts('service')->publish;
-        $total_urls = $service_areas_count * $services_count;
-        $max_entries = 2000;
-        $pages_needed = (int) ceil($total_urls / $max_entries);
-
-        for ($page = 1; $page <= $pages_needed; $page++) {
-            $suffix = $page > 1 ? $page : '';
-            $this->add_sitemap_to_index($base_url . 'service-city-sitemap' . $suffix . '.xml', $current_time);
-        }
+        $this->add_sitemap_to_index($base_url . 'services-sitemap.xml?v=' . $version, $current_time);
+        $this->add_sitemap_to_index($base_url . 'service-city-sitemap.xml?v=' . $version, $current_time);
 
         echo '</sitemapindex>';
     }
@@ -159,21 +170,29 @@ class Sunnyside_Custom_Sitemap_Generator {
     }
 
     /**
-     * Generate areas sitemap
+     * Generate cities sitemap
+     * Uses /cities/{city}/ URL pattern (not /areas/)
      */
-    private function generate_areas_sitemap() {
-        $base_url = home_url('/');
+    private function generate_cities_sitemap() {
+        $base_url = trailingslashit(home_url());
         $current_time = mysql2date('c', current_time('mysql'), false);
 
         echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-        echo '<?xml-stylesheet type="text/xsl" href="' . $base_url . 'main-sitemap.xsl"?>' . "\n";
         echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
 
-        $service_areas = defined('SUNNYSIDE_SERVICE_AREAS') ? SUNNYSIDE_SERVICE_AREAS : array();
+        // Get all published city posts
+        $cities = get_posts([
+            'post_type' => 'city',
+            'post_status' => 'publish',
+            'posts_per_page' => -1,
+            'orderby' => 'title',
+            'order' => 'ASC'
+        ]);
 
-        foreach ($service_areas as $area) {
-            $url = $base_url . 'cities/' . sanitize_title($area) . '/';
-            $this->add_url_to_sitemap($url, $current_time);
+        foreach ($cities as $city) {
+            $url = $base_url . 'cities/' . $city->post_name . '/';
+            $lastmod = mysql2date('c', $city->post_modified_gmt, false);
+            $this->add_url_to_sitemap($url, $lastmod, '0.8', 'weekly');
         }
 
         echo '</urlset>';
@@ -183,10 +202,9 @@ class Sunnyside_Custom_Sitemap_Generator {
      * Generate brands sitemap
      */
     private function generate_brands_sitemap() {
-        $base_url = home_url('/');
+        $base_url = trailingslashit(home_url());
 
         echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-        echo '<?xml-stylesheet type="text/xsl" href="' . $base_url . 'main-sitemap.xsl"?>' . "\n";
         echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
 
         // Get all published brands
@@ -201,15 +219,55 @@ class Sunnyside_Custom_Sitemap_Generator {
         foreach ($brands as $brand) {
             $url = $base_url . 'brands/' . $brand->post_name . '/';
             $lastmod = mysql2date('c', $brand->post_modified_gmt, false);
-            $this->add_url_to_sitemap($url, $lastmod);
+            $this->add_url_to_sitemap($url, $lastmod, '0.7', 'monthly');
         }
 
-        // Add special Daikin URL if Daikin brand exists
+        // Add special Daikin product pages if Daikin brand exists
         $daikin = get_page_by_path('daikin', OBJECT, 'brand');
-        if ($daikin) {
-            $url = $base_url . 'daikin/air-conditioners/';
+        if ($daikin && defined('SUNNYSIDE_DAIKIN_PRODUCTS')) {
             $lastmod = mysql2date('c', $daikin->post_modified_gmt, false);
-            $this->add_url_to_sitemap($url, $lastmod);
+
+            // Add the special /daikin/air-conditioners/ URL
+            $this->add_url_to_sitemap($base_url . 'daikin/air-conditioners/', $lastmod, '0.7', 'monthly');
+
+            // Add all Daikin product pages from constants
+            foreach (SUNNYSIDE_DAIKIN_PRODUCTS as $product) {
+                $product_url = $base_url . 'daikin/' . $product['slug'] . '/';
+                $this->add_url_to_sitemap($product_url, $lastmod, '0.7', 'monthly');
+            }
+        }
+
+        echo '</urlset>';
+    }
+
+    /**
+     * Generate services sitemap
+     * Excludes services that redirect elsewhere
+     */
+    private function generate_services_sitemap() {
+        $base_url = trailingslashit(home_url());
+
+        echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+        echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+
+        // Get all published services
+        $services = get_posts([
+            'post_type' => 'service',
+            'post_status' => 'publish',
+            'posts_per_page' => -1,
+            'orderby' => 'title',
+            'order' => 'ASC'
+        ]);
+
+        foreach ($services as $service) {
+            // Skip services that redirect elsewhere
+            if (in_array($service->post_name, $this->excluded_service_slugs)) {
+                continue;
+            }
+
+            $url = $base_url . 'services/' . $service->post_name . '/';
+            $lastmod = mysql2date('c', $service->post_modified_gmt, false);
+            $this->add_url_to_sitemap($url, $lastmod, '0.9', 'weekly');
         }
 
         echo '</urlset>';
@@ -217,12 +275,13 @@ class Sunnyside_Custom_Sitemap_Generator {
 
     /**
      * Generate service-city sitemap
+     * Uses root-level /{city}/{service}/ URL pattern
+     * Excludes services that redirect elsewhere
      */
     private function generate_service_city_sitemap() {
-        $base_url = home_url('/');
+        $base_url = trailingslashit(home_url());
 
         echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-        echo '<?xml-stylesheet type="text/xsl" href="' . $base_url . 'main-sitemap.xsl"?>' . "\n";
         echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
 
         // Get all published cities and services
@@ -242,22 +301,24 @@ class Sunnyside_Custom_Sitemap_Generator {
             'order' => 'ASC'
         ]);
 
-        // Add main service pages first
-        foreach ($services as $service) {
-            $url = $base_url . 'services/' . $service->post_name . '/';
-            $lastmod = mysql2date('c', $service->post_modified_gmt, false);
-            $this->add_url_to_sitemap($url, $lastmod);
-        }
-
-        // Generate all city-service combinations
+        // Generate all city-service combinations using /{city}/{service}/ pattern
         foreach ($cities as $city) {
             foreach ($services as $service) {
+                // Skip services that redirect elsewhere
+                if (in_array($service->post_name, $this->excluded_service_slugs)) {
+                    continue;
+                }
+
+                // Use root-level URL pattern: /{city}/{service}/
                 $url = $base_url . $city->post_name . '/' . $service->post_name . '/';
-                $lastmod = max(
-                    mysql2date('c', $city->post_modified_gmt, false),
-                    mysql2date('c', $service->post_modified_gmt, false)
-                );
-                $this->add_url_to_sitemap($url, $lastmod);
+
+                // Use the most recent modification date
+                $city_time = strtotime($city->post_modified_gmt);
+                $service_time = strtotime($service->post_modified_gmt);
+                $latest_time = max($city_time, $service_time);
+                $lastmod = mysql2date('c', gmdate('Y-m-d H:i:s', $latest_time), false);
+
+                $this->add_url_to_sitemap($url, $lastmod, '0.8', 'weekly');
             }
         }
 
@@ -265,12 +326,14 @@ class Sunnyside_Custom_Sitemap_Generator {
     }
 
     /**
-     * Add a URL to the sitemap
+     * Add a URL to the sitemap with optional priority and changefreq
      */
-    private function add_url_to_sitemap($loc, $lastmod) {
+    private function add_url_to_sitemap($loc, $lastmod, $priority = '0.5', $changefreq = 'monthly') {
         echo '  <url>' . "\n";
         echo '    <loc>' . esc_url($loc) . '</loc>' . "\n";
         echo '    <lastmod>' . esc_html($lastmod) . '</lastmod>' . "\n";
+        echo '    <changefreq>' . esc_html($changefreq) . '</changefreq>' . "\n";
+        echo '    <priority>' . esc_html($priority) . '</priority>' . "\n";
         echo '  </url>' . "\n";
     }
 }
