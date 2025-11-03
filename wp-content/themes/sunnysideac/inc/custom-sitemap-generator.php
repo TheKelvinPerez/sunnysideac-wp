@@ -6,7 +6,7 @@
  * - Standard WordPress sitemaps (pages, posts, categories)
  * - Dynamic sitemaps (cities, brands, services, service-city combinations)
  * - Respects all custom redirects and URL rewrites
- * - Cache-busting version parameters for dynamic content
+ * - Proper HTTP caching headers for search engine optimization
  *
  * @package SunnysideAC
  */
@@ -149,12 +149,11 @@ class Sunnyside_Custom_Sitemap_Generator {
         $this->add_sitemap_to_index($base_url . 'category-sitemap.xml', $current_time);
         $this->add_sitemap_to_index($base_url . 'tag-sitemap.xml', $current_time);
 
-        // Our custom dynamic sitemaps (add version to break cache)
-        $version = date('YmdHis'); // Current timestamp as version
-        $this->add_sitemap_to_index($base_url . 'cities-sitemap.xml?v=' . $version, $current_time);
-        $this->add_sitemap_to_index($base_url . 'brands-sitemap.xml?v=' . $version, $current_time);
-        $this->add_sitemap_to_index($base_url . 'services-sitemap.xml?v=' . $version, $current_time);
-        $this->add_sitemap_to_index($base_url . 'service-city-sitemap.xml?v=' . $version, $current_time);
+        // Our custom dynamic sitemaps
+        $this->add_sitemap_to_index($base_url . 'cities-sitemap.xml', $current_time);
+        $this->add_sitemap_to_index($base_url . 'brands-sitemap.xml', $current_time);
+        $this->add_sitemap_to_index($base_url . 'services-sitemap.xml', $current_time);
+        $this->add_sitemap_to_index($base_url . 'service-city-sitemap.xml', $current_time);
 
         echo '</sitemapindex>';
     }
