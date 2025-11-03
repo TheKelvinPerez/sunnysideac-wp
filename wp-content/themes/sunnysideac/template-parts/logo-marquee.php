@@ -82,8 +82,8 @@ $icon_url = get_template_directory_uri() . '/assets/images/home-page/trusted-bra
 		<div class="relative overflow-hidden rounded-[20px]">
 			<div
 				id="logo-marquee-container"
-				class="flex items-center"
-				style="width: fit-content;"
+				class="flex items-center min-h-24 md:min-h-28 lg:min-h-32"
+				style="width: fit-content; will-change: transform; transition: none !important;"
 				data-logos="<?php echo esc_attr( wp_json_encode( $company_logos ) ); ?>"
 			>
 				<!-- Logo instances will be dynamically added here -->
