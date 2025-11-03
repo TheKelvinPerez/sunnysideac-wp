@@ -89,3 +89,24 @@
 body {
   @apply bg-gray-50;
 }
+
+/* Rotating text animation for customer reviews circular badge */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotating-text {
+  animation: rotate 28s linear infinite;
+}
+
+/* Faster rotation on desktop to compensate for larger circle */
+@media (min-width: 1024px) {
+  .rotating-text {
+    animation: rotate 20s linear infinite;
+  }
+}

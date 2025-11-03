@@ -413,18 +413,3 @@ $description_text = 'Our greatest reward is the trust and satisfaction of our cu
 		</div>
 	</div>
 </section>
-
-<style>
-	.rotating-text {
-		animation: rotate 20s linear infinite;
-	}
-
-	@keyframes rotate {
-		from {
-			transform: rotate(0deg);
-		}
-		to {
-			transform: rotate(360deg);
-		}
-	}
-</style>
