@@ -1288,21 +1288,6 @@ function sunnysideac_handle_emergency_redirects() {
 		wp_redirect( home_url( "/{$city_slug}/ductless-mini-split/" ), 301 );
 		exit;
 	}
-
-	// Check for misspelled furnace URLs and redirect to correct spelling
-	if ( preg_match( '/^\/services\/furnances\/?$/', $request_uri ) ||
-	     preg_match( '/^\/([^\/]+)\/furnances\/?$/', $request_uri, $matches ) ) {
-		if ( isset( $matches[1] ) ) {
-			// City-service combination
-			$city_slug = $matches[1];
-			wp_redirect( home_url( "/{$city_slug}/furnaces/" ), 301 );
-		} else {
-			// Main service page
-			wp_redirect( home_url( '/services/furnaces/' ), 301 );
-		}
-		exit;
-	}
-}
 add_action( 'template_redirect', 'sunnysideac_handle_emergency_redirects', 0 );
 
 /**
