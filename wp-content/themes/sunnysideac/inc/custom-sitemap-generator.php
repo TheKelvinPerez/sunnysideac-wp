@@ -241,6 +241,13 @@ class Sunnyside_Custom_Sitemap_Generator {
             'order' => 'ASC'
         ]);
 
+        // Add main service pages first
+        foreach ($services as $service) {
+            $url = $base_url . 'services/' . $service->post_name . '/';
+            $lastmod = mysql2date('c', $service->post_modified_gmt, false);
+            $this->add_url_to_sitemap($url, $lastmod);
+        }
+
         // Generate all city-service combinations
         foreach ($cities as $city) {
             foreach ($services as $service) {

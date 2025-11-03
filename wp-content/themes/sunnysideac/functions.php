@@ -1240,7 +1240,24 @@ function sunnysideac_handle_bare_urls_404s() {
 		}
 	}
 }
-add_action( 'template_redirect', 'sunnysideac_handle_bare_urls_404s' );
+add_action( 'template_redirect', 'sunnysideac_handle_bare_urls_404s', 1 );
+
+/**
+ * Handle emergency service redirects early
+ */
+function sunnysideac_handle_emergency_redirects() {
+	$request_uri = $_SERVER['REQUEST_URI'] ?? '';
+
+	// Check for emergency service URLs and redirect
+	if ( strpos( $request_uri, '/services/emergency-hvac' ) !== false ||
+	     strpos( $request_uri, '/services/emergency-ac' ) !== false ||
+	     strpos( $request_uri, '/services/24-hour-emergency' ) !== false ||
+	     strpos( $request_uri, '/services/emergency-service' ) !== false ) {
+		wp_redirect( home_url( '/services/ac-repair/' ), 301 );
+		exit;
+	}
+}
+add_action( 'template_redirect', 'sunnysideac_handle_emergency_redirects', 0 );
 
 /**
  * Handle custom sitemap requests - Improved pattern matching
@@ -1271,7 +1288,11 @@ function sunnysideac_handle_custom_sitemaps() {
 		$generator->handle_sitemap_requests();
 	}
 }
-// Temporarily disabled - add_action( 'template_redirect', 'sunnysideac_handle_custom_sitemaps', 1 );
+add_action( 'template_redirect', 'sunnysideac_handle_custom_sitemaps', 1 );
+
+// Initialize custom sitemap generator
+require_once get_template_directory() . '/inc/custom-sitemap-generator.php';
+new Sunnyside_Custom_Sitemap_Generator();
 
 /**
  * Force city templates for proper routing
