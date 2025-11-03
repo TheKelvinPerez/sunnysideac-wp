@@ -128,9 +128,10 @@ class Sunnyside_Custom_Sitemap_Generator {
         $this->add_sitemap_to_index($base_url . 'category-sitemap.xml', $current_time);
         $this->add_sitemap_to_index($base_url . 'tag-sitemap.xml', $current_time);
 
-        // Our custom dynamic sitemaps
-        $this->add_sitemap_to_index($base_url . 'areas-sitemap.xml', $current_time);
-        $this->add_sitemap_to_index($base_url . 'brands-sitemap.xml', $current_time);
+        // Our custom dynamic sitemaps (add version to break cache)
+        $version = date('YmdHis'); // Current timestamp as version
+        $this->add_sitemap_to_index($base_url . 'areas-sitemap.xml?v=' . $version, $current_time);
+        $this->add_sitemap_to_index($base_url . 'brands-sitemap.xml?v=' . $version, $current_time);
 
         // Service-city sitemap (may have multiple pages)
         $service_areas_count = defined('SUNNYSIDE_SERVICE_AREAS') ? count(SUNNYSIDE_SERVICE_AREAS) : 0;
