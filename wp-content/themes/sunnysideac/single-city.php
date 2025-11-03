@@ -391,7 +391,7 @@ if ( have_posts() ) :
 							<p class="text-lg text-gray-600">We also serve these surrounding communities</p>
 						</div>
 
-						<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+						<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
 							<?php
 							$current_city  = get_the_title();
 							$nearby_cities = array_slice( SUNNYSIDE_SERVICE_AREAS, 0, 12 ); // Show first 12 cities
