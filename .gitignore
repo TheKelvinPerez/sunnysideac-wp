@@ -6,6 +6,7 @@
 !wp-config-template.php
 !robots-template.txt
 !SECURITY-SETUP.md
+!README.md
 !.gitignore
 
 # Critical build and deployment files (never ignore)
