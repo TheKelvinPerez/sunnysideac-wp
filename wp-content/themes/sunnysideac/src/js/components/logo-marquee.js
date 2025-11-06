@@ -50,28 +50,87 @@ export function initLogoMarquee() {
 	// Animation speed
 	const speed = 0.8; // pixels per frame at 60fps
 
-	// Measure actual logo width
+	// Cache for measured values to prevent forced reflows
+	let cachedLogoWidth = null;
+	let cachedContainerWidth = null;
+	let resizeObserver = null;
+	let lastResizeCheck = 0;
+
+	// Measure actual logo width (cached to prevent forced reflows)
 	function getActualLogoWidth() {
-		if (container.children.length > 0) {
-			const firstLogo = container.children[0];
-			const computedStyle = window.getComputedStyle(firstLogo);
-			const width = firstLogo.offsetWidth;
-			const marginLeft = parseInt(computedStyle.marginLeft) || 0;
-			const marginRight = parseInt(computedStyle.marginRight) || 0;
-			const totalWidth = width + marginLeft + marginRight;
-
-			if (DEBUG && frameCount % 300 === 0) {
-				console.log('[Logo Marquee] Logo width:', {
-					width,
-					marginLeft,
-					marginRight,
-					totalWidth
-				});
-			}
-
-			return totalWidth;
+		// Return cached value if available
+		if (cachedLogoWidth !== null) {
+			return cachedLogoWidth;
 		}
-		return 136; // fallback (96px + 40px margins)
+
+		if (container.children.length > 0) {
+			// Batch all DOM reads together to prevent forced reflows
+			const firstLogo = container.children[0];
+
+			// Use requestAnimationFrame to schedule measurements safely
+			const measureLogo = () => {
+				const computedStyle = window.getComputedStyle(firstLogo);
+				const width = firstLogo.offsetWidth;
+				const marginLeft = parseInt(computedStyle.marginLeft) || 0;
+				const marginRight = parseInt(computedStyle.marginRight) || 0;
+				const totalWidth = width + marginLeft + marginRight;
+
+				if (DEBUG) {
+					console.log('[Logo Marquee] Measured logo width:', {
+						width,
+						marginLeft,
+						marginRight,
+						totalWidth
+					});
+				}
+
+				cachedLogoWidth = totalWidth;
+				return totalWidth;
+			};
+
+			return measureLogo();
+		}
+		cachedLogoWidth = 136; // fallback (96px + 40px margins)
+		return cachedLogoWidth;
+	}
+
+	// Get container width (cached to prevent forced reflows)
+	function getContainerWidth() {
+		// Return cached value if available
+		if (cachedContainerWidth !== null) {
+			return cachedContainerWidth;
+		}
+
+		if (container && container.parentElement) {
+			const width = container.parentElement.offsetWidth;
+			cachedContainerWidth = width;
+			return width;
+		}
+		return 800; // fallback width
+	}
+
+	// Setup ResizeObserver to invalidate cache when dimensions change
+	function setupResizeObserver() {
+		if (!window.ResizeObserver) {
+			return; // ResizeObserver not supported
+		}
+
+		resizeObserver = new ResizeObserver(entries => {
+			// Invalidate cache when container resizes
+			cachedContainerWidth = null;
+			cachedLogoWidth = null;
+			if (DEBUG) {
+				console.log('[Logo Marquee] Container resized, cache invalidated');
+			}
+		});
+
+		// Observe container and parent for size changes
+		if (container.parentElement) {
+			resizeObserver.observe(container.parentElement);
+		}
+		if (container.children.length > 0) {
+			resizeObserver.observe(container.children[0]);
+		}
 	}
 
 	// Create logo element HTML
@@ -129,11 +188,14 @@ export function initLogoMarquee() {
 			container.appendChild(element);
 		});
 
-		if (DEBUG) {
-			console.log('[Logo Marquee] Initialized with', logoInstances.length, 'logo instances');
-			console.log('[Logo Marquee] Container width:', container.offsetWidth);
-			console.log('[Logo Marquee] Container scroll width:', container.scrollWidth);
-		}
+		// Batch DOM measurements after DOM is updated to prevent forced reflows
+		requestAnimationFrame(() => {
+			if (DEBUG) {
+				console.log('[Logo Marquee] Initialized with', logoInstances.length, 'logo instances');
+				console.log('[Logo Marquee] Container width:', getContainerWidth());
+				console.log('[Logo Marquee] Logo width:', getActualLogoWidth());
+			}
+		});
 
 		return true;
 	}
@@ -154,9 +216,9 @@ export function initLogoMarquee() {
 
 			translateX -= speed;
 
-			// Use actual measured logo width
+			// Use cached measurements to prevent forced reflows
 			const actualLogoWidth = getActualLogoWidth();
-			const containerWidth = container.parentElement.offsetWidth;
+			const containerWidth = getContainerWidth();
 			const bufferZone = containerWidth * 0.4; // 40% buffer space
 
 			// Log every 300 frames (approximately every 5 seconds at 60fps)
@@ -189,7 +251,7 @@ export function initLogoMarquee() {
 				if (firstInstance) {
 					logoInstances.push(firstInstance);
 
-					// Remove the first DOM element and recreate it at the end
+					// Batch DOM operations: remove first element
 					if (container.firstChild) {
 						container.removeChild(container.firstChild);
 					}
@@ -206,13 +268,13 @@ export function initLogoMarquee() {
 						});
 					}
 
-					// Recreate and append the element at the end
+					// Create and append the element at the end
 					const element = createLogoElement(firstInstance);
 					container.appendChild(element);
 				}
 			}
 
-			// Apply transform
+			// Apply transform (only DOM write in this frame)
 			const transformValue = `translateX(${translateX}px)`;
 			container.style.transform = transformValue;
 
@@ -305,6 +367,7 @@ export function initLogoMarquee() {
 		}
 
 		addEventListeners();
+		setupResizeObserver();
 
 		// Start animation
 		animationRef = requestAnimationFrame(animate);
@@ -349,6 +412,10 @@ export function initLogoMarquee() {
 			if (DEBUG) console.log('[Logo Marquee] Cleaning up animation');
 			cancelAnimationFrame(animationRef);
 		}
+		if (resizeObserver) {
+			resizeObserver.disconnect();
+			if (DEBUG) console.log('[Logo Marquee] ResizeObserver disconnected');
+		}
 	});
 
 	// Expose for debugging
@@ -359,8 +426,10 @@ export function initLogoMarquee() {
 			logoInstances: logoInstances.length,
 			setCounter,
 			frameCount,
-			containerWidth: container?.parentElement?.offsetWidth,
-			logoWidth: getActualLogoWidth()
+			containerWidth: getContainerWidth(),
+			logoWidth: getActualLogoWidth(),
+			cachedLogoWidth,
+			cachedContainerWidth
 		}),
 		pause: () => {
 			console.log('[Logo Marquee] Manual pause');
@@ -371,10 +440,17 @@ export function initLogoMarquee() {
 			isPaused = false;
 		},
 		reset: () => {
-			console.log('[Logo Marquee] Manual reset');
+			console.log('[Logo Marquee] Manual reset - invalidating cache');
 			translateX = 0;
 			frameCount = 0;
+			cachedLogoWidth = null;
+			cachedContainerWidth = null;
 			initializeLogos();
+		},
+		invalidateCache: () => {
+			console.log('[Logo Marquee] Manual cache invalidation');
+			cachedLogoWidth = null;
+			cachedContainerWidth = null;
 		},
 		toggleDebug: () => {
 			// This won't work dynamically since DEBUG is const, but helpful reminder

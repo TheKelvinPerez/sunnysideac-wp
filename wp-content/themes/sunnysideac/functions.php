@@ -1116,6 +1116,18 @@ function sunnysideac_add_cities_city_rewrite() {
 add_action( 'init', 'sunnysideac_add_cities_city_rewrite', 15 );
 
 /**
+ * Add rewrite for /areas/{city}/ → city page (legacy support)
+ */
+function sunnysideac_add_areas_city_rewrite() {
+	add_rewrite_rule(
+		'^areas/([^/]+)/?$',
+		'index.php?city=$matches[1]',
+		'top'
+	);
+}
+add_action( 'init', 'sunnysideac_add_areas_city_rewrite', 15 );
+
+/**
  * Add rewrite for /daikin/{product}/ → Daikin product page
  */
 function sunnysideac_add_daikin_product_rewrite() {
@@ -1256,25 +1268,50 @@ function sunnysideac_handle_emergency_redirects() {
 		wp_redirect( home_url( '/services/ac-repair/' ), 301 );
 		exit;
 	}
+
+	// Check for plural ductless mini splits URL and redirect to singular
+	if ( strpos( $request_uri, '/services/ductless-mini-splits' ) !== false ) {
+		wp_redirect( home_url( '/services/ductless-mini-split/' ), 301 );
+		exit;
+	}
+
+	// Check for /areas/ URLs and redirect to /cities/ for SEO consistency
+	if ( preg_match( '/^\/areas\/([^\/]+)\/?$/', $request_uri, $matches ) ) {
+		$city_slug = $matches[1];
+		wp_redirect( home_url( "/cities/{$city_slug}/" ), 301 );
+		exit;
+	}
+
+	// Check for city-service plural ductless mini splits URLs and redirect to singular
+	if ( preg_match( '/^\/([^\/]+)\/ductless-mini-splits\/?$/', $request_uri, $matches ) ) {
+		$city_slug = $matches[1];
+		wp_redirect( home_url( "/{$city_slug}/ductless-mini-split/" ), 301 );
+		exit;
+	}
 }
 add_action( 'template_redirect', 'sunnysideac_handle_emergency_redirects', 0 );
 
 /**
- * Handle custom sitemap requests - Improved pattern matching
+ * Handle custom sitemap requests - Updated for new sitemap structure
  */
 function sunnysideac_handle_custom_sitemaps() {
 	$request_uri = $_SERVER['REQUEST_URI'] ?? '';
 
+	// Strip query string for pattern matching
+	$request_uri_clean = strtok($request_uri, '?');
+
 	// Determine sitemap type with more specific patterns
 	$sitemap_type = null;
 
-	if ( $request_uri === '/sitemap.xml' || $request_uri === '/sitemap.xml/' ) {
+	if ( $request_uri_clean === '/sitemap.xml' || $request_uri_clean === '/sitemap.xml/' ) {
 		$sitemap_type = 'index';
-	} elseif ( $request_uri === '/areas-sitemap.xml' || $request_uri === '/areas-sitemap.xml/' ) {
-		$sitemap_type = 'areas';
-	} elseif ( $request_uri === '/brands-sitemap.xml' || $request_uri === '/brands-sitemap.xml/' ) {
+	} elseif ( $request_uri_clean === '/cities-sitemap.xml' || $request_uri_clean === '/cities-sitemap.xml/' ) {
+		$sitemap_type = 'cities';
+	} elseif ( $request_uri_clean === '/brands-sitemap.xml' || $request_uri_clean === '/brands-sitemap.xml/' ) {
 		$sitemap_type = 'brands';
-	} elseif ( $request_uri === '/service-city-sitemap.xml' || $request_uri === '/service-city-sitemap.xml/' ) {
+	} elseif ( $request_uri_clean === '/services-sitemap.xml' || $request_uri_clean === '/services-sitemap.xml/' ) {
+		$sitemap_type = 'services';
+	} elseif ( $request_uri_clean === '/service-city-sitemap.xml' || $request_uri_clean === '/service-city-sitemap.xml/' ) {
 		$sitemap_type = 'service-city';
 	}
 
@@ -1292,7 +1329,6 @@ add_action( 'template_redirect', 'sunnysideac_handle_custom_sitemaps', 1 );
 
 // Initialize custom sitemap generator
 require_once get_template_directory() . '/inc/custom-sitemap-generator.php';
-new Sunnyside_Custom_Sitemap_Generator();
 
 /**
  * Force city templates for proper routing
