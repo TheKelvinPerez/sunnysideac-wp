@@ -111,6 +111,18 @@ class Sunnyside_Custom_Sitemap_Generator {
                 case 'service-city':
                     $this->generate_service_city_sitemap();
                     break;
+                case 'page':
+                    $this->generate_wordpress_sitemap('page');
+                    break;
+                case 'category':
+                    $this->generate_wordpress_sitemap('category');
+                    break;
+                case 'post':
+                    $this->generate_wordpress_sitemap('post');
+                    break;
+                case 'tag':
+                    $this->generate_wordpress_sitemap('tag');
+                    break;
                 default:
                     $this->generate_error_response('Invalid sitemap type');
                     break;
@@ -334,6 +346,97 @@ class Sunnyside_Custom_Sitemap_Generator {
         echo '    <changefreq>' . esc_html($changefreq) . '</changefreq>' . "\n";
         echo '    <priority>' . esc_html($priority) . '</priority>' . "\n";
         echo '  </url>' . "\n";
+    }
+
+    /**
+     * Generate standard WordPress sitemaps (pages, posts, categories, tags)
+     */
+    private function generate_wordpress_sitemap($post_type) {
+        $base_url = trailingslashit(home_url());
+
+        echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+        echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+
+        if ($post_type === 'page') {
+            // Generate pages sitemap
+            $pages = get_posts([
+                'post_type' => 'page',
+                'post_status' => 'publish',
+                'posts_per_page' => -1,
+                'orderby' => 'modified',
+                'order' => 'DESC'
+            ]);
+
+            foreach ($pages as $page) {
+                $url = get_permalink($page->ID);
+                $lastmod = mysql2date('c', $page->post_modified_gmt, false);
+                $priority = $page->ID == get_option('page_on_front') ? '1.0' : '0.8';
+                $this->add_url_to_sitemap($url, $lastmod, $priority, 'weekly');
+            }
+        } elseif ($post_type === 'post') {
+            // Generate posts sitemap
+            $posts = get_posts([
+                'post_type' => 'post',
+                'post_status' => 'publish',
+                'posts_per_page' => -1,
+                'orderby' => 'modified',
+                'order' => 'DESC'
+            ]);
+
+            foreach ($posts as $post) {
+                $url = get_permalink($post->ID);
+                $lastmod = mysql2date('c', $post->post_modified_gmt, false);
+                $this->add_url_to_sitemap($url, $lastmod, '0.6', 'monthly');
+            }
+        } elseif ($post_type === 'category') {
+            // Generate categories sitemap
+            $categories = get_categories([
+                'orderby' => 'name',
+                'order' => 'ASC',
+                'hide_empty' => true
+            ]);
+
+            foreach ($categories as $category) {
+                $url = get_category_link($category->term_id);
+                // Use the most recent post in this category as lastmod
+                $recent_post = get_posts([
+                    'post_type' => 'post',
+                    'post_status' => 'publish',
+                    'category' => $category->term_id,
+                    'posts_per_page' => 1,
+                    'orderby' => 'modified',
+                    'order' => 'DESC'
+                ]);
+
+                $lastmod = !empty($recent_post) ? mysql2date('c', $recent_post[0]->post_modified_gmt, false) : mysql2date('c', current_time('mysql'), false);
+                $this->add_url_to_sitemap($url, $lastmod, '0.7', 'weekly');
+            }
+        } elseif ($post_type === 'tag') {
+            // Generate tags sitemap
+            $tags = get_tags([
+                'orderby' => 'name',
+                'order' => 'ASC',
+                'hide_empty' => true
+            ]);
+
+            foreach ($tags as $tag) {
+                $url = get_tag_link($tag->term_id);
+                // Use the most recent post in this tag as lastmod
+                $recent_post = get_posts([
+                    'post_type' => 'post',
+                    'post_status' => 'publish',
+                    'tag_id' => $tag->term_id,
+                    'posts_per_page' => 1,
+                    'orderby' => 'modified',
+                    'order' => 'DESC'
+                ]);
+
+                $lastmod = !empty($recent_post) ? mysql2date('c', $recent_post[0]->post_modified_gmt, false) : mysql2date('c', current_time('mysql'), false);
+                $this->add_url_to_sitemap($url, $lastmod, '0.5', 'monthly');
+            }
+        }
+
+        echo '</urlset>';
     }
 }
 

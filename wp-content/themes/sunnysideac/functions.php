@@ -1313,6 +1313,14 @@ function sunnysideac_handle_custom_sitemaps() {
 		$sitemap_type = 'services';
 	} elseif ( $request_uri_clean === '/service-city-sitemap.xml' || $request_uri_clean === '/service-city-sitemap.xml/' ) {
 		$sitemap_type = 'service-city';
+	} elseif ( $request_uri_clean === '/page-sitemap.xml' || $request_uri_clean === '/page-sitemap.xml/' ) {
+		$sitemap_type = 'page';
+	} elseif ( $request_uri_clean === '/category-sitemap.xml' || $request_uri_clean === '/category-sitemap.xml/' ) {
+		$sitemap_type = 'category';
+	} elseif ( $request_uri_clean === '/post-sitemap.xml' || $request_uri_clean === '/post-sitemap.xml/' ) {
+		$sitemap_type = 'post';
+	} elseif ( $request_uri_clean === '/tag-sitemap.xml' || $request_uri_clean === '/tag-sitemap.xml/' ) {
+		$sitemap_type = 'tag';
 	}
 
 	if ( $sitemap_type ) {
