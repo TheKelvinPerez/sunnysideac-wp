@@ -38,6 +38,7 @@ require_once __DIR__ . '/inc/core/theme-setup.php';
 require_once __DIR__ . '/inc/core/post-types-taxonomies.php';
 require_once __DIR__ . '/inc/core/routing.php';
 require_once __DIR__ . '/inc/core/template-hierarchy.php';
+require_once __DIR__ . '/inc/ajax/pagination.php';
 
 /**
  * Load asset management and optimizations
@@ -81,10 +82,6 @@ require_once __DIR__ . '/inc/footer-menu-helper.php';
 require_once __DIR__ . '/inc/posthog-tracking.php';
 require_once __DIR__ . '/inc/custom-sitemap-generator.php';
 
-/**
- * AJAX Pagination
- */
-require_once __DIR__ . '/inc/ajax-pagination.php';
 
 /**
  * Note: Performance monitoring temporarily disabled
