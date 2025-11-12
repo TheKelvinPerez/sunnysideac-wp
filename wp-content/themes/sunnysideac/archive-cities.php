@@ -275,32 +275,40 @@ get_header();
 						$city_url  = $city_post ? get_permalink( $city_post->ID ) : home_url( sprintf( '/cities/%s', sanitize_title( $city ) ) );
 						?>
 						<a href="<?php echo esc_url( $city_url ); ?>"
-							class="group block bg-gray-50 rounded-2xl p-6 text-center transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-orange-50 hover:to-orange-100 hover:shadow-lg">
-							<!-- Icon Circle -->
-							<div class="mb-4">
-								<div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-orange-200 to-orange-300">
-									<svg class="h-8 w-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-									</svg>
+							class="group block relative h-48 rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg"
+							style="background-image: url('<?php echo esc_url( sunnysideac_asset_url( 'assets/city-images/' . sanitize_title( $city ) . '.jpg' ) ); ?>'); background-size: cover; background-position: center;">
+
+							<!-- Gradient Overlay -->
+							<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+
+							<!-- Content -->
+							<div class="relative h-full flex flex-col justify-end p-6 text-center">
+								<!-- Icon Circle -->
+								<div class="mb-3">
+									<div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm">
+										<svg class="h-6 w-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+										</svg>
+									</div>
 								</div>
+
+								<!-- City Content -->
+								<div class="text-xl font-bold text-white mb-1" role="heading" aria-level="4">
+									<?php echo esc_html( $city ); ?>
+								</div>
+
+								<p class="text-white/90 text-sm mb-3">
+									Expert HVAC services
+								</p>
+
+								<span class="inline-flex items-center text-white font-medium text-sm bg-orange-500 px-3 py-1 rounded-full">
+									View Services
+									<svg class="w-4 h-4 ml-1 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+									</svg>
+								</span>
 							</div>
-
-							<!-- City Content -->
-							<div class="text-xl font-bold text-gray-900 mb-2 group-hover:text-orange-500" role="heading" aria-level="4">
-								<?php echo esc_html( $city ); ?>
-							</div>
-
-							<p class="text-gray-600 text-sm mb-4">
-								Expert HVAC services in <?php echo esc_html( strtolower( $city ) ); ?>
-							</p>
-
-							<span class="inline-flex items-center text-orange-500 font-medium text-sm">
-								View Services
-								<svg class="w-4 h-4 ml-1 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-								</svg>
-							</span>
 						</a>
 					<?php endforeach; ?>
 				</div>
@@ -326,20 +334,28 @@ get_header();
 							the_post();
 							?>
 							<a href="<?php the_permalink(); ?>"
-								class="group block bg-gray-50 rounded-2xl p-4 text-center transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-orange-50 hover:to-orange-100 hover:shadow-lg">
-								<!-- Icon Circle -->
-								<div class="mb-3">
-									<div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-orange-200 to-orange-300">
-										<svg class="h-6 w-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-										</svg>
-									</div>
-								</div>
+								class="group block relative h-40 rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg"
+								style="background-image: url('<?php echo esc_url( sunnysideac_asset_url( 'assets/city-images/' . get_post_field( 'post_name', get_the_ID() ) . '.jpg' ) ); ?>'); background-size: cover; background-position: center;">
 
-								<!-- City Name -->
-								<div class="text-lg font-bold text-gray-900 group-hover:text-orange-500" role="heading" aria-level="4">
-									<?php echo esc_html( get_the_title() ); ?>
+								<!-- Gradient Overlay -->
+								<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+
+								<!-- Content -->
+								<div class="relative h-full flex flex-col justify-end p-4 text-center">
+									<!-- Icon Circle -->
+									<div class="mb-2">
+										<div class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm">
+											<svg class="h-5 w-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+											</svg>
+										</div>
+									</div>
+
+									<!-- City Name -->
+									<div class="text-lg font-bold text-white" role="heading" aria-level="4">
+										<?php echo esc_html( get_the_title() ); ?>
+									</div>
 								</div>
 							</a>
 						<?php endwhile; ?>
