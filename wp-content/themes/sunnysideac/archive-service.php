@@ -290,35 +290,18 @@ get_header();
 							foreach ( $services as $service_name ) :
 								$service_slug = sanitize_title( $service_name );
 								$service_url  = home_url( sprintf( SUNNYSIDE_SERVICE_URL_PATTERN, $service_slug ) );
-								$icon_path    = sunnysideac_get_service_icon( $service_name );
-								?>
-								<a href="<?php echo esc_url( $service_url ); ?>"
-									class="group block bg-gray-50 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-orange-50 hover:to-orange-100 hover:shadow-lg">
-									<!-- Icon Circle -->
-									<div class="mb-4">
-										<div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-orange-200 to-orange-300">
-											<svg class="h-8 w-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="<?php echo esc_attr( $icon_path ); ?>" />
-											</svg>
-										</div>
-									</div>
 
-									<!-- Service Content -->
-									<div class="text-xl font-bold text-gray-900 mb-2 group-hover:text-orange-500" role="heading" aria-level="4">
-										<?php echo esc_html( $service_name ); ?>
-									</div>
-
-									<p class="text-gray-600 text-sm mb-4">
-										Professional <?php echo esc_html( strtolower( $service_name ) ); ?> services across South Florida
-									</p>
-
-									<span class="inline-flex items-center text-orange-500 font-medium text-sm">
-										Learn More
-										<svg class="w-4 h-4 ml-1 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-										</svg>
-									</span>
-								</a>
+								get_template_part(
+									'template-parts/service-card',
+									null,
+									array(
+										'service_name' => $service_name,
+										'service_slug' => $service_slug,
+										'service_url'  => $service_url,
+										'card_size'    => 'archive',
+									)
+								);
+							?>
 							<?php endforeach; ?>
 						</div>
 					</section>
@@ -345,24 +328,19 @@ get_header();
 							while ( have_posts() ) :
 								the_post();
 								?>
-								<a href="<?php the_permalink(); ?>"
-									class="group block bg-gray-50 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-orange-50 hover:to-orange-100 hover:shadow-lg">
-									<div class="text-xl font-bold text-gray-900 mb-2 group-hover:text-orange-500" role="heading" aria-level="4">
-										<?php the_title(); ?>
-									</div>
-									<?php if ( has_excerpt() ) : ?>
-										<p class="text-gray-600 text-sm mb-4">
-											<?php echo get_the_excerpt(); ?>
-										</p>
-									<?php endif; ?>
-
-									<span class="inline-flex items-center text-orange-500 font-medium text-sm">
-										Learn More
-										<svg class="w-4 h-4 ml-1 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-										</svg>
-									</span>
-								</a>
+								<?php
+								get_template_part(
+									'template-parts/service-card',
+									null,
+									array(
+										'service_name'    => get_the_title(),
+										'service_slug'    => get_post_field( 'post_name', get_the_ID() ),
+										'service_url'     => get_permalink(),
+										'service_post_id' => get_the_ID(),
+										'card_size'       => 'archive',
+									)
+								);
+								?>
 							<?php endwhile; ?>
 						<?php else : ?>
 							<div class="col-span-full text-center py-12">

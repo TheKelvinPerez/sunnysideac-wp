@@ -218,43 +218,22 @@ get_header();
 						while ( $brands_display_query->have_posts() ) :
 							$brands_display_query->the_post();
 							?>
-							<a href="<?php the_permalink(); ?>"
-								class="group block bg-gray-50 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-orange-50 hover:to-orange-100 hover:shadow-lg">
-
-								<?php if ( has_post_thumbnail() ) : ?>
-									<div class="mb-4 h-24 flex items-center justify-center">
-										<?php the_post_thumbnail( 'medium', array( 'class' => 'max-h-full w-auto object-contain transition-transform group-hover:scale-110' ) ); ?>
-									</div>
-								<?php else : ?>
-									<!-- Fallback icon if no thumbnail -->
-									<div class="mb-4 text-center">
-										<div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-orange-200 to-orange-300">
-											<svg class="h-8 w-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-											</svg>
-										</div>
-									</div>
-								<?php endif; ?>
-
-								<div class="text-center">
-									<div class="text-xl font-bold text-gray-900 mb-2 group-hover:text-orange-500" role="heading" aria-level="4">
-										<?php the_title(); ?>
-									</div>
-
-									<?php if ( has_excerpt() ) : ?>
-										<p class="text-gray-600 text-sm mb-4">
-											<?php echo get_the_excerpt(); ?>
-										</p>
-									<?php endif; ?>
-
-									<span class="inline-flex items-center text-orange-500 font-medium text-sm">
-										Learn More
-										<svg class="w-4 h-4 ml-1 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-										</svg>
-									</span>
-								</div>
-							</a>
+							<?php
+							get_template_part(
+								'template-parts/brand-card',
+								null,
+								array(
+									'brand_name'    => get_the_title(),
+									'brand_slug'    => get_post_field( 'post_name', get_the_ID() ),
+									'brand_url'     => get_permalink(),
+									'brand_post_id' => get_the_ID(),
+									'card_size'     => 'featured',
+									'show_button'   => true,
+									'button_text'   => 'View Products',
+									'description'   => 'Expert service and repair',
+								)
+							);
+							?>
 						<?php endwhile; ?>
 						<?php wp_reset_postdata(); ?>
 					</div>
