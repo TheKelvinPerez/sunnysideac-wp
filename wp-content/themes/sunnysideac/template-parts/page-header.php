@@ -14,6 +14,7 @@
  *     'description' => 'Professional heating, cooling, and air quality services',
  *     'show_ctas' => true, // Optional, defaults to true
  *     'bg_color' => 'white', // Optional: 'white' or 'gradient', defaults to 'white'
+ *     'featured_image_id' => 123, // Optional: Post ID for featured image background
  * ]);
  */
 
@@ -27,21 +28,46 @@ $logo_url    = $args['logo_url'] ?? '';
 $logo_link   = $args['logo_link'] ?? '';
 $logo_alt    = $args['logo_alt'] ?? '';
 
-// Determine background class
-$bg_class = $bg_color === 'gradient'
-	? 'bg-gradient-to-r from-[#fb9939] to-[#e5462f]'
-	: 'bg-white';
+// Featured image support
+$featured_image_id = $args['featured_image_id'] ?? null;
+$featured_image_url = '';
+$has_featured_image = false;
+
+if ($featured_image_id && has_post_thumbnail($featured_image_id)) {
+    $featured_image_url = get_the_post_thumbnail_url($featured_image_id, 'large');
+    $has_featured_image = true;
+}
+
+// Determine background class and styles
+$bg_class = '';
+$bg_style = '';
+
+if ($has_featured_image) {
+    $bg_class = 'relative overflow-hidden';
+    $bg_style = "background-image: url('{$featured_image_url}'); background-size: cover; background-position: center;";
+} elseif ($bg_color === 'gradient') {
+    $bg_class = 'bg-gradient-to-r from-[#fb9939] to-[#e5462f]';
+} else {
+    $bg_class = 'bg-white';
+}
 
 // Determine text colors based on background
-$breadcrumb_color     = $bg_color === 'gradient' ? 'text-white/80' : 'text-gray-600';
-$breadcrumb_hover     = $bg_color === 'gradient' ? 'hover:text-white' : 'hover:text-orange-500';
-$breadcrumb_active    = $bg_color === 'gradient' ? 'text-white font-semibold' : 'text-orange-500 font-semibold';
-$breadcrumb_separator = $bg_color === 'gradient' ? 'text-white/60' : 'text-gray-400';
-$description_color    = $bg_color === 'gradient' ? 'text-white/90' : 'text-gray-600';
+$is_dark_bg = $has_featured_image || $bg_color === 'gradient';
+$breadcrumb_color     = $is_dark_bg ? 'text-white/80' : 'text-gray-600';
+$breadcrumb_hover     = $is_dark_bg ? 'hover:text-white' : 'hover:text-orange-500';
+$breadcrumb_active    = $is_dark_bg ? 'text-white font-semibold' : 'text-orange-500 font-semibold';
+$breadcrumb_separator = $is_dark_bg ? 'text-white/60' : 'text-gray-400';
+$description_color    = $is_dark_bg ? 'text-white/90' : 'text-gray-600';
 ?>
 
 <!-- Page Header - Breadcrumbs & Title -->
-<header class="entry-header <?php echo esc_attr( $bg_class ); ?> rounded-[20px] p-6 md:p-10 mb-6">
+<header class="entry-header <?php echo esc_attr( $bg_class ); ?> rounded-[20px] p-6 md:p-10 mb-6" style="<?php echo esc_attr( $bg_style ); ?>">
+	<?php if ($has_featured_image): ?>
+		<!-- Gradient Overlay for Featured Image -->
+		<div class="absolute inset-0 bg-gradient-to-br from-[#fb9939]/90 via-[#e5462f]/50 to-black/70"></div>
+		<!-- Content Wrapper for proper z-index -->
+		<div class="relative z-10">
+	<?php endif; ?>
 	<?php if ( ! empty( $breadcrumbs ) ) : ?>
 		<!-- Breadcrumbs -->
 		<nav aria-label="Breadcrumb" class="mb-6 flex justify-center" itemscope itemtype="https://schema.org/BreadcrumbList">
@@ -159,5 +185,8 @@ $description_color    = $bg_color === 'gradient' ? 'text-white/90' : 'text-gray-
 				</a>
 			</div>
 		<?php endif; ?>
+	<?php endif; ?>
+	<?php if ($has_featured_image): ?>
+		</div> <!-- Close content wrapper -->
 	<?php endif; ?>
 </header>

@@ -201,59 +201,20 @@ if ( have_posts() ) :
 				<article id="post-<?php the_ID(); ?>" <?php post_class( 'city-page' ); ?>>
 
 					<?php
-					// Page Header with Breadcrumbs (using template part)
+					// Page Header with Featured Image Background and Breadcrumbs
 					get_template_part(
 						'template-parts/page-header',
 						null,
 						array(
-							'breadcrumbs' => $breadcrumbs,
-							'title'       => 'HVAC Services in ' . $city_title,
-							'description' => 'Professional heating, cooling, and air quality services for the ' . $city_title . ' community',
-							'show_ctas'   => true,
-							'bg_color'    => 'white',
+							'breadcrumbs'      => $breadcrumbs,
+							'title'            => 'HVAC Services in ' . $city_title,
+							'description'      => 'Professional heating, cooling, and air quality services for the ' . $city_title . ' community',
+							'show_ctas'        => true,
+							'bg_color'         => 'white', // This is fallback if no featured image
+							'featured_image_id' => get_the_ID(), // Pass city post ID for featured image
 						)
 					);
 					?>
-
-					<!-- City Hero Image -->
-					<?php if ( has_post_thumbnail() ) : ?>
-						<section class="relative bg-gray-50 rounded-[20px] overflow-hidden mb-6">
-							<figure class="relative h-64 md:h-96 lg:h-[500px]" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-								<?php
-								// Featured image with gradient overlay
-								the_post_thumbnail(
-									'full',
-									array(
-										'class'    => 'w-full h-full object-cover',
-										'itemprop' => 'url',
-										'alt'      => esc_attr( 'Professional HVAC services in ' . get_the_title() . ', Florida' ),
-										'style'    => 'object-position: center;',
-									)
-								);
-								?>
-
-								<!-- Gradient Overlay -->
-								<div class="absolute inset-0 bg-gradient-to-br from-[#fb9939]/90 via-[#e5462f]/50 to-black/70"></div>
-
-								<!-- Hero Content -->
-								<div class="absolute inset-0 flex items-center justify-center text-center p-6">
-									<div class="text-white">
-										<h2 class="text-3xl md:text-5xl font-bold mb-4 drop-shadow-lg">
-											<?php echo esc_html( $city_title ); ?>
-										</h2>
-										<p class="text-lg md:text-xl opacity-90 max-w-2xl mx-auto drop-shadow">
-											Expert HVAC Services Serving <?php echo esc_html( $city_title ); ?> Community
-										</p>
-									</div>
-								</div>
-
-								<!-- Schema.org metadata -->
-								<meta itemprop="width" content="1920">
-								<meta itemprop="height" content="1080">
-								<meta itemprop="caption" content="<?php echo esc_attr( 'Professional HVAC services in ' . get_the_title() . ', Florida' ); ?>">
-							</figure>
-						</section>
-					<?php endif; ?>
 
 					<!-- City Content (if exists) -->
 					<?php if ( get_the_content() || $city_service_hours || $city_service_area_note ) : ?>
