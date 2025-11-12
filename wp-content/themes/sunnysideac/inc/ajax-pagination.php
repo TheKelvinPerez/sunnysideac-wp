@@ -54,8 +54,8 @@ function sunnysideac_cities_pagination_handler() {
         'current'   => $page,
         'total'     => $cities_query->max_num_pages,
         'mid_size'  => 2,
-        'prev_text' => '← Previous',
-        'next_text' => 'Next →',
+        'prev_text' => '←',
+        'next_text' => '→',
         'type'      => 'array',
     );
 

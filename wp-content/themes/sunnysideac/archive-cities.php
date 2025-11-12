@@ -334,8 +334,8 @@ get_header();
 							'current'  => max(1, get_query_var('paged')),
 							'total'    => $GLOBALS['wp_query']->max_num_pages,
 							'mid_size' => 2,
-							'prev_text' => '← Previous',
-							'next_text' => 'Next →',
+							'prev_text' => '←',
+							'next_text' => '→',
 							'type'     => 'array',
 							'end_size' => 1,
 						));
