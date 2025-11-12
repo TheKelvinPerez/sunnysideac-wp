@@ -270,15 +270,19 @@ get_header();
 				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
 					<?php foreach ( SUNNYSIDE_PRIORITY_CITIES as $city ) : ?>
 						<?php
+						// Get city post for featured image
+						$city_post = get_page_by_path( sanitize_title( $city ), OBJECT, 'city' );
+
 						get_template_part(
 							'template-parts/city-card',
 							null,
 							array(
-								'city_name'   => $city,
-								'city_slug'   => sanitize_title( $city ),
-								'card_size'   => 'featured',
-								'show_button' => true,
-								'description' => 'Expert HVAC services',
+								'city_name'    => $city,
+								'city_slug'    => sanitize_title( $city ),
+								'city_post_id' => $city_post ? $city_post->ID : null,
+								'card_size'    => 'featured',
+								'show_button'  => true,
+								'description'  => 'Expert HVAC services',
 							)
 						);
 						?>
@@ -310,10 +314,11 @@ get_header();
 								'template-parts/city-card',
 								null,
 								array(
-									'city_name' => get_the_title(),
-									'city_slug' => get_post_field( 'post_name', get_the_ID() ),
-									'city_url'  => get_permalink(),
-									'card_size' => 'archive',
+									'city_name'    => get_the_title(),
+									'city_slug'    => get_post_field( 'post_name', get_the_ID() ),
+									'city_url'     => get_permalink(),
+									'city_post_id' => get_the_ID(),
+									'card_size'    => 'archive',
 								)
 							);
 							?>

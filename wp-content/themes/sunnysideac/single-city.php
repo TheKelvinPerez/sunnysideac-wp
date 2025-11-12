@@ -215,22 +215,42 @@ if ( have_posts() ) :
 					);
 					?>
 
-					<!-- Featured Image (if exists) -->
+					<!-- City Hero Image -->
 					<?php if ( has_post_thumbnail() ) : ?>
-						<section class="bg-white rounded-[20px] p-6 md:p-10 mb-6">
-							<figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+						<section class="relative bg-gray-50 rounded-[20px] overflow-hidden mb-6">
+							<figure class="relative h-64 md:h-96 lg:h-[500px]" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
 								<?php
+								// Featured image with gradient overlay
 								the_post_thumbnail(
-									'large',
+									'full',
 									array(
-										'class'    => 'w-full h-auto rounded-lg shadow-lg',
+										'class'    => 'w-full h-full object-cover',
 										'itemprop' => 'url',
-										'alt'      => get_the_title(),
+										'alt'      => esc_attr( 'Professional HVAC services in ' . get_the_title() . ', Florida' ),
+										'style'    => 'object-position: center;',
 									)
 								);
 								?>
-								<meta itemprop="width" content="1200">
-								<meta itemprop="height" content="630">
+
+								<!-- Gradient Overlay -->
+								<div class="absolute inset-0 bg-gradient-to-br from-[#fb9939]/90 via-[#e5462f]/50 to-black/70"></div>
+
+								<!-- Hero Content -->
+								<div class="absolute inset-0 flex items-center justify-center text-center p-6">
+									<div class="text-white">
+										<h2 class="text-3xl md:text-5xl font-bold mb-4 drop-shadow-lg">
+											<?php echo esc_html( $city_title ); ?>
+										</h2>
+										<p class="text-lg md:text-xl opacity-90 max-w-2xl mx-auto drop-shadow">
+											Expert HVAC Services Serving <?php echo esc_html( $city_title ); ?> Community
+										</p>
+									</div>
+								</div>
+
+								<!-- Schema.org metadata -->
+								<meta itemprop="width" content="1920">
+								<meta itemprop="height" content="1080">
+								<meta itemprop="caption" content="<?php echo esc_attr( 'Professional HVAC services in ' . get_the_title() . ', Florida' ); ?>">
 							</figure>
 						</section>
 					<?php endif; ?>
@@ -398,15 +418,18 @@ if ( have_posts() ) :
 
 							foreach ( $nearby_cities as $city ) :
 								if ( $city !== $current_city ) :
+									// Get city post for featured image
+									$city_post = get_page_by_path( sanitize_title( $city ), OBJECT, 'city' );
 									?>
 									<?php
 									get_template_part(
 										'template-parts/city-card',
 										null,
 										array(
-											'city_name' => $city,
-											'city_slug' => sanitize_title( $city ),
-											'card_size' => 'archive',
+											'city_name'    => $city,
+											'city_slug'    => sanitize_title( $city ),
+											'city_post_id' => $city_post ? $city_post->ID : null,
+											'card_size'    => 'archive',
 										)
 									);
 									?>

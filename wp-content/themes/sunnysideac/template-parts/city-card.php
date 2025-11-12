@@ -42,8 +42,16 @@ if ( empty( $args['city_url'] ) ) {
     $args['city_url'] = $city_post ? get_permalink( $city_post->ID ) : home_url( sprintf( '/cities/%s', $args['city_slug'] ) );
 }
 
-// Set image path
-$image_path = ! empty( $args['custom_image'] ) ? $args['custom_image'] : 'assets/city-images/' . $args['city_slug'] . '.jpg';
+// Get city post for featured image
+$city_post = ! empty( $args['city_post_id'] ) ? get_post( $args['city_post_id'] ) : get_page_by_path( $args['city_slug'], OBJECT, 'city' );
+
+// Set image path - prioritize database featured image, fallback to file system
+if ( $city_post && has_post_thumbnail( $city_post->ID ) ) {
+    $image_url = get_the_post_thumbnail_url( $city_post->ID, 'medium_large' );
+    $image_path = $image_url; // Use full URL for database images
+} else {
+    $image_path = ! empty( $args['custom_image'] ) ? $args['custom_image'] : 'assets/city-images/' . $args['city_slug'] . '.jpg';
+}
 
 // Card configuration based on size
 $card_config = array(
@@ -77,7 +85,7 @@ $additional_classes = ! empty( $args['custom_classes'] ) ? ' ' . $args['custom_c
 
 <a href="<?php echo esc_url( $args['city_url'] ); ?>"
 	class="group block relative <?php echo esc_attr( $config['height'] ); ?> rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg<?php echo esc_attr( $additional_classes ); ?>"
-	style="background-image: url('<?php echo esc_url( sunnysideac_asset_url( $image_path ) ); ?>'); background-size: cover; background-position: center;">
+	style="background-image: url('<?php echo esc_url( filter_var( $image_path, FILTER_VALIDATE_URL ) ? $image_path : sunnysideac_asset_url( $image_path ) ); ?>'); background-size: cover; background-position: center;">
 
 	<!-- Gradient Overlay -->
 	<div class="absolute inset-0 bg-gradient-to-br from-[#fb9939]/90 via-black/50 to-transparent"></div>
