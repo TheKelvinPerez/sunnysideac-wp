@@ -55,7 +55,7 @@ $card_config = array(
         'description'    => ! empty( $args['description'] ) ? $args['description'] : 'Expert HVAC services',
         'padding'        => 'p-6',
         'margin_bottoms' => 'mb-3 mb-1 mb-3',
-        'button_classes' => 'bg-orange-500 text-white px-3 py-1 rounded-full',
+        'button_classes' => 'bg-orange-500 text-white px-4 py-2 rounded-full',
     ),
     'archive'  => array(
         'height'         => 'h-40',
@@ -80,7 +80,7 @@ $additional_classes = ! empty( $args['custom_classes'] ) ? ' ' . $args['custom_c
 	style="background-image: url('<?php echo esc_url( sunnysideac_asset_url( $image_path ) ); ?>'); background-size: cover; background-position: center;">
 
 	<!-- Gradient Overlay -->
-	<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+	<div class="absolute inset-0 bg-gradient-to-br from-[#fb9939]/90 via-black/50 to-transparent"></div>
 
 	<!-- Content -->
 	<div class="relative h-full flex flex-col justify-end <?php echo esc_attr( $config['padding'] ); ?> text-center">
@@ -106,12 +106,14 @@ $additional_classes = ! empty( $args['custom_classes'] ) ? ' ' . $args['custom_c
 		<?php endif; ?>
 
 		<?php if ( $args['show_button'] && ! empty( $config['button_classes'] ) ) : ?>
-			<span class="inline-flex items-center font-medium text-sm <?php echo esc_attr( $config['button_classes'] ); ?>">
-				<?php echo esc_html( $args['button_text'] ); ?>
-				<svg class="w-4 h-4 ml-1 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-				</svg>
-			</span>
+			<div class="flex justify-center">
+				<span class="inline-flex items-center font-medium text-sm <?php echo esc_attr( $config['button_classes'] ); ?>">
+					<?php echo esc_html( $args['button_text'] ); ?>
+					<svg class="w-4 h-4 ml-1 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+					</svg>
+				</span>
+			</div>
 		<?php endif; ?>
 	</div>
 </a>
