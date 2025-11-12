@@ -17,29 +17,29 @@
 
 // Default arguments
 $defaults = array(
-    'city_name'      => '',
-    'city_slug'      => '',
-    'city_url'       => '',
-    'card_size'      => 'archive', // 'featured' or 'archive'
-    'show_button'    => false,
-    'button_text'    => 'View Services',
-    'description'    => '',
-    'custom_classes' => '',
-    'custom_image'   => '',
+	'city_name'      => '',
+	'city_slug'      => '',
+	'city_url'       => '',
+	'card_size'      => 'archive', // 'featured' or 'archive'
+	'show_button'    => false,
+	'button_text'    => 'View Services',
+	'description'    => '',
+	'custom_classes' => '',
+	'custom_image'   => '',
 );
 
 $args = wp_parse_args( $args, $defaults );
 
 // Validate required parameters
 if ( empty( $args['city_name'] ) || empty( $args['city_slug'] ) ) {
-    return;
+	return;
 }
 
 // Generate URL if not provided
 if ( empty( $args['city_url'] ) ) {
-    // Check if this city has a city post
-    $city_post = get_page_by_path( $args['city_slug'], OBJECT, 'city' );
-    $args['city_url'] = $city_post ? get_permalink( $city_post->ID ) : home_url( sprintf( '/cities/%s', $args['city_slug'] ) );
+	// Check if this city has a city post
+	$city_post        = get_page_by_path( $args['city_slug'], OBJECT, 'city' );
+	$args['city_url'] = $city_post ? get_permalink( $city_post->ID ) : home_url( sprintf( '/cities/%s', $args['city_slug'] ) );
 }
 
 // Get city post for featured image
@@ -47,34 +47,34 @@ $city_post = ! empty( $args['city_post_id'] ) ? get_post( $args['city_post_id'] 
 
 // Set image path - prioritize database featured image, fallback to file system
 if ( $city_post && has_post_thumbnail( $city_post->ID ) ) {
-    $image_url = get_the_post_thumbnail_url( $city_post->ID, 'medium_large' );
-    $image_path = $image_url; // Use full URL for database images
+	$image_url  = get_the_post_thumbnail_url( $city_post->ID, 'medium_large' );
+	$image_path = $image_url; // Use full URL for database images
 } else {
-    $image_path = ! empty( $args['custom_image'] ) ? $args['custom_image'] : 'assets/city-images/' . $args['city_slug'] . '.jpg';
+	$image_path = ! empty( $args['custom_image'] ) ? $args['custom_image'] : 'assets/city-images/' . $args['city_slug'] . '.jpg';
 }
 
 // Card configuration based on size
 $card_config = array(
-    'featured' => array(
-        'height'         => 'h-48',
-        'icon_size'      => 'w-12 h-12',
-        'icon_svg_size'  => 'h-6 w-6',
-        'text_size'      => 'text-xl',
-        'description'    => ! empty( $args['description'] ) ? $args['description'] : 'Expert HVAC services',
-        'padding'        => 'p-6',
-        'margin_bottoms' => 'mb-3 mb-1 mb-3',
-        'button_classes' => 'bg-orange-500 text-white px-4 py-2 rounded-full',
-    ),
-    'archive'  => array(
-        'height'         => 'h-40',
-        'icon_size'      => 'w-10 h-10',
-        'icon_svg_size'  => 'h-5 w-5',
-        'text_size'      => 'text-lg',
-        'description'    => '', // No description for archive cards
-        'padding'        => 'p-4',
-        'margin_bottoms' => 'mb-2',
-        'button_classes' => '', // No button for archive cards
-    ),
+	'featured' => array(
+		'height'         => 'h-48',
+		'icon_size'      => 'w-12 h-12',
+		'icon_svg_size'  => 'h-6 w-6',
+		'text_size'      => 'text-xl',
+		'description'    => ! empty( $args['description'] ) ? $args['description'] : 'Expert HVAC services',
+		'padding'        => 'p-6',
+		'margin_bottoms' => 'mb-3 mb-1 mb-3',
+		'button_classes' => 'bg-orange-500 text-white px-4 py-2 rounded-full',
+	),
+	'archive'  => array(
+		'height'         => 'h-40',
+		'icon_size'      => 'w-10 h-10',
+		'icon_svg_size'  => 'h-5 w-5',
+		'text_size'      => 'text-lg',
+		'description'    => '', // No description for archive cards
+		'padding'        => 'p-4',
+		'margin_bottoms' => 'mb-2',
+		'button_classes' => '', // No button for archive cards
+	),
 );
 
 $config = $card_config[ $args['card_size'] ] ?? $card_config['archive'];
@@ -88,7 +88,7 @@ $additional_classes = ! empty( $args['custom_classes'] ) ? ' ' . $args['custom_c
 	style="background-image: url('<?php echo esc_url( filter_var( $image_path, FILTER_VALIDATE_URL ) ? $image_path : sunnysideac_asset_url( $image_path ) ); ?>'); background-size: cover; background-position: center;">
 
 	<!-- Gradient Overlay -->
-	<div class="absolute inset-0 bg-gradient-to-br from-[#fb9939]/90 via-black/50 to-transparent"></div>
+	<div class="absolute inset-0 bg-gradient-to-br from-[#fb9939]/90 via-gray-500/50 to-transparent"></div>
 
 	<!-- Content -->
 	<div class="relative h-full flex flex-col justify-end <?php echo esc_attr( $config['padding'] ); ?> text-center">
