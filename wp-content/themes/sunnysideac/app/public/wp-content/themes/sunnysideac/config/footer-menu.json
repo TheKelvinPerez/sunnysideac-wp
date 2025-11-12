@@ -1,0 +1,64 @@
+{
+  "footer_sections": {
+    "column_2": {
+      "services": {
+        "title": "Services",
+        "links": [
+          { "name": "AC Repair", "href": "/services/ac-repair" },
+          { "name": "AC Installation", "href": "/services/ac-installation" },
+          { "name": "AC Maintenance", "href": "/services/ac-maintenance" },
+          { "name": "Heating Services", "href": "/services/heating-repair" },
+          { "name": "All HVAC Services", "href": "/services" }
+        ]
+      },
+      "company": {
+        "title": "Company",
+        "links": [
+          { "name": "About Us", "href": "/about" },
+          { "name": "Financing", "href": "/financing" },
+          { "name": "Maintenance Plan", "href": "/maintenance-plan" },
+          { "name": "Careers", "href": "/careers" }
+        ]
+      }
+    },
+    "column_3": {
+      "service_areas": {
+        "title": "Service Areas",
+        "links": [
+          { "name": "Pembroke Pines", "href": "/cities/pembroke-pines" },
+          { "name": "Miramar", "href": "/cities/miramar" },
+          { "name": "Weston", "href": "/cities/weston" },
+          { "name": "Hollywood", "href": "/cities/hollywood" },
+          { "name": "Fort Lauderdale", "href": "/cities/fort-lauderdale" },
+          { "name": "All Service Areas", "href": "/cities" }
+        ]
+      },
+      "brands": {
+        "title": "Brands",
+        "links": [
+          { "name": "Daikin", "href": "/brands/daikin" },
+          { "name": "Goodman", "href": "/brands/goodman" },
+          { "name": "Rheem", "href": "/brands/rheem" },
+          { "name": "Trane", "href": "/brands/trane" },
+          { "name": "Carrier", "href": "/brands/carrier" },
+          { "name": "All Brands", "href": "/brands" }
+        ]
+      }
+    },
+    "column_4": {
+      "support": {
+        "title": "Support",
+        "links": [
+          { "name": "Maintenance Plans", "href": "/maintenance-plan" },
+          { "name": "Warranty Information", "href": "/warranty" },
+          { "name": "Customer Portal", "href": "/customer-portal" }
+        ]
+      },
+      "contact": {
+        "title": "Contact Us",
+        "type": "contact_info"
+      }
+    }
+  }
+}
+

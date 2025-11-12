@@ -270,46 +270,18 @@ get_header();
 				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
 					<?php foreach ( SUNNYSIDE_PRIORITY_CITIES as $city ) : ?>
 						<?php
-						// Check if this city has a city post
-						$city_post = get_page_by_path( sanitize_title( $city ), OBJECT, 'city' );
-						$city_url  = $city_post ? get_permalink( $city_post->ID ) : home_url( sprintf( '/cities/%s', sanitize_title( $city ) ) );
+						get_template_part(
+							'template-parts/city-card',
+							null,
+							array(
+								'city_name'   => $city,
+								'city_slug'   => sanitize_title( $city ),
+								'card_size'   => 'featured',
+								'show_button' => true,
+								'description' => 'Expert HVAC services',
+							)
+						);
 						?>
-						<a href="<?php echo esc_url( $city_url ); ?>"
-							class="group block relative h-48 rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg"
-							style="background-image: url('<?php echo esc_url( sunnysideac_asset_url( 'assets/city-images/' . sanitize_title( $city ) . '.jpg' ) ); ?>'); background-size: cover; background-position: center;">
-
-							<!-- Gradient Overlay -->
-							<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
-
-							<!-- Content -->
-							<div class="relative h-full flex flex-col justify-end p-6 text-center">
-								<!-- Icon Circle -->
-								<div class="mb-3">
-									<div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm">
-										<svg class="h-6 w-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-										</svg>
-									</div>
-								</div>
-
-								<!-- City Content -->
-								<div class="text-xl font-bold text-white mb-1" role="heading" aria-level="4">
-									<?php echo esc_html( $city ); ?>
-								</div>
-
-								<p class="text-white/90 text-sm mb-3">
-									Expert HVAC services
-								</p>
-
-								<span class="inline-flex items-center text-white font-medium text-sm bg-orange-500 px-3 py-1 rounded-full">
-									View Services
-									<svg class="w-4 h-4 ml-1 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-									</svg>
-								</span>
-							</div>
-						</a>
 					<?php endforeach; ?>
 				</div>
 			</section>
@@ -333,31 +305,18 @@ get_header();
 						while ( have_posts() ) :
 							the_post();
 							?>
-							<a href="<?php the_permalink(); ?>"
-								class="group block relative h-40 rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg"
-								style="background-image: url('<?php echo esc_url( sunnysideac_asset_url( 'assets/city-images/' . get_post_field( 'post_name', get_the_ID() ) . '.jpg' ) ); ?>'); background-size: cover; background-position: center;">
-
-								<!-- Gradient Overlay -->
-								<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
-
-								<!-- Content -->
-								<div class="relative h-full flex flex-col justify-end p-4 text-center">
-									<!-- Icon Circle -->
-									<div class="mb-2">
-										<div class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm">
-											<svg class="h-5 w-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-											</svg>
-										</div>
-									</div>
-
-									<!-- City Name -->
-									<div class="text-lg font-bold text-white" role="heading" aria-level="4">
-										<?php echo esc_html( get_the_title() ); ?>
-									</div>
-								</div>
-							</a>
+							<?php
+							get_template_part(
+								'template-parts/city-card',
+								null,
+								array(
+									'city_name' => get_the_title(),
+									'city_slug' => get_post_field( 'post_name', get_the_ID() ),
+									'city_url'  => get_permalink(),
+									'card_size' => 'archive',
+								)
+							);
+							?>
 						<?php endwhile; ?>
 					<?php else : ?>
 						<div class="col-span-full text-center py-12">
@@ -366,18 +325,45 @@ get_header();
 					<?php endif; ?>
 				</div>
 
-				<!-- Pagination -->
+				<!-- AJAX Pagination -->
 				<?php if ( have_posts() ) : ?>
-					<div class="mt-12 text-center">
+					<div class="mt-12 text-center cities-pagination">
 						<?php
-						the_posts_pagination(
-							array(
-								'mid_size'  => 2,
-								'prev_text' => '← Previous',
-								'next_text' => 'Next →',
-								'class'     => 'inline-flex gap-2',
-							)
-						);
+						// Create AJAX-enabled pagination
+						$pagination_links = paginate_links(array(
+							'current'  => max(1, get_query_var('paged')),
+							'total'    => $GLOBALS['wp_query']->max_num_pages,
+							'mid_size' => 2,
+							'prev_text' => '← Previous',
+							'next_text' => 'Next →',
+							'type'     => 'array',
+							'end_size' => 1,
+						));
+
+						if ($pagination_links) {
+							echo '<div class="flex justify-center gap-2">';
+							foreach ($pagination_links as $link) {
+								$link_class = 'inline-flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-orange-50 hover:border-orange-300 hover:text-orange-600 transition-colors';
+
+								// Check if current page
+								if (strpos($link, 'current') !== false) {
+									$link_class = 'inline-flex items-center justify-center w-10 h-10 rounded-lg bg-orange-500 text-white border border-orange-500';
+								}
+
+								// Extract page number
+								$current_page = max(1, get_query_var('paged'));
+								if (preg_match('/page\/(\d+)/', $link, $matches)) {
+									$page_num = $matches[1];
+								} elseif (strpos($link, 'current') !== false) {
+									$page_num = $current_page;
+								} else {
+									$page_num = 1;
+								}
+
+								echo '<a href="#" class="' . esc_attr($link_class) . '" onclick="loadCitiesPage(' . $page_num . '); return false;">' . strip_tags($link) . '</a>';
+							}
+							echo '</div>';
+						}
 						?>
 					</div>
 				<?php endif; ?>

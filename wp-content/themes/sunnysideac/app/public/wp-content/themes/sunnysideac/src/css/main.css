@@ -1,0 +1,113 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+/*
+ * Tailwind CSS v4 Configuration
+ * Configure your theme using CSS variables and the @theme directive
+ */
+
+@theme {
+  /* Fonts - Using system font stack for optimal performance */
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+  /* Example: Add custom colors */
+  /* --color-primary: #0070f3; */
+  /* --color-secondary: #7928ca; */
+
+  /* Example: Add custom spacing */
+  /* --spacing-huge: 5rem; */
+}
+
+/* Fix for Cities navigation active state - ensure proper background color */
+.nav-item.cities-debug-active {
+  background-color: #ffc549 !important;
+}
+
+/*
+ * Custom Component Styles
+ * Use @layer components for reusable component classes
+ */
+@layer components {
+  /* Navigation Icons - Custom aspect ratios with proper display sizes */
+  .icon-nav-phone {
+    width: 18px;
+    height: 22px;
+  }
+
+  .icon-nav-mail {
+    width: 16px;
+    height: 16px;
+  }
+
+  .icon-nav-social {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Logo sizing - expected 246x166 display size */
+  .logo-responsive {
+    width: 123px;
+    height: 83px;
+  }
+
+  /* Example component */
+  /* .btn-primary {
+    @apply bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors;
+  } */
+}
+
+/*
+ * Custom Utility Styles
+ * Use @layer utilities for custom utility classes
+ */
+@layer utilities {
+  /* SVG rendering fixes */
+  svg {
+    display: inline-block !important;
+    vertical-align: middle;
+  }
+
+  svg path {
+    vector-effect: non-scaling-stroke;
+  }
+
+  svg path[d] {
+    display: inline !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
+
+/*
+ * Regular Custom CSS
+ * Add your custom styles below (outside of @layer)
+ */
+
+/* Global background color */
+body {
+  @apply bg-gray-50;
+}
+
+/* Rotating text animation for customer reviews circular badge */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Base mobile animation - 28s for smaller circle */
+.rotating-text {
+  animation: rotate 28s linear infinite !important;
+}
+
+/* Faster rotation on desktop to compensate for larger circle */
+@media (min-width: 1024px) {
+  .rotating-text {
+    animation: rotate 20s linear infinite !important;
+  }
+}

@@ -82,6 +82,11 @@ require_once __DIR__ . '/inc/posthog-tracking.php';
 require_once __DIR__ . '/inc/custom-sitemap-generator.php';
 
 /**
+ * AJAX Pagination
+ */
+require_once __DIR__ . '/inc/ajax-pagination.php';
+
+/**
  * Note: Performance monitoring temporarily disabled
  * Uncomment when ready to re-enable:
  * require_once __DIR__ . '/inc/performance-monitor.php';

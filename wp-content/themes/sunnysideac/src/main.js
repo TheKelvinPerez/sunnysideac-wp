@@ -59,4 +59,10 @@ lazyLoadConditional(
   () => import('./js/forms/customer-portal.js')
 );
 
+// Cities Pagination - Load only on cities archive page
+lazyLoadConditional(
+  () => window.location.pathname.includes('/cities') && !window.location.pathname.includes('/cities/'),
+  () => import('./js/cities-pagination.js')
+);
+
 console.log('✅ SunnySide AC theme loaded with Vite - Lazy loading enabled');
