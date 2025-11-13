@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/0xaquawolf/Projects/wp-sites/sunnyside-ac/.ddev/**)",
+      "Read(//Users/0xaquawolf/Projects/wp-sites/sunnyside-ac/app/public/wp-content/plugins/**)",
+      "Bash(xargs:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

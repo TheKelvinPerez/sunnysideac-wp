@@ -1,0 +1,189 @@
+# Google Search Engines
+User-agent: Googlebot
+Allow: /
+Allow: /wp-admin/admin-ajax.php
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/plugins/
+Disallow: /wp-login.php
+Disallow: /wp-register.php
+Disallow: /*.php$
+Allow: /wp-content/uploads/
+Allow: /wp-content/themes/sunnysideac/assets/
+Crawl-delay: 1
+
+User-agent: Googlebot-Image
+Allow: /
+Allow: /wp-content/uploads/
+Allow: /wp-content/themes/sunnysideac/assets/
+
+User-agent: Googlebot-Video
+Allow: /
+
+User-agent: Mediapartners-Google
+Allow: /
+
+# Bing/Microsoft Search
+User-agent: Bingbot
+Allow: /
+Allow: /wp-admin/admin-ajax.php
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/plugins/
+Disallow: /wp-login.php
+Disallow: /wp-register.php
+Allow: /wp-content/uploads/
+Crawl-delay: 1
+
+User-agent: MSNBot
+Allow: /
+Allow: /wp-admin/admin-ajax.php
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/plugins/
+Disallow: /wp-login.php
+Disallow: /wp-register.php
+Allow: /wp-content/uploads/
+
+# Other Major Search Engines
+User-agent: Slurp
+Allow: /
+Allow: /wp-admin/admin-ajax.php
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/plugins/
+Disallow: /wp-login.php
+Disallow: /wp-register.php
+Allow: /wp-content/uploads/
+Crawl-delay: 1
+
+User-agent: DuckDuckBot
+Allow: /
+Allow: /wp-admin/admin-ajax.php
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/plugins/
+Disallow: /wp-login.php
+Disallow: /wp-register.php
+Allow: /wp-content/uploads/
+
+User-agent: Baiduspider
+Allow: /
+Allow: /wp-admin/admin-ajax.php
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/plugins/
+Disallow: /wp-login.php
+Disallow: /wp-register.php
+Allow: /wp-content/uploads/
+Crawl-delay: 1
+
+# AI/LLM Crawlers - RESTRICTED ACCESS
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: YouBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: FacebookBot
+Allow: /
+Allow: /wp-admin/admin-ajax.php
+Disallow: /wp-admin/
+Disallow: /wp-login.php
+Allow: /wp-content/uploads/
+
+# Social Media Crawlers
+User-agent: Twitterbot
+Allow: /
+Allow: /wp-content/uploads/
+
+User-agent: facebookexternalhit
+Allow: /
+Allow: /wp-content/uploads/
+
+User-agent: LinkedInBot
+Allow: /
+Allow: /wp-content/uploads/
+
+User-agent: WhatsApp
+Allow: /
+Allow: /wp-content/uploads/
+
+# SEO and Analytics Tools
+User-agent: SemrushBot
+Allow: /
+Allow: /wp-admin/admin-ajax.php
+Disallow: /wp-admin/
+Allow: /wp-content/uploads/
+Crawl-delay: 2
+
+User-agent: AhrefsBot
+Allow: /
+Allow: /wp-admin/admin-ajax.php
+Disallow: /wp-admin/
+Allow: /wp-content/uploads/
+Crawl-delay: 2
+
+User-agent: MJ12bot
+Allow: /
+Allow: /wp-admin/admin-ajax.php
+Disallow: /wp-admin/
+Allow: /wp-content/uploads/
+Crawl-delay: 2
+
+# Default for all other crawlers
+User-agent: *
+Allow: /
+Allow: /wp-admin/admin-ajax.php
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/plugins/
+Disallow: /wp-content/themes/
+Disallow: /wp-content/cache/
+Disallow: /wp-content/upgrade/
+Disallow: /wp-content/languages/
+Disallow: /wp-login.php
+Disallow: /wp-register.php
+Disallow: /*?*
+Disallow: /*.php$
+Disallow: /*.js$
+Disallow: /*.inc$
+Disallow: /*.css$
+Disallow: /*.tgz$
+Disallow: /*.gz$
+Disallow: /*.tar$
+Disallow: /*.zip$
+Disallow: /*.pdf$
+Disallow: /*.swf$
+Disallow: /*.xls$
+Disallow: /*.xlsx$
+Disallow: /*.doc$
+Disallow: /*.docx$
+
+Allow: /wp-content/uploads/
+Allow: /wp-content/themes/sunnysideac/assets/
+Allow: /*.css?ver=*
+Allow: /*.js?ver=*
+
+Crawl-delay: 1
+
+# Sitemap
+Sitemap: https://sunnyside247ac.com/sitemap.xml

@@ -1,0 +1,83 @@
+# Ignore everything by default
+/*
+
+# But track these directories and files
+!wp-content/
+!wp-config-template.php
+!robots-template.txt
+!SECURITY-SETUP.md
+!README.md
+!.gitignore
+
+# Critical build and deployment files (never ignore)
+!build.sh
+!.gitattributes
+!.deployment/
+!scripts/
+
+# Within wp-content, ignore everything
+wp-content/*
+
+# Except themes and plugins directories
+!wp-content/themes/
+!wp-content/plugins/
+
+# Within themes, ignore default themes
+wp-content/themes/twenty*/
+
+# Only track YOUR custom theme
+!wp-content/themes/sunnysideac/
+
+# Track must-use plugins (security hardening)
+!wp-content/mu-plugins/
+
+# Track custom plugins (add your custom plugins here)
+# Example: !wp-content/plugins/your-custom-plugin/
+
+# Always ignore these
+wp-content/uploads/
+wp-content/cache/
+wp-content/backup*/
+wp-content/upgrade/
+wp-content/ai1wm-backups/
+logs/
+
+# Ignore backup files
+*.backup
+*.bak
+
+# Ignore config and environment files (but track templates)
+wp-config.php
+!wp-config-template.php
+!robots-template.txt
+.htaccess
+*.log
+error_log
+debug.log
+
+# Ignore OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Ignore editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Track .gitignore itself
+!.gitignore
+wp-content/plugins/advanced-custom-fields-pro
+wp-content/plugins/all-in-one-wp-migration
+wp-content/plugins/all-in-one-wp-migration-unlimited-extension
+wp-content/plugins/query-monitor
+wp-content/plugins/seo-by-rank-math
+wp-content/plugins/seo-by-rank-math-pro
+wp-content/plugins/user-switching
+wp-content/plugins/wp-rocket

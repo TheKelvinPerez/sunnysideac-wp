@@ -1,0 +1,14 @@
+# Preserve file permissions and executable status
+build.sh text eol=lf
+
+# Keep executable files executable
+*.sh text eol=lf
+
+# Preserve file modes for critical scripts
+build.sh text eol=lf mode=755
+
+# Deployment scripts
+.deployment/generate-static-homepage.php text eol=lf mode=755
+
+# Theme build scripts
+wp-content/themes/sunnysideac/scripts/*.sh text eol=lf mode=755
