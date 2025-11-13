@@ -1,0 +1,58 @@
+<?php
+/**
+ * Security Hardening Plugin
+ *
+ * @author: Security Hardening
+ * @version: 1.0.0
+ */
+
+// Prevent direct access
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+// Disable XML-RPC
+add_filter('xmlrpc_enabled', '__return_false');
+
+// Note: WP-Cron is disabled in wp-config.php with DISABLE_WP_CRON constant
+
+// Remove WordPress version from scripts/styles (but keep generator for SEO tools)
+function remove_wp_version_strings($src) {
+    if (strpos($src, 'ver=')) {
+        $src = remove_query_arg('ver', $src);
+    }
+    return $src;
+}
+add_filter('style_loader_src', 'remove_wp_version_strings', 15, 1);
+add_filter('script_loader_src', 'remove_wp_version_strings', 15, 1);
+
+// Hide login errors
+function hide_login_errors() {
+    return 'Invalid username or password.';
+}
+add_filter('login_errors', 'hide_login_errors');
+
+// Disable file editing
+if (!defined('DISALLOW_FILE_EDIT')) {
+    define('DISALLOW_FILE_EDIT', true);
+}
+if (!defined('DISALLOW_FILE_MODS')) {
+    define('DISALLOW_FILE_MODS', true);
+}
+
+// Note: Removed robots_txt filter to allow proper SEO crawling
+
+// SEO-Friendly: Ensure sitemaps can be indexed properly
+function ensure_sitemap_indexing() {
+    if (strpos($_SERVER['REQUEST_URI'], 'sitemap') !== false) {
+        // Remove any noindex headers for sitemaps
+        header_remove('X-Robots-Tag');
+        add_action('wp_head', function() {
+            echo '<meta name="robots" content="index, follow">' . "\n";
+        }, 1);
+    }
+}
+add_action('send_headers', 'ensure_sitemap_indexing');
+
+// SEO-Friendly: Keep WordPress version visible for SEO tools (security through obscurity isn't effective)
+// The security benefits of hiding version are minimal compared to SEO tool compatibility

@@ -1,0 +1,31 @@
+{
+  "name": "sunnysideac",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:prod": "npm run build && npm run critical-css",
+    "critical-css": "node scripts/extract-critical.js",
+    "optimize-images": "./optimize-images.sh",
+    "preview": "vite preview",
+    "composer:install": "composer install",
+    "postinstall": "composer install"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.14",
+    "autoprefixer": "^10.4.21",
+    "dotenv": "^17.2.3",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.14",
+    "vite": "^6.3.6"
+  },
+  "dependencies": {
+    "@tailwindcss/typography": "^0.5.19"
+  }
+}

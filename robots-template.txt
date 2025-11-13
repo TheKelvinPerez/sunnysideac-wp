@@ -1,0 +1,191 @@
+# WordPress Robots.txt Template with Security Hardening
+# Optimized for all search engines and AI chatbots
+#
+# INSTRUCTIONS:
+# 1. Copy this file to robots.txt
+# 2. Update the sitemap URL at the bottom with your production domain
+# 3. Review the security blocks to ensure they match your needs
+
+# ============================================================================
+# SEARCH ENGINES - Allow all major search engines to index
+# ============================================================================
+
+# Google (Googlebot, Google-Extended for AI training)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Bing
+User-agent: Bingbot
+Allow: /
+
+# Yandex
+User-agent: Yandex
+Allow: /
+
+# Baidu
+User-agent: Baiduspider
+Allow: /
+
+# ============================================================================
+# AI CHATBOTS AND CRAWLERS - Allow AI training and indexing
+# ============================================================================
+
+# OpenAI (ChatGPT)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic (Claude)
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+# Common Crawl (used by many AI models)
+User-agent: CCBot
+Allow: /
+
+# Other AI crawlers
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+# ============================================================================
+# CATCH-ALL - Allow any other bots
+# ============================================================================
+
+User-agent: *
+Allow: /
+
+# ============================================================================
+# WORDPRESS SYSTEM PROTECTION - Block access to admin and system directories
+# ============================================================================
+
+# Block WordPress admin and system directories
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/plugins/
+Disallow: /wp-content/themes/
+
+# Allow access to theme assets (CSS, JS, images) for proper rendering
+Allow: /wp-content/themes/*/dist/
+Allow: /wp-content/themes/*/assets/
+Allow: /wp-content/uploads/
+
+# ============================================================================
+# SECURITY HARDENING - Block sensitive files and directories
+# ============================================================================
+
+# Block WordPress system files
+Disallow: /wp-login.php
+Disallow: /wp-register.php
+Disallow: /wp-signup.php
+Disallow: /wp-activate.php
+Disallow: /wp-cron.php
+Disallow: /xmlrpc.php
+Disallow: /wp-config.php
+Disallow: /wp-config-sample.php
+Disallow: /readme.html
+Disallow: /license.txt
+Disallow: /wp-mail.php
+Disallow: /wp-links-opml.php
+Disallow: /wp-trackback.php
+
+# Block sensitive files and directories
+Disallow: /.env
+Disallow: /.git/
+Disallow: /.svn/
+Disallow: /.htaccess
+Disallow: /.htpasswd
+Disallow: /wp-content/debug.log
+Disallow: /error_log
+Disallow: /php_error.log
+
+# Block backup and temporary files
+Disallow: /*.sql$
+Disallow: /*.sql.gz$
+Disallow: /*.tar$
+Disallow: /*.tar.gz$
+Disallow: /*.zip$
+Disallow: /*.bak$
+Disallow: /*.old$
+Disallow: /*.tmp$
+Disallow: /*.log$
+Disallow: /*~$
+
+# Block WordPress installation and upgrade files
+Disallow: /wp-admin/install.php
+Disallow: /wp-admin/upgrade.php
+Disallow: /wp-admin/setup-config.php
+
+# Block plugin and theme editors
+Disallow: /wp-admin/plugin-editor.php
+Disallow: /wp-admin/theme-editor.php
+
+# Block common WordPress directories that may expose information
+Disallow: /wp-content/cache/
+Disallow: /wp-content/backup/
+Disallow: /wp-content/backups/
+Disallow: /wp-content/upgrade/
+Disallow: /wp-content/mu-plugins/
+
+# ============================================================================
+# SEO OPTIMIZATION - Block duplicate content
+# ============================================================================
+
+# Block WordPress query parameters that create duplicate content
+Disallow: /*?*replytocom=
+Disallow: /*?attachment_id=
+Disallow: /*?s=
+Disallow: /search/
+Disallow: /*?feed=
+Disallow: /*?preview=
+
+# Block WordPress trackback endpoints
+Disallow: /*/trackback/
+Disallow: /*/trackback
+Disallow: /trackback/
+
+# ============================================================================
+# SITEMAP LOCATION
+# ============================================================================
+
+# IMPORTANT: Update this URL to your production domain!
+Sitemap: https://yourdomain.com/sitemap_index.xml
+
+# Examples:
+# Production: Sitemap: https://yourdomain.com/sitemap_index.xml
+# Staging: Sitemap: https://staging.yourdomain.com/sitemap_index.xml
+# DDEV Local: Sitemap: https://yoursite.ddev.site/sitemap_index.xml
+
+# ============================================================================
+# NOTES
+# ============================================================================
+#
+# Security Note:
+# robots.txt is guidance for polite bots only - it does NOT provide true security.
+# Real security is enforced by:
+# - wp-content/mu-plugins/waf-protection.php (WAF)
+# - wp-content/mu-plugins/file-security.php
+# - wp-content/mu-plugins/security-hardening.php
+# - Server-level .htaccess rules
+#
+# SEO Note:
+# This robots.txt is optimized to allow all major search engines and AI
+# chatbots to index your content while blocking access to WordPress system
+# files and preventing duplicate content issues.

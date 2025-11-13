@@ -1,0 +1,466 @@
+<?php
+/**
+ * Helper Functions
+ * Utility functions used throughout the theme
+ */
+
+/**
+ * Get asset URL helper function with CDN support
+ *
+ * Multi-environment support:
+ * - local: Always uses local assets (DDEV/local development)
+ * - development/dev/staging: Uses CDN if CDN_ENABLED=true, otherwise local
+ * - production: Uses CDN if CDN_ENABLED=true, otherwise local
+ *
+ * @param string $path Path relative to theme directory
+ * @return string Full URL to asset (with CDN if enabled)
+ */
+function sunnysideac_asset_url( $path ) {
+	$base_url = get_template_directory_uri();
+	$app_env = $_ENV['APP_ENV'] ?? 'production';
+
+	// Local environment ALWAYS uses local assets (no CDN)
+	if ( $app_env === 'local' ) {
+		return $base_url . '/' . ltrim( $path, '/' );
+	}
+
+	// Check if CDN is enabled and configured
+	$cdn_enabled = ! empty( $_ENV['CDN_ENABLED'] ) && $_ENV['CDN_ENABLED'] === 'true';
+
+	if ( $cdn_enabled && ! empty( $_ENV['CDN_BASE_URL'] ) ) {
+		$cdn_base = rtrim( $_ENV['CDN_BASE_URL'], '/' );
+		$theme_path = '/wp-content/themes/' . basename( get_template_directory() );
+		$cdn_url = $cdn_base . $theme_path . '/' . ltrim( $path, '/' );
+
+		return $cdn_url;
+	}
+
+	// Fallback to local URL if CDN is not enabled or not configured
+	return $base_url . '/' . ltrim( $path, '/' );
+}
+
+/**
+ * Parse video URL and return embed details
+ *
+ * @param string $url Video URL (YouTube or Vimeo)
+ * @return array|false Array with 'type', 'id', 'embed_url', 'thumbnail_url' or false if invalid
+ */
+function sunnysideac_parse_video_url( $url ) {
+	if ( empty( $url ) ) {
+		return false;
+	}
+
+	// YouTube patterns
+	if ( preg_match( '/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]+)/', $url, $matches ) ) {
+		$video_id = $matches[1];
+		return array(
+			'type'          => 'youtube',
+			'id'            => $video_id,
+			'embed_url'     => 'https://www.youtube.com/embed/' . $video_id,
+			'watch_url'     => 'https://www.youtube.com/watch?v=' . $video_id,
+			'thumbnail_url' => 'https://img.youtube.com/vi/' . $video_id . '/maxresdefault.jpg',
+		);
+	}
+
+	// Vimeo patterns
+	if ( preg_match( '/vimeo\.com\/(?:video\/)?([0-9]+)/', $url, $matches ) ) {
+		$video_id = $matches[1];
+		return array(
+			'type'          => 'vimeo',
+			'id'            => $video_id,
+			'embed_url'     => 'https://player.vimeo.com/video/' . $video_id,
+			'watch_url'     => 'https://vimeo.com/' . $video_id,
+			'thumbnail_url' => null, // Vimeo requires API call for thumbnail
+		);
+	}
+
+	return false;
+}
+
+/**
+ * Get video embed HTML
+ *
+ * @param string $url Video URL
+ * @param array  $args Optional arguments (width, height, class, title, use_facade)
+ * @return string HTML embed code or empty string
+ */
+function sunnysideac_get_video_embed( $url, $args = array() ) {
+	$video = sunnysideac_parse_video_url( $url );
+
+	if ( ! $video ) {
+		return '';
+	}
+
+	$defaults = array(
+		'width'      => '100%',
+		'height'     => '100%',
+		'class'      => 'video-embed',
+		'title'      => 'Video',
+		'use_facade' => false, // Option to use click-to-play facade for better performance
+	);
+
+	$args = wp_parse_args( $args, $defaults );
+
+	// Build iframe with performance optimizations
+	$iframe = sprintf(
+		'<iframe src="%s" width="%s" height="%s" class="%s" title="%s" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"%s></iframe>',
+		esc_url( $video['embed_url'] ),
+		esc_attr( $args['width'] ),
+		esc_attr( $args['height'] ),
+		esc_attr( $args['class'] ),
+		esc_attr( $args['title'] ),
+		// Add importance="low" for better resource prioritization
+		' importance="low"'
+	);
+
+	return $iframe;
+}
+
+/**
+ * Get video thumbnail URL
+ *
+ * @param string $url Video URL
+ * @param string $size Thumbnail size (default, medium, high, maxres for YouTube)
+ * @return string|null Thumbnail URL or null if not available
+ */
+function sunnysideac_get_video_thumbnail( $url, $size = 'maxresdefault' ) {
+	$video = sunnysideac_parse_video_url( $url );
+
+	if ( ! $video ) {
+		return null;
+	}
+
+	if ( $video['type'] === 'youtube' ) {
+		// YouTube thumbnail sizes: default (120x90), mqdefault (320x180), hqdefault (480x360), sddefault (640x480), maxresdefault (1280x720)
+		return 'https://img.youtube.com/vi/' . $video['id'] . '/' . $size . '.jpg';
+	}
+
+	// Vimeo requires API call for thumbnails (return null for now)
+	return null;
+}
+
+/**
+ * Get appropriate icon for service name
+ *
+ * @param string $service_name The name of the service
+ * @return string SVG icon path data
+ */
+function sunnysideac_get_service_icon( $service_name ) {
+	$icons = array(
+		'AC Repair'             => 'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z',
+		'AC Installation'       => 'M12 6v6m0 0v6m0-6h6m-6 0H6',
+		'AC Maintenance'        => 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z',
+		'AC Replacement'        => 'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15',
+		'Heating Repair'        => 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z',
+		'Heating Installation'  => 'M13 10V3L4 14h7v7l9-11h-7z',
+		'Heat Pumps'            => 'M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12',
+		'Ductless / Mini Split' => 'M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z',
+		'Indoor Air Quality'    => 'M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z',
+		'Water Heaters'         => 'M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41',
+	);
+
+	return $icons[ $service_name ] ?? 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2';
+}
+
+/**
+ * Get optimized image URL with WebP support and fallback
+ *
+ * @param string $path Path relative to theme directory
+ * @param array $args Optional arguments (sizes, webp, avif, loading, class, alt)
+ * @return string HTML img element with responsive sources
+ */
+function sunnysideac_responsive_image( $path, $args = array() ) {
+	$defaults = array(
+		'sizes'        => array( 'large', 'medium', 'thumbnail' ),
+		'webp'         => true,
+		'avif'         => true, // Enable AVIF for better compression
+		'loading'      => 'lazy',
+		'class'        => '',
+		'alt'          => '',
+		'decoding'     => 'async',
+		'width'        => null,
+		'height'       => null,
+	);
+
+	$args = wp_parse_args( $args, $defaults );
+
+	// Handle new array-based path format
+	if ( is_array( $path ) ) {
+		$image_paths = $path;
+		$path = $image_paths['png'] ?? ''; // Default to PNG as fallback
+	}
+
+	// Check if optimized version exists
+	$optimized_path = str_replace( 'assets/', 'assets/images/optimize/', $path );
+	$webp_path = preg_replace( '/\.(png|jpg|jpeg)$/i', '.webp', $optimized_path );
+	$avif_path = preg_replace( '/\.(png|jpg|jpeg)$/i', '.avif', $optimized_path );
+
+	$theme_dir = get_template_directory();
+	$optimized_file = $theme_dir . '/' . $optimized_path;
+	$webp_file = $theme_dir . '/' . $webp_path;
+	$avif_file = $theme_dir . '/' . $avif_path;
+
+	// Determine which image to use
+	$image_url = '';
+	$webp_url = '';
+	$avif_url = '';
+
+	// Use array format if available, otherwise fall back to generated paths
+	if ( isset( $image_paths ) && is_array( $image_paths ) ) {
+		if ( ! empty( $image_paths['png'] ) ) {
+			$image_url = sunnysideac_asset_url( $image_paths['png'] );
+		}
+		if ( $args['webp'] && ! empty( $image_paths['webp'] ) ) {
+			$webp_url = sunnysideac_asset_url( $image_paths['webp'] );
+		}
+		if ( $args['avif'] && ! empty( $image_paths['avif'] ) ) {
+			$avif_url = sunnysideac_asset_url( $image_paths['avif'] );
+		}
+	} else {
+		// Fallback to original logic for string paths
+		if ( file_exists( $optimized_file ) ) {
+			$image_url = sunnysideac_asset_url( $optimized_path );
+		} else {
+			$image_url = sunnysideac_asset_url( $path );
+		}
+
+		if ( $args['webp'] && file_exists( $webp_file ) ) {
+			$webp_url = sunnysideac_asset_url( $webp_path );
+		}
+
+		if ( $args['avif'] && file_exists( $avif_file ) ) {
+			$avif_url = sunnysideac_asset_url( $avif_path );
+		}
+	}
+
+	// Build responsive image HTML
+	$img_tag = '';
+
+	// Add modern format support with picture element if AVIF or WebP exists
+	if ( $avif_url || $webp_url ) {
+		$img_tag .= '<picture>';
+
+		// AVIF source (best compression, supported by modern browsers)
+		if ( $avif_url ) {
+			$img_tag .= sprintf(
+				'<source srcset="%s" type="image/avif">',
+				esc_url( $avif_url )
+			);
+		}
+
+		// WebP source (good compression, widely supported)
+		if ( $webp_url ) {
+			$img_tag .= sprintf(
+				'<source srcset="%s" type="image/webp">',
+				esc_url( $webp_url )
+			);
+		}
+	}
+
+	// Build img tag attributes
+	$attributes = array(
+		'src'      => $image_url,
+		'alt'      => $args['alt'],
+		'loading'  => $args['loading'],
+		'decoding' => $args['decoding'],
+	);
+
+	if ( ! empty( $args['class'] ) ) {
+		$attributes['class'] = $args['class'];
+	}
+
+	if ( $args['width'] ) {
+		$attributes['width'] = $args['width'];
+	}
+
+	if ( $args['height'] ) {
+		$attributes['height'] = $args['height'];
+	}
+
+	// Build attribute string
+	$attr_string = '';
+	foreach ( $attributes as $attr => $value ) {
+		$attr_string .= sprintf( ' %s="%s"', $attr, esc_attr( $value ) );
+	}
+
+	$img_tag .= sprintf( '<img%s>', $attr_string );
+
+	if ( $avif_url || $webp_url ) {
+		$img_tag .= '</picture>';
+	}
+
+	return $img_tag;
+}
+
+/**
+ * Get optimized background image with WebP support
+ *
+ * @param string $path Path relative to theme directory
+ * @param array $args Optional arguments (webp, size, class)
+ * @return string CSS with background-image and WebP support
+ */
+function sunnysideac_responsive_background_image( $path, $args = array() ) {
+	$defaults = array(
+		'webp'  => true,
+		'size'  => 'cover',
+		'class' => '',
+	);
+
+	$args = wp_parse_args( $args, $defaults );
+
+	// Check if optimized version exists
+	$optimized_path = str_replace( 'assets/', 'assets/images/optimize/', $path );
+	$webp_path = preg_replace( '/\.(png|jpg|jpeg)$/i', '.webp', $optimized_path );
+
+	$theme_dir = get_template_directory();
+	$optimized_file = $theme_dir . '/' . $optimized_path;
+	$webp_file = $theme_dir . '/' . $webp_path;
+
+	// Determine which image to use
+	$image_url = '';
+	$webp_url = '';
+
+	if ( file_exists( $optimized_file ) ) {
+		$image_url = sunnysideac_asset_url( $optimized_path );
+	} else {
+		$image_url = sunnysideac_asset_url( $path );
+	}
+
+	if ( $args['webp'] && file_exists( $webp_file ) ) {
+		$webp_url = sunnysideac_asset_url( $webp_path );
+	}
+
+	$class_attr = ! empty( $args['class'] ) ? ' class="' . esc_attr( $args['class'] ) . '"' : '';
+
+	// Generate CSS with WebP support
+	$css = '<style' . $class_attr . '>';
+
+	if ( $webp_url ) {
+		$css .= sprintf(
+			'@supports (background-image: url("data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==")) { .bg-webp-%s { background-image: url("%s"); background-size: %s; } }',
+			md5( $path ),
+			esc_url( $webp_url ),
+			esc_attr( $args['size'] )
+		);
+	}
+
+	$css .= sprintf(
+		'.bg-fallback-%s { background-image: url("%s"); background-size: %s; }',
+		md5( $path ),
+		esc_url( $image_url ),
+		esc_attr( $args['size'] )
+	);
+
+	$css .= '</style>';
+
+	return $css;
+}
+
+/**
+ * Enhanced WordPress attachment image helper with automatic dimensions for better CLS
+ *
+ * @param int    $image_id WordPress attachment ID
+ * @param string $size     Image size (thumbnail, medium, large, full)
+ * @param array  $args     Additional arguments (class, loading, etc.)
+ * @return string HTML img element with proper dimensions and optimization
+ */
+function sunnysideac_get_optimized_image( $image_id, $size = 'large', $args = array() ) {
+	if ( ! $image_id ) {
+		return '';
+	}
+
+	$defaults = array(
+		'class'   => '',
+		'loading' => 'lazy',
+		'decoding' => 'async',
+		'webp'    => true,
+		'avif'    => true,
+	);
+
+	$args = wp_parse_args( $args, $defaults );
+
+	$image = wp_get_attachment_image_src( $image_id, $size );
+	if ( ! $image ) {
+		return '';
+	}
+
+	$image_meta = wp_get_attachment_metadata( $image_id );
+	$alt_text   = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+
+	// Get dimensions from size or calculate aspect ratio
+	$width  = $image[1];
+	$height = $image[2];
+
+	// For responsive images, ensure we have dimensions
+	if ( empty( $width ) || empty( $height ) ) {
+		if ( ! empty( $image_meta['width'] ) && ! empty( $image_meta['height'] ) ) {
+			// Calculate dimensions based on original aspect ratio
+			$aspect_ratio = $image_meta['height'] / $image_meta['width'];
+			$width        = $image_meta['width'];
+			$height       = $image_meta['height'];
+		} else {
+			// Fallback dimensions
+			$width  = 800;
+			$height = 600;
+		}
+	}
+
+	// Build srcset for responsive images
+	$srcset = wp_get_attachment_image_srcset( $image_id, $size );
+	$sizes  = wp_get_attachment_image_sizes( $image_id, $size );
+
+	// Check for WebP versions
+	$webp_srcset = '';
+	$webp_sizes  = '';
+
+	if ( $args['webp'] ) {
+		// Generate WebP srcset by replacing extensions
+		$webp_srcset = preg_replace( '/\.(jpg|jpeg|png)(\s+\d+w)/i', '.webp$2', $srcset );
+	}
+
+	// Build attributes array
+	$attributes = array(
+		'src'      => esc_url( $image[0] ),
+		'alt'      => esc_attr( $alt_text ),
+		'width'    => intval( $width ),
+		'height'   => intval( $height ),
+		'loading'  => esc_attr( $args['loading'] ),
+		'decoding' => esc_attr( $args['decoding'] ),
+		'style'    => sprintf( 'aspect-ratio: %d/%d;', intval( $width ), intval( $height ) ),
+	);
+
+	if ( ! empty( $args['class'] ) ) {
+		$attributes['class'] = esc_attr( $args['class'] );
+	}
+
+	if ( $srcset ) {
+		$attributes['srcset'] = esc_attr( $srcset );
+	}
+
+	if ( $sizes ) {
+		$attributes['sizes'] = esc_attr( $sizes );
+	}
+
+	// Build HTML string
+	$html = '<img';
+	foreach ( $attributes as $name => $value ) {
+		$html .= ' ' . $name . '="' . $value . '"';
+	}
+	$html .= '>';
+
+	// Wrap with picture element for WebP support
+	if ( $webp_srcset && $args['webp'] ) {
+		$picture_html = '<picture>';
+		$picture_html .= '<source type="image/webp" srcset="' . esc_attr( $webp_srcset ) . '"';
+		if ( $sizes ) {
+			$picture_html .= ' sizes="' . esc_attr( $sizes ) . '"';
+		}
+		$picture_html .= '>';
+		$picture_html .= $html;
+		$picture_html .= '</picture>';
+
+		return $picture_html;
+	}
+
+	return $html;
+}
