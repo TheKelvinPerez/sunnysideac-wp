@@ -323,35 +323,24 @@ if ( have_posts() ) :
 								foreach ( $service_list as $service_name ) :
 									$service_slug = sanitize_title( $service_name );
 									$service_url  = home_url( sprintf( '/services/%s/', $service_slug ) );
-									?>
-								<a href="<?php echo esc_url( $service_url ); ?>"
-									class="group block bg-gray-50 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-orange-50 hover:to-orange-100 hover:shadow-lg">
-									<!-- Icon Circle -->
-									<div class="mb-4">
-										<div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-orange-200 to-orange-300">
-											<svg class="h-6 w-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="<?php echo esc_attr( sunnysideac_get_service_icon( $service_name ) ); ?>" />
-											</svg>
-										</div>
-									</div>
 
-									<!-- Service Content -->
-									<div class="text-lg font-bold text-gray-900 mb-2 group-hover:text-orange-500" role="heading" aria-level="4">
-										<?php echo esc_html( $service_name ); ?>
-									</div>
+									// Get service post for featured image
+									$service_post = get_page_by_path( $service_slug, OBJECT, 'service' );
 
-									<p class="text-gray-600 text-sm mb-4">
-										Professional <?php echo strtolower( esc_html( $service_name ) ); ?> for <?php echo esc_html( $brand_title ); ?> systems
-									</p>
-
-									<span class="inline-flex items-center text-orange-500 font-medium text-sm">
-										Learn more
-										<svg class="w-4 h-4 ml-1 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-										</svg>
-									</span>
-								</a>
-									<?php
+									get_template_part(
+										'template-parts/service-card',
+										null,
+										array(
+											'service_name'    => $service_name,
+											'service_slug'    => $service_slug,
+											'service_url'     => $service_url,
+											'card_size'       => 'archive',
+											'show_button'     => true,
+											'button_text'     => 'Learn More',
+											'description'     => 'Professional ' . strtolower( $service_name ) . ' for ' . $brand_title . ' systems',
+											'service_post_id' => $service_post ? $service_post->ID : null,
+										)
+									);
 								endforeach;
 							endforeach;
 							?>
@@ -369,32 +358,33 @@ if ( have_posts() ) :
 							<p class="text-lg text-gray-600">Expert <?php echo esc_html( $brand_title ); ?> service across South Florida</p>
 						</div>
 
-						<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-							<?php
-							$displayed_cities = array_slice( SUNNYSIDE_SERVICE_AREAS, 0, 16 ); // Show first 16 cities
-							foreach ( $displayed_cities as $city ) :
-								$city_slug = sanitize_title( $city );
-								$city_url  = home_url( sprintf( '/cities/%s/', $city_slug ) );
-								?>
-								<a href="<?php echo esc_url( $city_url ); ?>"
-									class="group block bg-gray-50 rounded-2xl p-4 text-center transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-orange-50 hover:to-orange-100 hover:shadow-lg">
-									<!-- Icon Circle -->
-									<div class="mb-3">
-										<div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-orange-200 to-orange-300">
-											<svg class="h-6 w-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-											</svg>
-										</div>
-									</div>
+						<nav aria-label="Service areas">
+							<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+								<?php
+								$displayed_cities = array_slice( SUNNYSIDE_SERVICE_AREAS, 0, 16 ); // Show first 16 cities
+								foreach ( $displayed_cities as $city ) :
+									$city_slug = sanitize_title( $city );
+									$city_url  = home_url( sprintf( '/cities/%s/', $city_slug ) );
 
-									<!-- City Name -->
-									<div class="text-lg font-bold text-gray-900 group-hover:text-orange-500" role="heading" aria-level="4">
-										<?php echo esc_html( $city ); ?>
-									</div>
-								</a>
-							<?php endforeach; ?>
-						</div>
+									// Get city post for featured image
+									$city_post = get_page_by_path( $city_slug, OBJECT, 'city' );
+
+									get_template_part(
+										'template-parts/city-card',
+										null,
+										array(
+											'city_name'    => $city,
+											'city_slug'    => $city_slug,
+											'city_url'     => $city_url,
+											'card_size'    => 'archive',
+											'city_post_id' => $city_post ? $city_post->ID : null,
+											'description'  => $brand_title . ' Service',
+										)
+									);
+								endforeach;
+								?>
+							</div>
+						</nav>
 
 						<div class="text-center mt-8">
 							<a href="<?php echo esc_url( home_url( '/cities/' ) ); ?>"

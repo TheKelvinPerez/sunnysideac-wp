@@ -152,6 +152,42 @@ define(
 	)
 );
 
+// City videos
+define(
+	'SUNNYSIDE_CITY_VIDEOS',
+	array(
+		'Palm Beach'           => 'https://youtu.be/q7mF0BGn6iE',
+		'West Palm Beach'      => 'https://youtu.be/5eTLTT7h3aU',
+		'Royal Palm Beach'     => 'https://youtu.be/2tKWc5rx_g8',
+		'Wellington'           => 'https://www.youtube.com/watch?v=eOnemeiOCRQ',
+		'Palm Springs'         => 'https://www.youtube.com/watch?v=tUmzAMND8is',
+		'Homestead'            => 'https://www.youtube.com/watch?v=KwmorRpJj00',
+		'Boca Raton'           => 'https://www.youtube.com/watch?v=znTpJazXzdY',
+		'Deerfield Beach'      => 'https://youtu.be/Ks2Vf5sNrRU',
+		'Light House Point'    => 'https://www.youtube.com/watch?v=J21qK703wUQ',
+		'Palmetto Bay'         => 'https://www.youtube.com/watch?v=qr0M52qjeiY',
+		'Pompano Beach'        => 'https://www.youtube.com/watch?v=DZdG8ohRDSI',
+		'Key Biscayne'         => 'https://www.youtube.com/watch?v=PJUhinVCzy0',
+		'Coral Springs'        => 'https://www.youtube.com/watch?v=rwj6MjNB61M',
+		'Coral Gables'         => 'https://www.youtube.com/watch?v=U8W-sc8wzjE',
+		'Tamarac'              => 'https://www.youtube.com/watch?v=fxQW2DPTZP0',
+		'Fort Lauderdale'      => 'https://www.youtube.com/watch?v=p_x5lKpViR8',
+		'Sunrise'              => 'https://www.youtube.com/watch?v=9_81GJYDsQE',
+		'Plantation'           => 'https://www.youtube.com/watch?v=01i8no3pAFw',
+		'Sunny Isles'          => 'https://www.youtube.com/watch?v=1FU2wTzgvAU',
+		'Hialeah Lakes'        => 'https://www.youtube.com/watch?v=LzDds3iZotI',
+		'Weston'               => 'https://www.youtube.com/watch?v=d509pWeQfeY',
+		'Hollywood'            => 'https://www.youtube.com/watch?v=n1Dyoj1w5tI',
+		'Davie'                => 'https://www.youtube.com/watch?v=bntgoZi1FkM',
+		'Pembroke Park'        => 'https://www.youtube.com/watch?v=674cMcVWCIk',
+		'West Park'            => 'https://www.youtube.com/watch?v=fgjdG38yPp4',
+		'Miami Lakes'          => 'https://www.youtube.com/watch?v=UFQbIQ20ko4',
+		'South West Ranches'   => 'https://www.youtube.com/watch?v=y7_j9IjRWEM',
+		'Pembroke Pines'       => 'https://www.youtube.com/watch?v=TvSi7lgSPk4',
+		'Miramar'              => 'https://www.youtube.com/watch?v=mt-Y4R2LbnA',
+	)
+);
+
 // Daikin product pages structure
 define(
 	'SUNNYSIDE_DAIKIN_PRODUCTS',

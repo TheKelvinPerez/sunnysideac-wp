@@ -363,66 +363,36 @@ if ( have_posts() ) :
 						<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 							<?php
 							$daikin_services = array(
-								array(
-									'name'        => 'AC Installation',
-									'description' => 'Professional AC installation by factory-trained technicians',
-									'icon'        => 'M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4',
-									'url'         => home_url( '/services/ac-installation/' ),
-								),
-								array(
-									'name'        => 'AC Repair',
-									'description' => 'Expert AC repair and diagnostic services',
-									'icon'        => 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z',
-									'url'         => home_url( '/services/ac-repair/' ),
-								),
-								array(
-									'name'        => 'Emergency Service',
-									'description' => '24/7 emergency AC repair service available',
-									'icon'        => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
-									'url'         => home_url( '/contact/' ),
-								),
-								array(
-									'name'        => 'AC Replacement',
-									'description' => 'Upgrade to newer, more efficient Daikin models',
-									'icon'        => 'M7 11l5-9-5 9zm0 0l5 9m-5-9h12',
-									'url'         => home_url( '/services/ac-replacement/' ),
-								),
-								array(
-									'name'        => 'Warranty Service',
-									'description' => 'Full warranty support and manufacturer relations',
-									'icon'        => 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
-									'url'         => home_url( '/warranty/' ),
-								),
-								array(
-									'name'        => 'AC Maintenance',
-									'description' => 'Preventive maintenance and tune-up services',
-									'icon'        => 'M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z',
-									'url'         => home_url( '/services/ac-maintenance/' ),
-								),
+								'ac-installation'   => 'AC Installation',
+								'ac-repair'        => 'AC Repair',
+								'emergency-service' => 'Emergency Service',
+								'ac-replacement'   => 'AC Replacement',
+								'warranty-service' => 'Warranty Service',
+								'ac-maintenance'   => 'AC Maintenance',
 							);
 
-							foreach ( $daikin_services as $service ) :
-								?>
-								<a href="<?php echo esc_url( $service['url'] ); ?>" class="group block bg-gray-50 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-orange-50 hover:to-orange-100 hover:shadow-lg">
-									<!-- Icon Circle -->
-									<div class="mb-4">
-										<div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-orange-200 to-orange-300">
-											<svg class="h-6 w-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="<?php echo esc_attr( $service['icon'] ); ?>" />
-											</svg>
-										</div>
-									</div>
+							foreach ( $daikin_services as $service_slug => $service_name ) :
+								// Get service post ID for featured image
+								$service_post = get_page_by_path( $service_slug, OBJECT, 'service' );
+								$service_url = $service_post ? get_permalink( $service_post->ID ) : home_url( sprintf( '/services/%s/', $service_slug ) );
+								$service_post_id = $service_post ? $service_post->ID : null;
 
-									<!-- Service Content -->
-									<h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-orange-500">
-										<?php echo esc_html( $service['name'] ); ?>
-									</h3>
-
-									<p class="text-gray-600 text-sm">
-										<?php echo esc_html( $service['description'] ); ?>
-									</p>
-								</a>
-							<?php endforeach; ?>
+								get_template_part(
+									'template-parts/service-card',
+									null,
+									array(
+										'service_name'    => $service_name,
+										'service_slug'    => $service_slug,
+										'service_url'     => $service_url,
+										'service_post_id' => $service_post_id,
+										'card_size'       => 'featured',
+										'show_button'     => true,
+										'button_text'     => 'Learn More',
+										'description'     => 'Expert ' . strtolower( esc_html( $service_name ) ) . ' for Daikin systems',
+									)
+								);
+							endforeach;
+							?>
 						</div>
 					</section>
 
@@ -482,15 +452,21 @@ if ( have_posts() ) :
 							</p>
 							<div class="flex flex-col sm:flex-row gap-4 justify-center">
 								<a href="tel:<?php echo esc_attr( SUNNYSIDE_TEL_HREF ); ?>"
-									class="inline-flex items-center justify-center gap-2 rounded-[35px] bg-white px-8 py-4 transition-all hover:scale-105 hover:shadow-xl focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-orange-500 focus:outline-none">
-									<span class="text-lg font-bold text-orange-500">
+									class="inline-flex items-center justify-center gap-2 rounded-[35px] bg-white px-8 py-4 transition-all hover:scale-105 hover:shadow-xl focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-orange-500 focus:outline-none shadow-lg">
+									<svg class="h-5 w-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+									</svg>
+									<span class="text-lg font-bold text-orange-500 whitespace-nowrap">
 										Call <?php echo esc_html( SUNNYSIDE_PHONE_DISPLAY ); ?>
 									</span>
 								</a>
 
 								<a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"
-									class="inline-flex items-center justify-center gap-2 rounded-[35px] bg-gradient-to-r from-[#7fcbf2] to-[#594bf7] px-8 py-4 transition-all hover:scale-105 hover:shadow-xl focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 focus:ring-offset-orange-500 focus:outline-none">
-									<span class="text-lg font-bold text-white">
+									class="inline-flex items-center justify-center gap-2 rounded-[35px] bg-gradient-to-r from-[#7fcbf2] to-[#594bf7] px-8 py-4 transition-all hover:scale-105 hover:shadow-xl focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 focus:ring-offset-orange-500 focus:outline-none shadow-lg">
+									<svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+									</svg>
+									<span class="text-lg font-bold text-white whitespace-nowrap">
 										Schedule Service
 									</span>
 								</a>

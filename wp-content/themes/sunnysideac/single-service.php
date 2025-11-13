@@ -176,81 +176,37 @@ if ( have_posts() ) :
 				<!-- Hero Section with Service Title & CTA -->
 				<article id="post-<?php the_ID(); ?>" <?php post_class( 'service-page' ); ?>>
 
-					<!-- Page Header - Breadcrumbs & Title -->
-					<header class="entry-header bg-white rounded-[20px] p-6 md:p-10 mb-6">
-						<!-- Breadcrumbs -->
-						<nav aria-label="Breadcrumb" class="mb-6 flex justify-center" itemscope itemtype="https://schema.org/BreadcrumbList">
-							<ol class="flex flex-wrap items-center gap-2 text-sm text-gray-600">
-								<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-									<a itemprop="item" href="<?php echo esc_url( home_url( '/' ) ); ?>" class="hover:text-orange-500">
-										<span itemprop="name">Home</span>
-									</a>
-									<meta itemprop="position" content="1">
-								</li>
-								<li class="text-gray-400">/</li>
-								<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-									<a itemprop="item" href="<?php echo esc_url( home_url( '/services/' ) ); ?>" class="hover:text-orange-500">
-										<span itemprop="name">Services</span>
-									</a>
-									<meta itemprop="position" content="2">
-								</li>
-								<li class="text-gray-400">/</li>
-								<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-									<span itemprop="name" class="font-semibold text-orange-500"><?php echo esc_html( $service_title ); ?></span>
-									<meta itemprop="position" content="3">
-								</li>
-							</ol>
-						</nav>
+					<!-- Page Header with Featured Image Background -->
+					<?php
+					// Page breadcrumbs
+					$breadcrumbs = array(
+						array(
+							'name' => 'Home',
+							'url'  => home_url( '/' ),
+						),
+						array(
+							'name' => 'Services',
+							'url'  => home_url( '/services/' ),
+						),
+						array(
+							'name' => $service_title,
+							'url'  => '',
+						),
+					);
 
-						<!-- Main Title with Gradient -->
-						<div class="text-center mb-8">
-							<h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4" itemprop="name">
-								<span class="bg-gradient-to-r from-[#fb9939] to-[#e5462f] bg-clip-text text-transparent">
-									<?php echo esc_html( $service_title ); ?>
-								</span>
-							</h1>
-
-							<p class="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-								Expert <?php echo esc_html( strtolower( $service_title ) ); ?> services throughout South Florida
-							</p>
-						</div>
-
-						<!-- CTA Buttons -->
-						<div class="flex flex-col sm:flex-row justify-center gap-4 mt-8">
-							<a href="tel:<?php echo esc_attr( SUNNYSIDE_TEL_HREF ); ?>"
-								class="inline-flex items-center justify-center gap-2 rounded-[35px] bg-gradient-to-r from-[#fb9939] to-[#e5462f] px-6 py-4 transition-opacity hover:opacity-90 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:outline-none"
-								aria-label="Call to schedule service - <?php echo esc_attr( SUNNYSIDE_PHONE_DISPLAY ); ?>">
-								<span class="text-base lg:text-lg font-medium text-white whitespace-nowrap">
-									Schedule Service Now
-								</span>
-							</a>
-
-							<a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"
-								class="inline-flex items-center justify-center gap-2 rounded-[35px] bg-gradient-to-r from-[#7fcbf2] to-[#594bf7] px-6 py-4 transition-opacity hover:opacity-90 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none">
-								<span class="text-base lg:text-lg font-medium text-white whitespace-nowrap">
-									Get a Free Quote
-								</span>
-							</a>
-						</div>
-
-						<!-- Featured Image (if exists) -->
-						<?php if ( has_post_thumbnail() ) : ?>
-							<figure class="mt-8" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-								<?php
-								the_post_thumbnail(
-									'large',
-									array(
-										'class'    => 'w-full h-auto rounded-2xl shadow-lg',
-										'itemprop' => 'url',
-										'alt'      => esc_attr( $service_title . ' services in South Florida' ),
-									)
-								);
-								?>
-								<meta itemprop="width" content="1200">
-								<meta itemprop="height" content="630">
-							</figure>
-						<?php endif; ?>
-					</header>
+					get_template_part(
+						'template-parts/page-header',
+						null,
+						array(
+							'breadcrumbs'      => $breadcrumbs,
+							'title'            => $service_title,
+							'description'      => 'Expert ' . strtolower( $service_title ) . ' services throughout South Florida',
+							'show_ctas'        => true,
+							'bg_color'         => 'white', // This is fallback if no featured image
+							'featured_image_id' => $service_id, // Pass service post ID for featured image
+						)
+					);
+					?>
 
 					<!-- Main Service Description -->
 					<?php if ( $service_description ) : ?>
@@ -377,17 +333,27 @@ if ( have_posts() ) :
 						</header>
 
 						<nav aria-label="Service areas">
-							<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+							<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
 								<?php foreach ( SUNNYSIDE_SERVICE_AREAS as $city ) : ?>
-									<a href="<?php echo esc_url( home_url( '/' . sanitize_title( $city ) . '/' . get_post_field( 'post_name', $service_id ) . '/' ) ); ?>"
-										class="group block bg-gray-50 rounded-2xl p-4 text-center transition-all duration-300 hover:scale-105 hover:bg-orange-50 hover:shadow-lg">
-										<div class="font-semibold text-gray-900 group-hover:text-orange-500" role="heading" aria-level="4">
-											<?php echo esc_html( $city ); ?>
-										</div>
-										<p class="text-sm text-gray-600 mt-1">
-											<?php echo esc_html( $service_title ); ?>
-										</p>
-									</a>
+									<?php
+									// Get city post for featured image
+									$city_post = get_page_by_path( sanitize_title( $city ), OBJECT, 'city' );
+									$service_slug = get_post_field( 'post_name', $service_id );
+									$city_service_url = home_url( '/' . sanitize_title( $city ) . '/' . $service_slug . '/' );
+
+									get_template_part(
+										'template-parts/city-card',
+										null,
+										array(
+											'city_name'    => $city,
+											'city_slug'    => sanitize_title( $city ),
+											'city_url'     => $city_service_url,
+											'card_size'    => 'archive',
+											'city_post_id' => $city_post ? $city_post->ID : null,
+											'description'  => $service_title,
+										)
+									);
+									?>
 								<?php endforeach; ?>
 							</div>
 						</nav>

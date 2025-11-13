@@ -28,6 +28,7 @@ $defaults = array(
 	'custom_classes' => '',
 	'custom_image'   => '',
 	'brand_post_id'  => '',
+	'style'          => 'gradient', // 'gradient' for background images with gradient, 'contained' for white background with contained image
 );
 
 $args = wp_parse_args( $args, $defaults );
@@ -83,55 +84,76 @@ $config = $card_config[ $args['card_size'] ] ?? $card_config['archive'];
 
 // Additional classes
 $additional_classes = ! empty( $args['custom_classes'] ) ? ' ' . $args['custom_classes'] : '';
-?>
 
-<a href="<?php echo esc_url( $args['brand_url'] ); ?>"
-	class="group block relative <?php echo esc_attr( $config['height'] ); ?> rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg<?php echo esc_attr( $additional_classes ); ?> bg-white border border-gray-200">
+if ( $args['style'] === 'contained' ) :
+	?>
+	<!-- Contained Style with Gradient Overlay -->
+	<a href="<?php echo esc_url( $args['brand_url'] ); ?>"
+		   class="group block relative <?php echo esc_attr( $config['height'] ); ?> rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg bg-white border border-gray-200<?php echo esc_attr( $additional_classes ); ?>"
+		   style="background-image: url('<?php echo esc_url( filter_var( $image_path, FILTER_VALIDATE_URL ) ? $image_path : sunnysideac_asset_url( $image_path ) ); ?>'); background-size: contain; background-position: center; background-repeat: no-repeat;">
 
-	<!-- Brand Image Container -->
-	<div class="absolute inset-0 bg-white p-4 flex items-center justify-center">
-		<img
-			src="<?php echo esc_url( filter_var( $image_path, FILTER_VALIDATE_URL ) ? $image_path : sunnysideac_asset_url( $image_path ) ); ?>"
-			alt="<?php echo esc_attr( $args['brand_name'] ); ?> Logo"
-			class="max-w-full max-h-full object-contain"
-		>
-	</div>
+		<!-- Gradient Overlay -->
+		<div class="absolute inset-0 bg-gradient-to-br from-[#fb9939]/90 via-gray-500/50 to-transparent"></div>
 
-	<!-- Gradient Overlay -->
-	<div class="absolute inset-0 bg-gradient-to-br from-green-600/90 via-green-700/50 to-transparent"></div>
-
-	<!-- Content -->
-	<div class="relative h-full flex flex-col justify-end <?php echo esc_attr( $config['padding'] ); ?> text-center">
-		<!-- Icon Circle -->
-		<div class="<?php echo esc_attr( $config['margin_bottoms'] ); ?>">
-			<div class="inline-flex items-center justify-center <?php echo esc_attr( $config['icon_size'] ); ?> rounded-full bg-white/90 backdrop-blur-sm">
-				<!-- Award/Badge icon for brands -->
-				<svg class="<?php echo esc_attr( $config['icon_svg_size'] ); ?> text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-				</svg>
+		<!-- Content -->
+		<div class="relative h-full flex flex-col justify-end <?php echo esc_attr( $config['padding'] ); ?> text-center">
+			<!-- Brand Name -->
+			<div class="<?php echo esc_attr( $config['text_size'] ); ?> font-bold text-white mb-3" role="heading" aria-level="4">
+				<?php echo esc_html( $args['brand_name'] ); ?>
 			</div>
+
+			<?php if ( ! empty( $config['description'] ) ) : ?>
+				<p class="text-white/90 text-sm mb-3">
+					<?php echo esc_html( $config['description'] ); ?>
+				</p>
+			<?php endif; ?>
+
+			<?php if ( $args['show_button'] && ! empty( $config['button_classes'] ) ) : ?>
+				<div class="flex justify-center">
+					<span class="inline-flex items-center font-medium text-sm <?php echo esc_attr( $config['button_classes'] ); ?>">
+						<?php echo esc_html( $args['button_text'] ); ?>
+						<svg class="w-4 h-4 ml-1 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+						</svg>
+					</span>
+				</div>
+			<?php endif; ?>
 		</div>
+	</a>
 
-		<!-- Brand Name -->
-		<div class="<?php echo esc_attr( $config['text_size'] ); ?> font-bold text-white <?php echo ! empty( $config['margin_bottoms'] ) ? explode( ' ', $config['margin_bottoms'] )[1] : ''; ?>" role="heading" aria-level="4">
-			<?php echo esc_html( $args['brand_name'] ); ?>
-		</div>
+<?php else : ?>
+	<!-- Gradient Style (default) -->
+	<a href="<?php echo esc_url( $args['brand_url'] ); ?>"
+		class="group block relative <?php echo esc_attr( $config['height'] ); ?> rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg<?php echo esc_attr( $additional_classes ); ?>"
+		style="background-image: url('<?php echo esc_url( filter_var( $image_path, FILTER_VALIDATE_URL ) ? $image_path : sunnysideac_asset_url( $image_path ) ); ?>'); background-size: cover; background-position: center;">
 
-		<?php if ( ! empty( $config['description'] ) ) : ?>
-			<p class="text-white/90 text-sm <?php echo ! empty( $config['margin_bottoms'] ) ? explode( ' ', $config['margin_bottoms'] )[2] : ''; ?>">
-				<?php echo esc_html( $config['description'] ); ?>
-			</p>
-		<?php endif; ?>
+		<!-- Gradient Overlay -->
+		<div class="absolute inset-0 bg-gradient-to-br from-[#fb9939]/90 via-gray-500/50 to-transparent"></div>
 
-		<?php if ( $args['show_button'] && ! empty( $config['button_classes'] ) ) : ?>
-			<div class="flex justify-center">
-				<span class="inline-flex items-center font-medium text-sm <?php echo esc_attr( $config['button_classes'] ); ?>">
-					<?php echo esc_html( $args['button_text'] ); ?>
-					<svg class="w-4 h-4 ml-1 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-					</svg>
-				</span>
+		<!-- Content -->
+		<div class="relative h-full flex flex-col justify-end <?php echo esc_attr( $config['padding'] ); ?> text-center">
+			<!-- Brand Name -->
+			<div class="<?php echo esc_attr( $config['text_size'] ); ?> font-bold text-white mb-3" role="heading" aria-level="4">
+				<?php echo esc_html( $args['brand_name'] ); ?>
 			</div>
-		<?php endif; ?>
-	</div>
-</a>
+
+			<?php if ( ! empty( $config['description'] ) ) : ?>
+				<p class="text-white/90 text-sm mb-3">
+					<?php echo esc_html( $config['description'] ); ?>
+				</p>
+			<?php endif; ?>
+
+			<?php if ( $args['show_button'] && ! empty( $config['button_classes'] ) ) : ?>
+				<div class="flex justify-center">
+					<span class="inline-flex items-center font-medium text-sm <?php echo esc_attr( $config['button_classes'] ); ?>">
+						<?php echo esc_html( $args['button_text'] ); ?>
+						<svg class="w-4 h-4 ml-1 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+						</svg>
+					</span>
+				</div>
+			<?php endif; ?>
+		</div>
+	</a>
+
+<?php endif; ?>

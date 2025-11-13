@@ -29,30 +29,30 @@ $logo_link   = $args['logo_link'] ?? '';
 $logo_alt    = $args['logo_alt'] ?? '';
 
 // Featured image support
-$featured_image_id = $args['featured_image_id'] ?? null;
+$featured_image_id  = $args['featured_image_id'] ?? null;
 $featured_image_url = '';
 $has_featured_image = false;
 
-if ($featured_image_id && has_post_thumbnail($featured_image_id)) {
-    $featured_image_url = get_the_post_thumbnail_url($featured_image_id, 'large');
-    $has_featured_image = true;
+if ( $featured_image_id && has_post_thumbnail( $featured_image_id ) ) {
+	$featured_image_url = get_the_post_thumbnail_url( $featured_image_id, 'large' );
+	$has_featured_image = true;
 }
 
 // Determine background class and styles
 $bg_class = '';
 $bg_style = '';
 
-if ($has_featured_image) {
-    $bg_class = 'relative overflow-hidden';
-    $bg_style = "background-image: url('{$featured_image_url}'); background-size: cover; background-position: center;";
-} elseif ($bg_color === 'gradient') {
-    $bg_class = 'bg-gradient-to-r from-[#fb9939] to-[#e5462f]';
+if ( $has_featured_image ) {
+	$bg_class = 'relative overflow-hidden';
+	$bg_style = "background-image: url('{$featured_image_url}'); background-size: cover; background-position: center;";
+} elseif ( $bg_color === 'gradient' ) {
+	$bg_class = 'bg-gradient-to-r from-[#fb9939] to-[#e5462f]';
 } else {
-    $bg_class = 'bg-white';
+	$bg_class = 'bg-white';
 }
 
 // Determine text colors based on background
-$is_dark_bg = $has_featured_image || $bg_color === 'gradient';
+$is_dark_bg           = $has_featured_image || $bg_color === 'gradient';
 $breadcrumb_color     = $is_dark_bg ? 'text-white/80' : 'text-gray-600';
 $breadcrumb_hover     = $is_dark_bg ? 'hover:text-white' : 'hover:text-orange-500';
 $breadcrumb_active    = $is_dark_bg ? 'text-white font-semibold' : 'text-orange-500 font-semibold';
@@ -62,9 +62,9 @@ $description_color    = $is_dark_bg ? 'text-white/90' : 'text-gray-600';
 
 <!-- Page Header - Breadcrumbs & Title -->
 <header class="entry-header <?php echo esc_attr( $bg_class ); ?> rounded-[20px] p-6 md:p-10 mb-6" style="<?php echo esc_attr( $bg_style ); ?>">
-	<?php if ($has_featured_image): ?>
+	<?php if ( $has_featured_image ) : ?>
 		<!-- Gradient Overlay for Featured Image -->
-		<div class="absolute inset-0 bg-gradient-to-br from-[#fb9939]/90 via-[#e5462f]/50 to-black/70"></div>
+		<div class="absolute inset-0 bg-gradient-to-br from-[#d45839] to-slate-500/60"></div>
 		<!-- Content Wrapper for proper z-index -->
 		<div class="relative z-10">
 	<?php endif; ?>
@@ -126,12 +126,12 @@ $description_color    = $is_dark_bg ? 'text-white/90' : 'text-gray-600';
 		<!-- Main Title with Gradient -->
 		<div class="text-center mb-8">
 			<h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4">
-				<?php if ( $bg_color === 'white' ) : ?>
+				<?php if ( $bg_color === 'white' && ! $has_featured_image ) : ?>
 					<span class="bg-gradient-to-r from-[#fb9939] to-[#e5462f] bg-clip-text text-transparent">
 						<?php echo esc_html( $title ); ?>
 					</span>
 				<?php else : ?>
-					<span class="bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
+					<span class="bg-gradient-to-r from-white to-white/90 bg-clip-text text-transparent">
 						<?php echo esc_html( $title ); ?>
 					</span>
 				<?php endif; ?>
@@ -147,8 +147,8 @@ $description_color    = $is_dark_bg ? 'text-white/90' : 'text-gray-600';
 
 	<?php if ( $show_ctas ) : ?>
 		<!-- CTA Buttons -->
-		<?php if ( $bg_color === 'gradient' ) : ?>
-			<!-- Gradient Background - Use high contrast buttons with borders -->
+		<?php if ( $bg_color === 'gradient' || $has_featured_image ) : ?>
+			<!-- Dark Background - Use high contrast buttons with borders -->
 			<div class="flex flex-col sm:flex-row justify-center gap-4 mt-8">
 				<a href="tel:<?php echo esc_attr( SUNNYSIDE_TEL_HREF ); ?>"
 					class="inline-flex items-center justify-center gap-2 rounded-[35px] bg-white px-6 py-4 transition-all hover:scale-105 hover:shadow-xl focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-orange-500 focus:outline-none shadow-lg"
@@ -186,7 +186,7 @@ $description_color    = $is_dark_bg ? 'text-white/90' : 'text-gray-600';
 			</div>
 		<?php endif; ?>
 	<?php endif; ?>
-	<?php if ($has_featured_image): ?>
+	<?php if ( $has_featured_image ) : ?>
 		</div> <!-- Close content wrapper -->
 	<?php endif; ?>
 </header>

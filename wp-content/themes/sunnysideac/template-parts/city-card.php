@@ -56,23 +56,23 @@ if ( $city_post && has_post_thumbnail( $city_post->ID ) ) {
 // Card configuration based on size
 $card_config = array(
 	'featured' => array(
-		'height'         => 'h-48',
-		'icon_size'      => 'w-12 h-12',
-		'icon_svg_size'  => 'h-6 w-6',
+		'height'         => 'h-64',
+		'icon_size'      => 'w-16 h-16',
+		'icon_svg_size'  => 'h-8 w-8',
 		'text_size'      => 'text-xl',
 		'description'    => ! empty( $args['description'] ) ? $args['description'] : 'Expert HVAC services',
 		'padding'        => 'p-6',
-		'margin_bottoms' => 'mb-3 mb-1 mb-3',
+		'margin_bottoms' => 'mb-4 mb-2 mb-4',
 		'button_classes' => 'bg-orange-500 text-white px-4 py-2 rounded-full',
 	),
 	'archive'  => array(
-		'height'         => 'h-40',
-		'icon_size'      => 'w-10 h-10',
-		'icon_svg_size'  => 'h-5 w-5',
+		'height'         => 'h-52',
+		'icon_size'      => 'w-14 h-14',
+		'icon_svg_size'  => 'h-7 w-7',
 		'text_size'      => 'text-lg',
-		'description'    => '', // No description for archive cards
-		'padding'        => 'p-4',
-		'margin_bottoms' => 'mb-2',
+		'description'    => ! empty( $args['description'] ) ? $args['description'] : '',
+		'padding'        => 'p-5',
+		'margin_bottoms' => 'mb-3',
 		'button_classes' => '', // No button for archive cards
 	),
 );
@@ -92,23 +92,21 @@ $additional_classes = ! empty( $args['custom_classes'] ) ? ' ' . $args['custom_c
 
 	<!-- Content -->
 	<div class="relative h-full flex flex-col justify-end <?php echo esc_attr( $config['padding'] ); ?> text-center">
-		<!-- Icon Circle -->
+		<!-- Icon -->
 		<div class="<?php echo esc_attr( $config['margin_bottoms'] ); ?>">
-			<div class="inline-flex items-center justify-center <?php echo esc_attr( $config['icon_size'] ); ?> rounded-full bg-white/90 backdrop-blur-sm">
-				<svg class="<?php echo esc_attr( $config['icon_svg_size'] ); ?> text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-				</svg>
-			</div>
+			<svg class="<?php echo esc_attr( $config['icon_svg_size'] ); ?> text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+			</svg>
 		</div>
 
 		<!-- City Name -->
-		<div class="<?php echo esc_attr( $config['text_size'] ); ?> font-bold text-white <?php echo ! empty( $config['margin_bottoms'] ) ? explode( ' ', $config['margin_bottoms'] )[1] : ''; ?>" role="heading" aria-level="4">
+		<div class="<?php echo esc_attr( $config['text_size'] ); ?> font-bold text-white <?php echo ! empty( $config['margin_bottoms'] ) ? $config['margin_bottoms'] : ''; ?>" role="heading" aria-level="4">
 			<?php echo esc_html( $args['city_name'] ); ?>
 		</div>
 
 		<?php if ( ! empty( $config['description'] ) ) : ?>
-			<p class="text-white/90 text-sm <?php echo ! empty( $config['margin_bottoms'] ) ? explode( ' ', $config['margin_bottoms'] )[2] : ''; ?>">
+			<p class="text-white/90 text-sm <?php echo ! empty( $config['margin_bottoms'] ) ? 'mb-3' : ''; ?>">
 				<?php echo esc_html( $config['description'] ); ?>
 			</p>
 		<?php endif; ?>

@@ -231,6 +231,7 @@ get_header();
 									'show_button'   => true,
 									'button_text'   => 'View Products',
 									'description'   => 'Expert service and repair',
+									'style'         => 'contained',
 								)
 							);
 							?>

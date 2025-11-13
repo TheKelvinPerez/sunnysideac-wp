@@ -17,9 +17,12 @@ if ( have_posts() ) :
 	$city_description       = get_field( 'city_description', $city_id );
 	$city_service_hours     = get_field( 'city_service_hours', $city_id );
 	$city_service_area_note = get_field( 'city_service_area_note', $city_id );
-	$city_video_url         = get_field( 'city_video_url', $city_id );
-	$city_video_title       = get_field( 'city_video_title', $city_id );
-	$city_video_description = get_field( 'city_video_description', $city_id );
+
+	// Get video URL from constants first, then fallback to ACF field
+	$city_videos            = SUNNYSIDE_CITY_VIDEOS;
+	$city_video_url         = isset( $city_videos[ $city_title ] ) ? $city_videos[ $city_title ] : get_field( 'city_video_url', $city_id );
+	$city_video_title       = $city_video_url ? ( get_field( 'city_video_title', $city_id ) ?: 'HVAC Services in ' . $city_title ) : '';
+	$city_video_description = $city_video_url ? get_field( 'city_video_description', $city_id ) : '';
 
 	// SEO Variables
 	$seo_title       = 'HVAC Services in ' . $city_title . ' | AC Repair & Installation | Sunnyside AC';

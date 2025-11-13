@@ -45,57 +45,40 @@ if ( empty( $daikin_products ) ) {
 		</a>
 	</div>
 
-	<!-- 3-Column Grid of Square Cards -->
+	<!-- 3-Column Grid of Product Cards -->
 	<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 		<?php foreach ( $daikin_products as $product ) : ?>
 			<?php
 			$product_url = home_url( '/brands/daikin/' . $product['slug'] );
 			$is_active   = ( $current_slug === $product['slug'] );
-
-			// Build CSS classes for square cards
-			$base_classes   = 'group flex flex-col items-center justify-center p-8 rounded-[24px] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 min-h-[200px]';
-			$hover_classes  = 'hover:bg-gradient-to-br hover:from-orange-50 hover:to-orange-100 hover:shadow-lg hover:scale-105';
-			$active_classes = 'bg-gradient-to-br from-orange-100 to-orange-200 shadow-lg';
-			$normal_classes = 'bg-gray-50';
-
-			$link_classes = $base_classes . ' ' . $hover_classes . ' ' . ( $is_active ? $active_classes : $normal_classes );
+			$image_path = 'assets/brand-images/' . $product['slug'] . '.jpg';
 			?>
 			<a href="<?php echo esc_url( $product_url ); ?>"
-			   class="<?php echo esc_attr( $link_classes ); ?>"
+			   class="group block relative h-64 rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg <?php echo $is_active ? 'ring-2 ring-orange-500 ring-offset-2' : ''; ?>"
+			   style="background-image: url('<?php echo esc_url( sunnysideac_asset_url( $image_path ) ); ?>'); background-size: cover; background-position: center;"
 			   <?php echo $is_active ? 'aria-current="page"' : ''; ?>
 			   aria-label="<?php echo esc_attr( $product['name'] ); ?>">
 
-				<!-- Large Icon -->
-				<div class="mb-4">
-					<div class="inline-flex items-center justify-center w-20 h-20 rounded-full <?php echo $is_active ? 'bg-gradient-to-br from-orange-300 to-orange-400' : 'bg-gradient-to-br from-orange-200 to-orange-300'; ?> shadow-md">
-						<svg class="h-10 w-10 <?php echo $is_active ? 'text-white' : 'text-orange-500'; ?> transition-colors duration-300"
-						     fill="none"
-						     stroke="currentColor"
-						     viewBox="0 0 24 24"
-						     aria-hidden="true">
-							<path stroke-linecap="round"
-							      stroke-linejoin="round"
-							      stroke-width="2"
-							      d="<?php echo esc_attr( $product['icon'] ); ?>" />
-						</svg>
-					</div>
-				</div>
+				<!-- Gradient Overlay -->
+				<div class="absolute inset-0 bg-gradient-to-br from-[#fb9939]/90 via-gray-500/50 to-transparent"></div>
 
-				<!-- Product Name -->
-				<div class="text-center">
-					<h3 class="text-lg font-bold <?php echo $is_active ? 'text-[#e5462f]' : 'text-gray-900 group-hover:text-[#e5462f]'; ?> transition-colors duration-300 mb-2">
+				<!-- Content -->
+				<div class="relative h-full flex flex-col justify-end p-6 text-center">
+					<!-- Product Name -->
+					<h3 class="text-xl font-bold text-white mb-2 transition-colors duration-300" role="heading" aria-level="4">
 						<?php echo esc_html( $product['short_name'] ); ?>
 					</h3>
-					<p class="text-sm text-gray-600 group-hover:text-gray-700 transition-colors duration-300">
+
+					<p class="text-white/90 text-sm mb-3">
 						View Details & Specs
 					</p>
-				</div>
 
-				<!-- Hover indicator -->
-				<div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-					<svg class="w-5 h-5 text-orange-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-					</svg>
+					<!-- Hover indicator -->
+					<div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+						<svg class="w-5 h-5 text-white mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+						</svg>
+					</div>
 				</div>
 			</a>
 		<?php endforeach; ?>
