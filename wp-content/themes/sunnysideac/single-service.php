@@ -194,16 +194,22 @@ if ( have_posts() ) :
 						),
 					);
 
+					// Get featured image URL for the service
+					$featured_image_url = '';
+					if ( has_post_thumbnail( $service_id ) ) {
+						$featured_image_url = get_the_post_thumbnail_url( $service_id, 'large' );
+					}
+
 					get_template_part(
 						'template-parts/page-header',
 						null,
 						array(
-							'breadcrumbs'      => $breadcrumbs,
-							'title'            => $service_title,
-							'description'      => 'Expert ' . strtolower( $service_title ) . ' services throughout South Florida',
-							'show_ctas'        => true,
-							'bg_color'         => 'white', // This is fallback if no featured image
-							'featured_image_id' => $service_id, // Pass service post ID for featured image
+							'breadcrumbs'        => $breadcrumbs,
+							'title'              => $service_title,
+							'description'        => 'Expert ' . strtolower( $service_title ) . ' services throughout South Florida',
+							'show_ctas'          => true,
+							'bg_color'           => 'white', // This is fallback if no featured image
+							'featured_image_url' => $featured_image_url, // Pass the actual image URL
 						)
 					);
 					?>

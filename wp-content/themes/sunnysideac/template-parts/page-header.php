@@ -30,7 +30,31 @@ $logo_alt    = $args['logo_alt'] ?? '';
 
 // Featured image support - use custom image if provided
 $featured_image_url = $args['featured_image_url'] ?? '';
-$has_featured_image = ! empty( $featured_image_url );
+
+// If featured image URL is provided, verify the file actually exists
+if ( ! empty( $featured_image_url ) ) {
+	// Check if this is a WordPress uploads URL and test if the file exists
+	if ( strpos( $featured_image_url, 'wp-content/uploads' ) !== false ) {
+		// Convert URL to file path for checking
+		$file_path = str_replace( home_url( '/' ), ABSPATH, $featured_image_url );
+		if ( ! file_exists( $file_path ) ) {
+			// File doesn't exist, fall back to theme asset
+			$featured_image_url = '';
+		}
+	}
+}
+
+// Fallback to a theme asset image if no valid featured image
+if ( empty( $featured_image_url ) ) {
+	$featured_image_url = sunnysideac_asset_url( 'assets/images/home-page/hero-right-image.png' );
+}
+
+$has_featured_image = true; // We always have an image now
+
+// Debug: Log featured image URL in development
+if ( defined( 'WP_DEBUG' ) && WP_DEBUG && ! empty( $featured_image_url ) ) {
+	error_log( 'Page Header Featured Image URL: ' . $featured_image_url );
+}
 
 // Determine background class and styles
 $bg_class = '';

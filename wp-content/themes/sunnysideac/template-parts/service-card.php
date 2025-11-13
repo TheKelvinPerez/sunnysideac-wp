@@ -42,8 +42,22 @@ if ( empty( $args['service_url'] ) ) {
 	$args['service_url'] = $service_post ? get_permalink( $service_post->ID ) : home_url( sprintf( '/services/%s', $args['service_slug'] ) );
 }
 
-// Set image path - use custom image if provided, otherwise use service slug
-$image_path = ! empty( $args['custom_image'] ) ? $args['custom_image'] : 'assets/services-images/' . $args['service_slug'] . '.jpg';
+// Set image path - use custom image if provided, otherwise use service slug with fallbacks
+if ( ! empty( $args['custom_image'] ) ) {
+	$image_path = $args['custom_image'];
+} else {
+	// Handle common misspellings by mapping to correct image names
+	$image_name = $args['service_slug'];
+	switch ( $image_name ) {
+		case 'furnances': // Common misspelling of furnaces
+			$image_name = 'furnaces';
+			break;
+		case 'filteres': // Common misspelling of filters
+			$image_name = 'filters';
+			break;
+	}
+	$image_path = 'assets/services-images/' . $image_name . '.jpg';
+}
 
 // Card configuration based on size
 $card_config = array(
