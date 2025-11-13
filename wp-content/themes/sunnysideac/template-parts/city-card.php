@@ -88,7 +88,7 @@ $additional_classes = ! empty( $args['custom_classes'] ) ? ' ' . $args['custom_c
 	style="background-image: url('<?php echo esc_url( filter_var( $image_path, FILTER_VALIDATE_URL ) ? $image_path : sunnysideac_asset_url( $image_path ) ); ?>'); background-size: cover; background-position: center;">
 
 	<!-- Gradient Overlay -->
-	<div class="absolute inset-0 bg-gradient-to-br from-[#fb9939]/90 via-gray-500/50 to-transparent"></div>
+	<div class="absolute inset-0 bg-gradient-to-br from-[#fb9939]/90 via-gray-500/70 to-transparent"></div>
 
 	<!-- Content -->
 	<div class="relative h-full flex flex-col justify-end <?php echo esc_attr( $config['padding'] ); ?> text-center">
