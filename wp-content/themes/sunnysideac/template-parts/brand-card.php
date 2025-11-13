@@ -58,23 +58,23 @@ if ( $brand_post && has_post_thumbnail( $brand_post->ID ) ) {
 // Card configuration based on size
 $card_config = array(
 	'featured' => array(
-		'height'         => 'h-48',
-		'icon_size'      => 'w-12 h-12',
-		'icon_svg_size'  => 'h-6 w-6',
+		'height'         => 'h-64',
+		'icon_size'      => 'w-16 h-16',
+		'icon_svg_size'  => 'h-8 w-8',
 		'text_size'      => 'text-xl',
 		'description'    => ! empty( $args['description'] ) ? $args['description'] : 'Premium HVAC equipment',
 		'padding'        => 'p-6',
-		'margin_bottoms' => 'mb-3 mb-1 mb-3',
+		'margin_bottoms' => 'mb-4 mb-2 mb-4',
 		'button_classes' => 'bg-green-600 text-white px-4 py-2 rounded-full',
 	),
 	'archive'  => array(
-		'height'         => 'h-40',
-		'icon_size'      => 'w-10 h-10',
-		'icon_svg_size'  => 'h-5 w-5',
+		'height'         => 'h-52',
+		'icon_size'      => 'w-14 h-14',
+		'icon_svg_size'  => 'h-7 w-7',
 		'text_size'      => 'text-lg',
 		'description'    => '', // No description for archive cards
-		'padding'        => 'p-4',
-		'margin_bottoms' => 'mb-2',
+		'padding'        => 'p-5',
+		'margin_bottoms' => 'mb-3',
 		'button_classes' => '', // No button for archive cards
 	),
 );
@@ -86,8 +86,16 @@ $additional_classes = ! empty( $args['custom_classes'] ) ? ' ' . $args['custom_c
 ?>
 
 <a href="<?php echo esc_url( $args['brand_url'] ); ?>"
-	class="group block relative <?php echo esc_attr( $config['height'] ); ?> rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg<?php echo esc_attr( $additional_classes ); ?>"
-	style="background-image: url('<?php echo esc_url( filter_var( $image_path, FILTER_VALIDATE_URL ) ? $image_path : sunnysideac_asset_url( $image_path ) ); ?>'); background-size: cover; background-position: center;">
+	class="group block relative <?php echo esc_attr( $config['height'] ); ?> rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg<?php echo esc_attr( $additional_classes ); ?> bg-white border border-gray-200">
+
+	<!-- Brand Image Container -->
+	<div class="absolute inset-0 bg-white p-4 flex items-center justify-center">
+		<img
+			src="<?php echo esc_url( filter_var( $image_path, FILTER_VALIDATE_URL ) ? $image_path : sunnysideac_asset_url( $image_path ) ); ?>"
+			alt="<?php echo esc_attr( $args['brand_name'] ); ?> Logo"
+			class="max-w-full max-h-full object-contain"
+		>
+	</div>
 
 	<!-- Gradient Overlay -->
 	<div class="absolute inset-0 bg-gradient-to-br from-green-600/90 via-green-700/50 to-transparent"></div>
