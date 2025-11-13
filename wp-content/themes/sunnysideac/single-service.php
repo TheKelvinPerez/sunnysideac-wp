@@ -194,10 +194,28 @@ if ( have_posts() ) :
 						),
 					);
 
-					// Get featured image URL for the service
+					// Use theme assets for service featured images instead of uploads
 					$featured_image_url = '';
-					if ( has_post_thumbnail( $service_id ) ) {
-						$featured_image_url = get_the_post_thumbnail_url( $service_id, 'large' );
+
+					// Map service titles to appropriate theme asset images
+					$service_to_image_map = array(
+						'AC Repair'           => 'assets/images/home-page/our-projects-pictures/full-size/ac_condenser_installation_work.png',
+						'AC Maintenance'      => 'assets/images/home-page/our-projects-pictures/full-size/professional_ac_maintenance_tools.png',
+						'AC Installation'     => 'assets/images/home-page/our-projects-pictures/full-size/residential_ac_unit_installation.png',
+						'Heating'             => 'assets/images/home-page/our-projects-pictures/full-size/residential_heating_system_install.png',
+						'Furnace Repair'      => 'assets/images/home-page/our-projects-pictures/full-size/furnace_ductwork_connection.png',
+						'Air Quality'         => 'assets/images/home-page/our-projects-pictures/full-size/indoor_air_handler_system_service.png',
+						'Duct Cleaning'       => 'assets/images/home-page/our-projects-pictures/full-size/indoor_hvac_equipment_service.png',
+						'Commercial HVAC'     => 'assets/images/home-page/our-projects-pictures/full-size/commercial_hvac_professional_work.png',
+						'Water Heaters'       => 'assets/images/home-page/our-projects-pictures/full-size/hvac_system_basement_work.png',
+						'UV Lights'           => 'assets/images/home-page/our-projects-pictures/full-size/hvac_system_basement_work.png',
+						'Filters'             => 'assets/images/home-page/our-projects-pictures/full-size/indoor_air_handler_system_service.png',
+						'Ductless Mini Split' => 'assets/images/home-page/our-projects-pictures/full-size/hvac_unit_professional_installation.png',
+					);
+
+					// Get the image for this service or use fallback
+					if ( isset( $service_to_image_map[ $service_title ] ) ) {
+						$featured_image_url = sunnysideac_asset_url( $service_to_image_map[ $service_title ] );
 					}
 
 					get_template_part(

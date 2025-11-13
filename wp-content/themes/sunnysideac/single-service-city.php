@@ -290,7 +290,7 @@ if ( have_posts() ) :
 						'description'      => $description,
 						'show_ctas'        => true,
 						'bg_color'         => 'white', // This is fallback if no featured image
-						'featured_image_url' => has_post_thumbnail( $service_id ) ? get_the_post_thumbnail_url( $service_id, 'large' ) : '', // Pass featured image URL
+						'featured_image_url' => sunnysideac_get_service_featured_image_url( $service_title, $service_id ), // Use theme assets for service images
 					)
 				);
 				?>

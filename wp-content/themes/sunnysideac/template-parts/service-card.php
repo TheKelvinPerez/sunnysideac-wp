@@ -42,21 +42,12 @@ if ( empty( $args['service_url'] ) ) {
 	$args['service_url'] = $service_post ? get_permalink( $service_post->ID ) : home_url( sprintf( '/services/%s', $args['service_slug'] ) );
 }
 
-// Set image path - use custom image if provided, otherwise use service slug with fallbacks
+// Set image path - use custom image if provided, otherwise use theme assets
 if ( ! empty( $args['custom_image'] ) ) {
 	$image_path = $args['custom_image'];
 } else {
-	// Handle common misspellings by mapping to correct image names
-	$image_name = $args['service_slug'];
-	switch ( $image_name ) {
-		case 'furnances': // Common misspelling of furnaces
-			$image_name = 'furnaces';
-			break;
-		case 'filteres': // Common misspelling of filters
-			$image_name = 'filters';
-			break;
-	}
-	$image_path = 'assets/services-images/' . $image_name . '.jpg';
+	// Use the helper function to get service image from theme assets
+	$image_path = sunnysideac_get_service_featured_image_url( $args['service_name'] );
 }
 
 // Card configuration based on size
@@ -91,7 +82,7 @@ $additional_classes = ! empty( $args['custom_classes'] ) ? ' ' . $args['custom_c
 
 <a href="<?php echo esc_url( $args['service_url'] ); ?>"
 	class="group block relative <?php echo esc_attr( $config['height'] ); ?> rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg<?php echo esc_attr( $additional_classes ); ?>"
-	style="background-image: url('<?php echo esc_url( filter_var( $image_path, FILTER_VALIDATE_URL ) ? $image_path : sunnysideac_asset_url( $image_path ) ); ?>'); background-size: cover; background-position: center;">
+	style="background-image: url('<?php echo esc_url( $image_path ); ?>'); background-size: cover; background-position: center;">
 
 	<!-- Gradient Overlay -->
 	<div class="absolute inset-0 bg-gradient-to-br from-[#fb9939]/90 via-gray-500/50 to-transparent"></div>
