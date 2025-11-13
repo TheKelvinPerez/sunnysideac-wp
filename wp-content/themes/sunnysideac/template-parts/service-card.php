@@ -12,8 +12,7 @@
  *     @type string       $description     Custom description text (default: based on card type)
  *     @type string       $custom_classes  Additional CSS classes
  *     @type string       $custom_image    Custom image path (optional - will use service slug if not provided)
- *     @type int          $service_post_id Service post ID (optional - for featured image)
- * }
+  * }
  */
 
 // Default arguments
@@ -27,8 +26,7 @@ $defaults = array(
 	'description'     => '',
 	'custom_classes'  => '',
 	'custom_image'    => '',
-	'service_post_id' => '',
-);
+	);
 
 $args = wp_parse_args( $args, $defaults );
 
@@ -44,16 +42,8 @@ if ( empty( $args['service_url'] ) ) {
 	$args['service_url'] = $service_post ? get_permalink( $service_post->ID ) : home_url( sprintf( '/services/%s', $args['service_slug'] ) );
 }
 
-// Get service post for featured image
-$service_post = ! empty( $args['service_post_id'] ) ? get_post( $args['service_post_id'] ) : get_page_by_path( $args['service_slug'], OBJECT, 'service' );
-
-// Set image path - prioritize database featured image, fallback to file system
-if ( $service_post && has_post_thumbnail( $service_post->ID ) ) {
-	$image_url  = get_the_post_thumbnail_url( $service_post->ID, 'medium_large' );
-	$image_path = $image_url; // Use full URL for database images
-} else {
-	$image_path = ! empty( $args['custom_image'] ) ? $args['custom_image'] : 'assets/services-images/' . $args['service_slug'] . '.jpg';
-}
+// Set image path - use custom image if provided, otherwise use service slug
+$image_path = ! empty( $args['custom_image'] ) ? $args['custom_image'] : 'assets/services-images/' . $args['service_slug'] . '.jpg';
 
 // Card configuration based on size
 $card_config = array(

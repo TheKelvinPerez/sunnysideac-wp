@@ -42,16 +42,8 @@ if ( empty( $args['city_url'] ) ) {
 	$args['city_url'] = $city_post ? get_permalink( $city_post->ID ) : home_url( sprintf( '/cities/%s', $args['city_slug'] ) );
 }
 
-// Get city post for featured image
-$city_post = ! empty( $args['city_post_id'] ) ? get_post( $args['city_post_id'] ) : get_page_by_path( $args['city_slug'], OBJECT, 'city' );
-
-// Set image path - prioritize database featured image, fallback to file system
-if ( $city_post && has_post_thumbnail( $city_post->ID ) ) {
-	$image_url  = get_the_post_thumbnail_url( $city_post->ID, 'medium_large' );
-	$image_path = $image_url; // Use full URL for database images
-} else {
-	$image_path = ! empty( $args['custom_image'] ) ? $args['custom_image'] : 'assets/city-images/' . $args['city_slug'] . '.jpg';
-}
+// Set image path - use custom image if provided, otherwise use city slug
+$image_path = ! empty( $args['custom_image'] ) ? $args['custom_image'] : 'assets/city-images/' . $args['city_slug'] . '.jpg';
 
 // Card configuration based on size
 $card_config = array(

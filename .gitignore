@@ -81,3 +81,21 @@ wp-content/plugins/seo-by-rank-math
 wp-content/plugins/seo-by-rank-math-pro
 wp-content/plugins/user-switching
 wp-content/plugins/wp-rocket
+
+# Database exports and dumps - SECURITY: Never commit database files
+*.sql
+*.sql.gz
+*.sql.bz2
+*.sql.xz
+*.sql.tar.gz
+database-export-*
+local-database-export-*
+prod_backup_*
+production_db_backup_*
+sync_db_*
+backup-*.sql
+dump-*.sql
+export-*.sql
+
+# Specific SQL files already in repo
+wp-content/themes/sunnysideac/fresh-local-export.sql

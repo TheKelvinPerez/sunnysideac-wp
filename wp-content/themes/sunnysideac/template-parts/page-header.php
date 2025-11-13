@@ -14,7 +14,7 @@
  *     'description' => 'Professional heating, cooling, and air quality services',
  *     'show_ctas' => true, // Optional, defaults to true
  *     'bg_color' => 'white', // Optional: 'white' or 'gradient', defaults to 'white'
- *     'featured_image_id' => 123, // Optional: Post ID for featured image background
+ *     'featured_image_url' => 'https://example.com/image.jpg', // Optional: Direct URL for featured image background
  * ]);
  */
 
@@ -28,15 +28,9 @@ $logo_url    = $args['logo_url'] ?? '';
 $logo_link   = $args['logo_link'] ?? '';
 $logo_alt    = $args['logo_alt'] ?? '';
 
-// Featured image support
-$featured_image_id  = $args['featured_image_id'] ?? null;
-$featured_image_url = '';
-$has_featured_image = false;
-
-if ( $featured_image_id && has_post_thumbnail( $featured_image_id ) ) {
-	$featured_image_url = get_the_post_thumbnail_url( $featured_image_id, 'large' );
-	$has_featured_image = true;
-}
+// Featured image support - use custom image if provided
+$featured_image_url = $args['featured_image_url'] ?? '';
+$has_featured_image = ! empty( $featured_image_url );
 
 // Determine background class and styles
 $bg_class = '';

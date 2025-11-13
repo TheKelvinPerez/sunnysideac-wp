@@ -214,7 +214,7 @@ if ( have_posts() ) :
 							'description'      => 'Professional heating, cooling, and air quality services for the ' . $city_title . ' community',
 							'show_ctas'        => true,
 							'bg_color'         => 'white', // This is fallback if no featured image
-							'featured_image_id' => get_the_ID(), // Pass city post ID for featured image
+							'featured_image_url' => has_post_thumbnail() ? get_the_post_thumbnail_url( get_the_ID(), 'large' ) : '', // Pass featured image URL
 						)
 					);
 					?>
