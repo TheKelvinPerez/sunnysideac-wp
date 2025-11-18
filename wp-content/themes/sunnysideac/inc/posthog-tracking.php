@@ -28,7 +28,10 @@ function sunnysideac_get_posthog_distinct_id() {
 	// Use PHP session or cookie-based ID for anonymous users
 	if ( ! isset( $_COOKIE['posthog_distinct_id'] ) ) {
 		$distinct_id = 'anon_' . bin2hex( random_bytes( 16 ) );
-		setcookie( 'posthog_distinct_id', $distinct_id, time() + ( 86400 * 365 ), '/' ); // 1 year
+		// Only set cookie if headers haven't been sent
+		if ( ! headers_sent() ) {
+			setcookie( 'posthog_distinct_id', $distinct_id, time() + ( 86400 * 365 ), '/' ); // 1 year
+		}
 		return $distinct_id;
 	}
 
