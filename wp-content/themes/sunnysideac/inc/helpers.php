@@ -464,3 +464,191 @@ function sunnysideac_get_optimized_image( $image_id, $size = 'large', $args = ar
 
 	return $html;
 }
+
+/**
+ * Get approved reviews for display
+ *
+ * @param array $args Optional query arguments
+ * @return array Array of approved review posts
+ */
+function sunnysideac_get_approved_reviews( $args = [] ) {
+	$default_args = [
+		'post_type'      => 'review',
+		'posts_per_page' => -1,
+		'post_status'    => 'any', // Include all post statuses
+		'meta_query'     => [
+			[
+				'key'     => 'review_status',
+				'value'   => 'approved',
+				'compare' => '=',
+			],
+		],
+		'orderby'        => 'date',
+		'order'          => 'DESC',
+	];
+
+	$args = wp_parse_args( $args, $default_args );
+	return get_posts( $args );
+}
+
+/**
+ * Get pending reviews count for admin dashboard
+ *
+ * @return int Number of pending reviews
+ */
+function sunnysideac_get_pending_reviews_count() {
+	$args = [
+		'post_type'      => 'review',
+		'posts_per_page' => -1,
+		'post_status'    => 'any', // Include all statuses to find pending ones
+		'meta_query'     => [
+			[
+				'key'     => 'review_status',
+				'value'   => 'pending',
+				'compare' => '=',
+			],
+		],
+	];
+
+	$reviews = get_posts( $args );
+	return count( $reviews );
+}
+
+/**
+ * Get star rating display HTML
+ *
+ * @param int $rating Rating value from 1-5
+ * @return string HTML for star rating display
+ */
+function sunnysideac_get_star_rating_html( $rating ) {
+	if ( empty( $rating ) || $rating < 1 || $rating > 5 ) {
+		return '';
+	}
+
+	$star_icon = sunnysideac_asset_url( 'assets/icons/review-star-icon-filled.svg' );
+	$empty_star_icon = sunnysideac_asset_url( 'assets/icons/review-star-icon-empty.svg' );
+
+	$html = '<div class="flex gap-1 review-stars" role="img" aria-label="' . esc_attr( $rating ) . ' out of 5 stars">';
+
+	for ( $i = 1; $i <= 5; $i++ ) {
+		$icon_url = $i <= $rating ? $star_icon : $empty_star_icon;
+		$html .= '<img src="' . esc_url( $icon_url ) . '" alt="" class="w-4 h-4" />';
+	}
+
+	$html .= '</div>';
+	return $html;
+}
+
+/**
+ * Get reviews by service ID
+ *
+ * @param int $service_id Service post ID
+ * @param array $args Optional query arguments
+ * @return array Array of reviews for the specified service
+ */
+function sunnysideac_get_reviews_by_service( $service_id, $args = [] ) {
+	$args = wp_parse_args(
+		$args,
+		[
+			'post_type'      => 'review',
+			'posts_per_page' => -1,
+			'post_status'    => 'publish',
+			'meta_query'     => [
+				'relation' => 'AND',
+				[
+					'key'     => 'review_status',
+					'value'   => 'approved',
+					'compare' => '=',
+				],
+				[
+					'key'     => 'service_relationship',
+					'value'   => $service_id,
+					'compare' => '=',
+				],
+			],
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+		]
+	);
+
+	return get_posts( $args );
+}
+
+/**
+ * Get reviews by city ID
+ *
+ * @param int $city_id City post ID
+ * @param array $args Optional query arguments
+ * @return array Array of reviews for the specified city
+ */
+function sunnysideac_get_reviews_by_city( $city_id, $args = [] ) {
+	$args = wp_parse_args(
+		$args,
+		[
+			'post_type'      => 'review',
+			'posts_per_page' => -1,
+			'post_status'    => 'publish',
+			'meta_query'     => [
+				'relation' => 'AND',
+				[
+					'key'     => 'review_status',
+					'value'   => 'approved',
+					'compare' => '=',
+				],
+				[
+					'key'     => 'city_relationship',
+					'value'   => $city_id,
+					'compare' => '=',
+				],
+			],
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+		]
+	);
+
+	return get_posts( $args );
+}
+
+/**
+ * Calculate average rating for reviews
+ *
+ * @param array $reviews Array of review posts
+ * @return float Average rating (0-5)
+ */
+function sunnysideac_calculate_average_rating( $reviews ) {
+	if ( empty( $reviews ) ) {
+		return 0;
+	}
+
+	$total_rating = 0;
+	$count        = 0;
+
+	foreach ( $reviews as $review ) {
+		$rating = get_field( 'rating', $review->ID );
+		if ( $rating && $rating >= 1 && $rating <= 5 ) {
+			$total_rating += $rating;
+			$count++;
+		}
+	}
+
+	return $count > 0 ? round( $total_rating / $count, 1 ) : 0;
+}
+
+/**
+ * Get rating distribution for reviews
+ *
+ * @param array $reviews Array of review posts
+ * @return array Rating distribution (1-5 stars)
+ */
+function sunnysideac_get_rating_distribution( $reviews ) {
+	$distribution = [ 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0 ];
+
+	foreach ( $reviews as $review ) {
+		$rating = get_field( 'rating', $review->ID );
+		if ( $rating && $rating >= 1 && $rating <= 5 ) {
+			$distribution[ $rating ]++;
+		}
+	}
+
+	return $distribution;
+}

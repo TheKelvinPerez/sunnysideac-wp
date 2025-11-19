@@ -77,6 +77,47 @@ function register_brand_cpt() {
 }
 add_action( 'init', 'register_brand_cpt' );
 
+// Register "Review" post type
+function register_review_cpt() {
+	register_post_type(
+		'review',
+		array(
+			'labels'       => array(
+				'name'          => 'Customer Reviews',
+				'singular_name' => 'Customer Review',
+				'menu_name'     => 'Reviews',
+				'add_new'       => 'Add New Review',
+				'add_new_item'  => 'Add New Review',
+				'edit_item'     => 'Edit Review',
+				'new_item'      => 'New Review',
+				'view_item'     => 'View Review',
+				'search_items'  => 'Search Reviews',
+				'not_found'     => 'No reviews found',
+				'not_found_in_trash' => 'No reviews found in trash',
+				'all_items'     => 'All Reviews',
+				'archives'      => 'Review Archives',
+			),
+			'public'       => true,
+			'has_archive'  => true,
+			'publicly_queryable' => true,
+			'show_ui'      => true,
+			'show_in_menu' => true,
+			'query_var'    => true,
+			'rewrite'      => array(
+				'slug'       => 'review',
+				'with_front' => false,
+			),
+			'capability_type' => 'post',
+			'hierarchical'    => false,
+			'menu_position'   => 25,
+			'menu_icon'       => 'dashicons-star-filled',
+			'supports'        => array( 'title', 'editor', 'custom-fields' ),
+			'show_in_rest'    => true,
+		)
+	);
+}
+add_action( 'init', 'register_review_cpt' );
+
 // Register Service Category taxonomy
 function register_service_category_taxonomy() {
 	register_taxonomy(
@@ -377,6 +418,136 @@ if ( function_exists( 'acf_add_local_field_group' ) ) {
 				),
 			),
 			'position' => 'normal',
+		)
+	);
+
+	/**
+	 * Review CPT - Review Details Field Group
+	 */
+	acf_add_local_field_group(
+		array(
+			'key'      => 'group_review_details',
+			'title'    => 'Review Details',
+			'fields'   => array(
+				// Reviewer Name
+				array(
+					'key'          => 'field_reviewer_name',
+					'label'        => 'Reviewer Name',
+					'name'         => 'reviewer_name',
+					'type'         => 'text',
+					'instructions' => 'Enter the customer\'s full name.',
+					'required'     => 1,
+					'placeholder'  => 'John Smith',
+					'maxlength'    => 100,
+				),
+				// Reviewer Email
+				array(
+					'key'          => 'field_reviewer_email',
+					'label'        => 'Reviewer Email',
+					'name'         => 'reviewer_email',
+					'type'         => 'email',
+					'instructions' => 'Enter the customer\'s email address.',
+					'required'     => 1,
+					'placeholder'  => 'john@example.com',
+				),
+				// Rating
+				array(
+					'key'          => 'field_rating',
+					'label'        => 'Star Rating',
+					'name'         => 'rating',
+					'type'         => 'number',
+					'instructions' => 'Select rating from 1-5 stars.',
+					'required'     => 1,
+					'min'          => 1,
+					'max'          => 5,
+					'step'         => 1,
+					'placeholder'  => '5',
+					'default_value' => 5,
+				),
+				// Service Relationship
+				array(
+					'key'          => 'field_service_relationship',
+					'label'        => 'Service Used',
+					'name'         => 'service_relationship',
+					'type'         => 'post_object',
+					'instructions' => 'Select the HVAC service that was provided.',
+					'required'     => 1,
+					'post_type'    => array(
+						0 => 'service',
+					),
+					'taxonomy'     => '',
+					'allow_null'   => 0,
+					'multiple'     => 0,
+					'return_format' => 'object',
+					'ui'           => 1,
+				),
+				// City Relationship
+				array(
+					'key'          => 'field_city_relationship',
+					'label'        => 'Service Location',
+					'name'         => 'city_relationship',
+					'type'         => 'post_object',
+					'instructions' => 'Select the city where service was provided.',
+					'required'     => 1,
+					'post_type'    => array(
+						0 => 'city',
+					),
+					'taxonomy'     => '',
+					'allow_null'   => 0,
+					'multiple'     => 0,
+					'return_format' => 'object',
+					'ui'           => 1,
+				),
+				// Review Status
+				array(
+					'key'          => 'field_review_status',
+					'label'        => 'Review Status',
+					'name'         => 'review_status',
+					'type'         => 'select',
+					'instructions' => 'Set the review status for display on frontend.',
+					'required'     => 1,
+					'choices'      => array(
+						'pending' => 'Pending Approval',
+						'approved' => 'Approved',
+						'rejected' => 'Rejected',
+					),
+					'default_value' => 'pending',
+					'allow_null'   => 0,
+					'multiple'     => 0,
+					'ui'           => 0,
+					'ajax'         => 0,
+					'placeholder'  => '',
+				),
+				// Submission Date
+				array(
+					'key'          => 'field_submission_date',
+					'label'        => 'Submission Date',
+					'name'         => 'submission_date',
+					'type'         => 'date_time_picker',
+					'instructions' => 'Date when the review was submitted.',
+					'required'     => 0,
+					'display_format' => 'Y-m-d H:i:s',
+					'return_format'   => 'Y-m-d H:i:s',
+					'first_day'       => 1,
+				),
+			),
+			'location' => array(
+				array(
+					array(
+						'param'    => 'post_type',
+						'operator' => '==',
+						'value'    => 'review',
+					),
+				),
+			),
+			'menu_order'            => 0,
+			'position'              => 'normal',
+			'style'                 => 'default',
+			'label_placement'       => 'top',
+			'instruction_placement' => 'label',
+			'hide_on_screen'        => '',
+			'active'                => true,
+			'description'           => 'Review details for customer testimonials including rating, service information, and reviewer contact details.',
 		)
 	);
 }
