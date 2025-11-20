@@ -167,7 +167,7 @@ $assets = [
         <div class="form-group pt-4">
             <button
                 type="submit"
-                class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center">
+                class="w-full rounded-full bg-gradient-to-r from-[#F79E37] to-[#E5462F] px-8 py-4 text-base font-medium text-white transition-opacity duration-200 hover:opacity-90 focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center">
                 <span class="submit-text"><?php echo esc_html($config['submit_text']); ?></span>
                 <span class="loading-text hidden flex items-center">
                     <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -275,5 +275,218 @@ button:disabled {
 </style>
 
 <script>
-// Form validation and interactivity will be added in Phase 3
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('review-submission-form');
+    const ratingButtons = document.querySelectorAll('.star-button');
+    const ratingValue = document.getElementById('rating-value');
+    const reviewContent = document.getElementById('review-content');
+    const characterCount = document.getElementById('character-count');
+    const submitButton = form.querySelector('button[type="submit"]');
+
+    // Star rating functionality
+    let currentRating = 0;
+
+    ratingButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const rating = parseInt(this.dataset.rating);
+            setRating(rating);
+        });
+
+        button.addEventListener('mouseenter', function() {
+            const hoverRating = parseInt(this.dataset.rating);
+            updateStarDisplay(hoverRating);
+        });
+    });
+
+    document.querySelector('.star-rating-container').addEventListener('mouseleave', function() {
+        updateStarDisplay(currentRating);
+    });
+
+    function setRating(rating) {
+        currentRating = rating;
+        ratingValue.value = rating;
+        updateStarDisplay(rating);
+        validateField(ratingValue);
+    }
+
+    function updateStarDisplay(rating) {
+        ratingButtons.forEach((button, index) => {
+            const star = button.querySelector('img');
+            if (index < rating) {
+                star.src = star.dataset.starFilled;
+                button.classList.add('selected');
+            } else {
+                star.src = star.dataset.starEmpty;
+                button.classList.remove('selected');
+            }
+        });
+    }
+
+    // Character counter
+    reviewContent.addEventListener('input', function() {
+        const length = this.value.length;
+        characterCount.textContent = length;
+
+        // Update character count color based on length
+        characterCount.classList.remove('warning', 'error');
+        if (length > 900) {
+            characterCount.classList.add('error');
+        } else if (length > 700) {
+            characterCount.classList.add('warning');
+        }
+
+        validateField(this);
+    });
+
+    // Real-time validation
+    const requiredFields = form.querySelectorAll('[required]');
+    requiredFields.forEach(field => {
+        field.addEventListener('blur', function() {
+            validateField(this);
+        });
+
+        field.addEventListener('input', function() {
+            if (this.classList.contains('has-error')) {
+                validateField(this);
+            }
+        });
+    });
+
+    function validateField(field) {
+        const formGroup = field.closest('.form-group');
+        let isValid = true;
+        let errorMessage = '';
+
+        // Remove existing error
+        const existingError = formGroup.querySelector('.error-message');
+        if (existingError) {
+            existingError.remove();
+        }
+        formGroup.classList.remove('has-error');
+
+        // Required field validation
+        if (field.hasAttribute('required') && !field.value.trim()) {
+            isValid = false;
+            errorMessage = 'This field is required.';
+        }
+
+        // Email validation
+        if (field.type === 'email' && field.value) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(field.value)) {
+                isValid = false;
+                errorMessage = 'Please enter a valid email address.';
+            }
+        }
+
+        // Rating validation
+        if (field.id === 'rating-value' && field.value === '0') {
+            isValid = false;
+            errorMessage = 'Please select a rating.';
+        }
+
+        // Review content validation
+        if (field.id === 'review-content' && field.value) {
+            if (field.value.length < 10) {
+                isValid = false;
+                errorMessage = 'Review must be at least 10 characters long.';
+            }
+        }
+
+        // Show error if invalid
+        if (!isValid) {
+            formGroup.classList.add('has-error');
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.textContent = errorMessage;
+            formGroup.appendChild(errorDiv);
+        }
+
+        return isValid;
+    }
+
+    // Form submission (prepare for AJAX in Phase 3)
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Validate all fields
+        const requiredFields = form.querySelectorAll('[required]');
+        let isFormValid = true;
+
+        requiredFields.forEach(field => {
+            if (!validateField(field)) {
+                isFormValid = false;
+            }
+        });
+
+        // Check honeypot
+        const honeypot = document.getElementById('website');
+        if (honeypot.value) {
+            // Spam bot detected - don't submit
+            return false;
+        }
+
+        if (!isFormValid) {
+            // Find first error field and scroll to it
+            const firstError = form.querySelector('.form-group.has-error');
+            if (firstError) {
+                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            return false;
+        }
+
+        // Show loading state (prepare for AJAX in Phase 3)
+        const submitText = submitButton.querySelector('.submit-text');
+        const loadingText = submitButton.querySelector('.loading-text');
+
+        submitButton.disabled = true;
+        submitText.classList.add('hidden');
+        loadingText.classList.remove('hidden');
+
+        // For now, just show success message (Phase 3 will add AJAX)
+        showMessage('Thank you for your review! Your submission has been received and will be reviewed.', 'success');
+
+        // Reset form after delay
+        setTimeout(() => {
+            form.reset();
+            currentRating = 0;
+            updateStarDisplay(0);
+            characterCount.textContent = '0';
+
+            // Reset loading state
+            submitButton.disabled = false;
+            submitText.classList.remove('hidden');
+            loadingText.classList.add('hidden');
+        }, 3000);
+    });
+
+    function showMessage(message, type) {
+        const messagesContainer = document.getElementById('form-messages');
+        const messageDiv = messagesContainer.querySelector('div');
+        const messageIcon = messageDiv.querySelector('.message-icon');
+        const messageText = messageDiv.querySelector('.message-text');
+
+        messagesContainer.classList.remove('hidden');
+        messageDiv.className = `p-4 rounded-lg flex items-start ${type}-message`;
+
+        // Set icon based on message type
+        const icons = {
+            success: '✅',
+            error: '❌',
+            info: 'ℹ️'
+        };
+        messageIcon.textContent = icons[type] || icons.info;
+
+        messageText.textContent = message;
+
+        // Scroll to message
+        messagesContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        // Hide message after 10 seconds
+        setTimeout(() => {
+            messagesContainer.classList.add('hidden');
+        }, 10000);
+    }
+});
 </script>
