@@ -436,7 +436,24 @@ document.addEventListener('DOMContentLoaded', function() {
             return false;
         }
 
-        // Show loading state (prepare for AJAX in Phase 3)
+        // Collect form data
+        const formData = new FormData(form);
+        const submissionData = {
+            action: formData.get('action'),
+            nonce: formData.get('nonce'),
+            rating: formData.get('rating'),
+            review_content: formData.get('review_content'),
+            reviewer_name: formData.get('reviewer_name'),
+            reviewer_email: formData.get('reviewer_email'),
+            service_id: formData.get('service_id'),
+            city_id: formData.get('city_id'),
+            website: formData.get('website') // honeypot field
+        };
+
+        // Console log for debugging
+        console.log('🚀 Review Form Submission Data:', submissionData);
+
+        // Show loading state
         const submitText = submitButton.querySelector('.submit-text');
         const loadingText = submitButton.querySelector('.loading-text');
 
@@ -444,22 +461,55 @@ document.addEventListener('DOMContentLoaded', function() {
         submitText.classList.add('hidden');
         loadingText.classList.remove('hidden');
 
-        // For now, just show success message (Phase 3 will add AJAX)
-        showMessage('Thank you for your review! Your submission has been received and will be reviewed.', 'success');
+        // AJAX submission (Phase 3 implementation)
+        submitReviewViaAJAX(submissionData);
+    });
 
-        // Reset form after delay
-        setTimeout(() => {
-            form.reset();
-            currentRating = 0;
-            updateStarDisplay(0);
-            characterCount.textContent = '0';
+    function submitReviewViaAJAX(data) {
+        console.log('📡 Sending AJAX request with data:', data);
 
+        fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams(data)
+        })
+        .then(response => {
+            console.log('📥 AJAX response received:', response);
+            return response.json();
+        })
+        .then(result => {
+            console.log('✅ AJAX result:', result);
+
+            if (result.success) {
+                showMessage(result.data.message, 'success');
+                // Reset form after successful submission
+                setTimeout(() => {
+                    document.getElementById('review-submission-form').reset();
+                    currentRating = 0;
+                    updateStarDisplay(0);
+                    characterCount.textContent = '0';
+                }, 2000);
+            } else {
+                showMessage(result.data.message || 'An error occurred. Please try again.', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('❌ AJAX error:', error);
+            showMessage('Connection error. Please try again.', 'error');
+        })
+        .finally(() => {
             // Reset loading state
+            const submitButton = document.querySelector('button[type="submit"]');
+            const submitText = submitButton.querySelector('.submit-text');
+            const loadingText = submitButton.querySelector('.loading-text');
+
             submitButton.disabled = false;
             submitText.classList.remove('hidden');
             loadingText.classList.add('hidden');
-        }, 3000);
-    });
+        });
+    }
 
     function showMessage(message, type) {
         const messagesContainer = document.getElementById('form-messages');
