@@ -11,31 +11,31 @@ get_header(); ?>
 	<div class="lg:px-0 max-w-7xl mx-auto">
 		<section class="flex gap-10 flex-col">
 			<!-- Hero Section -->
-			<?php get_template_part( 'template-parts/hero-section' ); ?>
+			<?php get_template_part( 'template-parts/hero/hero-section' ); ?>
 
 			<!-- Logo Marquee Section -->
-			<?php get_template_part( 'template-parts/logo-marquee' ); ?>
+			<?php get_template_part( 'template-parts/components/logo-marquee' ); ?>
 
 			<!-- Work Process Section -->
-			<?php get_template_part( 'template-parts/work-process' ); ?>
+			<?php get_template_part( 'template-parts/components/work-process' ); ?>
 
 			<!-- Why Choose Us Section -->
-			<?php get_template_part( 'template-parts/why-choose-us' ); ?>
+			<?php get_template_part( 'template-parts/components/why-choose-us' ); ?>
 
 			<!-- Family Owned Section -->
-		<?php get_template_part( 'template-parts/family-owned-section' ); ?>
+		<?php get_template_part( 'template-parts/components/family-owned-section' ); ?>
 
 			<!-- Customer Reviews Section -->
-		<?php get_template_part( 'template-parts/customer-reviews' ); ?>
+		<?php get_template_part( 'template-parts/components/customer-reviews' ); ?>
 
 			<!-- Areas We Serve Section -->
-			<?php get_template_part( 'template-parts/areas-we-serve' ); ?>
+			<?php get_template_part( 'template-parts/components/areas-we-serve' ); ?>
 
 			<!-- Blog Section -->
-			<?php get_template_part( 'template-parts/blog-section' ); ?>
+			<?php get_template_part( 'template-parts/components/blog-section' ); ?>
 
 			<!-- Our Projects Section -->
-			<?php get_template_part( 'template-parts/our-projects' ); ?>
+			<?php get_template_part( 'template-parts/components/our-projects' ); ?>
 
 			<!-- FAQ Section -->
 			<?php
@@ -84,7 +84,7 @@ get_header(); ?>
 			);
 
 			get_template_part(
-				'template-parts/faq-component',
+				'template-parts/components/faq-component',
 				null,
 				array(
 					'faq_data'     => $homepage_faqs,
@@ -99,7 +99,7 @@ get_header(); ?>
 			?>
 
 			<!-- Contact Us Section -->
-			<?php get_template_part( 'template-parts/contact-us' ); ?>
+			<?php get_template_part( 'template-parts/components/contact-us' ); ?>
 		</section>
 	</div>
 

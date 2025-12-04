@@ -5,7 +5,7 @@
 	<div class="px-5 lg:px-0 max-w-7xl mx-auto">
 		<section class="flex gap-10 flex-col">
 			<!-- Hero Section -->
-			<?php get_template_part( 'template-parts/hero-section' ); ?>
+			<?php get_template_part( 'template-parts/hero/hero-section' ); ?>
 
 			<!-- Services Section -->
 			<section id="services" class="py-16">

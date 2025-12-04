@@ -97,7 +97,7 @@ $images = array(
 <!-- Page Header with Breadcrumbs -->
 <?php
 get_template_part(
-	'template-parts/page-header',
+	'template-parts/header/page-header',
 	null,
 	array(
 		'breadcrumbs' => $breadcrumbs,
@@ -339,7 +339,7 @@ get_template_part(
 							?>
 							<?php
 							get_template_part(
-								'template-parts/blog-card',
+								'template-parts/cards/blog-card',
 								null,
 								array(
 									'post'            => get_post(),
