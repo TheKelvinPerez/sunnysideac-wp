@@ -74,7 +74,7 @@ $company_info = array(
 
 		<?php
 		get_template_part(
-			'template-parts/social-icons',
+			'template-parts/components/social-icons',
 			null,
 			array(
 				'size'      => 'md',

@@ -37,7 +37,7 @@ get_template_part(
 <main class="px-5 lg:px-0 max-w-7xl mx-auto">
 	<div class="flex gap-10 flex-col py-12">
 		<!-- Family Owned Legacy Section -->
-		<?php get_template_part( 'template-parts/family-owned-section' ); ?>
+		<?php get_template_part( 'template-parts/components/family-owned-section' ); ?>
 
 		<!-- Call to Action Section -->
 		<section

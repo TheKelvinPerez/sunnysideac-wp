@@ -347,7 +347,7 @@ $images = array(
 					Follow Us:
 				</div>
 				<div class="flex justify-center">
-					<?php get_template_part( 'template-parts/social-icons', null, array( 'size' => 'md' ) ); ?>
+					<?php get_template_part( 'template-parts/components/social-icons', null, array( 'size' => 'md' ) ); ?>
 				</div>
 			</nav>
 		</aside>

@@ -57,7 +57,7 @@ get_template_part(
 				);
 				?>
 
-				<?php get_template_part( 'template-parts/review-form' ); ?>
+				<?php get_template_part( 'template-parts/components/review-form' ); ?>
 			</div>
 		</section>
 	</div>

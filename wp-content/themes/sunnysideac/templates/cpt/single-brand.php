@@ -210,7 +210,7 @@ if ( have_posts() ) :
 					// Show Daikin submenu if this is the Daikin brand
 					$brand_slug = get_post_field( 'post_name', $brand_id );
 					if ( $brand_slug === 'daikin' ) {
-						get_template_part( 'template-parts/daikin-submenu' );
+						get_template_part( 'template-parts/components/daikin-submenu' );
 					}
 					?>
 
@@ -428,7 +428,7 @@ if ( have_posts() ) :
 					);
 
 					get_template_part(
-						'template-parts/faq-component',
+						'template-parts/components/faq-component',
 						null,
 						array(
 							'faq_data'     => $brand_faqs,

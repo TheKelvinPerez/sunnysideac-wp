@@ -309,7 +309,7 @@ if ( have_posts() ) :
 					set_query_var( 'city_post', $city_post );
 
 					// Include responsive video component
-					get_template_part( 'template-parts/video-embed' );
+					get_template_part( 'template-parts/components/video-embed' );
 				endif;
 				?>
 

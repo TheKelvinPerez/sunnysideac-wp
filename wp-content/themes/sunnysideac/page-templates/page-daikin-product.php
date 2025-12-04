@@ -209,7 +209,7 @@ if ( have_posts() ) :
 					?>
 
 					<!-- Daikin Product Submenu -->
-					<?php get_template_part( 'template-parts/daikin-submenu' ); ?>
+					<?php get_template_part( 'template-parts/components/daikin-submenu' ); ?>
 
 					<!-- Hero Section with Image -->
 					<?php if ( $hero_image || $short_description ) : ?>
@@ -427,7 +427,7 @@ if ( have_posts() ) :
 					);
 
 					get_template_part(
-						'template-parts/faq-component',
+						'template-parts/components/faq-component',
 						null,
 						array(
 							'faq_data'     => $product_faqs,

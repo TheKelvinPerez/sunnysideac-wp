@@ -424,7 +424,7 @@ $faqs = array(
 				);
 
 				get_template_part(
-					'template-parts/faq-component',
+					'template-parts/components/faq-component',
 					null,
 					array(
 						'faq_data'     => $formatted_faqs,

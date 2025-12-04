@@ -5,7 +5,7 @@
  * Displays an interactive FAQ accordion with JSON-LD schema markup and semantic HTML
  *
  * Usage:
- * get_template_part('template-parts/faq-component', null, [
+ * get_template_part('template-parts/components/faq-component', null, [
  *     'faq_data' => [
  *         ['question' => 'Question 1?', 'answer' => 'Answer 1'],
  *         ['question' => 'Question 2?', 'answer' => 'Answer 2'],

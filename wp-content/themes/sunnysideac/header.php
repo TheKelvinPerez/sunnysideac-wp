@@ -697,7 +697,7 @@ $phone_icon = sunnysideac_asset_url( 'assets/icons/navigation-phone-icon.svg' );
 				</div>
 
 				<!-- Social icons -->
-				<?php get_template_part( 'template-parts/social-icons', null, array( 'size' => 'md' ) ); ?>
+				<?php get_template_part( 'template-parts/components/social-icons', null, array( 'size' => 'md' ) ); ?>
 			</div>
 		</div>
 
@@ -952,7 +952,7 @@ $phone_icon = sunnysideac_asset_url( 'assets/icons/navigation-phone-icon.svg' );
 								<div class="mt-6 text-center">
 									<div class="mb-3 text-sm font-medium text-gray-800">Follow Us:</div>
 									<div class="flex justify-center">
-										<?php get_template_part( 'template-parts/social-icons', null, array( 'size' => 'sm' ) ); ?>
+										<?php get_template_part( 'template-parts/components/social-icons', null, array( 'size' => 'sm' ) ); ?>
 									</div>
 								</div>
 							</div>

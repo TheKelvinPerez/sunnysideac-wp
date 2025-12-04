@@ -159,7 +159,7 @@ get_template_part(
 			aria-labelledby="contact-form-heading"
 		>
 			<div class="p-6 md:p-8 lg:p-10">
-				<?php get_template_part( 'template-parts/contact-us' ); ?>
+				<?php get_template_part( 'template-parts/components/contact-us' ); ?>
 			</div>
 		</section>
 	</div>
