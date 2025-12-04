@@ -2,9 +2,8 @@
  * AJAX Cities Pagination
  */
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Load cities page via AJAX
-    window.loadCitiesPage = function(page) {
+// Define function globally so it's available when lazy loaded
+window.loadCitiesPage = function(page) {
         const citiesGrid = document.querySelector('.cities-archive .grid');
         const paginationContainer = document.querySelector('.cities-pagination');
 
@@ -59,7 +58,10 @@ document.addEventListener('DOMContentLoaded', function() {
             citiesGrid.style.opacity = '1';
         });
     };
+}
 
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
     // Initialize pagination container
     const paginationContainer = document.querySelector('.cities-pagination');
     if (paginationContainer) {
