@@ -38,6 +38,7 @@ require_once __DIR__ . '/inc/core/theme-setup.php';
 require_once __DIR__ . '/inc/core/post-types-taxonomies.php';
 require_once __DIR__ . '/inc/core/routing.php';
 require_once __DIR__ . '/inc/core/template-hierarchy.php';
+require_once __DIR__ . '/inc/core/cpt-template-loader.php';
 require_once __DIR__ . '/inc/ajax/pagination.php';
 require_once __DIR__ . '/inc/ajax/set-city-featured-images.php';
 
