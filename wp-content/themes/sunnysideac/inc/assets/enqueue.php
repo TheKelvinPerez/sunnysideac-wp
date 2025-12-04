@@ -160,43 +160,17 @@ function sunnysideac_add_type_attribute( $tag, $handle ) {
 add_filter( 'script_loader_tag', 'sunnysideac_add_type_attribute', 10, 3 );
 
 /**
- * Enqueue Cities Pagination Script
+ * Localize Cities Pagination Script
+ * Note: The script is loaded via main.js lazy loading for better performance
  */
-function sunnysideac_enqueue_cities_pagination() {
-    // Only load on cities archive page
+function sunnysideac_localize_cities_pagination() {
+    // Only localize on cities archive page
     if (is_post_type_archive('city')) {
-        $is_dev = sunnysideac_is_vite_dev_server_running();
-
-        if ($is_dev) {
-            // Development mode: Load from Vite dev server
-            wp_enqueue_script(
-                'sunnysideac-cities-pagination',
-                sunnysideac_get_vite_dev_server_url() . '/src/js/cities-pagination.js',
-                array('sunnysideac-main'),
-                null,
-                true
-            );
-            wp_script_add_data('sunnysideac-cities-pagination', 'type', 'module');
-        } else {
-            // Production mode: Check if cities-pagination.js is built
-            $script_path = get_template_directory() . '/dist/js/cities-pagination.js';
-            if (file_exists($script_path)) {
-                wp_enqueue_script(
-                    'sunnysideac-cities-pagination',
-                    get_template_directory_uri() . '/dist/js/cities-pagination.js',
-                    array('sunnysideac-main'),
-                    null,
-                    true
-                );
-                wp_script_add_data('sunnysideac-cities-pagination', 'type', 'module');
-            }
-        }
-
-        // Localize script with WordPress variables
-        wp_localize_script('sunnysideac-cities-pagination', 'citiesPagination', array(
+        // Localize script with WordPress variables for the lazy-loaded script
+        wp_localize_script('sunnysideac-main', 'citiesPagination', array(
             'ajaxurl' => admin_url('admin-ajax.php'),
             'nonce'   => wp_create_nonce('cities_pagination_nonce'),
         ));
     }
 }
-add_action('wp_enqueue_scripts', 'sunnysideac_enqueue_cities_pagination', 20);
+add_action('wp_enqueue_scripts', 'sunnysideac_localize_cities_pagination', 20);
