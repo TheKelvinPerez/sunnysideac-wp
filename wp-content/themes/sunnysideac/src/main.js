@@ -61,7 +61,7 @@ lazyLoadConditional(
 
 // Cities Pagination - Load only on cities archive page
 lazyLoadConditional(
-  () => window.location.pathname.includes('/cities') && !window.location.pathname.includes('/cities/'),
+  () => window.location.pathname.includes('/cities') && !window.location.pathname.match(/\/cities\/[^\/]+$/),
   () => import('./js/cities-pagination.js')
 );
 
