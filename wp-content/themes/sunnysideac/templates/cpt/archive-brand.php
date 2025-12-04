@@ -220,7 +220,7 @@ get_header();
 							?>
 							<?php
 							get_template_part(
-								'template-parts/brand-card',
+								'template-parts/cards/brand-card',
 								null,
 								array(
 									'brand_name'    => get_the_title(),

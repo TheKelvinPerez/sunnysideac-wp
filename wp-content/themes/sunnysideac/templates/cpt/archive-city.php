@@ -274,7 +274,7 @@ get_header();
 						$city_post = get_page_by_path( sanitize_title( $city ), OBJECT, 'city' );
 
 						get_template_part(
-							'template-parts/city-card',
+							'template-parts/cards/city-card',
 							null,
 							array(
 								'city_name'    => $city,
@@ -311,7 +311,7 @@ get_header();
 							?>
 							<?php
 							get_template_part(
-								'template-parts/city-card',
+								'template-parts/cards/city-card',
 								null,
 								array(
 									'city_name'    => get_the_title(),

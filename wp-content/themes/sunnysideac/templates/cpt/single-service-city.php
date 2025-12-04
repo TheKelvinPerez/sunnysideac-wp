@@ -566,7 +566,7 @@ if ( have_posts() ) :
 									$city_service_url = home_url( '/' . $city_slug . '/' . $service_slug . '/' );
 
 									get_template_part(
-										'template-parts/service-card',
+										'template-parts/cards/service-card',
 										null,
 										array(
 											'service_name'    => $service_name,

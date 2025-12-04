@@ -6,7 +6,7 @@
  * Used in review archive and other listing contexts.
  *
  * Usage:
- * get_template_part('template-parts/review-card', null, ['review' => $review_post]);
+ * get_template_part('template-parts/cards/review-card', null, ['review' => $review_post]);
  *
  * @package Sunnyside AC
  */

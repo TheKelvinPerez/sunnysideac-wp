@@ -342,7 +342,7 @@ if ( have_posts() ) :
 									$city_service_url = home_url( '/' . sanitize_title( $city ) . '/' . $service_slug . '/' );
 
 									get_template_part(
-										'template-parts/city-card',
+										'template-parts/cards/city-card',
 										null,
 										array(
 											'city_name'    => $city,

@@ -292,7 +292,7 @@ get_header();
 								$service_url  = home_url( sprintf( SUNNYSIDE_SERVICE_URL_PATTERN, $service_slug ) );
 
 								get_template_part(
-									'template-parts/service-card',
+									'template-parts/cards/service-card',
 									null,
 									array(
 										'service_name' => $service_name,
@@ -330,7 +330,7 @@ get_header();
 								?>
 								<?php
 								get_template_part(
-									'template-parts/service-card',
+									'template-parts/cards/service-card',
 									null,
 									array(
 										'service_name'    => get_the_title(),

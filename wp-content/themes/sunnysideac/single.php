@@ -277,7 +277,7 @@ get_template_part(
 						?>
 						<?php
 						get_template_part(
-							'template-parts/blog-card',
+							'template-parts/cards/blog-card',
 							null,
 							array(
 								'post'            => get_post(),

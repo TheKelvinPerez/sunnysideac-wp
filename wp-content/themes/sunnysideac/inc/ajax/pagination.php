@@ -30,7 +30,7 @@ function sunnysideac_cities_pagination_handler() {
     if ($cities_query->have_posts()) :
         while ($cities_query->have_posts()) : $cities_query->the_post();
             get_template_part(
-                'template-parts/city-card',
+                'template-parts/cards/city-card',
                 null,
                 array(
                     'city_name' => get_the_title(),

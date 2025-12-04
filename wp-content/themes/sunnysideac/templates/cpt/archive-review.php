@@ -221,7 +221,7 @@ get_template_part(
 			<?php if ( $approved_reviews ) : ?>
 				<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8" id="reviews-container">
 					<?php foreach ( $approved_reviews as $review ) : ?>
-						<?php get_template_part( 'template-parts/review-card', null, [ 'review' => $review ] ); ?>
+						<?php get_template_part( 'template-parts/cards/review-card', null, [ 'review' => $review ] ); ?>
 					<?php endforeach; ?>
 				</div>
 

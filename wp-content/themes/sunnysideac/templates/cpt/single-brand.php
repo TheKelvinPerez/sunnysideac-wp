@@ -328,7 +328,7 @@ if ( have_posts() ) :
 									$service_post = get_page_by_path( $service_slug, OBJECT, 'service' );
 
 									get_template_part(
-										'template-parts/service-card',
+										'template-parts/cards/service-card',
 										null,
 										array(
 											'service_name'    => $service_name,
@@ -370,7 +370,7 @@ if ( have_posts() ) :
 									$city_post = get_page_by_path( $city_slug, OBJECT, 'city' );
 
 									get_template_part(
-										'template-parts/city-card',
+										'template-parts/cards/city-card',
 										null,
 										array(
 											'city_name'    => $city,

@@ -378,7 +378,7 @@ if ( have_posts() ) :
 								$service_post_id = $service_post ? $service_post->ID : null;
 
 								get_template_part(
-									'template-parts/service-card',
+									'template-parts/cards/service-card',
 									null,
 									array(
 										'service_name'    => $service_name,

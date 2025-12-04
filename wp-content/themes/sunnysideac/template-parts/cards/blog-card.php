@@ -4,7 +4,7 @@
  * Reusable blog card component for displaying blog posts
  *
  * Usage:
- * get_template_part('template-parts/blog-card', null, [
+ * get_template_part('template-parts/cards/blog-card', null, [
  *     'post' => $post_object,                    // WordPress post object (optional, defaults to global post)
  *     'show_excerpt' => true,                    // Whether to show excerpt
  *     'excerpt_length' => 20,                    // Excerpt length in words
