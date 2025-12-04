@@ -4,7 +4,7 @@
  * Reusable header with breadcrumbs, title, description, and CTA buttons
  *
  * Usage:
- * get_template_part('template-parts/page-header', null, [
+ * get_template_part('template-parts/header/page-header', null, [
  *     'breadcrumbs' => [
  *         ['name' => 'Home', 'url' => home_url('/')],
  *         ['name' => 'Services', 'url' => home_url('/services/')],

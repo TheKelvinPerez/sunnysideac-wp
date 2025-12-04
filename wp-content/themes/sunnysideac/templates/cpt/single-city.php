@@ -206,7 +206,7 @@ if ( have_posts() ) :
 					<?php
 					// Page Header with Featured Image Background and Breadcrumbs
 					get_template_part(
-						'template-parts/page-header',
+						'template-parts/header/page-header',
 						null,
 						array(
 							'breadcrumbs'      => $breadcrumbs,

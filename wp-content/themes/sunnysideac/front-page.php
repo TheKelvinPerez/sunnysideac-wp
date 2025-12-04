@@ -11,7 +11,7 @@ get_header(); ?>
 	<div class="lg:px-0 max-w-7xl mx-auto">
 		<section class="flex gap-10 flex-col">
 			<!-- Hero Section -->
-			<?php get_template_part( 'template-parts/hero-section' ); ?>
+			<?php get_template_part( 'template-parts/hero/hero-section' ); ?>
 
 			<!-- Logo Marquee Section -->
 			<?php get_template_part( 'template-parts/logo-marquee' ); ?>

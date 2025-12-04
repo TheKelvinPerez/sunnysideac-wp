@@ -57,7 +57,7 @@ function sunnysideac_render_footer_menu_from_config() {
 	if ( isset( $config['footer_sections']['column_2']['services'] ) ) {
 		$services = $config['footer_sections']['column_2']['services'];
 		get_template_part(
-			'template-parts/footer-menu-section',
+			'template-parts/footer/footer-menu-section',
 			null,
 			array(
 				'title' => $services['title'],
@@ -70,7 +70,7 @@ function sunnysideac_render_footer_menu_from_config() {
 	if ( isset( $config['footer_sections']['column_2']['company'] ) ) {
 		$company = $config['footer_sections']['column_2']['company'];
 		get_template_part(
-			'template-parts/footer-menu-section',
+			'template-parts/footer/footer-menu-section',
 			null,
 			array(
 				'title' => $company['title'],
@@ -88,7 +88,7 @@ function sunnysideac_render_footer_menu_from_config() {
 	if ( isset( $config['footer_sections']['column_3']['service_areas'] ) ) {
 		$service_areas = $config['footer_sections']['column_3']['service_areas'];
 		get_template_part(
-			'template-parts/footer-menu-section',
+			'template-parts/footer/footer-menu-section',
 			null,
 			array(
 				'title' => $service_areas['title'],
@@ -101,7 +101,7 @@ function sunnysideac_render_footer_menu_from_config() {
 	if ( isset( $config['footer_sections']['column_3']['brands'] ) ) {
 		$brands = $config['footer_sections']['column_3']['brands'];
 		get_template_part(
-			'template-parts/footer-menu-section',
+			'template-parts/footer/footer-menu-section',
 			null,
 			array(
 				'title' => $brands['title'],
@@ -130,7 +130,7 @@ function sunnysideac_render_footer_column_4() {
 	if ( isset( $config['footer_sections']['column_4']['support'] ) ) {
 		$support = $config['footer_sections']['column_4']['support'];
 		get_template_part(
-			'template-parts/footer-menu-section',
+			'template-parts/footer/footer-menu-section',
 			null,
 			array(
 				'title' => $support['title'],
@@ -146,7 +146,7 @@ function sunnysideac_render_footer_column_4() {
 		// Check if this is a contact_info type section
 		if ( isset( $contact['type'] ) && $contact['type'] === 'contact_info' ) {
 			get_template_part(
-				'template-parts/footer-contact-info',
+				'template-parts/footer/footer-contact-info',
 				null,
 				array(
 					'title' => $contact['title'],

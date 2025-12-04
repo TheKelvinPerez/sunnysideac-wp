@@ -15,13 +15,13 @@
 			<!-- Main footer content - 4 columns on desktop -->
 			<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
 				<!-- Column 1: Company Info with Logo -->
-				<?php get_template_part( 'template-parts/footer-company-info' ); ?>
+				<?php get_template_part( 'template-parts/footer/footer-company-info' ); ?>
 
 				<!-- Columns 2 & 3: Footer Navigation (using JSON config) -->
-				<?php get_template_part( 'template-parts/footer-navigation' ); ?>
+				<?php get_template_part( 'template-parts/footer/footer-navigation' ); ?>
 
 				<!-- Column 4: Services and Contact Us -->
-				<?php get_template_part( 'template-parts/footer-services-contact' ); ?>
+				<?php get_template_part( 'template-parts/footer/footer-services-contact' ); ?>
 			</div>
 
 			<!-- Divider line -->

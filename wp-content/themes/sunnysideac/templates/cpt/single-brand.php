@@ -178,7 +178,7 @@ if ( have_posts() ) :
 
 					// Page Header with Breadcrumbs (using template part)
 					get_template_part(
-						'template-parts/page-header',
+						'template-parts/header/page-header',
 						null,
 						array(
 							'breadcrumbs' => array(

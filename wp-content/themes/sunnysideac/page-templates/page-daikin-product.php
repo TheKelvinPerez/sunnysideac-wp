@@ -196,7 +196,7 @@ if ( have_posts() ) :
 					<!-- Page Header with Breadcrumbs -->
 					<?php
 					get_template_part(
-						'template-parts/page-header',
+						'template-parts/header/page-header',
 						null,
 						array(
 							'breadcrumbs' => $breadcrumbs,
