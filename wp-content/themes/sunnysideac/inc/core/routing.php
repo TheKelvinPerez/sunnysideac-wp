@@ -52,11 +52,11 @@ add_action( 'init', 'sunnysideac_add_daikin_product_rewrite', 15 );
 
 /**
  * Add root-level rewrite for /{city}/{service}/ → single service
- * Excludes known base URLs like 'services', 'category', 'tag', 'page', 'cities', 'brands', 'daikin'
+ * Excludes known base URLs like 'services', 'category', 'tag', 'page', 'cities', 'brands', 'daikin', 'reviews'
  */
 function sunnysideac_add_city_service_root_rewrite() {
 	add_rewrite_rule(
-		'^(?!services|category|tag|page|cities|brands|daikin)([^/]+)/([^/]+)/?$',
+		'^(?!services|category|tag|page|cities|brands|daikin|reviews)([^/]+)/([^/]+)/?$',
 		'index.php?post_type=service&name=$matches[2]&city_slug=$matches[1]',
 		'top'
 	);

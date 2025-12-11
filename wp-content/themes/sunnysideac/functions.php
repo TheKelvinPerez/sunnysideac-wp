@@ -59,6 +59,7 @@ require_once __DIR__ . '/inc/seo/meta-tags.php';
  */
 require_once __DIR__ . '/inc/forms/careers-handler.php';
 require_once __DIR__ . '/inc/forms/warranty-handler.php';
+require_once __DIR__ . '/inc/forms/review-handler.php';
 
 /**
  * Load performance optimizations
@@ -72,6 +73,7 @@ require_once __DIR__ . '/inc/performance/webp-support.php';
 require_once __DIR__ . '/inc/content/blog-helpers.php';
 require_once __DIR__ . '/inc/content/faq-helpers.php';
 require_once __DIR__ . '/inc/content/content-cleanup.php';
+
 
 /**
  * Load existing navigation and tracking systems

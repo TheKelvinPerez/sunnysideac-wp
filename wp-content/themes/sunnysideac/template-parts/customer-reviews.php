@@ -14,9 +14,9 @@ $icons = array(
 // Images data - optimized with WebP/AVIF support
 $images = array(
 	'customer_review_card' => array(
-		'avif'  => sunnysideac_asset_url( 'assets/images/optimize/Customer-Review-Card-Image.avif' ),
-		'webp'  => sunnysideac_asset_url( 'assets/images/optimize/Customer-Review-Card-Image.webp' ),
-		'png'   => sunnysideac_asset_url( 'assets/images/optimize/Customer-Review-Card-Image.png' ),
+		'avif' => sunnysideac_asset_url( 'assets/images/optimize/Customer-Review-Card-Image.avif' ),
+		'webp' => sunnysideac_asset_url( 'assets/images/optimize/Customer-Review-Card-Image.webp' ),
+		'png'  => sunnysideac_asset_url( 'assets/images/optimize/Customer-Review-Card-Image.png' ),
 	),
 	'review_photos'        => array(
 		sunnysideac_asset_url( 'assets/images/home-page/review_photo_1.png' ),
@@ -155,7 +155,7 @@ $description_text = 'Our greatest reward is the trust and satisfaction of our cu
 
 			<!-- Review Card -->
 			<article class="flex h-[95vw] flex-col gap-4 rounded-2xl bg-gray-50 p-4">
-				<div class="flex gap-1 review-stars" role="img" aria-label="5 out of 5 stars">
+				<div class="flex items-center juistfy-center gap-1 review-stars" role="img" aria-label="5 out of 5 stars">
 					<?php for ( $i = 0; $i < 5; $i++ ) : ?>
 						<img
 							src="<?php echo esc_url( $icons['star'] ); ?>"

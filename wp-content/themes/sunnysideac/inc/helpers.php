@@ -17,7 +17,7 @@
  */
 function sunnysideac_asset_url( $path ) {
 	$base_url = get_template_directory_uri();
-	$app_env = $_ENV['APP_ENV'] ?? 'production';
+	$app_env  = $_ENV['APP_ENV'] ?? 'production';
 
 	// Local environment ALWAYS uses local assets (no CDN)
 	if ( $app_env === 'local' ) {
@@ -28,9 +28,9 @@ function sunnysideac_asset_url( $path ) {
 	$cdn_enabled = ! empty( $_ENV['CDN_ENABLED'] ) && $_ENV['CDN_ENABLED'] === 'true';
 
 	if ( $cdn_enabled && ! empty( $_ENV['CDN_BASE_URL'] ) ) {
-		$cdn_base = rtrim( $_ENV['CDN_BASE_URL'], '/' );
+		$cdn_base   = rtrim( $_ENV['CDN_BASE_URL'], '/' );
 		$theme_path = '/wp-content/themes/' . basename( get_template_directory() );
-		$cdn_url = $cdn_base . $theme_path . '/' . ltrim( $path, '/' );
+		$cdn_url    = $cdn_base . $theme_path . '/' . ltrim( $path, '/' );
 
 		return $cdn_url;
 	}
@@ -166,20 +166,20 @@ function sunnysideac_get_service_icon( $service_name ) {
  * Get optimized image URL with WebP support and fallback
  *
  * @param string $path Path relative to theme directory
- * @param array $args Optional arguments (sizes, webp, avif, loading, class, alt)
+ * @param array  $args Optional arguments (sizes, webp, avif, loading, class, alt)
  * @return string HTML img element with responsive sources
  */
 function sunnysideac_responsive_image( $path, $args = array() ) {
 	$defaults = array(
-		'sizes'        => array( 'large', 'medium', 'thumbnail' ),
-		'webp'         => true,
-		'avif'         => true, // Enable AVIF for better compression
-		'loading'      => 'lazy',
-		'class'        => '',
-		'alt'          => '',
-		'decoding'     => 'async',
-		'width'        => null,
-		'height'       => null,
+		'sizes'    => array( 'large', 'medium', 'thumbnail' ),
+		'webp'     => true,
+		'avif'     => true, // Enable AVIF for better compression
+		'loading'  => 'lazy',
+		'class'    => '',
+		'alt'      => '',
+		'decoding' => 'async',
+		'width'    => null,
+		'height'   => null,
 	);
 
 	$args = wp_parse_args( $args, $defaults );
@@ -187,23 +187,23 @@ function sunnysideac_responsive_image( $path, $args = array() ) {
 	// Handle new array-based path format
 	if ( is_array( $path ) ) {
 		$image_paths = $path;
-		$path = $image_paths['png'] ?? ''; // Default to PNG as fallback
+		$path        = $image_paths['png'] ?? ''; // Default to PNG as fallback
 	}
 
 	// Check if optimized version exists
 	$optimized_path = str_replace( 'assets/', 'assets/images/optimize/', $path );
-	$webp_path = preg_replace( '/\.(png|jpg|jpeg)$/i', '.webp', $optimized_path );
-	$avif_path = preg_replace( '/\.(png|jpg|jpeg)$/i', '.avif', $optimized_path );
+	$webp_path      = preg_replace( '/\.(png|jpg|jpeg)$/i', '.webp', $optimized_path );
+	$avif_path      = preg_replace( '/\.(png|jpg|jpeg)$/i', '.avif', $optimized_path );
 
-	$theme_dir = get_template_directory();
+	$theme_dir      = get_template_directory();
 	$optimized_file = $theme_dir . '/' . $optimized_path;
-	$webp_file = $theme_dir . '/' . $webp_path;
-	$avif_file = $theme_dir . '/' . $avif_path;
+	$webp_file      = $theme_dir . '/' . $webp_path;
+	$avif_file      = $theme_dir . '/' . $avif_path;
 
 	// Determine which image to use
 	$image_url = '';
-	$webp_url = '';
-	$avif_url = '';
+	$webp_url  = '';
+	$avif_url  = '';
 
 	// Use array format if available, otherwise fall back to generated paths
 	if ( isset( $image_paths ) && is_array( $image_paths ) ) {
@@ -296,7 +296,7 @@ function sunnysideac_responsive_image( $path, $args = array() ) {
  * Get optimized background image with WebP support
  *
  * @param string $path Path relative to theme directory
- * @param array $args Optional arguments (webp, size, class)
+ * @param array  $args Optional arguments (webp, size, class)
  * @return string CSS with background-image and WebP support
  */
 function sunnysideac_responsive_background_image( $path, $args = array() ) {
@@ -310,15 +310,15 @@ function sunnysideac_responsive_background_image( $path, $args = array() ) {
 
 	// Check if optimized version exists
 	$optimized_path = str_replace( 'assets/', 'assets/images/optimize/', $path );
-	$webp_path = preg_replace( '/\.(png|jpg|jpeg)$/i', '.webp', $optimized_path );
+	$webp_path      = preg_replace( '/\.(png|jpg|jpeg)$/i', '.webp', $optimized_path );
 
-	$theme_dir = get_template_directory();
+	$theme_dir      = get_template_directory();
 	$optimized_file = $theme_dir . '/' . $optimized_path;
-	$webp_file = $theme_dir . '/' . $webp_path;
+	$webp_file      = $theme_dir . '/' . $webp_path;
 
 	// Determine which image to use
 	$image_url = '';
-	$webp_url = '';
+	$webp_url  = '';
 
 	if ( file_exists( $optimized_file ) ) {
 		$image_url = sunnysideac_asset_url( $optimized_path );
@@ -370,11 +370,11 @@ function sunnysideac_get_optimized_image( $image_id, $size = 'large', $args = ar
 	}
 
 	$defaults = array(
-		'class'   => '',
-		'loading' => 'lazy',
+		'class'    => '',
+		'loading'  => 'lazy',
 		'decoding' => 'async',
-		'webp'    => true,
-		'avif'    => true,
+		'webp'     => true,
+		'avif'     => true,
 	);
 
 	$args = wp_parse_args( $args, $defaults );
@@ -450,7 +450,7 @@ function sunnysideac_get_optimized_image( $image_id, $size = 'large', $args = ar
 
 	// Wrap with picture element for WebP support
 	if ( $webp_srcset && $args['webp'] ) {
-		$picture_html = '<picture>';
+		$picture_html  = '<picture>';
 		$picture_html .= '<source type="image/webp" srcset="' . esc_attr( $webp_srcset ) . '"';
 		if ( $sizes ) {
 			$picture_html .= ' sizes="' . esc_attr( $sizes ) . '"';
@@ -525,14 +525,14 @@ function sunnysideac_get_star_rating_html( $rating ) {
 		return '';
 	}
 
-	$star_icon = sunnysideac_asset_url( 'assets/icons/review-star-icon-filled.svg' );
+	$star_icon       = sunnysideac_asset_url( 'assets/icons/review-star-icon-filled.svg' );
 	$empty_star_icon = sunnysideac_asset_url( 'assets/icons/review-star-icon-empty.svg' );
 
-	$html = '<div class="flex gap-1 review-stars" role="img" aria-label="' . esc_attr( $rating ) . ' out of 5 stars">';
+	$html = '<div class="flex gap-1 items-center justify-center review-stars" role="img" aria-label="' . esc_attr( $rating ) . ' out of 5 stars">';
 
 	for ( $i = 1; $i <= 5; $i++ ) {
 		$icon_url = $i <= $rating ? $star_icon : $empty_star_icon;
-		$html .= '<img src="' . esc_url( $icon_url ) . '" alt="" class="w-4 h-4" />';
+		$html    .= '<img src="' . esc_url( $icon_url ) . '" alt="" class="w-4 h-4" />';
 	}
 
 	$html .= '</div>';
@@ -542,7 +542,7 @@ function sunnysideac_get_star_rating_html( $rating ) {
 /**
  * Get reviews by service ID
  *
- * @param int $service_id Service post ID
+ * @param int   $service_id Service post ID
  * @param array $args Optional query arguments
  * @return array Array of reviews for the specified service
  */
@@ -577,7 +577,7 @@ function sunnysideac_get_reviews_by_service( $service_id, $args = [] ) {
 /**
  * Get reviews by city ID
  *
- * @param int $city_id City post ID
+ * @param int   $city_id City post ID
  * @param array $args Optional query arguments
  * @return array Array of reviews for the specified city
  */
@@ -627,7 +627,7 @@ function sunnysideac_calculate_average_rating( $reviews ) {
 		$rating = get_field( 'rating', $review->ID );
 		if ( $rating && $rating >= 1 && $rating <= 5 ) {
 			$total_rating += $rating;
-			$count++;
+			++$count;
 		}
 	}
 
@@ -641,12 +641,18 @@ function sunnysideac_calculate_average_rating( $reviews ) {
  * @return array Rating distribution (1-5 stars)
  */
 function sunnysideac_get_rating_distribution( $reviews ) {
-	$distribution = [ 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0 ];
+	$distribution = [
+		1 => 0,
+		2 => 0,
+		3 => 0,
+		4 => 0,
+		5 => 0,
+	];
 
 	foreach ( $reviews as $review ) {
 		$rating = get_field( 'rating', $review->ID );
 		if ( $rating && $rating >= 1 && $rating <= 5 ) {
-			$distribution[ $rating ]++;
+			++$distribution[ $rating ];
 		}
 	}
 

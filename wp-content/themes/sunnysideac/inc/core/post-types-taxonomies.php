@@ -104,7 +104,7 @@ function register_review_cpt() {
 			'show_in_menu' => true,
 			'query_var'    => true,
 			'rewrite'      => array(
-				'slug'       => 'review',
+				'slug'       => 'reviews',
 				'with_front' => false,
 			),
 			'capability_type' => 'post',
